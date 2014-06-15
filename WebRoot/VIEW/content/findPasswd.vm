@@ -1,0 +1,59 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">面试官信息注册</div>
+            <div class="panel-body">
+            	#if($result.success)
+            		<div class="row">
+            				<div class="col-lg-12">
+                                <div class="alert alert-dismissable alert-warning">
+                                    <h4>操作成功!</h4>
+                                    <p>请到您的邮箱中点击对应联连接完成密码找回工作，如果不能获取您的邮箱，请看是否被误分到垃圾邮件中</p>
+                                </div> 
+                            </div>   
+                    </div>
+            	#else
+        		<div class="row">
+                    <div class="col-lg-12">
+                       	<div class="alert alert-dismissable alert-warning">
+                            <h4>请输入你的用户名称找回密码!</h4>
+                            <p>我们会像您的账户邮箱发送一个确认连接，请操作该连接完成密码的找回！</p>
+                        </div>
+                        #if($result && !$result.success)
+                		<div class="alert alert-dismissable alert-danger">
+                       		<a href="#" class="alert-link">$result.message</a>
+                   	 	</div>
+                        #end
+	                    <form class="form-horizontal" action="$link.contextPath/findPasswd.htm?action=findpass" id="findPasswdForm">
+	                        <fieldset>
+	                            <div class="form-group">
+	                                <div class="col-lg-6">
+	                                    <input type="text" class="input-sm col-lg-12" name="email"
+	                                           placeholder="请输入您的公司邮箱">
+	                                </div>
+	                               <div class="col-lg-2">
+			                            <button type="submit" class="btn btn-primary  btn-sm col-lg-12">
+			                                找回账户信息
+			                            </button>	                               
+	                               </div>
+	                            </div>
+	                        </fieldset>
+	                    </form>
+	                    <script language="javascript">
+	                        $('#findPasswdForm').submit(function(){
+	                            var email=$('#inputEmail').val();
+	                            var myRegExp = /[a-z0-9-]{1,30}@[a-z0-9-]{1,65}.[a-z]{3}/;
+	                            if(!myRegExp.test(email)){
+	                                alert('请输入合法的账号，账号为您的注册邮箱！');
+	                                return false;
+	                            }
+	                            return true;
+	                        });
+	                    </script>
+                	</div>
+                </div>	
+                #end
+            </div>
+        </div>
+    </div>
+</div>

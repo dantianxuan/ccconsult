@@ -1,0 +1,83 @@
+<div class="row">
+	<div class="col-lg-12">
+    	<div style="width:80%;float:left"><input type="text" class="form-control"/></div>
+	 	<div style="width:20%;float:right;padding-left:12px;"><button class="btn btn-danger col-lg-8" type="button">快速寻找</button></div>
+	</div>
+</div>
+<br/>
+<div class="row">
+		<div class="col-lg-6">
+		<div class="panel panel-default">
+		  <div class="panel-body">
+			<div class="carousel slide" data-ride="carousel">
+						<!-- Indicators -->
+						<ol class="carousel-indicators">
+							<li data-target="#carousel-example-generic" data-slide-to="0"
+								class="active"></li>
+							<li data-target="#carousel-example-generic" data-slide-to="1"></li>
+							<li data-target="#carousel-example-generic" data-slide-to="2"></li>
+						</ol>
+			
+						<!-- Wrapper for slides -->
+						<div class="carousel-inner">
+							<div class="item active">
+								<img class="img-rounded" src="STATIC/image/image.jpg">
+			
+								<div class="carousel-caption" style="font-size:12px;">最顶尖企业的一线员工，为您带来最真实的面试支持和发展建议</div>
+							</div>
+						</div>
+			
+						<!-- Controls -->
+						<a class="left carousel-control" href="#carousel-example-generic"
+							data-slide="prev"> <span>《</span> </a> <a
+							class="right carousel-control" href="#carousel-example-generic"
+							data-slide="next"> <span>》</span> </a>
+					</div>
+		  </div>
+		</div>
+
+		</div>
+		<!-- right CONTENT
+	       ================================================== -->
+		<div class="col-lg-6">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h5 class="panel-title">
+						动态信息<a href="$link.contextPath/articles.htm"><span class="badge" style="float: right" >更多信息</span></a>
+					</h5>
+				</div>
+				<div class="panel-body" style="font-size: 14px;">
+					<p style="margin: 0px;font-size:12px;">
+						#foreach($article in $articles)
+							<a href="$link.contextPath/article.htm?articleId=$article.id">$article.title</a><br/>
+						#end
+					</p>
+				</div>
+			</div>
+	
+		</div>
+</div>
+<div class="row">
+	<div class="col-lg-12">
+		<div class="panel panel-default">
+			  <div class="panel-heading"><strong>热门公司</strong></a></div>
+			  <div class="panel-body">		  
+		 		#foreach($company in $companys)
+					<div class="col-lg-4">
+						<div class="well well-sm" style="height:80px;">
+						<a href="$link.contextPath/company.htm?companyId=$company.id">
+								<img src="STATIC/image/alipay.jpg"
+								style="width:60px;height: 60px; float:left" class="img-rounded">
+								<p style="padding-left: 72px;">
+									<small>$company.name</small><br /> 
+									<small>面试官：12人</small><br /> 
+									<small>面试人数：24人</small>
+								</p>
+						</a>			
+						</div>
+					</div>
+				#end
+			  </div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,64 @@
+<script language="javascript">
+	function login(action){
+		$('#actionInput').val(action);
+		console.log($('#actionInput').val());
+		var account=$('input[name=account]').val();
+    	var password=$('input[name=password]').val();
+    	if(account=='' || account==undefined){
+    		alert('登陆名称不能为空');
+    		return ;
+    	}
+		if(password=='' || password==undefined){
+    		alert('密码不能为空');
+    		return ;
+    	}
+        $('#loginForm').submit();
+    }
+</script>
+ <div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">请登录</div>
+            <div class="panel-body">
+            	#if($result && !$result.success)
+                <div class="alert alert-dismissable alert-danger">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong>请注意</strong> #if($result.message) $result.message #else 用户或者密码错误  #end
+                </div>
+                #end
+                <form class="form-horizontal" id="loginForm" action="$link.contextPath/login.htm" method="post">
+                    <fieldset>
+                        <div class="form-group">
+                            <label for="inputName" class="col-lg-2 control-label">用户名称</label>
+                            <div class="col-lg-6">
+                                <input type="text"  name="account" class="form-control"  placeholder="账户名称为邮箱地址" value="$!account"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPasswd" class="col-lg-2 control-label">用户密码</label>
+                            <div class="col-lg-6">
+                                <input type="password"  name="password" class="form-control"  placeholder="账户密码"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPasswd" class="col-lg-2 control-label"></label>
+                            <div class="col-lg-6">
+                                    <button type="button" class="btn btn-primary col-lg-5" onclick="login('CONSULTANT')">
+                                        普通用户登陆
+                                    </button>
+                                    <button type="button" class="col-lg-offset-2 btn btn-warning col-lg-5" onclick="login('COUNSELOR')">
+                                        面试官登陆
+                                    </button>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <input type="hidden" name="action" id="actionInput"/>
+                </form>
+                <hr/>
+                <a  href="$link.contextPath/findPasswd.htm" style="margin: 12px">忘记密码</a>
+                <a  href="$link.contextPath/regist/regConsultnt.htm" style="margin: 12px">快速注册用户</a>
+                <a  href="$link.contextPath/regist/regCounselorInit.htm" style="margin: 12px">注册面试官</a>
+            </div>
+        </div>
+    </div>
+</div>

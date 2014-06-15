@@ -1,0 +1,73 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">面试官信息注册</div>
+            <div class="panel-body">
+            	#if($result.success)
+            		<div class="row">
+            				<div class="col-lg-12">
+                                <div class="alert alert-dismissable alert-warning">
+                                    <h4>感谢您的注册!</h4>
+                                    <p>我们已经记录您的注册信息，请到您的邮箱中完成注册，如果不能正常收到邮件，请检查是否被误分到垃圾邮件中！</p>
+                                </div> 
+                            </div>   
+                    </div>
+            	#else
+        		<div class="row">
+                    <div class="col-lg-12">
+                       	<div class="alert alert-dismissable alert-warning">
+                            <h4>感谢您的注册!</h4>
+                            <p>请使用您的公司邮箱进行注册，注册后我们会给您发送邮件，并完善其余信息！</p>
+                        </div>
+                        #if($result && !$result.success)
+                		<div class="alert alert-dismissable alert-danger">
+                       		<a href="#" class="alert-link">$result.message</a>
+                   	 	</div>
+                        #end
+	                    <form class="form-horizontal" action="$link.contextPath/regist/regInterviewerMail.htm" id="regEmailForm">
+	                        <fieldset>
+	                            <div class="form-group">
+	                                <div class="col-lg-6">
+	                                    <input type="text" style="height:28px;width:100%;margin-top:4px;" name="email"
+	                                           placeholder="请输入您的公司邮箱">
+	                                </div>
+	                                <div class="col-lg-4">
+	                                    <select class="col-lg-12" name="subPrefix" id="selectMailSubfix" style="padding:4px;">
+	                                       #foreach($company in $companys)
+	                                        <option  value="$company.mailSuffix">$company.mailSuffix</option>
+	                                       #end 
+	                                    </select>
+	                                    <script>
+	                                    $("#selectMailSubfix").select2({
+										    placeholder: "请选择公司邮箱后缀"
+										});
+	                                    </script>
+	                                </div>
+	                               <div class="col-lg-2">
+			                            <button type="submit" class="btn btn-primary col-lg-12">
+			                                注册信息
+			                            </button>	                               
+	                               </div>
+	                            </div>
+	                        </fieldset>
+	                    </form>
+	                    <script language="javascript">
+	                        $('#regEmailForm').submit(function(){
+	                            var email=$('#inputEmail').val();
+	                            var prefix=$('#selectMailSubfix').val();
+	                            console.log(prefix);
+	                            var myRegExp = /[a-z0-9-]{1,30}@[a-z0-9-]{1,65}.[a-z]{3}/;
+	                            if(!myRegExp.test(email+prefix)){
+	                                $('#alertArea').show();
+	                                return false;
+	                            }
+	                            return true;
+	                        });
+	                    </script>
+                	</div>
+                </div>	
+                #end
+            </div>
+        </div>
+    </div>
+</div>

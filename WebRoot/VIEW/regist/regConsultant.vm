@@ -1,0 +1,63 @@
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">用户信息注册</div>
+            <div class="panel-body">
+                <form class="form-horizontal" action="$link.contextPath/regist/regConsultant.htm?action=regist"
+                 method="post" enctype="multipart/form-data">
+        			#if($result && !$result.success)
+                		<div class="alert alert-dismissable alert-danger">
+                       		<a href="#" class="alert-link">$result.message</a>
+                   	 	</div>
+                    #end
+                    <fieldset>
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">账号(邮箱)</label>
+                                <div class="col-lg-8">
+                                     <input type="text" name="email" class="form-control" placeholder="请输入账号" value="$!consultant.email"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label  class="col-lg-2 control-label">昵称</label>
+                                <div class="col-lg-8">
+                                    <input type="text" name="name" class="form-control" placeholder="请输入昵称" value="$!consultant.name"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label  class="col-lg-2 control-label">上传头像</label>
+                                <div class="col-lg-8">
+                                    <input  type="file" name="localPhoto"  class="file" multiple="true" data-show-upload="false" data-show-caption="true" />
+                                </div>
+                            </div>             
+                            <div class="form-group">
+                                <label  class="col-lg-2 control-label">联系电话</label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" name="mobile" placeholder="请输入手机号码" value="$!consultant.mobile" />
+                                </div>
+                            </div>                                           
+                            <div class="form-group">
+                                <label  class="col-lg-2 control-label">密码</label>
+                                <div class="col-lg-8">
+                                    <input type="password" class="form-control"  placeholder="请输入密码" name="passwd">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label  class="col-lg-2 control-label">重复密码</label>
+                                <div class="col-lg-8">
+                                    <input type="password" class="form-control"  placeholder="请重复输入密码" name="repasswd">
+                                </div>
+                            </div>
+                        	<div class="form-group">
+	                            <div class="col-lg-10 col-lg-offset-2">
+	                                <button type="submit" class="btn btn-danger col-lg-4">注册信息</button>
+	                            </div>
+                        	</div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="$link.contextPath/STATIC/js/fileinput.js"></script>
+<link rel="stylesheet" href="$link.contextPath/STATIC/css/fileinput.css"/>

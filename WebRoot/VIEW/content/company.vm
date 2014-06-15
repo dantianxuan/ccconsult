@@ -1,0 +1,58 @@
+<div class="row">
+    <div class="col-lg-4" >
+        <img src="STATIC/image/alipays.jpg" class="img-thumbnail">
+    </div>
+    <!-- right CONTENT================================ -->
+    <div class="col-lg-8" >
+        <div class="panel panel-default">
+            <div class="panel-body" style="font-size: 13px;">
+                <p style="border-bottom:solid 1px #ddd;padding-bottom:12px;"> $!company.description</p>
+                <a  style="float:right;" href="$!company.link" target="_blank">友情链接：www.alipay.net </a>
+            </div>
+        </div>
+    </div>
+</div>
+<br/>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+				  	<ol class="breadcrumb" style="margin:2px;padding:0px;">
+					  <li class="active"><a href="#">预约中</a></li>
+					  <li><a href="#">已经创建记录</a></li>
+					  <li><a href="#">等待评价</a></li>
+					  <li><a href="#">已完成记录</a></li>
+					</ol>
+            </div>
+            <div class="panel-body">
+              	#if(!$counselors)
+            		<p>该公司无可咨询人员</p>
+            	#else
+	            	#foreach($counselor in $counselors)
+		            	 <div class="row">
+		                    <div class="col-lg-12">
+								<div class="panel panel-default">
+					            	<div class="panel-body">
+ 											<div class="col-lg-2">
+				                                <img src="STATIC/image/alipay.jpg" style="width: 80px;" class="img-rounded"/><br/>
+				                            </div>
+				                            <div class="col-lg-10">
+				                                <p class="text-warning" style="border-bottom:solid 1px #ddd">
+				                                	<small><a href="$link.contextPath/counselorInfo.htm?counselorId=$counselor.id">
+				                                	$counselor.name（支付宝-技术部）<span style="float:right">好评：<span class="badge">3</span></span></a></small></p>
+				                                <p >
+				                                    <small>$!counselor.description</small>
+				                                </p>
+				                            </div>
+									</div>
+								</div>
+	                        </div>
+		                </div>
+	            	#end            	
+            	#end
+            </div>
+        </div>
+    </div>
+</div>
+
+

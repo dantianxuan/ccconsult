@@ -1,0 +1,81 @@
+#set($counselorVO=$session.getAttribute("SESSION_COUNSELOR_OBJECT"))
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+            	欢迎您：$counselorVO.counselor.name
+            </div>
+            <div class="panel-body">
+					<a  class="btn btn-primary" href="$link.contextPath/counselor/counselorSelf.htm"><span class="glyphicon glyphicon-send"></span>   预约信息</a>
+					<a  class="btn btn-warning" href="$link.contextPath/counselor/personal.htm"><span class="glyphicon glyphicon-user"></span>个人信息</a>
+					<a  class="btn btn-warning" href="$link.contextPath/counselor/counselorSelf.htm"><span class="glyphicon glyphicon-copyright-mark"></span>   账户信息</a>
+					<a  class="btn btn-warning"    href="$link.contextPath/counselorVO/messages.htm"> <span class="glyphicon glyphicon-envelope"></span>    站内信箱</a>
+       	 	</div>
+    	</div>
+    </div>
+</div>
+    
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+			  	<ol class="breadcrumb" style="margin:2px;padding:0px;">
+			  		<li class="active"><a href="#">未完成记录<span class="badge">$result.object.size()</span></a></li>
+				  	<li class="active"><a href="#">预约中</a></li>
+				  	<li><a href="#">已经创建记录</a></li>
+				  	<li>等待评价</li>
+				  	<li>已完成记录</li>
+				</ol>
+            </div>
+            <div class="panel-body">
+        		#if($result && $result.object)
+        			#foreach($interviewVO in $result.object)
+        			<div class="col-lg-12" id="INTERVIEW_$interviewVO.interview.id">
+        				#set($interview=$interviewVO.interview)
+			            <div class="panel panel-default">
+			                <div class="panel-body">
+								<div class="col-lg-2">
+	                                <img src="$link.contextPath/STATIC/image/alipay.jpg" style="width: 90px;" class="img-rounded">
+	                            </div>
+	                            <div class="col-lg-10">
+	                                <p  style="border-bottom:solid 1px #ddd">
+	                                	咨询者：$interviewVO.consultant.name
+	                                	<span style="float: right">$date.format("yyyy-MM-dd HH:mm:ss", $interviewVO.interview.gmtCreate)
+                                	</p>
+									<p>
+										  <button type="button" class="btn   btn-success disabled ">创建预约订单</button>
+										  <span class="glyphicon glyphicon-arrow-right"></span>
+										  <button type="button" 
+										  onclick="window.location.href='$link.contextPath/counselor/interview.htm?interviewId=$interviewVO.interview.id'"
+										  class="btn 
+										  	#if($interview.step>1)  btn-success   
+										  	#elseif($interview.step==1) btn-primary   
+										  	#else  btn-default disabled #end">等待预约</button>
+										  <span class="glyphicon glyphicon-arrow-right"></span>
+										  <button type="button" class="btn disabled
+										  	#if($interview.step>2)  btn-success   
+										  	#elseif($interview.step==2) btn-primary   
+										  	#else  btn-default disabled #end">进行面试咨询</button>
+										  <span class="glyphicon glyphicon-arrow-right"></span>
+										  <button type="button" class="btn disabled
+										  	#if($interview.step>3)  btn-success   
+										  	#elseif($interview.step==3) btn-primary   
+										  	#else  btn-default disabled #end">完成评价</button>
+										  <span class="glyphicon glyphicon-arrow-right"></span>
+										  <button type="button" class="btn  btn-default disabled">
+										   <span class="glyphicon glyphicon-ok"></span>
+										  </button>
+									  </p>
+									  <a href="$link.contextPath/counselor/interview.htm?interviewId=$interviewVO.interview.id" style="float:right">详情...</a>
+	                            </div>
+			                </div>
+		                </div>
+		            </div>
+        			#end
+        		#else
+					 对不起，当前无记录                    		
+        		#end                 
+            </div>
+        </div>
+    </div>
+</div>

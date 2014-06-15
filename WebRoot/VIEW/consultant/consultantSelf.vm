@@ -1,0 +1,99 @@
+<script>
+	function deleteInterview(interviewId){
+		if(!confirm("请确认您要删除该记录")){
+			return ;
+		}
+		
+		jQuery.ajax({
+             type: "POST",
+             url: "$link.contextPath/consultant/deleteInterview.json",
+             data: {'interviewId':interviewId},
+             dataType: "json",
+             success: function(data){
+             	if(data.result.success==true){
+             		$('#INTERVIEW_'+interviewId).remove();
+             	}else{
+             		alert("对不起删除失败，请稍后重试");
+             	}
+              }
+         });
+	}
+</script>   
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+            	欢迎您：大大猫 
+            </div>
+            <div class="panel-body">
+					<button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-star"></span>  我的预约</button>
+					<button type="button" class="btn btn-warning"> <span class="glyphicon glyphicon-paperclip"></span>个人简历</button>
+					<button type="button" class="btn btn-warning"><span class="glyphicon glyphicon-user"></span>  个人信息</button>
+					<button type="button" class="btn btn-warning"> <span class="glyphicon glyphicon-envelope"></span>  站内信箱</button>
+       	 	</div>
+    	</div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+				  	<ol class="breadcrumb" style="margin:2px;padding:0px;">
+					  <li class="active"><a href="#">进行中<span class="badge">$result.object.size()</span></a></li>
+					  <li><a href="#">待评价</a></li>
+					  <li><a href="#">已完成</a></li>
+					</ol>
+            </div>
+            <div class="panel-body">
+        		#if($result && $result.object)
+        			#foreach($interviewVO in $result.object)
+        			<div class="col-lg-12" id="INTERVIEW_$interviewVO.interview.id">
+        				#set($interview=$interviewVO.interview)
+			            <div class="panel panel-default">
+			                <div class="panel-body">
+								<div class="col-lg-2">
+	                                <img src="$link.contextPath/STATIC/image/alipay.jpg" style="width: 90px;" class="img-rounded">
+	                            </div>
+	                            <div class="col-lg-10">
+	                                <p  style="border-bottom:solid 1px #ddd">
+	                                	面试官：$interviewVO.counselorVO.counselor.name
+	                                	<span style="float: right">$date.format("yyyy-MM-dd HH:mm:ss", $interviewVO.interview.gmtCreate)
+	                                	<span class="badge" onclick="deleteInterview($interviewVO.interview.id)">
+	                                		<a href="javascript:void(0)" style="color:#fff"><span class="glyphicon glyphicon-remove"></span>删除</a>
+                                		</span>
+                                	</p>
+									<p>
+										  <button type="button" class="btn   btn-success disabled ">创建预约订单</button>
+										  <span class="glyphicon glyphicon-arrow-right"></span>
+										  <button type="button" class="btn 
+										  	#if($interview.step>1)  btn-success disabled  
+										  	#elseif($interview.step==1) btn-primary   disabled
+										  	#else  btn-default disabled #end">等待咨询师预约通知</button>
+										  <span class="glyphicon glyphicon-arrow-right"></span>
+										  <button type="button" class="btn 
+										  	#if($interview.step>2)  btn-success disabled  
+										  	#elseif($interview.step==2) btn-primary   
+										  	#else  btn-default disabled #end">进行面试咨询</button>
+										  <span class="glyphicon glyphicon-arrow-right"></span>
+										  <button type="button" class="btn 
+										  	#if($interview.step>3)  btn-success disabled  
+										  	#elseif($interview.step==3) btn-primary   
+										  	#else  btn-default disabled #end">完成评价</button>
+										  <span class="glyphicon glyphicon-arrow-right"></span>
+										  <button type="button" class="btn  btn-default disabled">
+										   <span class="glyphicon glyphicon-ok"></span>
+										  </button>
+									  </p>
+									  <a href="$link.contextPath/consultant/interview.htm?interviewId=$interviewVO.interview.id" style="float:right">详情...</a>
+	                            </div>
+			                </div>
+		                </div>
+		            </div>
+        			#end
+        		#else
+					 对不起，当前无记录                    		
+        		#end
+            </div>
+        </div>
+    </div>
+</div>

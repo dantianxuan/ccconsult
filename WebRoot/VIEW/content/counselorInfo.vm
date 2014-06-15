@@ -1,0 +1,87 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-2">
+                        <img src="$link.contextPath/UPLOAD/$!interviewerHolder.photo" class="img-rounded" style="width: 82px;height: 82px;">
+                    </div>
+                    <div class="col-lg-5">
+	                    <p class="col-lg-12"><span class=" text-right col-lg-4">名称:</span>$!counselorVO.counselor.name</p>
+	                    <p class="col-lg-12"><span class=" text-right col-lg-4">邮箱:</span>$!counselorVO.company.name</p>
+	                    <p class="col-lg-12"><span class=" text-right col-lg-4">公司:</span>$!counselorVO.counselor.name</p>
+                    </div>
+                    <div class="col-lg-5">
+	                    <p class="col-lg-12"><span class=" text-right col-lg-4">名称:</span>$!counselorVO.counselor.name</p>
+	                    <p class="col-lg-12"><span class=" text-right col-lg-4">邮箱:</span>$!counselorVO.company.name</p>
+	                    <p class="col-lg-12"><span class=" text-right col-lg-4">公司:</span>$!counselorVO.counselor.name</p>	                    
+                    </div>	
+                </div>
+                <div class="row">
+                    <div class="col-lg-12" style="border-top:solid 1px #ddd">
+                    	<br/>
+                        <span style="margin-left:24px;"></span>$!counselorVO.counselor.description
+                    </div>
+                </div>                    
+            </div>
+        </div>
+    </div>
+</div>
+ <div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-body">
+					<button type="button" class="btn btn-primary" 
+						onclick="window.location.href='$link.contextPath/consultant/createInterview.htm?counselorId=$!counselorVO.counselor.id'"><span class="glyphicon glyphicon-star">
+						</span>  咨询预约
+					</button>
+					<button type="button" class="btn btn-warning"><span class="glyphicon glyphicon-send"></span>  毛遂自荐</button>
+					<button type="button" class="btn btn-warning"><span class="glyphicon glyphicon-star"></span>  优选人才</button>
+					<button type="button" class="btn btn-warning"> <span class="glyphicon glyphicon-paperclip"></span>发送站内信</button>
+       	 	</div>
+    	</div>
+    </div>
+</div>   
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                咨询记录
+            </div>
+            <div class="panel-body">
+            	#if($interviews)
+                    <div class="row">
+                    	<div class="col-lg-12">
+	                        <div class="well well-sm clearfix">
+	                            <div class="col-lg-2">
+	                                <img src="$link.contextPath/STATIC/image/alipay.jpg" style="width: 80px;" class="img-rounded">
+	                            </div>
+	                            <div class="col-lg-10">
+	                                <p class="text-warning">一条大鱼  <span style="float: right">2013-12-23 <span class="badge">好评</span></span></p>
+	                                <p class="text-warning">
+	                                    <small>非常不错的面试官，几句话就能听出我的基本水平，并针对我的需要面试的岗位提出了很多有效的建议，虽然最后没有通过，但是还是感觉到了面试官的专业水准
+	                                    </small>
+	                                </p>
+	                            </div>
+	                        </div>
+                   		</div>
+                    </div>                                      
+                    <div class="row">
+                        <ul class="pagination pagination-sm" style="float: right">
+                            <li class="disabled"><a href="#">«</a></li>
+                            <li class="active"><a href="#">1</a></li>
+                            <li><a href="#">2</a></li>
+                            <li><a href="#">3</a></li>
+                            <li><a href="#">4</a></li>
+                            <li><a href="#">5</a></li>
+                            <li><a href="#">»</a></li>
+                        </ul>
+                    </div>
+            	#else
+            		<p class="text-primary">对不起，没有记录.</p>
+            	#end
+
+            </div>
+        </div>
+    </div>
+</div>
