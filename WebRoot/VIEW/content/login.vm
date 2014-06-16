@@ -46,7 +46,7 @@
                                     <button type="button" class="btn btn-primary col-lg-5" onclick="login('CONSULTANT')">
                                         普通用户登陆
                                     </button>
-                                    <button type="button" class="col-lg-offset-2 btn btn-warning col-lg-5" onclick="login('COUNSELOR')">
+                                    <button type="button" class="col-lg-offset-2 btn btn-success col-lg-5" onclick="login('COUNSELOR')">
                                         面试官登陆
                                     </button>
                             </div>
