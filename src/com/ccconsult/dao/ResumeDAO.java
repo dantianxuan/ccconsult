@@ -1,5 +1,6 @@
 package com.ccconsult.dao;
 
+import com.ccconsult.dao.BaseHibernateDAO;
 import com.ccconsult.pojo.Resume;
 
 import java.util.Date;
@@ -20,14 +21,18 @@ import org.slf4j.LoggerFactory;
  */
 
 public class ResumeDAO extends BaseHibernateDAO {
-    private static final Logger log       = LoggerFactory.getLogger(ResumeDAO.class);
+    private static final Logger log             = LoggerFactory.getLogger(ResumeDAO.class);
     //property constants
-    public static final String  REAL_NAME = "realName";
-    public static final String  SEXY      = "sexy";
-    public static final String  EDUCATION = "education";
-    public static final String  RESUME    = "resume";
-    public static final String  SALARY    = "salary";
-    public static final String  TYPE      = "type";
+    public static final String  JOB_SEEKER_ID   = "jobSeekerId";
+    public static final String  REAL_NAME       = "realName";
+    public static final String  SEXY            = "sexy";
+    public static final String  EDUCATION       = "education";
+    public static final String  RESUME          = "resume";
+    public static final String  SALARY          = "salary";
+    public static final String  TYPE            = "type";
+    public static final String  MOBILE          = "mobile";
+    public static final String  EMAIL           = "email";
+    public static final String  WORK_EXPERIENCE = "workExperience";
 
     public void save(Resume transientInstance) {
         log.debug("saving Resume instance");
@@ -88,6 +93,10 @@ public class ResumeDAO extends BaseHibernateDAO {
         }
     }
 
+    public List findByJobSeekerId(Object jobSeekerId) {
+        return findByProperty(JOB_SEEKER_ID, jobSeekerId);
+    }
+
     public List findByRealName(Object realName) {
         return findByProperty(REAL_NAME, realName);
     }
@@ -110,6 +119,18 @@ public class ResumeDAO extends BaseHibernateDAO {
 
     public List findByType(Object type) {
         return findByProperty(TYPE, type);
+    }
+
+    public List findByMobile(Object mobile) {
+        return findByProperty(MOBILE, mobile);
+    }
+
+    public List findByEmail(Object email) {
+        return findByProperty(EMAIL, email);
+    }
+
+    public List findByWorkExperience(Object workExperience) {
+        return findByProperty(WORK_EXPERIENCE, workExperience);
     }
 
     public List findAll() {

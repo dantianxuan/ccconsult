@@ -11,6 +11,7 @@ public class Resume extends com.ccconsult.base.ToString implements java.io.Seria
     // Fields    
 
     private Integer id;
+    private Integer jobSeekerId;
     private String  realName;
     private String  sexy;
     private Date    birth;
@@ -18,8 +19,12 @@ public class Resume extends com.ccconsult.base.ToString implements java.io.Seria
     private String  resume;
     private Date    gmtCreate;
     private Date    gmtModified;
-    private long    salary;
+    private Long    salary;
     private String  type;
+    private Date    graduation;
+    private String  mobile;
+    private String  email;
+    private String  workExperience;
 
     // Constructors
 
@@ -28,8 +33,10 @@ public class Resume extends com.ccconsult.base.ToString implements java.io.Seria
     }
 
     /** full constructor */
-    public Resume(String realName, String sexy, Date birth, String education, String resume,
-                  Date gmtCreate, Date gmtModified, long salary, String type) {
+    public Resume(Integer jobSeekerId, String realName, String sexy, Date birth, String education,
+                  String resume, Date gmtCreate, Date gmtModified, Long salary, String type,
+                  Date graduation, String mobile, String email, String workExperience) {
+        this.jobSeekerId = jobSeekerId;
         this.realName = realName;
         this.sexy = sexy;
         this.birth = birth;
@@ -39,6 +46,10 @@ public class Resume extends com.ccconsult.base.ToString implements java.io.Seria
         this.gmtModified = gmtModified;
         this.salary = salary;
         this.type = type;
+        this.graduation = graduation;
+        this.mobile = mobile;
+        this.email = email;
+        this.workExperience = workExperience;
     }
 
     // Property accessors
@@ -49,6 +60,14 @@ public class Resume extends com.ccconsult.base.ToString implements java.io.Seria
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getJobSeekerId() {
+        return this.jobSeekerId;
+    }
+
+    public void setJobSeekerId(Integer jobSeekerId) {
+        this.jobSeekerId = jobSeekerId;
     }
 
     public String getRealName() {
@@ -107,11 +126,11 @@ public class Resume extends com.ccconsult.base.ToString implements java.io.Seria
         this.gmtModified = gmtModified;
     }
 
-    public long getSalary() {
+    public Long getSalary() {
         return this.salary;
     }
 
-    public void setSalary(long salary) {
+    public void setSalary(Long salary) {
         this.salary = salary;
     }
 
@@ -121,6 +140,38 @@ public class Resume extends com.ccconsult.base.ToString implements java.io.Seria
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public Date getGraduation() {
+        return this.graduation;
+    }
+
+    public void setGraduation(Date graduation) {
+        this.graduation = graduation;
+    }
+
+    public String getMobile() {
+        return this.mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public String getEmail() {
+        return this.email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getWorkExperience() {
+        return this.workExperience;
+    }
+
+    public void setWorkExperience(String workExperience) {
+        this.workExperience = workExperience;
     }
 
 }
