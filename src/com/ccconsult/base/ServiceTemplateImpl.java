@@ -47,6 +47,7 @@ public class ServiceTemplateImpl implements ServiceTemplate {
             result.setCode(e.getCode());
             result.setSuccess(false);
             result.setMessage(e.getLocalizedMessage());
+            session.flush();
             session.getTransaction().rollback();
             return (T) result;
         } catch (Throwable e2) {
@@ -76,6 +77,7 @@ public class ServiceTemplateImpl implements ServiceTemplate {
             if (result == null || !(result instanceof CcResult)) {
                 throw new RuntimeException("逻辑错误");
             }
+            session.flush();
             session.getTransaction().commit();
         } catch (CcException e) {
             // 业务异常捕获

@@ -2,7 +2,6 @@ package com.ccconsult.dao;
 
 import com.ccconsult.pojo.Prise;
 
-import java.util.Date;
 import java.util.List;
 import org.hibernate.LockMode;
 import org.hibernate.Query;

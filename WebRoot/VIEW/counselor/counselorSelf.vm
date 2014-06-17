@@ -9,7 +9,7 @@
 					<a  class="btn btn-primary" href="$link.contextPath/counselor/counselorSelf.htm"><span class="glyphicon glyphicon-send"></span>   预约信息</a>
 					<a  class="btn btn-warning" href="$link.contextPath/counselor/personal.htm"><span class="glyphicon glyphicon-user"></span>个人信息</a>
 					<a  class="btn btn-warning" href="$link.contextPath/counselor/counselorSelf.htm"><span class="glyphicon glyphicon-copyright-mark"></span>   账户信息</a>
-					<a  class="btn btn-warning"    href="$link.contextPath/counselorVO/messages.htm"> <span class="glyphicon glyphicon-envelope"></span>    站内信箱</a>
+					<a  class="btn btn-warning" href="$link.contextPath/counselorVO/messages.htm"> <span class="glyphicon glyphicon-envelope"></span>    站内信箱</a>
        	 	</div>
     	</div>
     </div>

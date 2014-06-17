@@ -1,11 +1,8 @@
 package com.ccconsult.dao;
 
-import com.ccconsult.dao.BaseHibernateDAO;
 import com.ccconsult.pojo.Resume;
 
-import java.util.Date;
 import java.util.List;
-import org.hibernate.LockMode;
 import org.hibernate.Query;
 import org.hibernate.criterion.Example;
 import org.slf4j.Logger;
@@ -20,20 +17,19 @@ import org.slf4j.LoggerFactory;
   * @author MyEclipse Persistence Tools 
  */
 
-public class ResumeDAO extends BaseHibernateDAO {
+public class ResumeDAO extends BaseHibernateDAO<Resume> {
     private static final Logger log             = LoggerFactory.getLogger(ResumeDAO.class);
     //property constants
-    public static final String  JOB_SEEKER_ID   = "jobSeekerId";
     public static final String  REAL_NAME       = "realName";
     public static final String  SEXY            = "sexy";
     public static final String  EDUCATION       = "education";
     public static final String  RESUME          = "resume";
-    public static final String  SALARY          = "salary";
-    public static final String  TYPE            = "type";
+    public static final String  CONSULTANT_ID   = "consultantId";
     public static final String  MOBILE          = "mobile";
     public static final String  EMAIL           = "email";
     public static final String  WORK_EXPERIENCE = "workExperience";
 
+    @Override
     public void save(Resume transientInstance) {
         log.debug("saving Resume instance");
         try {
@@ -45,6 +41,7 @@ public class ResumeDAO extends BaseHibernateDAO {
         }
     }
 
+    @Override
     public void delete(Resume persistentInstance) {
         log.debug("deleting Resume instance");
         try {
@@ -93,10 +90,6 @@ public class ResumeDAO extends BaseHibernateDAO {
         }
     }
 
-    public List findByJobSeekerId(Object jobSeekerId) {
-        return findByProperty(JOB_SEEKER_ID, jobSeekerId);
-    }
-
     public List findByRealName(Object realName) {
         return findByProperty(REAL_NAME, realName);
     }
@@ -113,12 +106,8 @@ public class ResumeDAO extends BaseHibernateDAO {
         return findByProperty(RESUME, resume);
     }
 
-    public List findBySalary(Object salary) {
-        return findByProperty(SALARY, salary);
-    }
-
-    public List findByType(Object type) {
-        return findByProperty(TYPE, type);
+    public Resume findByConsultantId(Object consultantId) {
+        return getLimit(findByProperty(CONSULTANT_ID, consultantId));
     }
 
     public List findByMobile(Object mobile) {
@@ -133,49 +122,4 @@ public class ResumeDAO extends BaseHibernateDAO {
         return findByProperty(WORK_EXPERIENCE, workExperience);
     }
 
-    public List findAll() {
-        log.debug("finding all Resume instances");
-        try {
-            String queryString = "from Resume";
-            Query queryObject = getSession().createQuery(queryString);
-            return queryObject.list();
-        } catch (RuntimeException re) {
-            log.error("find all failed", re);
-            throw re;
-        }
-    }
-
-    public Resume merge(Resume detachedInstance) {
-        log.debug("merging Resume instance");
-        try {
-            Resume result = (Resume) getSession().merge(detachedInstance);
-            log.debug("merge successful");
-            return result;
-        } catch (RuntimeException re) {
-            log.error("merge failed", re);
-            throw re;
-        }
-    }
-
-    public void attachDirty(Resume instance) {
-        log.debug("attaching dirty Resume instance");
-        try {
-            getSession().saveOrUpdate(instance);
-            log.debug("attach successful");
-        } catch (RuntimeException re) {
-            log.error("attach failed", re);
-            throw re;
-        }
-    }
-
-    public void attachClean(Resume instance) {
-        log.debug("attaching clean Resume instance");
-        try {
-            getSession().lock(instance, LockMode.NONE);
-            log.debug("attach successful");
-        } catch (RuntimeException re) {
-            log.error("attach failed", re);
-            throw re;
-        }
-    }
 }

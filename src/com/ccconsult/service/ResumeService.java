@@ -13,7 +13,7 @@ import com.ccconsult.pojo.Resume;
  */
 public interface ResumeService {
     /**
-    * ä¿?å­?ç®????
+    * ï¿½?ï¿½?ï¿½????
     * 
     * @param article
     * @return
@@ -21,7 +21,7 @@ public interface ResumeService {
     public CcResult saveResume(Resume resume);
 
     /**
-     * ä¿???¹ç?????
+     * ï¿½???ï¿½ï¿½?????
      * 
      * @param article
      * @return
@@ -29,11 +29,11 @@ public interface ResumeService {
     public CcResult updateResume(Resume resume);
 
     /**
-     * ??¹æ??åº??????????ç´¢ç?????
+     * ??ï¿½ï¿½??ï¿½??????????ç´¢ï¿½?????
      * 
      * @param jobSeekerId
      * @return
      */
-    public CcResult getResumeByJobSeekerId(String jobSeekerId);
+    public CcResult getResumeByConsultantId(final String consultantId);
 
 }

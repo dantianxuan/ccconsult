@@ -36,8 +36,6 @@
 	<bean id="serviceTemplate" class="com.ccconsult.base.ServiceTemplateImpl" />
 	<bean id="registService" class="com.ccconsult.service.RegistServiceImpl"></bean>
 	<bean id="articleService" class="com.ccconsult.service.ArticleServiceImpl"></bean>
-	 <bean id="resumeService" class="com.ccconsult.service.ResumeServiceImpl"></bean>
-
 
 	<bean id="mailSender" class="com.ccconsult.core.MailSenderImpl"></bean>
 	<bean id="javaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">

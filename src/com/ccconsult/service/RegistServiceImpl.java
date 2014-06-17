@@ -66,6 +66,7 @@ public class RegistServiceImpl extends AbstractService implements RegistService 
      * 
      */
 
+    @Override
     public CcResult regConsultant(final Consultant consultant) {
         return serviceTemplate.execute(CcResult.class, new BlankServiceCallBack() {
             @Override

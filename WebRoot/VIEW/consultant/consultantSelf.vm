@@ -1,3 +1,4 @@
+#set($consultant=$session.getAttribute("SESSION_CONSULTANT_OBJECT"))
 <script>
 	function deleteInterview(interviewId){
 		if(!confirm("请确认您要删除该记录")){
@@ -27,7 +28,7 @@
             </div>
             <div class="panel-body">
 					<button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-star"></span>  我的预约</button>
-					<button type="button" class="btn btn-warning"> <span class="glyphicon glyphicon-paperclip"></span>个人简历</button>
+					<button type="button" class="btn btn-warning" onclick="window.location.href='$link.contextPath/consultant/showResume.htm?consultantId=$consultant.id'"> <span class="glyphicon glyphicon-paperclip"></span>个人简历</button>
 					<button type="button" class="btn btn-warning"><span class="glyphicon glyphicon-user"></span>  个人信息</button>
 					<button type="button" class="btn btn-warning"> <span class="glyphicon glyphicon-envelope"></span>  站内信箱</button>
        	 	</div>
