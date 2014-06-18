@@ -73,6 +73,7 @@ public class ResumeController extends BaseController {
         });
         result.setSuccess(true);
         modelMap.put("result", result);
+        modelMap.put("resume", resume);
         return new ModelAndView("redirect:/consultant/consultantSelf.htm");
     }
 }
