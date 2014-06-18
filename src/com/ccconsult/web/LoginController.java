@@ -36,6 +36,7 @@ public class LoginController {
     public ModelAndView loginInterviewer(HttpServletRequest request, String account,
                                          String password, ModelMap modelMap) {
         CounselorVO counselorVO = counselorDAO.findByEmail(account);
+        modelMap.put("account", account);
         if (counselorVO == null) {
             modelMap.put("result", new CcResult("用户不存在"));
             return new ModelAndView("content/login");

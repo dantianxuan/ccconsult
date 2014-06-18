@@ -24,7 +24,7 @@
                        		<a href="#" class="alert-link">$result.message</a>
                    	 	</div>
                         #end
-	                    <form class="form-horizontal" action="$link.contextPath/regist/regInterviewerMail.htm" id="regEmailForm">
+	                    <form class="form-horizontal" action="$link.contextPath/regist/regCounselorMail.htm" id="regEmailForm">
 	                        <fieldset>
 	                            <div class="form-group">
 	                                <div class="col-lg-6">

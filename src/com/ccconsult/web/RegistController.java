@@ -82,7 +82,7 @@ public class RegistController {
      * 
      * @return
      */
-    @RequestMapping(value = "/regist/regInterviewer.htm", method = RequestMethod.GET)
+    @RequestMapping(value = "/regist/regCounselor.htm", method = RequestMethod.GET)
     public ModelAndView initRegInterviewer(String token, ModelMap modelMap) {
         CcResult result = registService.getRegMainInfo(token);
         if (!result.isSuccess()) {
@@ -166,43 +166,16 @@ public class RegistController {
      * @throws IOException 
      * @throws Exception
      */
-    @RequestMapping(value = "/regist/regJobseeker.htm", params = "action=regist")
-    public ModelAndView submitRegJobseeker(HttpServletRequest request, Consultant consultant,
-                                           String repasswd,
-                                           @RequestParam MultipartFile[] localPhoto,
-                                           ModelMap modelMap) {
+    @RequestMapping(value = "/regist/regConsultant.htm", params = "action=regist")
+    public ModelAndView submitRegConsultant(HttpServletRequest request, Consultant consultant,
+                                            String repasswd, ModelMap modelMap) {
         CcResult result = null;
-        String fileName = "";
-        try {
-            for (MultipartFile myfile : localPhoto) {
-                if (myfile.isEmpty()) {
-                    System.out.println("文件未上传");
-                } else {
-                    System.out.println("文件长度: " + myfile.getSize() + "文件类型: "
-                                       + myfile.getContentType() + "文件名称: " + myfile.getName()
-                                       + "文件原名: " + myfile.getOriginalFilename());
-                    String path = request.getSession().getServletContext().getRealPath("/")
-                                  + "UPLOAD";
-                    File parentFile = new File(path);
-                    if (!parentFile.exists()) {
-                        parentFile.mkdirs();
-                    }
-                    fileName = UUID.randomUUID().toString() + myfile.getOriginalFilename();
-                    FileCopyUtils.copy(myfile.getBytes(), new File(path, fileName));
-                }
-            }
-            consultant.setGmtCreate(new Date());
-            consultant.setPhoto(fileName);
-            consultant.setGmtModified(new Date());
-            if (StringUtils.equals(consultant.getPasswd(), repasswd)) {
-                result = registService.regConsultant(consultant);
-            } else {
-                result = new CcResult("重复密码输入不一致");
-            }
-
-        } catch (Exception e) {
-            LogUtil.error(logger, e, "文件上传失败");
-            result = new CcResult("文件上传失败");
+        consultant.setGmtCreate(new Date());
+        consultant.setGmtModified(new Date());
+        if (StringUtils.equals(consultant.getPasswd(), repasswd)) {
+            result = registService.regConsultant(consultant);
+        } else {
+            result = new CcResult("重复密码输入不一致");
         }
         if (result.isSuccess()) {
             request.getSession().setAttribute(CcConstrant.SESSION_CONSULTANT_OBJECT,

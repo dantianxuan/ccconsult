@@ -75,7 +75,6 @@ public class RegistServiceImpl extends AbstractService implements RegistService 
                 AssertUtil.notBlank(consultant.getEmail(), "用户邮箱不能为空");
                 AssertUtil.notBlank(consultant.getName(), "用户名称不能为空");
                 AssertUtil.notBlank(consultant.getMobile(), "请输入手机号码");
-
                 Consultant localJobseeker = consultantDAO.findByEmail(consultant.getEmail());
                 if (localJobseeker != null) {
                     throw new CcException("该用户名称已经被注册！");

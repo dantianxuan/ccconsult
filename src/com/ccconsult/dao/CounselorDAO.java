@@ -56,7 +56,7 @@ public class CounselorDAO extends BaseHibernateDAO<Counselor> {
     public CounselorVO findByEmail(Object email) {
         List<Counselor> counselors = findByProperty(EMAIL, email);
         Counselor counselor = getLimit(counselors);
-        if (counselors == null) {
+        if (counselor == null) {
             return null;
         }
         Company company = companyDAO.findById(counselor.getCompanyId());

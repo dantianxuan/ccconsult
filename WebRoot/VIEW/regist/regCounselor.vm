@@ -4,7 +4,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">面试官信息注册</div>
             <div class="panel-body">
-                <form class="form-horizontal" action="$link.contextPath/regist/regInterviewer.htm?action=regist"
+                <form class="form-horizontal" action="$link.contextPath/regist/regCounselor.htm?action=regist"
                  method="post" enctype="multipart/form-data">
         			#if($result && !$result.success)
                 		<div class="alert alert-dismissable alert-danger">
