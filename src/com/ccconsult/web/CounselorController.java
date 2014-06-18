@@ -105,14 +105,4 @@ public class CounselorController extends BaseController {
         return view;
     }
 
-    @RequestMapping(value = "/counselorInfo.htm", method = RequestMethod.GET)
-    public ModelAndView tocounselorInfo(HttpServletRequest request, String counselorId,
-                                        ModelMap modelMap) {
-        int interverId = NumberUtils.toInt(counselorId);
-        CounselorVO counselorVO = counselorDAO.findById(interverId);
-        modelMap.put("counselorVO", counselorVO);
-        ModelAndView view = new ModelAndView("content/counselorInfo");
-        return view;
-    }
-
 }

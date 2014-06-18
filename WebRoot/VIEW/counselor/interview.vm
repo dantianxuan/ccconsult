@@ -99,8 +99,8 @@
 							  	#elseif($interview.step==2) btn-primary   
 							  	#else  btn-default disabled #end">进行面试咨询</button>
 							  <span class="glyphicon glyphicon-arrow-right"></span>
-							  <button type="button" class="btn disabled
-							  	#if($interview.step>3)  btn-success disabled  
+							  <button type="button" class="btn 
+							  	#if($interview.step>3)  btn-success   
 							  	#elseif($interview.step==3) btn-primary   
 							  	#else  btn-default disabled #end">完成评价</button>
 							  <span class="glyphicon glyphicon-arrow-right"></span>
