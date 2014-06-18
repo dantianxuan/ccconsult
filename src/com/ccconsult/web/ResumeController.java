@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ccconsult.base.AssertUtil;
 import com.ccconsult.base.BlankServiceCallBack;
 import com.ccconsult.base.CcResult;
 import com.ccconsult.dao.ResumeDAO;
@@ -58,6 +59,15 @@ public class ResumeController extends BaseController {
                                     ModelMap modelMap) {
 
         CcResult result = serviceTemplate.execute(CcResult.class, new BlankServiceCallBack() {
+
+            @Override
+            public void check() {
+                AssertUtil.notBlank(resume.getRealName(), "简历的真实姓名不能为空！");
+                AssertUtil.notBlank(resume.getSexy(), "性别不能为空！");
+                AssertUtil.notBlank(resume.getSchool(), "毕业学校不能为空！");
+                AssertUtil.notBlank(resume.getProfession(), "专业不能为空！");
+            }
+
             @Override
             public CcResult executeService() {
                 if (resume.getId() != null && resume.getId() > 0) {
@@ -71,9 +81,12 @@ public class ResumeController extends BaseController {
                 return new CcResult(resume);
             }
         });
-        result.setSuccess(true);
+        if(result.isSuccess()){
+            return new ModelAndView("redirect:/consultant/consultantSelf.htm");
+        }
         modelMap.put("result", result);
         modelMap.put("resume", resume);
-        return new ModelAndView("redirect:/consultant/consultantSelf.htm");
+        return  new ModelAndView("consultant/editResume");
+        
     }
 }
