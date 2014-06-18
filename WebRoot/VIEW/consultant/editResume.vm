@@ -41,8 +41,8 @@
                            $result.message
                         </div>
                     #end
-                    <input type="hidden" name="consultantId" value="$consultant.id">
-                    <input type="hidden" name="id" value="$resume.id">
+                    <input type="hidden" name="consultantId" value="$!consultant.id">
+                    <input type="hidden" name="id" value="$!resume.id">
                            <div class="form-group">
                             <label  class="col-lg-2 control-label">真实姓名</label>
                             <div class="col-lg-8">
