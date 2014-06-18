@@ -34,13 +34,12 @@ public class ResumeController extends BaseController {
 
     @RequestMapping(value = "consultant/showResume.htm", method = RequestMethod.GET)
     public ModelAndView showResume(HttpServletRequest request, ModelMap modelMap) {
-        String consultantId = request.getParameter("consultantId");
 
-        if (!StringUtils.isBlank(consultantId)) {
-            modelMap.put("resume", resumeDAO.findByConsultantId(NumberUtils.toInt(consultantId)));
+        Consultant consultant = getConsultantInSession(request.getSession());
+        if (consultant != null) {
+            modelMap.put("resume", resumeDAO.findByConsultantId(consultant.getId()));
         }
         ModelAndView view = new ModelAndView("consultant/showResume");
-
         return view;
     }
 
@@ -72,7 +71,7 @@ public class ResumeController extends BaseController {
             public CcResult executeService() {
                 if (resume.getId() != null && resume.getId() > 0) {
                     resume.setGmtModified(new Date());
-                    resumeDAO.update(resume);
+                    resumeDAO.merge(resume);
                 } else {
                     resume.setGmtCreate(new Date());
                     resume.setGmtModified(new Date());
@@ -81,12 +80,12 @@ public class ResumeController extends BaseController {
                 return new CcResult(resume);
             }
         });
-        if(result.isSuccess()){
-            return new ModelAndView("redirect:/consultant/consultantSelf.htm");
+        if (result.isSuccess()) {
+            return new ModelAndView("redirect:/consultant/showResume.htm");
         }
         modelMap.put("result", result);
         modelMap.put("resume", resume);
-        return  new ModelAndView("consultant/editResume");
-        
+        return new ModelAndView("consultant/editResume");
+
     }
 }

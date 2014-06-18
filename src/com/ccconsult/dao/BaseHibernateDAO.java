@@ -9,6 +9,7 @@ import org.hibernate.Session;
 import org.springframework.util.CollectionUtils;
 
 import com.ccconsult.base.PageList;
+import com.ccconsult.pojo.Prise;
 
 /**
  * Data access object (DAO) for domain model
@@ -94,6 +95,11 @@ public class BaseHibernateDAO<T> implements IBaseHibernateDAO {
             throw re;
         }
 
+    }
+
+    public T merge(T detachedInstance) {
+        T t = (T) getSession().merge(detachedInstance);
+        return t;
     }
 
     public void save(T transientInstance) {

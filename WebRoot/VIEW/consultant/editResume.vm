@@ -110,7 +110,7 @@
 	    <script type="text/javascript">
 	   		var um = UM.getEditor('myEditor');
 	    </script>
-	    <input type="hidden" name="resume" value="$!resume.resume" id="resumeHidden">             
+	    <input type="hidden" name="resume" id="resumeHidden">             
 	</div>            
 	<div class="col-lg-12">
 			<br/>
