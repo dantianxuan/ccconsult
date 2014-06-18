@@ -38,10 +38,16 @@
             <column name="mobile" length="45" />
         </property>
         <property name="email" type="string">
-            <column name="email" length="225" />
+            <column name="email" length="45" />
         </property>
         <property name="workExperience" type="string">
             <column name="work_experience" length="45" />
+        </property>
+        <property name="school" type="string">
+            <column name="school" length="45" />
+        </property>
+        <property name="profession" type="string">
+            <column name="profession" length="45" />
         </property>
     </class>
 </hibernate-mapping>

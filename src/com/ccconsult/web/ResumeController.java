@@ -60,17 +60,8 @@ public class ResumeController extends BaseController {
         CcResult result = serviceTemplate.execute(CcResult.class, new BlankServiceCallBack() {
             @Override
             public CcResult executeService() {
-                //设置毕业时间
-                String startWorkDateYear = request.getParameter("startWorkDateYear");
-                String startWorkDateMonth = request.getParameter("startWorkDateMonth");
-                String graduation = startWorkDateYear + "-" + startWorkDateMonth;
-
-                //设置出生时间
-                String startBirthDateYear = request.getParameter("startWorkDateYear");
-                String startBirthDateMonth = request.getParameter("startWorkDateMonth");
-                String birth = startBirthDateYear + "-" + startBirthDateMonth;
-
                 if (resume.getId() != null && resume.getId() > 0) {
+                    resume.setGmtModified(new Date());
                     resumeDAO.update(resume);
                 } else {
                     resume.setGmtCreate(new Date());
