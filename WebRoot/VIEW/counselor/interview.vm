@@ -87,22 +87,22 @@
 		  <div class="panel-body">
                     <div class="col-lg-12" >
 						  <p>
-							  <button type="button" class="btn   btn-success disabled ">创建咨询订单</button>
+							  <button type="button" class="btn   btn-success disabled ">创建咨询请求</button>
 							  <span class="glyphicon glyphicon-arrow-right"></span>
-							  <button type="button" class="btn disabled 
+							  <button type="button" class="btn  
 							  	#if($interview.step>1)  btn-success disabled  
 							  	#elseif($interview.step==1) btn-primary 
-							  	#else  btn-default disabled #end">咨询师确认信息</button>
+							  	#else  btn-default  #end">确认咨询时间</button>
 							  <span class="glyphicon glyphicon-arrow-right"></span>
 							  <button type="button" class="btn disabled
-							  	#if($interview.step>2)  btn-success disabled  
+							  	#if($interview.step>2)  btn-success   
 							  	#elseif($interview.step==2) btn-primary   
-							  	#else  btn-default disabled #end">进行面试咨询</button>
+							  	#else  btn-default  #end" data-toggle="modal" data-target="#confirmInterview">咨询中</button>
 							  <span class="glyphicon glyphicon-arrow-right"></span>
 							  <button type="button" class="btn 
 							  	#if($interview.step>3)  btn-success   
-							  	#elseif($interview.step==3) btn-primary   
-							  	#else  btn-default disabled #end">完成评价</button>
+							  	#elseif($interview.step==3 || $interview.step==2) btn-primary   
+							  	#else  btn-default disabled #end" onclick="$('#appriseRow').toggle(200)">完成咨询并评价</button>
 							  <span class="glyphicon glyphicon-arrow-right"></span>
 							  <button type="button" class="btn btn-default disabled">
 							   <span class="glyphicon glyphicon-ok"></span>
@@ -114,6 +114,42 @@
   		</div>
 	</div>
 </div>
+
+<div class="row" id="appriseRow" style="display:none">
+	<div class="col-lg-12">
+		<div class="panel panel-default">
+		  <div class="panel-heading"><span class="glyphicon glyphicon-pushpin"></span>咨询者信息</div>
+		  <div class="panel-body">
+		  		<div class="col-lg-12">
+                  	<div class="progress" style="margin-bottom:8px;">
+					  <div class="progress-bar" style="width: 50%;"></div>
+					</div>
+					 <p>请对您的咨询者进行评分，客观公正的评分对您,点击
+					 <span style="font-size:30px;" class="glyphicon glyphicon-circle-arrow-left"></span>和
+					 <span  style="font-size:30px;" class="glyphicon glyphicon-circle-arrow-right"></span>调整评分
+					 </p>
+                </div>	
+		  		<div class="col-lg-12" style="border-top:solid 1px #ddd">
+		  		<br/>
+                <script type="text/plain" id="commentEditor" style="height:200px;wdith:100%;clear:both"></script>
+                <script type="text/javascript">
+				    $(function(){
+				        window.um = UM.getEditor('commentEditor', {
+				            /* 传入配置参数,可配参数列表看umeditor.config.js */
+				            toolbar: ['undo redo | bold italic underline']
+				        });
+				    });
+                </script> 
+                </div>
+				<div class="col-lg-12" style="border-top:solid 1px #ddd;">
+		  		<br/>
+		  			请仔细完成评价，评价内容不能少于200字符  <button type="button" class="btn btn-danger" style="float:right">提交评价</button>
+                </div>                
+		  </div>
+  		</div>
+	</div>
+</div>
+
 
 <div class="row">
 	<div class="col-lg-12">
@@ -131,7 +167,7 @@
                     </div>
                 </div>	
 		  		<div class="col-lg-12" style="border-top:solid 1px #ddd">
-						<p>为了让您更了解您的咨询者，您可以查看他的<a href="#"><strong>个人简历</strong></a>或者留言进行了解。 </p>
+						<p>为了让您更了解您的咨询者，您可以查看他的<a  target="_blank" href="$link.contextPath/counselor/consultantResume.htm?consultantId=$!consultant.id"><strong style="font-size:22px;">个人简历</strong></a>或者留言进行了解。 </p>
                 </div>	                
 		  </div>
   		</div>
@@ -214,8 +250,52 @@
 		</div>
 	</div>
 </div>
+
+
+<div class="modal" id="confirmInterview">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">请确认您的面试并仔细阅读下列条款</h4>
+      </div>
+      <div class="modal-body">
+      	<ol>
+		  <li>请在规定的时间完成您的咨询，如果您逾期不能完成咨询，会取消您的咨询和留下记录</li>
+		  <li>请遵守相关规定，不要泄露任何可能存在法律和保密纠纷的信息给咨询者</li>
+		  <li>如果您和您的咨询者在平台上产生的任何纠纷，本平台不承担法律责任</li>
+		  <li>您的咨询费用必须在完成咨询后且咨询者未提起申述的情况下完成</li>
+		</ol>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">不同意</button>
+        <button type="button" class="btn btn-primary">同意上述事项</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <script>
-	
+
+	function confirmRules(){
+		jQuery.ajax({
+             type: "POST",
+             url: "$link.contextPath/counselor/confirmRules.json",
+             data: {
+             		'interviewId':$('#interviewIdHidden').val()
+             		},
+             dataType: "json",
+             success: function(data){
+             	if(data.result.success==true){
+             		window.location.href=window.location.href;
+             	}else{
+             		alert("确认失败 "+data.result.message);
+             	}
+              }
+         });
+	}
+		
 	function scheduleInterview(){
 		jQuery.ajax({
              type: "POST",

@@ -4,6 +4,7 @@
 package com.ccconsult.web;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import com.ccconsult.base.CcResult;
 import com.ccconsult.dao.ConsultantDAO;
 import com.ccconsult.dao.CounselorDAO;
 import com.ccconsult.pojo.Consultant;
+import com.ccconsult.util.StringUtil;
 import com.ccconsult.view.CounselorVO;
 
 /**
@@ -34,7 +36,8 @@ public class LoginController {
 
     @RequestMapping(value = "/login.htm", params = "action=COUNSELOR", method = RequestMethod.POST)
     public ModelAndView loginInterviewer(HttpServletRequest request, String account,
-                                         String password, ModelMap modelMap) {
+                                         String password, HttpServletResponse response,
+                                         ModelMap modelMap) {
         CounselorVO counselorVO = counselorDAO.findByEmail(account);
         modelMap.put("account", account);
         if (counselorVO == null) {
@@ -46,7 +49,13 @@ public class LoginController {
             return new ModelAndView("content/login");
         }
         request.getSession().setAttribute(CcConstrant.SESSION_COUNSELOR_OBJECT, counselorVO);
+        String redirectUrl = (String) request.getSession().getAttribute("redirectUrl");
+        if (!StringUtil.isBlank(redirectUrl)) {
+            request.getSession().removeAttribute("redirectUrl");
+            return new ModelAndView("redirect:" + redirectUrl);
+        }
         return new ModelAndView("redirect:/counselor/counselorSelf.htm");
+
     }
 
     @RequestMapping(value = "/login.htm", params = "action=CONSULTANT", method = RequestMethod.POST)
@@ -63,6 +72,11 @@ public class LoginController {
             return new ModelAndView("content/login");
         }
         request.getSession().setAttribute(CcConstrant.SESSION_CONSULTANT_OBJECT, consultant);
+        String redirectUrl = (String) request.getSession().getAttribute("redirectUrl");
+        if (!StringUtil.isBlank(redirectUrl)) {
+            request.getSession().removeAttribute("redirectUrl");
+            return new ModelAndView("redirect:" + redirectUrl);
+        }
         return new ModelAndView("redirect:/consultant/consultantSelf.htm");
     }
 

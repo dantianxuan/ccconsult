@@ -27,7 +27,7 @@ import com.ccconsult.pojo.Company;
 @Controller
 public class IndexController {
 
-    private final static int TOPX = 16;
+    private final static int TOPX = 10;
 
     @Autowired
     private ArticleDAO       articleDAO;

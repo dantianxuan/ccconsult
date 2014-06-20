@@ -47,7 +47,7 @@
 										  <span class="glyphicon glyphicon-arrow-right"></span>
 										  <button type="button" 
 										  onclick="window.location.href='$link.contextPath/counselor/interview.htm?interviewId=$interviewVO.interview.id'"
-										  class="btn 
+										  class="btn disabled
 										  	#if($interview.step>1)  btn-success   
 										  	#elseif($interview.step==1) btn-primary   
 										  	#else  btn-default disabled #end">等待预约</button>

@@ -41,17 +41,13 @@
 	       ================================================== -->
 		<div class="col-lg-6">
 			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h5 class="panel-title">
-						动态信息<a href="$link.contextPath/articles.htm"><span class="badge" style="float: right" >更多信息</span></a>
-					</h5>
-				</div>
-				<div class="panel-body" style="font-size: 14px;">
-					<p style="margin: 0px;font-size:12px;">
+				<div class="panel-body" style="font-size: 13px;">
+					<p style="margin: 0px;">
 						#foreach($article in $articles)
-							<a href="$link.contextPath/article.htm?articleId=$article.id">$article.title</a><br/>
+							<a style="color:#000" href="$link.contextPath/article.htm?articleId=$article.id">$article.title</a><br/>
 						#end
 					</p>
+					<a href="$link.contextPath/articles.htm" style="float:right">更多信息</a>
 				</div>
 			</div>
 	
@@ -60,7 +56,7 @@
 <div class="row">
 	<div class="col-lg-12">
 		<div class="panel panel-default">
-			  <div class="panel-heading"><strong>热门公司</strong></a></div>
+			  <div class="panel-heading"><strong><span class="glyphicon glyphicon-tags"></span>  面试咨询</strong></div>
 			  <div class="panel-body">		  
 		 		#foreach($company in $companys)
 					<div class="col-lg-4">
@@ -81,3 +77,31 @@
 		</div>
 	</div>
 </div>
+
+<div class="row">
+	<div class="col-lg-12">
+		<div class="panel panel-default">
+			  <div class="panel-heading"><strong><span class="glyphicon glyphicon-tags"></span>  家装咨询</strong></div>
+			  <div class="panel-body">		  
+		 		#foreach($company in $companys)
+					<div class="col-lg-4">
+						<div class="well well-sm" style="height:80px;">
+						<a href="$link.contextPath/company.htm?companyId=$company.id">
+								<img src="STATIC/image/alipay.jpg"
+								style="width:60px;height: 60px; float:left" class="img-rounded">
+								<p style="padding-left: 72px;">
+									<small>$company.name</small><br /> 
+									<small>面试官：12人</small><br /> 
+									<small>面试人数：24人</small>
+								</p>
+						</a>			
+						</div>
+					</div>
+				#end
+			  </div>
+		</div>
+	</div>
+</div>
+
+
+

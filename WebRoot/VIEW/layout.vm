@@ -4,7 +4,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
-    <title>#if($title) $title #else 金牌面试官 #end</title>
+    <title>#if($title) $title #else 真咨网 #end</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="$link.contextPath/STATIC/css/bootstrap.css" rel="stylesheet">
     <link rel="stylesheet" href="$link.contextPath/STATIC/css/select2.css" rel="stylesheet">

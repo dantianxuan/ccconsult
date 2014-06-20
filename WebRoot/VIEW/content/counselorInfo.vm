@@ -1,3 +1,18 @@
+ <div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-body">
+					<button type="button" class="btn btn-primary" 
+						onclick="window.location.href='$link.contextPath/consultant/createInterview.htm?counselorId=$!counselorVO.counselor.id'"><span class="glyphicon glyphicon-star">
+						</span>  面试咨询
+					</button>
+					<button type="button" class="btn btn-warning"><span class="glyphicon glyphicon-send"></span>  知识咨询</button>
+					<button type="button" class="btn btn-warning"> <span class="glyphicon glyphicon-comment"></span>发送信息</button>
+       	 	</div>
+    	</div>
+    </div>
+</div> 
+
 <div class="row">
     <div class="col-lg-12">
         <div class="panel panel-default">
@@ -27,21 +42,7 @@
         </div>
     </div>
 </div>
- <div class="row">
-    <div class="col-lg-12">
-        <div class="panel panel-default">
-            <div class="panel-body">
-					<button type="button" class="btn btn-primary" 
-						onclick="window.location.href='$link.contextPath/consultant/createInterview.htm?counselorId=$!counselorVO.counselor.id'"><span class="glyphicon glyphicon-star">
-						</span>  咨询预约
-					</button>
-					<button type="button" class="btn btn-warning"><span class="glyphicon glyphicon-send"></span>  毛遂自荐</button>
-					<button type="button" class="btn btn-warning"><span class="glyphicon glyphicon-star"></span>  优选人才</button>
-					<button type="button" class="btn btn-warning"> <span class="glyphicon glyphicon-paperclip"></span>发送站内信</button>
-       	 	</div>
-    	</div>
-    </div>
-</div>   
+  
 <div class="row">
     <div class="col-lg-12">
         <div class="panel panel-default">
@@ -66,17 +67,6 @@
 	                        </div>
                    		</div>
                     </div>                                      
-                    <div class="row">
-                        <ul class="pagination pagination-sm" style="float: right">
-                            <li class="disabled"><a href="#">«</a></li>
-                            <li class="active"><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">5</a></li>
-                            <li><a href="#">»</a></li>
-                        </ul>
-                    </div>
             	#else
             		<p class="text-primary">对不起，没有记录.</p>
             	#end

@@ -84,7 +84,7 @@ public class CounselorController extends BaseController {
                 AssertUtil.state(DateUtil.getDiffDays(end, begin) <= 3, "最长时间不能超过3天");
                 interview.setGmtShceduleBegin(begin);
                 interview.setGmtScheduleEnd(end);
-                interview.setStep(InterviewStepEnum.CONFIRM.getValue());
+                interview.setStep(InterviewStepEnum.ON_SCHEDULE.getValue());
                 interviewDAO.update(interview);
                 return new CcResult(interview);
             }
@@ -96,6 +96,16 @@ public class CounselorController extends BaseController {
     @RequestMapping(value = "counselor/personal.htm", method = RequestMethod.GET)
     public ModelAndView counselorPage(HttpServletRequest request, ModelMap modelMap) {
         ModelAndView view = new ModelAndView("counselor/personal");
+        return view;
+    }
+
+    @RequestMapping(value = "counselorInfo.htm", method = RequestMethod.GET)
+    public ModelAndView counselorInfo(HttpServletRequest request, String counselorId,
+                                      ModelMap modelMap) {
+        ModelAndView view = new ModelAndView("content/counselorInfo");
+        int counsId = NumberUtils.toInt(counselorId);
+        CounselorVO counselorVO = counselorDAO.findById(counsId);
+        modelMap.put("counselorVO", counselorVO);
         return view;
     }
 

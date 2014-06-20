@@ -5,6 +5,7 @@ package com.ccconsult.filter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -25,6 +26,15 @@ public class ConsultantAuthorityInterceptor extends HandlerInterceptorAdapter {
         Object consultant = request.getSession()
             .getAttribute(CcConstrant.SESSION_CONSULTANT_OBJECT);
         if (consultant == null) {
+            HttpSession session = request.getSession();
+            if (null != request.getQueryString()) {
+                session
+                    .setAttribute("redirectUrl",
+                        request.getRequestURL().append("?").append(request.getQueryString())
+                            .toString());
+            } else {
+                session.setAttribute("redirectUrl", request.getRequestURL().toString());
+            }
             LogUtil.info(log, "无权限的请求", request.getLocalAddr());
             response.sendRedirect("/ccconsult/login.htm");
             return false;

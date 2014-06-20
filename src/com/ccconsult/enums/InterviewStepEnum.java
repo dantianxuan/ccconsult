@@ -4,7 +4,6 @@
  */
 package com.ccconsult.enums;
 
-
 /**
  * 订单状态枚举
  * 
@@ -16,8 +15,17 @@ public enum InterviewStepEnum {
     /** 创建状态 */
     CREATE(1, "CREATE", "创建状态"),
 
-    /** 已确认 */
-    CONFIRM(2, "CONFIRM", "已确认");
+    /** 确认预约 */
+    ON_SCHEDULE(2, "ON_SCHEDULE", "确认预约"),
+
+    /** 咨询中 */
+    ON_CONSULT(3, "ON_CONSULT", "咨询中"),
+
+    /** 双方评价 */
+    APPRAISE(4, "APPRAISE", "双方评价"),
+
+    /** 确认完成 */
+    FIHSHED(5, "FIHSHED", "确认完成");
 
     /** 枚举码 */
     private int    value;
