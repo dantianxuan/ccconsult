@@ -20,8 +20,10 @@ import com.ccconsult.pojo.Consultant;
 import com.ccconsult.pojo.Resume;
 
 /**
- * @author jinsaichen
+ * 简历操作类
  * 
+ * @author jinsaichen
+ * @version $Id: ResumeController.java, v 0.1 2014-6-20 下午5:19:59 jinsaichen Exp $
  */
 @Controller
 public class ResumeController extends BaseController {
@@ -67,8 +69,15 @@ public class ResumeController extends BaseController {
             @Override
             public CcResult executeService() {
                 if (resume.getId() != null && resume.getId() > 0) {
-                    resume.setGmtModified(new Date());
-                    resumeDAO.merge(resume);
+                    Resume originResume = resumeDAO.findById(resume.getId());
+                    originResume.setRealName(resume.getRealName());
+                    originResume.setSchool(resume.getSchool());
+                    originResume.setProfession(resume.getProfession());
+                    originResume.setResume(resume.getResume());
+                    originResume.setSexy(resume.getSexy());
+                    originResume.setWorkExperience(resume.getWorkExperience());
+                    originResume.setGmtModified(new Date());
+                    resumeDAO.merge(originResume);
                 } else {
                     resume.setGmtCreate(new Date());
                     resume.setGmtModified(new Date());

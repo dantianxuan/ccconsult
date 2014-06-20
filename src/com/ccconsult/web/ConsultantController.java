@@ -90,9 +90,14 @@ public class ConsultantController extends BaseController {
 
             @Override
             public CcResult executeService() {
+                
                 if (consultant.getId() != null && consultant.getId() > 0) {
-                    consultant.setGmtModified(new Date());
-                    consultantDAO.merge(consultant);
+                    Consultant originConsultant =   consultantDAO.findById(consultant.getId());
+                    originConsultant.setName(consultant.getName());
+                    originConsultant.setMobile(consultant.getMobile());
+                    originConsultant.setEmail(consultant.getEmail());
+                    originConsultant.setGmtModified(new Date());
+                    consultantDAO.merge(originConsultant);
                 }
                 return new CcResult(consultant);
             }
