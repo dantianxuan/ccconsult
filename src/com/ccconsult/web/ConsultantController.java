@@ -3,6 +3,7 @@
  */
 package com.ccconsult.web;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ccconsult.base.AssertUtil;
 import com.ccconsult.base.BlankServiceCallBack;
 import com.ccconsult.base.CcResult;
 import com.ccconsult.dao.ConsultantDAO;
@@ -21,6 +23,7 @@ import com.ccconsult.dao.InterviewDAO;
 import com.ccconsult.enums.DataStateEnum;
 import com.ccconsult.enums.InterviewStepEnum;
 import com.ccconsult.pojo.Consultant;
+import com.ccconsult.pojo.Resume;
 import com.ccconsult.view.InterviewVO;
 
 /**
@@ -31,8 +34,8 @@ import com.ccconsult.view.InterviewVO;
 public class ConsultantController extends BaseController {
 
     @Autowired
-    private InterviewDAO interviewDAO;
-    
+    private InterviewDAO  interviewDAO;
+
     @Autowired
     private ConsultantDAO consultantDAO;
 
@@ -57,9 +60,48 @@ public class ConsultantController extends BaseController {
 
         Consultant consultant = getConsultantInSession(request.getSession());
         if (consultant != null) {
-            modelMap.put("consultant", consultantDAO.findById(consultant.getId())); 
+            modelMap.put("consultant", consultantDAO.findById(consultant.getId()));
         }
         ModelAndView view = new ModelAndView("consultant/consultantInformation");
         return view;
+    }
+
+    @RequestMapping(value = "consultant/editInformation.htm", method = RequestMethod.GET)
+    public ModelAndView toInterview(HttpServletRequest request, ModelMap modelMap) {
+
+        Consultant consultant = getConsultantInSession(request.getSession());
+        if (consultant != null) {
+            modelMap.put("consultant", consultantDAO.findById(consultant.getId()));
+        }
+        ModelAndView view = new ModelAndView("consultant/editInformation");
+        return view;
+    }
+    @RequestMapping(value = "consultant/editInformation.htm",  params = "action=save", method = RequestMethod.POST)
+    public ModelAndView editInformation(HttpServletRequest request, ModelMap modelMap,
+                                        final Consultant consultant) {
+        CcResult result = serviceTemplate.execute(CcResult.class, new BlankServiceCallBack() {
+
+            @Override
+            public void check() {
+                AssertUtil.notBlank(consultant.getName(), "姓名不能为空！");
+                AssertUtil.notBlank(consultant.getMobile(), "联系方式不能为空！");
+                AssertUtil.notBlank(consultant.getEmail(), "邮箱号码不能为空！");
+            }
+
+            @Override
+            public CcResult executeService() {
+                if (consultant.getId() != null && consultant.getId() > 0) {
+                    consultant.setGmtModified(new Date());
+                    consultantDAO.merge(consultant);
+                }
+                return new CcResult(consultant);
+            }
+        });
+        if (result.isSuccess()) {
+            return new ModelAndView("redirect:/consultant/consultantInformation.htm");
+        }
+        modelMap.put("result", result);
+        modelMap.put("consultant", consultant);
+        return new ModelAndView("consultant/editInformation");
     }
 }
