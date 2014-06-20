@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ccconsult.base.BlankServiceCallBack;
 import com.ccconsult.base.CcResult;
+import com.ccconsult.dao.ConsultantDAO;
 import com.ccconsult.dao.InterviewDAO;
 import com.ccconsult.enums.DataStateEnum;
 import com.ccconsult.enums.InterviewStepEnum;
@@ -31,6 +32,9 @@ public class ConsultantController extends BaseController {
 
     @Autowired
     private InterviewDAO interviewDAO;
+    
+    @Autowired
+    private ConsultantDAO consultantDAO;
 
     @RequestMapping(value = "/consultant/consultantSelf.htm", method = RequestMethod.GET)
     public ModelAndView handleRequest(HttpServletRequest request, ModelMap modelMap) {
@@ -48,4 +52,14 @@ public class ConsultantController extends BaseController {
         return view;
     }
 
+    @RequestMapping(value = "consultant/consultantInformation.htm", method = RequestMethod.GET)
+    public ModelAndView showInformation(HttpServletRequest request, ModelMap modelMap) {
+
+        Consultant consultant = getConsultantInSession(request.getSession());
+        if (consultant != null) {
+            modelMap.put("consultant", consultantDAO.findById(consultant.getId())); 
+        }
+        ModelAndView view = new ModelAndView("consultant/consultantInformation");
+        return view;
+    }
 }
