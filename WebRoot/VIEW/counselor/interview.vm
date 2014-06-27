@@ -79,7 +79,30 @@
 			</div>
 	</div>
 </div>
-#end		
+#end	
+<div class="row">
+	<div class="col-lg-12">
+		<div class="panel panel-default">
+		  <div class="panel-heading"><span class="glyphicon glyphicon-pushpin"></span>咨询者信息</div>
+		  <div class="panel-body">
+		  		<div class="col-lg-12">
+                  	<div class="col-lg-1">
+                        <img src="$link.contextPath/UPLOAD/$!counselorVO.counselor.photo" class="img-rounded" style="width: 82px;height: 82px;">
+                    </div>
+                    <div class="col-lg-11">
+	                    <p class="col-lg-12"><span class=" text-right col-lg-2">名称:</span>$!consultant.name</p>
+	                    <p class="col-lg-12"><span class=" text-right col-lg-2">邮箱:</span>$!consultant.email</p>
+	                    <p class="col-lg-12"><span class=" text-right col-lg-2">手机号码:</span>$!consultant.mobile</p>
+                    </div>
+                </div>	
+		  		<div class="col-lg-12" style="border-top:solid 1px #ddd">
+						<p>为了让您更了解您的咨询者，您可以查看他的<a  target="_blank" href="$link.contextPath/counselor/consultantResume.htm?consultantId=$!consultant.id"><strong style="font-size:22px;">个人简历</strong></a>或者留言进行了解。 </p>
+                </div>	                
+		  </div>
+  		</div>
+	</div>
+</div>	
+
 <div class="row">
 	<div class="col-lg-12">
 		<div class="panel panel-default">
@@ -102,7 +125,7 @@
 							  <button type="button" class="btn 
 							  	#if($interview.step>3)  btn-success   
 							  	#elseif($interview.step==3 || $interview.step==2) btn-primary   
-							  	#else  btn-default disabled #end" onclick="$('#appriseRow').toggle(200)">完成咨询并评价</button>
+							  	#else  btn-default disabled #end" data-toggle="modal" data-target="#appriseInterview">完成咨询并评价</button>
 							  <span class="glyphicon glyphicon-arrow-right"></span>
 							  <button type="button" class="btn btn-default disabled">
 							   <span class="glyphicon glyphicon-ok"></span>
@@ -110,65 +133,6 @@
 						  </p>
 						  <p class="text-primary">红色表示当前所状态,用户预约在付款后会创建一笔担保交易，只有在完成咨询和确认后，才能最终完成交易.</p>
                     </div>
-		  </div>
-  		</div>
-	</div>
-</div>
-
-<div class="row" id="appriseRow" style="display:none">
-	<div class="col-lg-12">
-		<div class="panel panel-default">
-		  <div class="panel-heading"><span class="glyphicon glyphicon-pushpin"></span>咨询者信息</div>
-		  <div class="panel-body">
-		  		<div class="col-lg-12">
-                  	<div class="progress" style="margin-bottom:8px;">
-					  <div class="progress-bar" style="width: 50%;"></div>
-					</div>
-					 <p>请对您的咨询者进行评分，客观公正的评分对您,点击
-					 <span style="font-size:30px;" class="glyphicon glyphicon-circle-arrow-left"></span>和
-					 <span  style="font-size:30px;" class="glyphicon glyphicon-circle-arrow-right"></span>调整评分
-					 </p>
-                </div>	
-		  		<div class="col-lg-12" style="border-top:solid 1px #ddd">
-		  		<br/>
-                <script type="text/plain" id="commentEditor" style="height:200px;wdith:100%;clear:both"></script>
-                <script type="text/javascript">
-				    $(function(){
-				        window.um = UM.getEditor('commentEditor', {
-				            /* 传入配置参数,可配参数列表看umeditor.config.js */
-				            toolbar: ['undo redo | bold italic underline']
-				        });
-				    });
-                </script> 
-                </div>
-				<div class="col-lg-12" style="border-top:solid 1px #ddd;">
-		  		<br/>
-		  			请仔细完成评价，评价内容不能少于200字符  <button type="button" class="btn btn-danger" style="float:right">提交评价</button>
-                </div>                
-		  </div>
-  		</div>
-	</div>
-</div>
-
-
-<div class="row">
-	<div class="col-lg-12">
-		<div class="panel panel-default">
-		  <div class="panel-heading"><span class="glyphicon glyphicon-pushpin"></span>咨询者信息</div>
-		  <div class="panel-body">
-		  		<div class="col-lg-12">
-                  	<div class="col-lg-1">
-                        <img src="$link.contextPath/UPLOAD/$!counselorVO.counselor.photo" class="img-rounded" style="width: 82px;height: 82px;">
-                    </div>
-                    <div class="col-lg-11">
-	                    <p class="col-lg-12"><span class=" text-right col-lg-2">名称:</span>$!consultant.name</p>
-	                    <p class="col-lg-12"><span class=" text-right col-lg-2">邮箱:</span>$!consultant.email</p>
-	                    <p class="col-lg-12"><span class=" text-right col-lg-2">手机号码:</span>$!consultant.mobile</p>
-                    </div>
-                </div>	
-		  		<div class="col-lg-12" style="border-top:solid 1px #ddd">
-						<p>为了让您更了解您的咨询者，您可以查看他的<a  target="_blank" href="$link.contextPath/counselor/consultantResume.htm?consultantId=$!consultant.id"><strong style="font-size:22px;">个人简历</strong></a>或者留言进行了解。 </p>
-                </div>	                
 		  </div>
   		</div>
 	</div>
@@ -251,6 +215,38 @@
 	</div>
 </div>
 
+<div class="modal" id="appriseInterview">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">完成评价</h4>
+      </div>
+      <div class="modal-body">
+          	<div class="progress" style="margin-bottom:8px;">
+				  <div class="progress-bar" style="width: 50%;"></div>
+				</div>
+				 <p>请对您的咨询者进行评分，客观公正的评分对您,点击
+				 <span style="font-size:30px;" class="glyphicon glyphicon-circle-arrow-left"></span>和
+				 <span  style="font-size:30px;" class="glyphicon glyphicon-circle-arrow-right"></span>调整评分
+				 </p>
+            </div>	
+            <script type="text/plain" id="commentEditor" style="height:200px;"></script>
+            <script type="text/javascript">
+			    $(function(){
+			        window.um = UM.getEditor('commentEditor', {
+			            /* 传入配置参数,可配参数列表看umeditor.config.js */
+			            toolbar: ['undo redo | bold italic underline']
+			        });
+			    });
+            </script> 
+      </div>
+      <div class="modal-footer">
+			请仔细完成评价，评价内容不能少于200字符  <button type="button" class="btn btn-danger" style="float:right">提交评价</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div class="modal" id="confirmInterview">
   <div class="modal-dialog">
@@ -275,9 +271,7 @@
   </div>
 </div>
 
-
 <script>
-
 	function confirmRules(){
 		jQuery.ajax({
              type: "POST",

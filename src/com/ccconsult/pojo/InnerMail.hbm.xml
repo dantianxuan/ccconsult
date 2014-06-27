@@ -8,7 +8,7 @@
     <class name="com.ccconsult.pojo.InnerMail" table="inner_mail" catalog="ccconsult">
         <id name="id" type="integer">
             <column name="id" />
-            <generator class="native" />
+            <generator class="identity" />
         </id>
         <property name="content" type="string">
             <column name="content" length="5000" />
@@ -21,9 +21,6 @@
         </property>
         <property name="gmtCreate" type="timestamp">
             <column name="gmt_create" length="19" />
-        </property>
-        <property name="creator" type="string">
-            <column name="creator" />
         </property>
         <property name="gmtModified" type="timestamp">
             <column name="gmt_modified" length="19" />

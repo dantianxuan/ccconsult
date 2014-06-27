@@ -18,8 +18,8 @@
                 </li>
                 #end
                 <li>
-                    <a href="#">面试咨询</a>
-                </li>
+                    <a href="#">求职咨询</a>
+                </li>              
                 <li>
                     <a href="$link.contextPath/article.htm?articleId=1">关于我们</a>
                 </li>
@@ -29,13 +29,12 @@
 			 <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)">
-                       <img src="$link.contextPath/STATIC/image/alipay.jpg" style="width:30px;height: 30px;margin-bottom:6px; float:left" class="img-rounded"/>
-                        <div  style="float: left;margin-top:4px;font-size: 16px;">欢迎您面试官：$counselorVO.counselor.name</span><span class="caret"></span></div>
+                        欢迎您：$counselorVO.counselor.name</span><span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="$link.contextPath/counselor/personal.htm" data-toggle="tab">个人信息</a></li>
-                        <li><a href="#dropdown1" data-toggle="tab">我的面试</a></li>
-                        <li><a href="#dropdown2" data-toggle="tab">站内信</a></li>
+                        <li><a href="$link.contextPath/counselor/counselorSelf.htm">我的预约</a></li>
+						<li><a href="$link.contextPath/counselor/personalInfo.htm">个人信息</a></li>                        
+                        <li><a href="$link.contextPath/counselor/innerMails.htm">站内信</a></li>
                         <li><a href="$link.contextPath/logout.htm">注销</a></li>
                     </ul>
                 </li>
@@ -43,16 +42,11 @@
 			#elseif($consultant)
 			 <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" >
-                       <img src="$link.contextPath/STATIC/image/alipay.jpg" style="width:30px;height: 30px;margin-bottom:6px; float:left" class="img-rounded"/>
-                        <div  style="float: left;margin-top:4px;font-size: 16px;">欢迎您：$consultant.name</span><span class="caret"></span></div>
-                    </a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="float:left;">欢迎您：$consultant.name</span><span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="$link.contextPath/consultant/personal.htm" data-toggle="tab">个人信息</a></li>
-                        <li><a href="#dropdown1" data-toggle="tab">我的面试</a></li>
-                        <li><a href="#dropdown1" data-toggle="tab">简历修改</a></li>
-                        <li><a href="#dropdown2" data-toggle="tab">账户信息</a></li>
-                        <li><a href="#dropdown2" data-toggle="tab">站内信</a></li>
+                        <li><a href="$link.contextPath/consultant/consultantSelf.htm">我的预约</a></li>
+                        <li><a href="$link.contextPath/consultant/personalInfo.htm" >个人信息</a></li>
+                        <li><a href="$link.contextPath/consultant/innerMails.htm" >站内信箱</a></li>
                         <li><a href="$link.contextPath/logout.htm">注销</a></li>
                     </ul>
                 </li>

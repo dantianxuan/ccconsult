@@ -11,20 +11,20 @@
 		<div class="panel panel-default">
 		  <div class="panel-heading"><span class="glyphicon glyphicon-pushpin"></span>面试官信息</div>
 		  <div class="panel-body">
-                  <div class="col-lg-2">
+                  	<div class="col-lg-2">
                         <img src="$link.contextPath/STATIC/image/alipay.jpg" class="img-rounded" style="width: 82px;height: 82px;">
                     </div>
                     <div class="col-lg-5">
-	                    <p class="col-lg-12"><span class=" text-right col-lg-4">名称:</span>$!counselorVO.counselor.name</p>
-	                    <p class="col-lg-12"><span class=" text-right col-lg-4">邮箱:</span>$!counselorVO.company.name</p>
-	                    <p class="col-lg-12"><span class=" text-right col-lg-4">公司:</span>$!counselorVO.counselor.name</p>
+	                    <p class="col-lg-12"><strong class=" text-right col-lg-4">注册邮箱:</strong>$!counselorVO.counselor.name</p>
+	                    <p class="col-lg-12"><strong class=" text-right col-lg-4">真实姓名:</strong>$!counselorVO.company.name</p>
+	                    <p class="col-lg-12"><strong class=" text-right col-lg-4">公司信息:</strong>$!counselorVO.counselor.name</p>
                     </div>
                     <div class="col-lg-5">
-	                    <p class="col-lg-12"><span class=" text-right col-lg-4">名称:</span>$!counselorVO.counselor.name</p>
-	                    <p class="col-lg-12"><span class=" text-right col-lg-4">邮箱:</span>$!counselorVO.company.name</p>
-	                    <p class="col-lg-12"><span class=" text-right col-lg-4">公司:</span>$!counselorVO.counselor.name</p>	                    
-                    </div>	
-		  </div>
+	                    <p class="col-lg-12"><strong class=" text-right col-lg-4">认证状态</strong>$!counselorVO.counselor.name</p>
+	                    <p class="col-lg-12"><strong class=" text-right col-lg-4">手机信息</strong>$!counselorVO.company.name</p>
+	                    <p class="col-lg-12"><strong class=" text-right col-lg-4">评价</strong>$!counselorVO.counselor.name</p>	                    
+                    </div>
+                </div>	
   		</div>
 	</div>
 </div>
@@ -33,31 +33,37 @@
 		<div class="panel panel-default">
 		  <div class="panel-heading"><span class="glyphicon glyphicon-pushpin"></span>面试记录状态</div>
 		  <div class="panel-body">
-                    <div class="col-lg-12" >
-						  <p>
-							  <button type="button" class="btn   btn-success disabled ">创建预约订单</button>
-							  <span class="glyphicon glyphicon-arrow-right"></span>
-							  <button type="button" class="btn 
-							  	#if($interview.step>1)  btn-success disabled  
-							  	#elseif($interview.step==1) btn-primary disabled  
-							  	#else  btn-default disabled #end">等待咨询师预约</button>
-							  <span class="glyphicon glyphicon-arrow-right"></span>
-							  <button type="button" class="btn 
-							  	#if($interview.step>2)  btn-success disabled  
-							  	#elseif($interview.step==2) btn-primary   
-							  	#else  btn-default disabled #end">进行面试咨询</button>
-							  <span class="glyphicon glyphicon-arrow-right"></span>
-							  <button type="button" class="btn 
-							  	#if($interview.step>3)  btn-success disabled  
-							  	#elseif($interview.step==3) btn-primary   
-							  	#else  btn-default disabled #end">完成评价</button>
-							  <span class="glyphicon glyphicon-arrow-right"></span>
-							  <button type="button" class="btn btn-default disabled">
-							   <span class="glyphicon glyphicon-ok"></span>
-							  </button>
-						  </p>
-						  <p class="text-primary">您的预约会创建一笔担保交易，只有在完成咨询和确认后，才能最终完成交易.</p>
-                    </div>
+				<div class="col-lg-12" >
+					<p class="text-primary">
+						  <strong>咨询师已完成预约</strong> 请保持您的手机畅通或在预约时间联系咨询师以接受咨询.<br/>
+						  <span class="glyphicon glyphicon-dashboard"></span>$date.format("yyyy-MM-dd HH:mm:ss",$interview.gmtShceduleBegin)  $date.format("yyyy-MM-dd HH:mm:ss", $interview.gmtScheduleEnd)
+					</p>
+				</div>		  
+                <div class="col-lg-12" style="border-top:solid 1px #ddd;padding-top:8px;">
+					  <p >
+						  <a  class="btn   btn-success disabled ">创建预约订单</a>
+						  <span class="glyphicon glyphicon-arrow-right"></span>
+						  <a type="button" class="btn 
+						  	#if($interview.step>1)  btn-success disabled  
+						  	#elseif($interview.step==1) btn-primary disabled  
+						  	#else  btn-default disabled #end">等待咨询师预约</a>
+						  <span class="glyphicon glyphicon-arrow-right"></span>
+						  <a  class="btn disabled
+						  	#if($interview.step>2)  btn-success   
+						  	#elseif($interview.step==2) btn-primary   
+						  	#else  btn-default disabled #end">进行面试咨询</a>
+						  <span class="glyphicon glyphicon-arrow-right"></span>
+						  <a href="$link.contextPath/consultant/appriseInterview.htm?interviewId=$interview.id"  class="btn 
+						  	#if($interview.step>3)  btn-success disabled  
+						  	#elseif($interview.step==3 || $interview.step==2)  btn-primary   
+						  	#else  btn-default disabled #end">评价本次咨询</a>
+						  <span class="glyphicon glyphicon-arrow-right"></span>
+						  <a  class="btn btn-default disabled">
+						   <span class="glyphicon glyphicon-ok"></span>
+						  </a>
+					  </p>
+					  <p >您的预约会创建一笔担保交易，只有在完成咨询和确认后，才能最终完成交易.</p>
+                </div>
 		  </div>
   		</div>
 	</div>

@@ -15,7 +15,6 @@ public class InnerMail extends com.ccconsult.base.ToString implements java.io.Se
     private Integer senderId;
     private Integer senderRole;
     private Date    gmtCreate;
-    private String  creator;
     private Date    gmtModified;
     private Integer receiverId;
     private Integer receiverRole;
@@ -30,13 +29,12 @@ public class InnerMail extends com.ccconsult.base.ToString implements java.io.Se
 
     /** full constructor */
     public InnerMail(String content, Integer senderId, Integer senderRole, Date gmtCreate,
-                     String creator, Date gmtModified, Integer receiverId, Integer receiverRole,
-                     Integer state, Integer type) {
+                     Date gmtModified, Integer receiverId, Integer receiverRole, Integer state,
+                     Integer type) {
         this.content = content;
         this.senderId = senderId;
         this.senderRole = senderRole;
         this.gmtCreate = gmtCreate;
-        this.creator = creator;
         this.gmtModified = gmtModified;
         this.receiverId = receiverId;
         this.receiverRole = receiverRole;
@@ -84,14 +82,6 @@ public class InnerMail extends com.ccconsult.base.ToString implements java.io.Se
 
     public void setGmtCreate(Date gmtCreate) {
         this.gmtCreate = gmtCreate;
-    }
-
-    public String getCreator() {
-        return this.creator;
-    }
-
-    public void setCreator(String creator) {
-        this.creator = creator;
     }
 
     public Date getGmtModified() {

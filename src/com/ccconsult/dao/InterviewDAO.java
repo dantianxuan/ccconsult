@@ -53,11 +53,9 @@ public class InterviewDAO extends BaseHibernateDAO<Interview> {
         return findPageByQuery(0, Integer.MAX_VALUE, hql, null);
     }
 
-    public List<InterviewVO> findInterviewsConsultant(int consultant, InterviewStepEnum stepEnum,
-                                                      DataStateEnum state) {
-        String hql = "from Interview  where consultantId=" + consultant + "and step="
-                     + stepEnum.getValue() + "and state=" + state.getValue()
-                     + " order by gmtCreate desc";
+    public List<InterviewVO> findInterviewsConsultant(int consultant, DataStateEnum state) {
+        String hql = "from Interview  where consultantId=" + consultant + "and state="
+                     + state.getValue() + " order by gmtCreate desc";
         List<Interview> interviews = findPageByQuery(0, Integer.MAX_VALUE, hql, null);
 
         List<InterviewVO> interviewVOs = new ArrayList<InterviewVO>();
@@ -75,7 +73,8 @@ public class InterviewDAO extends BaseHibernateDAO<Interview> {
     }
 
     public List<InterviewVO> findUnDelInterviewsByCounselor(int counselorId) {
-        String hql = "from Interview  where counselorId=" + counselorId + "and step!=4 and state!=3 order by gmtCreate desc";
+        String hql = "from Interview  where counselorId=" + counselorId
+                     + "and step!=4 and state!=3 order by gmtCreate desc";
         List<Interview> interviews = findPageByQuery(0, Integer.MAX_VALUE, hql, null);
         List<InterviewVO> interviewVOs = new ArrayList<InterviewVO>();
         if (CollectionUtils.isEmpty(interviews)) {

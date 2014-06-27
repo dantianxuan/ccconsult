@@ -118,6 +118,29 @@ public class InterviewController extends BaseController {
         return modelMap;
     }
 
+    @RequestMapping(value = "consultant/appriseInterview.htm", method = RequestMethod.GET)
+    public ModelAndView toAppriaseInterview(HttpServletRequest request, final String interviewId,
+                                            final ModelMap modelMap) {
+        ModelAndView view = new ModelAndView("consultant/appriseInterview");
+        final Consultant consultant = getConsultantInSession(request.getSession());
+        CcResult result = serviceTemplate.execute(CcResult.class, new BlankServiceCallBack() {
+            @Override
+            public CcResult executeService() {
+                Interview interview = interviewDAO.findById(NumberUtils.toInt(interviewId));
+                AssertUtil.notNull(interview, "记录不存在");
+                CounselorVO counselorVO = counselorDAO.findById(interview.getCounselorId());
+                AssertUtil.state(consultant.getId().equals(interview.getConsultantId()), "不是您的记录");
+                modelMap.put("counselorVO", counselorVO);
+                modelMap.put("interview", interview);
+                return new CcResult(true);
+            }
+        });
+        modelMap.put("result", result);
+        return view;
+    }
+
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~counselor ~~~~~~~~~~~~~~~~~~~~~~~
+
     @RequestMapping(value = "counselor/interview.htm")
     public ModelAndView interviewerInterview(final HttpServletRequest request,
                                              final String interviewId, ModelMap modelMap) {
@@ -130,6 +153,16 @@ public class InterviewController extends BaseController {
         modelMap.put("messageVOs", messageVOs);
         genMap(modelMap);
         return new ModelAndView("counselor/interview");
+    }
+
+    @RequestMapping(value = "counselor/appriseInterview.htm")
+    public ModelAndView initAppriseInterview(final HttpServletRequest request, String interviewId,
+                                             ModelMap modelMap) {
+        Interview interview = interviewDAO.findById(NumberUtils.toInt(interviewId));
+        modelMap.put("interview", interview);
+        Consultant consultant = consultantDAO.findById(interview.getConsultantId());
+        modelMap.put("consultant", consultant);
+        return new ModelAndView("counselor/appriseInterview");
     }
 
     private ModelMap genMap(ModelMap modelMap) {

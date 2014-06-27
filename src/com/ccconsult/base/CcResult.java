@@ -3,6 +3,8 @@
  */
 package com.ccconsult.base;
 
+import java.util.Map;
+
 /**
  * 同意处理结果
  * 
@@ -12,22 +14,25 @@ package com.ccconsult.base;
 public class CcResult extends ToString {
 
     /** serialVersionUID */
-    private static final long serialVersionUID = 4887277624451526447L;
+    private static final long     serialVersionUID = 4887277624451526447L;
 
     /** 成功标识 */
-    private boolean           success          = false;
+    private boolean               success          = false;
 
     /** 结果码 */
-    private String            code             = "UNKNOWN";
+    private String                code             = "UNKNOWN";
 
     /** 返回信息 */
-    private String            message          = "未知异常";
+    private String                message          = "未知异常";
 
     /** 单次服务请求唯一标识 */
-    protected String          token;
+    protected String              token;
 
     /**包含对象*/
-    protected Object          object;
+    protected Object              object;
+
+    /**包含对象*/
+    protected Map<String, Object> relObject;
 
     /**
      * 同意处理结果
@@ -36,9 +41,12 @@ public class CcResult extends ToString {
 
     }
 
-    public CcResult(String message) {
-        this.message = message;
-
+    public CcResult(boolean isSuccess) {
+        if (isSuccess) {
+            this.success = true;
+            this.message = "处理成功";
+            this.code = "SUCCESS";
+        }
     }
 
     public CcResult(Object object) {
@@ -46,6 +54,13 @@ public class CcResult extends ToString {
         this.message = "处理成功";
         this.code = "SUCCESS";
         this.object = object;
+    }
+
+    public CcResult(Map<String, Object> relObject) {
+        this.success = true;
+        this.message = "处理成功";
+        this.code = "SUCCESS";
+        this.relObject = relObject;
     }
 
     public static CcResult retSuccess() {
@@ -105,6 +120,14 @@ public class CcResult extends ToString {
 
     public void setObject(Object object) {
         this.object = object;
+    }
+
+    public Map<String, Object> getRelObject() {
+        return relObject;
+    }
+
+    public void setRelObject(Map<String, Object> relObject) {
+        this.relObject = relObject;
     }
 
 }

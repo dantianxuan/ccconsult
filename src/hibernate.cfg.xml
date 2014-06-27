@@ -33,6 +33,7 @@
 		<mapping resource="com/ccconsult/pojo/Prise.hbm.xml" />
 		<mapping resource="com/ccconsult/pojo/RegMail.hbm.xml" />
 		<mapping resource="com/ccconsult/pojo/Resume.hbm.xml" />
+		<mapping resource="com/ccconsult/pojo/InnerMail.hbm.xml" />
 
 	</session-factory>
 

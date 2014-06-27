@@ -27,10 +27,9 @@
             	欢迎您：大大猫 
             </div>
             <div class="panel-body">
-					<button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-star"></span>  我的预约</button>
-					<button type="button" class="btn btn-warning" onclick="window.location.href='$link.contextPath/consultant/showResume.htm'"> <span class="glyphicon glyphicon-paperclip"></span>个人简历</button>
-					<button type="button" class="btn btn-warning" onclick="window.location.href='$link.contextPath/consultant/consultantInformation.htm'"><span class="glyphicon glyphicon-user"></span>  个人信息</button>
-					<button type="button" class="btn btn-warning"> <span class="glyphicon glyphicon-envelope"></span>  站内信箱</button>
+					<a class="btn btn-primary" href="$link.contextPath/consultant/consultantSelf.htm""><span class="glyphicon glyphicon-star"></span>  我的预约</a>
+					<a class="btn btn-warning" href="$link.contextPath/consultant/personalInfo.htm"><span class="glyphicon glyphicon-user"></span>  个人信息</a>
+					<a class="btn btn-warning" href="$link.contextPath/consultant/innerMails.htm"> <span class="glyphicon glyphicon-envelope"></span>  站内信箱</a>
        	 	</div>
     	</div>
     </div>
@@ -40,7 +39,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">
 				  	<ol class="breadcrumb" style="margin:2px;padding:0px;">
-					  <li class="active"><a href="#">进行中<span class="badge">$result.object.size()</span></a></li>
+					  <li class="active"><a href="#">进行中</a></li>
 					  <li><a href="#">待评价</a></li>
 					  <li><a href="#">已完成</a></li>
 					</ol>
@@ -71,12 +70,12 @@
 										  	#elseif($interview.step==1) btn-primary   disabled
 										  	#else  btn-default disabled #end">等待咨询师预约通知</button>
 										  <span class="glyphicon glyphicon-arrow-right"></span>
-										  <button type="button" class="btn 
+										  <button type="button" class="btn disabled
 										  	#if($interview.step>2)  btn-success disabled  
 										  	#elseif($interview.step==2) btn-primary   
 										  	#else  btn-default disabled #end">进行面试咨询</button>
 										  <span class="glyphicon glyphicon-arrow-right"></span>
-										  <button type="button" class="btn 
+										  <button type="button" class="btn disabled
 										  	#if($interview.step>3)  btn-success disabled  
 										  	#elseif($interview.step==3) btn-primary   
 										  	#else  btn-default disabled #end">完成评价</button>

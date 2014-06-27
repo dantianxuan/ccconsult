@@ -22,8 +22,11 @@ import com.ccconsult.base.BlankServiceCallBack;
 import com.ccconsult.base.CcException;
 import com.ccconsult.base.CcResult;
 import com.ccconsult.dao.CounselorDAO;
+import com.ccconsult.dao.InnerMailDAO;
 import com.ccconsult.dao.InterviewDAO;
 import com.ccconsult.enums.InterviewStepEnum;
+import com.ccconsult.enums.UserRoleEnum;
+import com.ccconsult.pojo.Consultant;
 import com.ccconsult.pojo.Interview;
 import com.ccconsult.util.DateUtil;
 import com.ccconsult.view.CounselorVO;
@@ -39,6 +42,8 @@ public class CounselorController extends BaseController {
     private CounselorDAO counselorDAO;
     @Autowired
     private InterviewDAO interviewDAO;
+    @Autowired
+    private InnerMailDAO innerMailDAO;
 
     @RequestMapping(value = "counselor/counselorSelf.htm", method = RequestMethod.GET)
     public ModelAndView counselorSelf(HttpServletRequest request, ModelMap modelMap) {
@@ -93,25 +98,28 @@ public class CounselorController extends BaseController {
         return modelMap;
     }
 
-    @RequestMapping(value = "counselor/personal.htm", method = RequestMethod.GET)
+    @RequestMapping(value = "counselor/editPersonalInfo.htm", method = RequestMethod.GET)
+    public ModelAndView toInterview(HttpServletRequest request, ModelMap modelMap) {
+        ModelAndView view = new ModelAndView("counselor/editPersonalInfo");
+        return view;
+    }
+
+    @RequestMapping(value = "counselor/personalInfo.htm", method = RequestMethod.GET)
     public ModelAndView counselorPage(HttpServletRequest request, ModelMap modelMap) {
-        ModelAndView view = new ModelAndView("counselor/personal");
+        ModelAndView view = new ModelAndView("counselor/personalInfo");
         return view;
     }
 
-    @RequestMapping(value = "counselorInfo.htm", method = RequestMethod.GET)
-    public ModelAndView counselorInfo(HttpServletRequest request, String counselorId,
-                                      ModelMap modelMap) {
-        ModelAndView view = new ModelAndView("content/counselorInfo");
-        int counsId = NumberUtils.toInt(counselorId);
-        CounselorVO counselorVO = counselorDAO.findById(counsId);
-        modelMap.put("counselorVO", counselorVO);
-        return view;
-    }
-
-    @RequestMapping(value = "counselor/messages.htm", method = RequestMethod.GET)
-    public ModelAndView interviewMessage(HttpServletRequest request, ModelMap modelMap) {
-        ModelAndView view = new ModelAndView("counselor/messages");
+    @RequestMapping(value = "counselor/innerMails.htm", method = RequestMethod.GET)
+    public ModelAndView toMessages(HttpServletRequest request, ModelMap modelMap) {
+        Consultant consultant = getConsultantInSession(request.getSession());
+        if (consultant != null) {
+            modelMap.put(
+                "innerMails",
+                innerMailDAO.findByByReceiver(consultant.getId(),
+                    UserRoleEnum.CONSULTANT.getValue()));
+        }
+        ModelAndView view = new ModelAndView("counselor/innerMails");
         return view;
     }
 

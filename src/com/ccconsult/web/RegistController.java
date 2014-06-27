@@ -52,10 +52,10 @@ public class RegistController {
      * 
      * @return
      */
-    @RequestMapping(value = "/regist/regConsultantInit.htm", method = RequestMethod.GET)
+    @RequestMapping(value = "regist/regCounselorInit.htm", method = RequestMethod.GET)
     public ModelAndView handleRequest(HttpServletRequest httpservletrequest, ModelMap modelMap) {
         modelMap.put("companys", companyDAO.findAll());
-        ModelAndView view = new ModelAndView("regist/regConsultantInit");
+        ModelAndView view = new ModelAndView("regist/regCounselorInit");
         return view;
     }
 
@@ -64,10 +64,10 @@ public class RegistController {
      * 
      * @return
      */
-    @RequestMapping(value = "/regist/regConsultantMail.htm", method = RequestMethod.GET)
+    @RequestMapping(value = "regist/regCounselorMail.htm", method = RequestMethod.GET)
     public ModelAndView registMail(HttpServletRequest httpservletrequest, String email,
                                    String subPrefix, ModelMap modelMap) {
-        ModelAndView view = new ModelAndView("regist/regConsultantInit");
+        ModelAndView view = new ModelAndView("regist/regCounselorInit");
         RegMail regMail = new RegMail();
         regMail.setMail(email + subPrefix);
         regMail.setGmtCreate(new Date());
@@ -82,7 +82,7 @@ public class RegistController {
      * 
      * @return
      */
-    @RequestMapping(value = "/regist/regCounselor.htm", method = RequestMethod.GET)
+    @RequestMapping(value = "regist/regCounselor.htm", method = RequestMethod.GET)
     public ModelAndView initRegInterviewer(String token, ModelMap modelMap) {
         CcResult result = registService.getRegMainInfo(token);
         if (!result.isSuccess()) {
@@ -101,7 +101,7 @@ public class RegistController {
      * 公司邮箱链接注册
      * @return
      */
-    @RequestMapping(value = "/regist/regCounselor.htm", params = "action=regist")
+    @RequestMapping(value = "regist/regCounselor.htm", params = "action=regist")
     public ModelAndView submitRegInterviewer(HttpServletRequest request, Counselor counselor,
                                              String repasswd,
                                              @RequestParam MultipartFile[] localPhoto,
@@ -154,7 +154,7 @@ public class RegistController {
     /**
      * @return
      */
-    @RequestMapping(value = "/regist/regConsultant.htm", method = RequestMethod.GET)
+    @RequestMapping(value = "regist/regConsultant.htm", method = RequestMethod.GET)
     public ModelAndView submitRegJobseeker(HttpServletRequest request, ModelMap modelMap) {
         return new ModelAndView("regist/regConsultant");
     }
@@ -166,7 +166,7 @@ public class RegistController {
      * @throws IOException 
      * @throws Exception
      */
-    @RequestMapping(value = "/regist/regConsultant.htm", params = "action=regist")
+    @RequestMapping(value = "regist/regConsultant.htm", params = "action=regist")
     public ModelAndView submitRegConsultant(HttpServletRequest request, Consultant consultant,
                                             String repasswd, ModelMap modelMap) {
         CcResult result = null;
