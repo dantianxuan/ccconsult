@@ -8,7 +8,7 @@
     <class name="com.ccconsult.pojo.Counselor" table="counselor" catalog="ccconsult">
         <id name="id" type="integer">
             <column name="id" />
-            <generator class="native" />
+            <generator class="identity" />
         </id>
         <property name="name" type="string">
             <column name="name">
@@ -46,6 +46,9 @@
         </property>
         <property name="passwd" type="string">
             <column name="passwd" />
+        </property>
+        <property name="department" type="string">
+            <column name="department" />
         </property>
     </class>
 </hibernate-mapping>

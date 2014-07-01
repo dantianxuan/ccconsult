@@ -1,66 +1,58 @@
 <div class="row">
 	<div class="col-lg-12">
     	<div style="width:80%;float:left"><input type="text" class="form-control"/></div>
-	 	<div style="width:20%;float:right;padding-left:12px;"><button class="btn btn-danger col-lg-8" type="button">快速寻找</button></div>
+	 	<div style="width:20%;float:right;padding-left:12px;"><button class="btn btn-danger col-lg-12" type="button">快速寻找</button></div>
 	</div>
 </div>
 <br/>
 <div class="row">
-		<div class="col-lg-6">
-		<div class="panel panel-default">
-		  <div class="panel-body">
-			<div class="carousel slide" data-ride="carousel">
-						<!-- Indicators -->
-						<ol class="carousel-indicators">
-							<li data-target="#carousel-example-generic" data-slide-to="0"
-								class="active"></li>
-							<li data-target="#carousel-example-generic" data-slide-to="1"></li>
-							<li data-target="#carousel-example-generic" data-slide-to="2"></li>
-						</ol>
-			
-						<!-- Wrapper for slides -->
-						<div class="carousel-inner">
-							<div class="item active">
-								<img class="img-rounded" src="STATIC/image/image.jpg">
-			
-								<div class="carousel-caption" style="font-size:12px;">最顶尖企业的一线员工，为您带来最真实的面试支持和发展建议</div>
-							</div>
-						</div>
-			
-						<!-- Controls -->
-						<a class="left carousel-control" href="#carousel-example-generic"
-							data-slide="prev"> <span>《</span> </a> <a
-							class="right carousel-control" href="#carousel-example-generic"
-							data-slide="next"> <span>》</span> </a>
+	<div class="col-lg-6" style="text-align:center;">
+		  	<div class="row">
+		  		<div class="col-lg-12" >
+					<div class="col-lg-6" style="height:120px;background:#fbaea8;">
+						<H1>真实</H1>
+						公司专属邮箱注册和定期验证激活
 					</div>
-		  </div>
-		</div>
-
-		</div>
-		<!-- right CONTENT
-	       ================================================== -->
-		<div class="col-lg-6">
-			<div class="panel panel-default">
-				<div class="panel-body" style="font-size: 13px;">
-					<p style="margin: 0px;">
-						#foreach($article in $articles)
-							<a style="color:#000" href="$link.contextPath/article.htm?articleId=$article.id">$article.title</a><br/>
-						#end
-					</p>
-					<a href="$link.contextPath/articles.htm" style="float:right">更多信息</a>
+					<div class="col-lg-6" style="height:120px;background:#c1e0f5;">
+						<H1>一线</H1>
+						国内外顶尖企业名企的一线雇员
+					</div>
 				</div>
+			  	<div class="col-lg-12">
+					<div class="col-lg-6" style="height:120px;background:#b8f5d2;">
+						<H1>专一</H1>
+						最专业的公司和最贴近行业前沿的员工
+					</div>
+					<div class="col-lg-6" style="height:120px;background:#91A7EC;">
+						<H1>放心</H1>
+						最有价值的咨询和担保交易式咨询
+					</div>
+				</div>	
+			</div>		
+	</div>
+	<!-- right CONTENT
+       ================================================== -->
+	<div class="col-lg-6">
+		<div class="panel panel-default">
+			<div class="panel-body" style="font-size: 13px;background:#F4FAFC">
+				<p style="margin: 0px;max-height:190px;overflow:hidden">
+					#foreach($article in $articles)
+						<a style="color:#000" href="$link.contextPath/article.htm?articleId=$article.id">$article.title</a><br/>
+					#end
+				</p>
+				<a href="$link.contextPath/articles.htm" style="float:right">更多信息</a>
 			</div>
-	
 		</div>
+	</div>
 </div>
 <div class="row">
 	<div class="col-lg-12">
-		<div class="panel panel-default">
+		<div class="panel panel-info">
 			  <div class="panel-heading"><strong><span class="glyphicon glyphicon-tags"></span>  面试咨询</strong></div>
 			  <div class="panel-body">		  
 		 		#foreach($company in $companys)
 					<div class="col-lg-4">
-						<div class="well well-sm" style="height:80px;">
+						<div class="well well-sm" style="height:80px;margin-bottom:4px;background-color:#fff">
 						<a href="$link.contextPath/company.htm?companyId=$company.id">
 								<img src="STATIC/image/alipay.jpg"
 								style="width:60px;height: 60px; float:left" class="img-rounded">
@@ -73,19 +65,9 @@
 						</div>
 					</div>
 				#end
-			  </div>
-		</div>
-	</div>
-</div>
-
-<div class="row">
-	<div class="col-lg-12">
-		<div class="panel panel-default">
-			  <div class="panel-heading"><strong><span class="glyphicon glyphicon-tags"></span>  家装咨询</strong></div>
-			  <div class="panel-body">		  
 		 		#foreach($company in $companys)
 					<div class="col-lg-4">
-						<div class="well well-sm" style="height:80px;">
+						<div class="well well-sm" style="height:80px;margin-bottom:4px;background-color:#fff">
 						<a href="$link.contextPath/company.htm?companyId=$company.id">
 								<img src="STATIC/image/alipay.jpg"
 								style="width:60px;height: 60px; float:left" class="img-rounded">
@@ -98,10 +80,22 @@
 						</div>
 					</div>
 				#end
+		 		#foreach($company in $companys)
+					<div class="col-lg-4">
+						<div class="well well-sm" style="height:80px;margin-bottom:4px">
+						<a href="$link.contextPath/company.htm?companyId=$company.id">
+								<img src="STATIC/image/alipay.jpg"
+								style="width:60px;height: 60px; float:left" class="img-rounded">
+								<p style="padding-left: 72px;">
+									<small>$company.name</small><br /> 
+									<small>面试官：12人</small><br /> 
+									<small>面试人数：24人</small>
+								</p>
+						</a>			
+						</div>
+					</div>
+				#end												
 			  </div>
 		</div>
 	</div>
 </div>
-
-
-

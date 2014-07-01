@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="$link.contextPath/STATIC/css/bootstrap.css" rel="stylesheet">
     <link rel="stylesheet" href="$link.contextPath/STATIC/css/select2.css" rel="stylesheet">
+    <link rel="stylesheet" href="$link.contextPath/STATIC/css/style.css" rel="stylesheet">
     <script src="$link.contextPath/STATIC/js/jquery-1.10.2.min.js"></script>
 	<script src="$link.contextPath/STATIC/js/bootstrap.min.js"></script>
 	<script src="$link.contextPath/STATIC/js/bootswatch.js"></script>

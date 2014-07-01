@@ -3,6 +3,8 @@
  */
 package com.ccconsult.web;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
@@ -31,17 +33,24 @@ public class ArticleController {
     @Autowired
     private ArticleDAO       articleDAO;
 
-    @RequestMapping(value = "/articleEdit.htm", method = RequestMethod.GET)
+    @RequestMapping(value = "backstage/articleEdit.htm", method = RequestMethod.GET)
     public ModelAndView toPage(HttpServletRequest request, ModelMap modelMap) {
         String articleId = request.getParameter("articleId");
         if (!StringUtils.isBlank(articleId)) {
             modelMap.put("result", new CcResult(articleDAO.findById(NumberUtils.toInt(articleId))));
         }
-        ModelAndView view = new ModelAndView("content/articleEdit");
+        ModelAndView view = new ModelAndView("backstage/articleEdit");
         return view;
     }
 
-    @RequestMapping(value = "/articleEdit.htm", params = "action=save", method = RequestMethod.POST)
+    @RequestMapping(value = "backstage/articleList.htm", method = RequestMethod.GET)
+    public ModelAndView manageArticles(HttpServletRequest request, ModelMap modelMap) {
+        List<Article> articles = articleDAO.findRecentList(TOPX);
+        modelMap.put("articles", articles);
+        return new ModelAndView("backstage/articleList");
+    }
+
+    @RequestMapping(value = "backstage/articleEdit.htm", params = "action=save", method = RequestMethod.POST)
     public ModelAndView saveArtcile(HttpServletRequest request, Article article, ModelMap modelMap) {
         if (article.getId() != null && article.getId() > 0) {
             modelMap.put("result", articleService.updateArticle(article));

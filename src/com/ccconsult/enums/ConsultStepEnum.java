@@ -8,9 +8,9 @@ package com.ccconsult.enums;
  * 订单状态枚举
  * 
  * @author jingyu.dan
- * @version $Id: InterviewStateEnum.java, v 0.1 2014-6-10 下午6:06:53 jingyu.dan Exp $
+ * @version $Id: ConsultStepEnum.java, v 0.1 2014-6-10 下午6:06:53 jingyu.dan Exp $
  */
-public enum InterviewStepEnum {
+public enum ConsultStepEnum {
 
     /** 创建状态 */
     CREATE(1, "CREATE", "创建状态"),
@@ -21,11 +21,14 @@ public enum InterviewStepEnum {
     /** 咨询中 */
     ON_CONSULT(3, "ON_CONSULT", "咨询中"),
 
-    /** 双方评价 */
-    APPRAISE(4, "APPRAISE", "双方评价"),
+    /** 咨询者评价 */
+    APPRAISE_CONSULTANT(4, "APPRAISE_CONSULTANT", "咨询者评价"),
+
+    /** 咨询师评价 */
+    APPRAISE_COUNSELOR(5, "APPRAISE_COUNSELOR", "咨询师评价"),
 
     /** 确认完成 */
-    FIHSHED(5, "FIHSHED", "确认完成");
+    FIHSHED(6, "FIHSHED", "完成咨询");
 
     /** 枚举码 */
     private int    value;
@@ -42,7 +45,7 @@ public enum InterviewStepEnum {
      * @param code          枚举code
      * @param description   枚举描述
      */
-    private InterviewStepEnum(int value, String code, String description) {
+    private ConsultStepEnum(int value, String code, String description) {
         this.value = value;
         this.code = code;
         this.description = description;
@@ -54,8 +57,8 @@ public enum InterviewStepEnum {
      * @param value 枚举值
      * @return      枚举对象
      */
-    public static InterviewStepEnum getByValue(int value) {
-        for (InterviewStepEnum type : values()) {
+    public static ConsultStepEnum getByValue(int value) {
+        for (ConsultStepEnum type : values()) {
             if (type.getValue() == value) {
                 return type;
             }

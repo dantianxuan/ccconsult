@@ -32,6 +32,7 @@
 	<bean id="messageDAO" class="com.ccconsult.dao.MessageDAO" />
 	<bean id="innerMailDAO" class="com.ccconsult.dao.InnerMailDAO" />
 	<bean id="resumeDAO" class="com.ccconsult.dao.ResumeDAO" />
+	<bean id="appriseDAO" class="com.ccconsult.dao.AppriseDAO" />
 
 	<bean id="serviceTemplate" class="com.ccconsult.base.ServiceTemplateImpl" />
 	<bean id="registService" class="com.ccconsult.service.RegistServiceImpl"></bean>

@@ -73,7 +73,7 @@
 #else
 <div class="row">
 	<div class="col-lg-12">
-			<div class="alert alert-dismissable alert-info">
+			<div class="alert alert-dismissable alert-warning">
 			  <strong>恭喜您完成预约</strong> 请您在约定时间联系您的咨询者完成咨询服务.
 			  <H4><span class="glyphicon glyphicon-dashboard"></span>$date.format("yyyy-MM-dd HH:mm:ss",$interview.gmtShceduleBegin)  $date.format("yyyy-MM-dd HH:mm:ss", $interview.gmtScheduleEnd) </4>
 			</div>
@@ -110,26 +110,31 @@
 		  <div class="panel-body">
                     <div class="col-lg-12" >
 						  <p>
-							  <button type="button" class="btn   btn-success disabled ">创建咨询请求</button>
+							  <a  class="btn btn-sm  btn-success disabled ">创建咨询请求</a>
 							  <span class="glyphicon glyphicon-arrow-right"></span>
-							  <button type="button" class="btn  
+							  <a  class="btn  btn-sm
 							  	#if($interview.step>1)  btn-success disabled  
 							  	#elseif($interview.step==1) btn-primary 
-							  	#else  btn-default  #end">确认咨询时间</button>
+							  	#else  btn-default  #end">确认咨询时间</a>
 							  <span class="glyphicon glyphicon-arrow-right"></span>
-							  <button type="button" class="btn disabled
+							  <a  class="btn disabled btn-sm
 							  	#if($interview.step>2)  btn-success   
 							  	#elseif($interview.step==2) btn-primary   
-							  	#else  btn-default  #end" data-toggle="modal" data-target="#confirmInterview">咨询中</button>
+							  	#else  btn-default  #end" data-toggle="modal" data-target="#confirmInterview">咨询进行中</a>
 							  <span class="glyphicon glyphicon-arrow-right"></span>
-							  <button type="button" class="btn 
+							  <a  class="btn disabled btn-sm
 							  	#if($interview.step>3)  btn-success   
-							  	#elseif($interview.step==3 || $interview.step==2) btn-primary   
-							  	#else  btn-default disabled #end" data-toggle="modal" data-target="#appriseInterview">完成咨询并评价</button>
+							  	#elseif($interview.step==3) btn-primary   
+							  	#else  btn-default  #end" data-toggle="modal" data-target="#confirmInterview">咨询者评价</a>
+							  <span class="glyphicon glyphicon-arrow-right"></span>	
+							  <a  class="btn btn-sm
+							  	#if($interview.step>4)  btn-success disabled
+							  	#elseif($interview.step==4)   btn-primary
+							  	#else btn-default #end" href="$link.contextPath/counselor/appriseInterview.htm?interviewId=$interview.id">评价本次咨询</a>
 							  <span class="glyphicon glyphicon-arrow-right"></span>
-							  <button type="button" class="btn btn-default disabled">
+							  <a  class="btn btn-sm disabled">
 							   <span class="glyphicon glyphicon-ok"></span>
-							  </button>
+							  </a>
 						  </p>
 						  <p class="text-primary">红色表示当前所状态,用户预约在付款后会创建一笔担保交易，只有在完成咨询和确认后，才能最终完成交易.</p>
                     </div>
@@ -191,6 +196,7 @@
 				  	</div>
 		  		#end
 		  	#end
+		  	#if($interview.step<5)
 		  	<form id="sendMessageForm">
 			<div class="col-lg-12">
 				<hr/>
@@ -210,42 +216,10 @@
 			   <button type="button" class="btn btn-danger col-lg-2" style="float:right;" onclick="sendMessage()">留言</button>
 		  	</div>
 		  	</form>
-		  </div>
+		  	#end
+		</div>
 		</div>
 	</div>
-</div>
-
-<div class="modal" id="appriseInterview">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h4 class="modal-title">完成评价</h4>
-      </div>
-      <div class="modal-body">
-          	<div class="progress" style="margin-bottom:8px;">
-				  <div class="progress-bar" style="width: 50%;"></div>
-				</div>
-				 <p>请对您的咨询者进行评分，客观公正的评分对您,点击
-				 <span style="font-size:30px;" class="glyphicon glyphicon-circle-arrow-left"></span>和
-				 <span  style="font-size:30px;" class="glyphicon glyphicon-circle-arrow-right"></span>调整评分
-				 </p>
-            </div>	
-            <script type="text/plain" id="commentEditor" style="height:200px;"></script>
-            <script type="text/javascript">
-			    $(function(){
-			        window.um = UM.getEditor('commentEditor', {
-			            /* 传入配置参数,可配参数列表看umeditor.config.js */
-			            toolbar: ['undo redo | bold italic underline']
-			        });
-			    });
-            </script> 
-      </div>
-      <div class="modal-footer">
-			请仔细完成评价，评价内容不能少于200字符  <button type="button" class="btn btn-danger" style="float:right">提交评价</button>
-      </div>
-    </div>
-  </div>
 </div>
 
 <div class="modal" id="confirmInterview">

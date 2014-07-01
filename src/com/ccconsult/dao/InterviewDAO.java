@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 
 import com.ccconsult.enums.DataStateEnum;
-import com.ccconsult.enums.InterviewStepEnum;
+import com.ccconsult.enums.ConsultStepEnum;
 import com.ccconsult.pojo.Interview;
 import com.ccconsult.view.InterviewVO;
 
@@ -54,7 +54,7 @@ public class InterviewDAO extends BaseHibernateDAO<Interview> {
     }
 
     public List<InterviewVO> findInterviewsConsultant(int consultant, DataStateEnum state) {
-        String hql = "from Interview  where consultantId=" + consultant + "and state="
+        String hql = "from Interview  where consultantId=" + consultant + " and state="
                      + state.getValue() + " order by gmtCreate desc";
         List<Interview> interviews = findPageByQuery(0, Integer.MAX_VALUE, hql, null);
 
@@ -72,9 +72,9 @@ public class InterviewDAO extends BaseHibernateDAO<Interview> {
         return interviewVOs;
     }
 
-    public List<InterviewVO> findUnDelInterviewsByCounselor(int counselorId) {
-        String hql = "from Interview  where counselorId=" + counselorId
-                     + "and step!=4 and state!=3 order by gmtCreate desc";
+    public List<InterviewVO> findUnderStepCounselor(int counselorId, ConsultStepEnum step) {
+        String hql = "from Interview  where counselorId=" + counselorId + " and step<"
+                     + step.getValue() + " and state!=3 order by gmtCreate desc";
         List<Interview> interviews = findPageByQuery(0, Integer.MAX_VALUE, hql, null);
         List<InterviewVO> interviewVOs = new ArrayList<InterviewVO>();
         if (CollectionUtils.isEmpty(interviews)) {
@@ -90,7 +90,7 @@ public class InterviewDAO extends BaseHibernateDAO<Interview> {
         return interviewVOs;
     }
 
-    public List<InterviewVO> findInterviewsByCounselor(int counselorId, InterviewStepEnum stepEnum,
+    public List<InterviewVO> findInterviewsByCounselor(int counselorId, ConsultStepEnum stepEnum,
                                                        DataStateEnum state) {
         String hql = "from Interview  where counselorId=" + counselorId + "and step="
                      + stepEnum.getValue() + "and state=" + state.getValue()

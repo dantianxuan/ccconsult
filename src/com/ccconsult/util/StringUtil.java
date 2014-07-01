@@ -1198,7 +1198,7 @@ public class StringUtil {
     /** 解析单词的解析器。 */
     private static final WordTokenizer CAMEL_CASE_TOKENIZER                  = new WordTokenizer() {
                                                                                  @Override
-                                                                                protected void startSentence(StringBuffer buffer,
+                                                                                 protected void startSentence(StringBuffer buffer,
                                                                                                               char ch) {
                                                                                      buffer
                                                                                          .append(Character
@@ -1206,7 +1206,7 @@ public class StringUtil {
                                                                                  }
 
                                                                                  @Override
-                                                                                protected void startWord(StringBuffer buffer,
+                                                                                 protected void startWord(StringBuffer buffer,
                                                                                                           char ch) {
                                                                                      if (!isDelimiter(buffer
                                                                                          .charAt(buffer
@@ -1222,7 +1222,7 @@ public class StringUtil {
                                                                                  }
 
                                                                                  @Override
-                                                                                protected void inWord(StringBuffer buffer,
+                                                                                 protected void inWord(StringBuffer buffer,
                                                                                                        char ch) {
                                                                                      buffer
                                                                                          .append(Character
@@ -1230,28 +1230,28 @@ public class StringUtil {
                                                                                  }
 
                                                                                  @Override
-                                                                                protected void startDigitSentence(StringBuffer buffer,
+                                                                                 protected void startDigitSentence(StringBuffer buffer,
                                                                                                                    char ch) {
                                                                                      buffer
                                                                                          .append(ch);
                                                                                  }
 
                                                                                  @Override
-                                                                                protected void startDigitWord(StringBuffer buffer,
+                                                                                 protected void startDigitWord(StringBuffer buffer,
                                                                                                                char ch) {
                                                                                      buffer
                                                                                          .append(ch);
                                                                                  }
 
                                                                                  @Override
-                                                                                protected void inDigitWord(StringBuffer buffer,
+                                                                                 protected void inDigitWord(StringBuffer buffer,
                                                                                                             char ch) {
                                                                                      buffer
                                                                                          .append(ch);
                                                                                  }
 
                                                                                  @Override
-                                                                                protected void inDelimiter(StringBuffer buffer,
+                                                                                 protected void inDelimiter(StringBuffer buffer,
                                                                                                             char ch) {
                                                                                      if (ch != UNDERSCORE) {
                                                                                          buffer
@@ -1262,7 +1262,7 @@ public class StringUtil {
 
     private static final WordTokenizer PASCAL_CASE_TOKENIZER                 = new WordTokenizer() {
                                                                                  @Override
-                                                                                protected void startSentence(StringBuffer buffer,
+                                                                                 protected void startSentence(StringBuffer buffer,
                                                                                                               char ch) {
                                                                                      buffer
                                                                                          .append(Character
@@ -1270,7 +1270,7 @@ public class StringUtil {
                                                                                  }
 
                                                                                  @Override
-                                                                                protected void startWord(StringBuffer buffer,
+                                                                                 protected void startWord(StringBuffer buffer,
                                                                                                           char ch) {
                                                                                      buffer
                                                                                          .append(Character
@@ -1278,7 +1278,7 @@ public class StringUtil {
                                                                                  }
 
                                                                                  @Override
-                                                                                protected void inWord(StringBuffer buffer,
+                                                                                 protected void inWord(StringBuffer buffer,
                                                                                                        char ch) {
                                                                                      buffer
                                                                                          .append(Character
@@ -1286,28 +1286,28 @@ public class StringUtil {
                                                                                  }
 
                                                                                  @Override
-                                                                                protected void startDigitSentence(StringBuffer buffer,
+                                                                                 protected void startDigitSentence(StringBuffer buffer,
                                                                                                                    char ch) {
                                                                                      buffer
                                                                                          .append(ch);
                                                                                  }
 
                                                                                  @Override
-                                                                                protected void startDigitWord(StringBuffer buffer,
+                                                                                 protected void startDigitWord(StringBuffer buffer,
                                                                                                                char ch) {
                                                                                      buffer
                                                                                          .append(ch);
                                                                                  }
 
                                                                                  @Override
-                                                                                protected void inDigitWord(StringBuffer buffer,
+                                                                                 protected void inDigitWord(StringBuffer buffer,
                                                                                                             char ch) {
                                                                                      buffer
                                                                                          .append(ch);
                                                                                  }
 
                                                                                  @Override
-                                                                                protected void inDelimiter(StringBuffer buffer,
+                                                                                 protected void inDelimiter(StringBuffer buffer,
                                                                                                             char ch) {
                                                                                      if (ch != UNDERSCORE) {
                                                                                          buffer
@@ -1318,7 +1318,7 @@ public class StringUtil {
 
     private static final WordTokenizer UPPER_CASE_WITH_UNDERSCORES_TOKENIZER = new WordTokenizer() {
                                                                                  @Override
-                                                                                protected void startSentence(StringBuffer buffer,
+                                                                                 protected void startSentence(StringBuffer buffer,
                                                                                                               char ch) {
                                                                                      buffer
                                                                                          .append(Character
@@ -1326,7 +1326,7 @@ public class StringUtil {
                                                                                  }
 
                                                                                  @Override
-                                                                                protected void startWord(StringBuffer buffer,
+                                                                                 protected void startWord(StringBuffer buffer,
                                                                                                           char ch) {
                                                                                      if (!isDelimiter(buffer
                                                                                          .charAt(buffer
@@ -1341,7 +1341,7 @@ public class StringUtil {
                                                                                  }
 
                                                                                  @Override
-                                                                                protected void inWord(StringBuffer buffer,
+                                                                                 protected void inWord(StringBuffer buffer,
                                                                                                        char ch) {
                                                                                      buffer
                                                                                          .append(Character
@@ -1349,14 +1349,14 @@ public class StringUtil {
                                                                                  }
 
                                                                                  @Override
-                                                                                protected void startDigitSentence(StringBuffer buffer,
+                                                                                 protected void startDigitSentence(StringBuffer buffer,
                                                                                                                    char ch) {
                                                                                      buffer
                                                                                          .append(ch);
                                                                                  }
 
                                                                                  @Override
-                                                                                protected void startDigitWord(StringBuffer buffer,
+                                                                                 protected void startDigitWord(StringBuffer buffer,
                                                                                                                char ch) {
                                                                                      if (!isDelimiter(buffer
                                                                                          .charAt(buffer
@@ -1370,14 +1370,14 @@ public class StringUtil {
                                                                                  }
 
                                                                                  @Override
-                                                                                protected void inDigitWord(StringBuffer buffer,
+                                                                                 protected void inDigitWord(StringBuffer buffer,
                                                                                                             char ch) {
                                                                                      buffer
                                                                                          .append(ch);
                                                                                  }
 
                                                                                  @Override
-                                                                                protected void inDelimiter(StringBuffer buffer,
+                                                                                 protected void inDelimiter(StringBuffer buffer,
                                                                                                             char ch) {
                                                                                      buffer
                                                                                          .append(ch);
@@ -1386,7 +1386,7 @@ public class StringUtil {
 
     private static final WordTokenizer LOWER_CASE_WITH_UNDERSCORES_TOKENIZER = new WordTokenizer() {
                                                                                  @Override
-                                                                                protected void startSentence(StringBuffer buffer,
+                                                                                 protected void startSentence(StringBuffer buffer,
                                                                                                               char ch) {
                                                                                      buffer
                                                                                          .append(Character
@@ -1394,7 +1394,7 @@ public class StringUtil {
                                                                                  }
 
                                                                                  @Override
-                                                                                protected void startWord(StringBuffer buffer,
+                                                                                 protected void startWord(StringBuffer buffer,
                                                                                                           char ch) {
                                                                                      if (!isDelimiter(buffer
                                                                                          .charAt(buffer
@@ -1409,7 +1409,7 @@ public class StringUtil {
                                                                                  }
 
                                                                                  @Override
-                                                                                protected void inWord(StringBuffer buffer,
+                                                                                 protected void inWord(StringBuffer buffer,
                                                                                                        char ch) {
                                                                                      buffer
                                                                                          .append(Character
@@ -1417,14 +1417,14 @@ public class StringUtil {
                                                                                  }
 
                                                                                  @Override
-                                                                                protected void startDigitSentence(StringBuffer buffer,
+                                                                                 protected void startDigitSentence(StringBuffer buffer,
                                                                                                                    char ch) {
                                                                                      buffer
                                                                                          .append(ch);
                                                                                  }
 
                                                                                  @Override
-                                                                                protected void startDigitWord(StringBuffer buffer,
+                                                                                 protected void startDigitWord(StringBuffer buffer,
                                                                                                                char ch) {
                                                                                      if (!isDelimiter(buffer
                                                                                          .charAt(buffer
@@ -1438,14 +1438,14 @@ public class StringUtil {
                                                                                  }
 
                                                                                  @Override
-                                                                                protected void inDigitWord(StringBuffer buffer,
+                                                                                 protected void inDigitWord(StringBuffer buffer,
                                                                                                             char ch) {
                                                                                      buffer
                                                                                          .append(ch);
                                                                                  }
 
                                                                                  @Override
-                                                                                protected void inDelimiter(StringBuffer buffer,
+                                                                                 protected void inDelimiter(StringBuffer buffer,
                                                                                                             char ch) {
                                                                                      buffer
                                                                                          .append(ch);
@@ -2757,6 +2757,22 @@ public class StringUtil {
     /* ============================================================================ */
     /*  取子串函数。                                                                */
     /* ============================================================================ */
+    /**
+     * 取指定字符串的子串。最大取得一定长度的字符串
+     * 
+     * @param str
+     * @param maxSize
+     * @return
+     */
+    public static String subMaxString(String str, int maxSize) {
+        if (str == null) {
+            return null;
+        }
+        if (str.length() > maxSize) {
+            return str.substring(0, maxSize);
+        }
+        return str;
+    }
 
     /**
      * 取指定字符串的子串。

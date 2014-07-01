@@ -16,10 +16,7 @@
                 <li>
                     <a href="$link.contextPath/mySelf.htm">个人主页</a>
                 </li>
-                #end
-                <li>
-                    <a href="#">求职咨询</a>
-                </li>              
+                #end            
                 <li>
                     <a href="$link.contextPath/article.htm?articleId=1">关于我们</a>
                 </li>

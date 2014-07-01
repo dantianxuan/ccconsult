@@ -35,38 +35,49 @@
 			            <div class="panel panel-default">
 			                <div class="panel-body">
 								<div class="col-lg-2">
-	                                <img src="$link.contextPath/STATIC/image/alipay.jpg" style="width: 90px;" class="img-rounded">
+									<a href="$link.contextPath/counselor/interview.htm?interviewId=$interviewVO.interview.id">
+	                                <img src="$link.contextPath/STATIC/image/alipay.jpg" style="width: 65px;" class="img-rounded">
+	                                </a>
 	                            </div>
 	                            <div class="col-lg-10">
 	                                <p  style="border-bottom:solid 1px #ddd">
+	                                	<a href="$link.contextPath/counselor/interview.htm?interviewId=$interviewVO.interview.id"><span class="glyphicon glyphicon-list-alt"></span>详情...</a>
 	                                	咨询者：$interviewVO.consultant.name
 	                                	<span style="float: right">$date.format("yyyy-MM-dd HH:mm:ss", $interviewVO.interview.gmtCreate)
                                 	</p>
 									<p>
-										  <button type="button" class="btn   btn-success disabled ">创建预约订单</button>
+										  <a  class="btn  btn-sm btn-success disabled ">创建预约订单</a>
 										  <span class="glyphicon glyphicon-arrow-right"></span>
-										  <button type="button" 
-										  onclick="window.location.href='$link.contextPath/counselor/interview.htm?interviewId=$interviewVO.interview.id'"
-										  class="btn disabled
+										  <a  
+										  	onclick="window.location.href='$link.contextPath/counselor/interview.htm?interviewId=$interviewVO.interview.id'"
+										  	class="btn  btn-sm
 										  	#if($interview.step>1)  btn-success   
 										  	#elseif($interview.step==1) btn-primary   
-										  	#else  btn-default disabled #end">等待预约</button>
+										  	#else  btn-default disabled #end">等待预约</a>
 										  <span class="glyphicon glyphicon-arrow-right"></span>
-										  <button type="button" class="btn disabled
+										  <a  onclick="window.location.href='$link.contextPath/counselor/interview.htm?interviewId=$interviewVO.interview.id'" 
+										  	class="btn disabled btn-sm
 										  	#if($interview.step>2)  btn-success   
 										  	#elseif($interview.step==2) btn-primary   
-										  	#else  btn-default disabled #end">进行面试咨询</button>
+										  	#else  btn-default disabled #end">进行面试咨询</a>
 										  <span class="glyphicon glyphicon-arrow-right"></span>
-										  <button type="button" class="btn disabled
-										  	#if($interview.step>3)  btn-success   
+										  <a  onclick="window.location.href='$link.contextPath/counselor/interview.htm?interviewId=$interviewVO.interview.id'"
+										  	class="btn disabled btn-sm
+										  	#if($interview.step>3)  btn-success   disabled
 										  	#elseif($interview.step==3) btn-primary   
-										  	#else  btn-default disabled #end">完成评价</button>
+										  	#else  btn-default disabled #end">咨询者已评价</a>
+										  <span class="glyphicon glyphicon-arrow-right"></span>	
+  										  <a  onclick="window.location.href='$link.contextPath/counselor/interview.htm?interviewId=$interviewVO.interview.id'"
+  										  	class="btn  btn-sm
+										  	#if($interview.step>4)  btn-success   disabled 
+										  	#elseif($interview.step==4) btn-primary   
+										  	#else btn-default disabled #end">咨询师评价</a>	
 										  <span class="glyphicon glyphicon-arrow-right"></span>
-										  <button type="button" class="btn  btn-default disabled">
+										  <a  onclick="window.location.href='$link.contextPath/counselor/appriseInterview.htm?interviewId=$interviewVO.interview.id'"
+										  	class="btn   btn-sm disabled">
 										   <span class="glyphicon glyphicon-ok"></span>
-										  </button>
+										  </a>
 									  </p>
-									  <a href="$link.contextPath/counselor/interview.htm?interviewId=$interviewVO.interview.id" style="float:right">详情...</a>
 	                            </div>
 			                </div>
 		                </div>

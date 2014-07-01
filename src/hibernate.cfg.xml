@@ -20,6 +20,14 @@
 		<property name="connection.driver_class">
 			com.mysql.jdbc.Driver
 		</property>
+		<property name="connection.autoReconnect">true</property>
+		<property name="connection.autoReconnectForPools">
+			true
+		</property>
+		<property name="connection.is-connection-validation-required">
+			true
+		</property>
+
 		<property name="validationQuery">select 1</property>
 		<property name="myeclipse.connection.profile">jdbc</property>
 		<mapping resource="com/ccconsult/pojo/Article.hbm.xml" />
@@ -30,10 +38,10 @@
 		<mapping resource="com/ccconsult/pojo/Counselor.hbm.xml" />
 		<mapping resource="com/ccconsult/pojo/Interview.hbm.xml" />
 		<mapping resource="com/ccconsult/pojo/Message.hbm.xml" />
-		<mapping resource="com/ccconsult/pojo/Prise.hbm.xml" />
 		<mapping resource="com/ccconsult/pojo/RegMail.hbm.xml" />
 		<mapping resource="com/ccconsult/pojo/Resume.hbm.xml" />
 		<mapping resource="com/ccconsult/pojo/InnerMail.hbm.xml" />
+		<mapping resource="com/ccconsult/pojo/Apprise.hbm.xml" />
 
 	</session-factory>
 

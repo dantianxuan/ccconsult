@@ -20,13 +20,16 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ccconsult.base.AssertUtil;
 import com.ccconsult.base.BlankServiceCallBack;
 import com.ccconsult.base.CcResult;
+import com.ccconsult.dao.AppriseDAO;
 import com.ccconsult.dao.ConsultantDAO;
 import com.ccconsult.dao.CounselorDAO;
 import com.ccconsult.dao.InterviewDAO;
 import com.ccconsult.dao.MessageDAO;
+import com.ccconsult.enums.AppriseRelTypeEnum;
 import com.ccconsult.enums.DataStateEnum;
-import com.ccconsult.enums.InterviewStepEnum;
+import com.ccconsult.enums.ConsultStepEnum;
 import com.ccconsult.enums.MessageRelTypeEnum;
+import com.ccconsult.pojo.Apprise;
 import com.ccconsult.pojo.Consultant;
 import com.ccconsult.pojo.Interview;
 import com.ccconsult.util.DateUtil;
@@ -48,6 +51,8 @@ public class InterviewController extends BaseController {
     private MessageDAO    messageDAO;
     @Autowired
     private ConsultantDAO consultantDAO;
+    @Autowired
+    private AppriseDAO    appriseDAO;
 
     @RequestMapping(value = "consultant/createInterview.htm", method = RequestMethod.GET)
     public ModelAndView toInterview(HttpServletRequest request, String counselorId,
@@ -59,9 +64,11 @@ public class InterviewController extends BaseController {
         return view;
     }
 
-    @RequestMapping(value = "consultant/createInterview.htm", method = RequestMethod.POST)
-    public ModelAndView createInterview(final HttpServletRequest request,
-                                        final Interview interview, ModelMap modelMap) {
+    @RequestMapping(value = "consultant/createInterview.json", method = RequestMethod.POST)
+    public @ResponseBody
+    ModelMap createInterview(final HttpServletRequest request, final Interview interview,
+                             ModelMap modelMap) {
+        modelMap.clear();
         CcResult result = serviceTemplate.execute(CcResult.class, new BlankServiceCallBack() {
             @Override
             public CcResult executeService() {
@@ -70,21 +77,15 @@ public class InterviewController extends BaseController {
                 CounselorVO counselorVO = counselorDAO.findById(interview.getCounselorId());
                 AssertUtil.notNull(counselorVO, "咨询对象不存在，请检查");
                 interview.setGmtCreate(new Date());
-                interview.setStep(InterviewStepEnum.CREATE.getValue());
+                interview.setStep(ConsultStepEnum.CREATE.getValue());
                 interview.setGmtModified(new Date());
                 interview.setState(DataStateEnum.NORMAL.getValue());
                 interviewDAO.save(interview);
                 return new CcResult(interview);
             }
         });
-        if (result.isSuccess()) {
-            return new ModelAndView("redirect:/consultant/interview.htm?interviewId="
-                                    + interview.getId());
-        }
-        CounselorVO counselorVO = counselorDAO.findById(interview.getCounselorId());
-        modelMap.put("counselorVO", counselorVO);
         modelMap.put("result", result);
-        return new ModelAndView("consultant/createInterview");
+        return modelMap;
     }
 
     @RequestMapping(value = "consultant/interview.htm")
@@ -97,6 +98,9 @@ public class InterviewController extends BaseController {
         List<MessageVO> messageVOs = messageDAO.queryByRelInfo(interview.getId(),
             MessageRelTypeEnum.INTERVIEW.getValue());
         modelMap.put("messageVOs", messageVOs);
+        List<Apprise> apprises = appriseDAO.findByRelId(interview.getId(),
+            AppriseRelTypeEnum.INTERVIEW.getValue());
+        modelMap.put("apprises", apprises);
         return new ModelAndView("consultant/interview");
     }
 
@@ -118,27 +122,6 @@ public class InterviewController extends BaseController {
         return modelMap;
     }
 
-    @RequestMapping(value = "consultant/appriseInterview.htm", method = RequestMethod.GET)
-    public ModelAndView toAppriaseInterview(HttpServletRequest request, final String interviewId,
-                                            final ModelMap modelMap) {
-        ModelAndView view = new ModelAndView("consultant/appriseInterview");
-        final Consultant consultant = getConsultantInSession(request.getSession());
-        CcResult result = serviceTemplate.execute(CcResult.class, new BlankServiceCallBack() {
-            @Override
-            public CcResult executeService() {
-                Interview interview = interviewDAO.findById(NumberUtils.toInt(interviewId));
-                AssertUtil.notNull(interview, "记录不存在");
-                CounselorVO counselorVO = counselorDAO.findById(interview.getCounselorId());
-                AssertUtil.state(consultant.getId().equals(interview.getConsultantId()), "不是您的记录");
-                modelMap.put("counselorVO", counselorVO);
-                modelMap.put("interview", interview);
-                return new CcResult(true);
-            }
-        });
-        modelMap.put("result", result);
-        return view;
-    }
-
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~counselor ~~~~~~~~~~~~~~~~~~~~~~~
 
     @RequestMapping(value = "counselor/interview.htm")
@@ -151,18 +134,11 @@ public class InterviewController extends BaseController {
         List<MessageVO> messageVOs = messageDAO.queryByRelInfo(interview.getId(),
             MessageRelTypeEnum.INTERVIEW.getValue());
         modelMap.put("messageVOs", messageVOs);
+        List<Apprise> apprises = appriseDAO.findByRelId(interview.getId(),
+            AppriseRelTypeEnum.INTERVIEW.getValue());
+        modelMap.put("apprises", apprises);
         genMap(modelMap);
         return new ModelAndView("counselor/interview");
-    }
-
-    @RequestMapping(value = "counselor/appriseInterview.htm")
-    public ModelAndView initAppriseInterview(final HttpServletRequest request, String interviewId,
-                                             ModelMap modelMap) {
-        Interview interview = interviewDAO.findById(NumberUtils.toInt(interviewId));
-        modelMap.put("interview", interview);
-        Consultant consultant = consultantDAO.findById(interview.getConsultantId());
-        modelMap.put("consultant", consultant);
-        return new ModelAndView("counselor/appriseInterview");
     }
 
     private ModelMap genMap(ModelMap modelMap) {

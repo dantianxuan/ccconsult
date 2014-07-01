@@ -29,6 +29,7 @@ public class CounselorDAO extends BaseHibernateDAO<Counselor> {
     public static final String COMPANY_ID  = "companyId";
     public static final String PHOTO       = "photo";
     public static final String PASSWD      = "passwd";
+    public static final String DEPARTMENT  = "department";
 
     public CounselorVO findById(java.lang.Integer id) {
         Counselor instance = (Counselor) getSession().get("com.ccconsult.pojo.Counselor", id);

@@ -15,4 +15,14 @@
 		<scope>application</scope>
 		<class>com.ccconsult.base.CcConstrant</class>
 	</tool>
+	<tool>
+		<key>enumUtil</key>
+		<scope>application</scope>
+		<class>com.ccconsult.util.EnumUtil</class>
+	</tool>
+	<tool>
+		<key>stringUtil</key>
+		<scope>application</scope>
+		<class>com.ccconsult.util.StringUtil</class>
+	</tool>
 </toolbox>

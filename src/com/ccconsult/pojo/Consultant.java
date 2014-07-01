@@ -18,6 +18,7 @@ public class Consultant extends com.ccconsult.base.ToString implements java.io.S
     private String  photo;
     private Date    gmtCreate;
     private Date    gmtModified;
+    private String  description;
 
     // Constructors
 
@@ -27,7 +28,7 @@ public class Consultant extends com.ccconsult.base.ToString implements java.io.S
 
     /** full constructor */
     public Consultant(String name, String passwd, String mobile, String email, String photo,
-                      Date gmtCreate, Date gmtModified) {
+                      Date gmtCreate, Date gmtModified, String description) {
         this.name = name;
         this.passwd = passwd;
         this.mobile = mobile;
@@ -35,6 +36,7 @@ public class Consultant extends com.ccconsult.base.ToString implements java.io.S
         this.photo = photo;
         this.gmtCreate = gmtCreate;
         this.gmtModified = gmtModified;
+        this.description = description;
     }
 
     // Property accessors
@@ -101,6 +103,14 @@ public class Consultant extends com.ccconsult.base.ToString implements java.io.S
 
     public void setGmtModified(Date gmtModified) {
         this.gmtModified = gmtModified;
+    }
+
+    public String getDescription() {
+        return this.description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
 }

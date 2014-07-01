@@ -1,4 +1,12 @@
 #set($consultant=$session.getAttribute("SESSION_CONSULTANT_OBJECT"))
+<link href="$link.contextPath/STATIC/plugin/umeditor/themes/default/css/umeditor.css" type="text/css" rel="stylesheet">
+<script type="text/javascript" src="$link.contextPath/STATIC/plugin/umeditor/umeditor.config.js"></script>
+<!-- 编辑器源码文件 -->
+<script type="text/javascript" src="$link.contextPath/STATIC/plugin/umeditor/umeditor.js"></script>
+<!-- 语言包文件(建议手动加载语言包，避免在ie下，因为加载语言失败导致编辑器加载失败) -->
+<script type="text/javascript" src="$link.contextPath/STATIC/plugin/umeditor/lang/zh-cn/zh-cn.js"></script>  
+<script src="$link.contextPath/STATIC/js/fileinput.js"></script>
+<link rel="stylesheet" href="$link.contextPath/STATIC/css/fileinput.css"/>
 <script language="javascript">
 	function submitConsultant(){
 		var name=$('input[name=name]').val();
@@ -22,7 +30,7 @@
 </script>
 <div class="row">
 	<div class="col-lg-12">
-		<div class="alert alert-dismissable alert-info">
+		<div class="alert alert-dismissable alert-warning">
 		   请编辑您的个人信息
 		</div>
 	</div>
@@ -36,31 +44,64 @@
                         </div>
                     #end
                     <input type="hidden" name="id" value="$!consultant.id">
-                           <div class="form-group">
-                            <label  class="col-lg-2 control-label">姓名</label>
-	                            <div class="col-lg-8">
-	                                <input type="text" name="name" class="form-control" placeholder="请输入姓名" value="$!consultant.name"/>
-	                            </div>
-                           </div>
-                           
-                          <div class="form-group">
-                                 <label  class="col-lg-2 control-label">联系方式</label>
+                     	<div class="form-group">
+                            <label  class="col-lg-2 control-label">有效的邮箱地址</label>
+                            <div class="col-lg-8" style="padding-top:8px;">
+                            	<p class="text-danger">$!consultant.email</p>
+                            </div>                            
+                        </div>    
+						<div class="form-group">
+                             <label  class="col-lg-2 control-label">个人头像</label>
+                            <div class="col-lg-8">
+                                 <img  src="$link.contextPath/UPLOAD/$!consultant.photo" class="img-rounded photoTitle" style="width: 120px;"/><br/>
+                                 <a class="photoTitle" href="javascript:void(0)" onclick="$('#fileUploadInput').show();">单击修改您的头像</a><br/>
+                            </div>                            
+                    	</div>  	
+                      	<div class="form-group" id="fileUploadInput" style="display:none;">
+                             <label  class="col-lg-2 control-label">上传头像</label>
+                            <div class="col-lg-8">
+                                 <input  type="file" name="localPhoto"  class="file" multiple="false" data-show-upload="false" data-show-caption="true" />
+                            </div>	                            
+                    	</div> 	                                          
+                       <div class="form-group">
+                        <label  class="col-lg-2 control-label">姓名</label>
+                            <div class="col-lg-8">
+                                <input type="text" name="name" class="form-control" placeholder="请输入姓名" value="$!consultant.name"/>
+                            </div>
+                       </div>
+                       <div class="form-group">
+                                 <label  class="col-lg-2 control-label">手机号码</label>
 	                            <div class="col-lg-8">
 	                                <input type="text" name="mobile" class="form-control" placeholder="请输入您的手机号码" value="$!consultant.mobile"/>
 	                            </div>
                         </div>
 
-                            <div class="form-group">
-                                <label  class="col-lg-2 control-label">有效的邮箱地址</label>
-                                <div class="col-lg-8">
-                                   <input type="text" name="email" class="form-control" placeholder="请输入您的有效的邮箱地址" value="$!consultant.email"/>
-                                </div>
-                            </div>
-                            
+						<div class="form-group">
+	                             <label  class="col-lg-2 control-label">个人简介</label>
+	                            <div class="col-lg-10">
+							  		<script type="text/plain" id="myEditor" name="description" style="width:100%;height:260px;">$!consultant.description</script>
+							        <script type="text/javascript">
+								        $(function(){
+								            window.um = UM.getEditor('myEditor', {
+								                /* 传入配置参数,可配参数列表看umeditor.config.js */
+								                toolbar: [
+													'source | undo redo | bold italic underline strikethrough | superscript subscript | forecolor backcolor | removeformat |',
+													            'insertorderedlist insertunorderedlist | selectall cleardoc paragraph | fontfamily fontsize' ,
+													            '| justifyleft justifycenter justifyright justifyjustify |',
+													            'link unlink | emotion image video  | map',
+													             'formula'
+					]
+								            });
+								        });
+							        </script> 
+	                            </div>
+	                    	</div>                    	  
+                        <hr/>              	                             
 						<div class="col-lg-12">
-								<br/>
-						        <button type="button" style="float:right;" class="btn btn-danger col-lg-4" onclick="submitConsultant()">提交个人信息</button>
-						</div>
+								<label  class="col-lg-2 control-label"></label>
+								<a  href="$link.contextPath/consultant/personalInfo.htm" class="btn btn-link col-lg-2" >  返回个人信息</a>
+								<button type="submit"  class="btn btn-danger ">提交个人信息</button>
+						</div>	                            
  					  </form>
 				</div>
 			</div>

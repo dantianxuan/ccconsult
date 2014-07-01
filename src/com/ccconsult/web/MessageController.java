@@ -59,7 +59,7 @@ public class MessageController extends BaseController {
                 message.setRelType(MessageRelTypeEnum.INTERVIEW.getValue());
                 AssertUtil.notNull(message, "非法请求");
                 AssertUtil.notBlank(message.getMessage(), "消息内容不能为空");
-                AssertUtil.state(message.getMessage().length() <= CcConstrant.SHOT_MESSAGE_LENGTH,
+                AssertUtil.state(message.getMessage().length() <= CcConstrant.COMMON_4096_LENGTH,
                     "消息长度太长");
                 messageDAO.save(message);
                 return new CcResult(message);

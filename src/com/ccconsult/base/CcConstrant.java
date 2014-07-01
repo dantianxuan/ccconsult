@@ -23,7 +23,13 @@ public class CcConstrant {
     public final static String UPLOAD_FOLDER             = "UPLOAD_FOLDER";
 
     /**短消息字符长度*/
-    public final static int    SHOT_MESSAGE_LENGTH       = 2048;
+    public final static int    COMMON_128_LENGTH         = 128;
+
+    /**短消息字符长度*/
+    public final static int    COMMON_256_LENGTH         = 256;
+
+    /**短消息字符长度*/
+    public final static int    COMMON_4096_LENGTH        = 4096;
 
     /**默认页大小*/
     public final static int    DEFAULT_PAGE_SIZE         = 20;
