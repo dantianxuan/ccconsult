@@ -20,6 +20,9 @@
                 <li>
                     <a href="$link.contextPath/article.htm?articleId=1">关于我们</a>
                 </li>
+                <li>
+                    <a href="$link.contextPath/article.htm?articleId=2">帮助信息</a>
+                </li>                
 
             </ul>
 			#if($counselorVO)

@@ -36,7 +36,7 @@ public class BaseHibernateDAO<T> implements IBaseHibernateDAO {
 
     public PageList<T> queryPage(int pageNo, int pageSize, String hql, Map map) {
         int count = getTotalCount(hql, map);
-        List<T> list = findPageByQuery(pageNo, pageSize, hql, map);
+        List<T> list = findByQuery(pageNo, pageSize, hql, map);
         return new PageList<T>(pageSize * pageNo, count, pageSize, list);
     }
 
@@ -49,7 +49,7 @@ public class BaseHibernateDAO<T> implements IBaseHibernateDAO {
      * @param map
      * @return
      */
-    public List<T> findPageByQuery(int pageNo, int pageSize, String hql, Map map) {
+    public List<T> findByQuery(int pageNo, int pageSize, String hql, Map map) {
         List<T> result = null;
         try {
             Query query = this.getSession().createQuery(hql);
@@ -79,6 +79,7 @@ public class BaseHibernateDAO<T> implements IBaseHibernateDAO {
      */
     public int getTotalCount(String hql, Map map) {
         try {
+            hql = "SELECT count(*) " + hql;
             Query query = this.getSession().createQuery(hql);
 
             Iterator it = map.keySet().iterator();
@@ -87,7 +88,7 @@ public class BaseHibernateDAO<T> implements IBaseHibernateDAO {
                 query.setParameter(key.toString(), map.get(key));
             }
 
-            Integer i = (Integer) query.list().get(0);
+            Integer i = Integer.parseInt(query.list().get(0).toString());
             return i;
         } catch (RuntimeException re) {
             throw re;

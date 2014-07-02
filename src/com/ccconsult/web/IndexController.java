@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ccconsult.base.CcConstrant;
+import com.ccconsult.base.PageList;
 import com.ccconsult.dao.ArticleDAO;
 import com.ccconsult.dao.CompanyDAO;
+import com.ccconsult.enums.ArticleTypeEnum;
 import com.ccconsult.pojo.Article;
 import com.ccconsult.pojo.Company;
 
@@ -27,16 +29,14 @@ import com.ccconsult.pojo.Company;
 @Controller
 public class IndexController {
 
-    private final static int TOPX = 10;
-
     @Autowired
-    private ArticleDAO       articleDAO;
+    private ArticleDAO articleDAO;
     @Autowired
-    private CompanyDAO       companyDAO;
+    private CompanyDAO companyDAO;
 
     @RequestMapping(value = "/index.htm", method = RequestMethod.GET)
     public ModelAndView toIndex(HttpServletRequest request, ModelMap modelMap) {
-        List<Article> articles = articleDAO.findRecentList(TOPX);
+        List<Article> articles = articleDAO.queryList(1, 10, ArticleTypeEnum.WEB_NEWS.getValue());
         List<Company> companys = companyDAO.findAll();
         modelMap.put("articles", articles);
         modelMap.put("companys", companys);

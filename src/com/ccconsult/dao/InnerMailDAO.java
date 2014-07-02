@@ -31,7 +31,7 @@ public class InnerMailDAO extends BaseHibernateDAO<InnerMail> {
     public List<InnerMail> findByByReceiver(int receiverId, int receiverRole) {
         String hql = "from InnerMail  where receiverId=" + receiverId + " and receiverRole="
                      + receiverRole + " and state!=3 order by gmtCreate desc";
-        return findPageByQuery(0, Integer.MAX_VALUE, hql, null);
+        return findByQuery(0, Integer.MAX_VALUE, hql, null);
     }
 
 }

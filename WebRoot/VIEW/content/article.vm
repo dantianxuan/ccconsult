@@ -7,8 +7,7 @@
             	#else
 	            	<h3 style="text-align: center;margin-top: 12px;">$!result.object.title</h3>
 	                <p class="text-muted" 
-	                style="font-size:12px;text-align: right;border-bottom: solid 1px #ddd">创建时间：$date.format("yyyy-MM-dd", $result.object.gmtCreate) 浏览量：
-	                <span class="badge">3</span> </p>
+	                style="font-size:12px;text-align: right;border-bottom: solid 1px #ddd">创建时间：$date.format("yyyy-MM-dd", $result.object.gmtModified)
 	                <p>$!result.object.content</p>
             	#end
             </div>

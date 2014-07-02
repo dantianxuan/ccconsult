@@ -19,6 +19,12 @@ public class CcConstrant {
     /** CONSULTANT 对象 */
     public final static String SESSION_CONSULTANT_OBJECT = "SESSION_CONSULTANT_OBJECT";
 
+    /** ADMIN 对象 */
+    public final static String SESSION_ADMIN_OBJECT      = "SESSION_ADMIN_OBJECT";
+
+    /** ADMIN 对象 */
+    public final static String ADMIN                     = "dantianxuan@qq.com";
+
     /** UPLOAD_FOLDER */
     public final static String UPLOAD_FOLDER             = "UPLOAD_FOLDER";
 

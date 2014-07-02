@@ -6,7 +6,7 @@
 </div>
 <br/>
 <div class="row">
-	<div class="col-lg-6" style="text-align:center;">
+	<div class="col-lg-5" style="text-align:center;">
 		  	<div class="row">
 		  		<div class="col-lg-12" >
 					<div class="col-lg-6" style="height:120px;background:#fbaea8;">
@@ -32,10 +32,10 @@
 	</div>
 	<!-- right CONTENT
        ================================================== -->
-	<div class="col-lg-6">
+	<div class="col-lg-7">
 		<div class="panel panel-default">
-			<div class="panel-body" style="font-size: 13px;background:#F4FAFC">
-				<p style="margin: 0px;max-height:190px;overflow:hidden">
+			<div class="panel-body" style="font-size: 13px;background:#F4FAFC;height:240px;">
+				<p style="margin: 0px;max-height:193px;overflow:hidden">
 					#foreach($article in $articles)
 						<a style="color:#000" href="$link.contextPath/article.htm?articleId=$article.id">$article.title</a><br/>
 					#end

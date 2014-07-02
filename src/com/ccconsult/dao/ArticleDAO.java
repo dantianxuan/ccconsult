@@ -1,10 +1,13 @@
 package com.ccconsult.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.ccconsult.base.PageList;
 import com.ccconsult.pojo.Article;
 
 /**
@@ -22,8 +25,9 @@ public class ArticleDAO extends BaseHibernateDAO<Article> {
     public static final String  TITLE     = "title";
     public static final String  CONTENT   = "content";
     public static final String  TOP_PHOTO = "topPhoto";
-    public static final String  SATE      = "sate";
-    public static final String  TOP       = "top";
+    public static final String  STATE     = "state";
+    public static final String  TOP_TAG   = "topTag";
+    public static final String  TYPE      = "type";
 
     public Article findById(java.lang.Integer id) {
         log.debug("getting Article instance with id: " + id);
@@ -36,8 +40,20 @@ public class ArticleDAO extends BaseHibernateDAO<Article> {
         }
     }
 
-    public List<Article> findRecentList(int topx) {
-        String hql = "from Article order by gmtCreate desc";
-        return findPageByQuery(0, topx, hql, null);
+    public List<Article> queryList(int pageNo, int pageSize, int type) {
+        Map map = new HashMap<String, Object>();
+        map.put(TYPE, type);
+        String hql = "from Article where type=:type and state!=3 order by gmtCreate desc";
+        return findByQuery(pageNo, pageSize, hql, map);
     }
+
+    public PageList<Article> queryPage(int pageNo, int pageSize, int type) {
+        Map map = new HashMap<String, Object>();
+        map.put(TYPE, type);
+        String hql = "from Article where type=:type and state!=3 order by gmtCreate desc";
+        int count = getTotalCount(hql, map);
+        List<Article> list = findByQuery(pageNo, pageSize, hql, map);
+        return new PageList<Article>(pageSize * pageNo, count, pageSize, list);
+    }
+
 }

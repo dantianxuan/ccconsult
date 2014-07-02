@@ -50,13 +50,13 @@ public class InterviewDAO extends BaseHibernateDAO<Interview> {
 
     public List<Interview> findByConsultantId(int id) {
         String hql = "from Interview  where consultantId=" + id + " order by gmtCreate desc";
-        return findPageByQuery(0, Integer.MAX_VALUE, hql, null);
+        return findByQuery(0, Integer.MAX_VALUE, hql, null);
     }
 
     public List<InterviewVO> findInterviewsConsultant(int consultant, DataStateEnum state) {
         String hql = "from Interview  where consultantId=" + consultant + " and state="
                      + state.getValue() + " order by gmtCreate desc";
-        List<Interview> interviews = findPageByQuery(0, Integer.MAX_VALUE, hql, null);
+        List<Interview> interviews = findByQuery(0, Integer.MAX_VALUE, hql, null);
 
         List<InterviewVO> interviewVOs = new ArrayList<InterviewVO>();
         if (CollectionUtils.isEmpty(interviews)) {
@@ -75,7 +75,7 @@ public class InterviewDAO extends BaseHibernateDAO<Interview> {
     public List<InterviewVO> findUnderStepCounselor(int counselorId, ConsultStepEnum step) {
         String hql = "from Interview  where counselorId=" + counselorId + " and step<"
                      + step.getValue() + " and state!=3 order by gmtCreate desc";
-        List<Interview> interviews = findPageByQuery(0, Integer.MAX_VALUE, hql, null);
+        List<Interview> interviews = findByQuery(0, Integer.MAX_VALUE, hql, null);
         List<InterviewVO> interviewVOs = new ArrayList<InterviewVO>();
         if (CollectionUtils.isEmpty(interviews)) {
             return interviewVOs;
@@ -95,7 +95,7 @@ public class InterviewDAO extends BaseHibernateDAO<Interview> {
         String hql = "from Interview  where counselorId=" + counselorId + "and step="
                      + stepEnum.getValue() + "and state=" + state.getValue()
                      + " order by gmtCreate desc";
-        List<Interview> interviews = findPageByQuery(0, Integer.MAX_VALUE, hql, null);
+        List<Interview> interviews = findByQuery(0, Integer.MAX_VALUE, hql, null);
 
         List<InterviewVO> interviewVOs = new ArrayList<InterviewVO>();
         if (CollectionUtils.isEmpty(interviews)) {

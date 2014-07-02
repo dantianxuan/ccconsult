@@ -16,8 +16,9 @@ public class Article extends com.ccconsult.base.ToString implements java.io.Seri
     private Date    gmtCreate;
     private Date    gmtModified;
     private String  topPhoto;
-    private String  sate;
-    private String  top;
+    private Integer state;
+    private String  topTag;
+    private Integer type;
 
     // Constructors
 
@@ -27,14 +28,15 @@ public class Article extends com.ccconsult.base.ToString implements java.io.Seri
 
     /** full constructor */
     public Article(String title, String content, Date gmtCreate, Date gmtModified, String topPhoto,
-                   String sate, String top) {
+                   Integer state, String topTag, Integer type) {
         this.title = title;
         this.content = content;
         this.gmtCreate = gmtCreate;
         this.gmtModified = gmtModified;
         this.topPhoto = topPhoto;
-        this.sate = sate;
-        this.top = top;
+        this.state = state;
+        this.topTag = topTag;
+        this.type = type;
     }
 
     // Property accessors
@@ -87,20 +89,28 @@ public class Article extends com.ccconsult.base.ToString implements java.io.Seri
         this.topPhoto = topPhoto;
     }
 
-    public String getSate() {
-        return this.sate;
+    public Integer getState() {
+        return this.state;
     }
 
-    public void setSate(String sate) {
-        this.sate = sate;
+    public void setState(Integer state) {
+        this.state = state;
     }
 
-    public String getTop() {
-        return this.top;
+    public String getTopTag() {
+        return this.topTag;
     }
 
-    public void setTop(String top) {
-        this.top = top;
+    public void setTopTag(String topTag) {
+        this.topTag = topTag;
+    }
+
+    public Integer getType() {
+        return this.type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
     }
 
 }

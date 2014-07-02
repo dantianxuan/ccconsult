@@ -8,7 +8,7 @@
     <class name="com.ccconsult.pojo.Article" table="article" catalog="ccconsult">
         <id name="id" type="integer">
             <column name="id" />
-            <generator class="native" />
+            <generator class="identity" />
         </id>
         <property name="title" type="string">
             <column name="title" length="256" />
@@ -25,11 +25,14 @@
         <property name="topPhoto" type="string">
             <column name="top_photo" length="45" />
         </property>
-        <property name="sate" type="string">
-            <column name="sate" length="45" />
+        <property name="state" type="integer">
+            <column name="state" />
         </property>
-        <property name="top" type="string">
-            <column name="top" length="45" />
+        <property name="topTag" type="string">
+            <column name="top_tag" length="45" />
+        </property>
+        <property name="type" type="integer">
+            <column name="type" />
         </property>
     </class>
 </hibernate-mapping>

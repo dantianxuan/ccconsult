@@ -20,14 +20,22 @@
 		<property name="connection.driver_class">
 			com.mysql.jdbc.Driver
 		</property>
+		<property name="minPoolSize">10</property>
+		<!-- 连接池维持的最大的连接个数 -->
+		<property name="maxPoolSize">20</property>
+		<!-- 最大空闲时间, 当某个连接在这个时间内没活动后将从池中移除，前提是池中至少多于最少的连接数: minPoolSize -->
+		<property name="maxIdleTime">1800</property>
+		<!-- 为加强准备语句的执行性能，此参数指定被缓存的 PreparedStatement 的个数 -->
+		<property name="maxStatements">50</property>
 		<property name="connection.autoReconnect">true</property>
 		<property name="connection.autoReconnectForPools">
 			true
 		</property>
+		<property name="poolPreparedStatements">true</property>
+		<property name="defaultAutoCommit">true</property>
 		<property name="connection.is-connection-validation-required">
 			true
 		</property>
-
 		<property name="validationQuery">select 1</property>
 		<property name="myeclipse.connection.profile">jdbc</property>
 		<mapping resource="com/ccconsult/pojo/Article.hbm.xml" />

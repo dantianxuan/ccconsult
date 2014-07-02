@@ -4,7 +4,6 @@
 		if(!confirm("请确认您要删除该记录")){
 			return ;
 		}
-		
 		jQuery.ajax({
              type: "POST",
              url: "$link.contextPath/consultant/deleteInterview.json",
@@ -28,6 +27,7 @@
             </div>
             <div class="panel-body">
 					<a class="btn btn-primary" href="$link.contextPath/consultant/consultantSelf.htm""><span class="glyphicon glyphicon-star"></span>  我的预约</a>
+					<a  class="btn btn-warning" href="$link.contextPath/consultant/consultantSelf.htm"><span class="glyphicon glyphicon-copyright-mark"></span>   账户信息</a>					
 					<a class="btn btn-warning" href="$link.contextPath/consultant/personalInfo.htm"><span class="glyphicon glyphicon-user"></span>  个人信息</a>
 					<a class="btn btn-warning" href="$link.contextPath/consultant/innerMails.htm"> <span class="glyphicon glyphicon-envelope"></span>  站内信箱</a>
        	 	</div>

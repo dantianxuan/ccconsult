@@ -1,4 +1,4 @@
-#set($articles=$result.object)
+<form id="queryArticlesForm" action="$link.contextPath/articles.htm">
 <div class="row">
     <div class="col-lg-12">
         <div class="panel panel-default">
@@ -11,7 +11,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    #foreach($article in $articles)
+                    #foreach($article in $articles.getResult())
                     <tr>
                         <td><a href="$link.contextPath/article.htm?articleId=$article.id">$article.title</td>
                         <td>$date.format("yyyy-MM-dd HH:mm:ss", $article.gmtModified)</td>
@@ -23,3 +23,21 @@
         </div>
     </div>
 </div>
+<input type="hidden" name="pageSize" value="$articles.getPageSize()"/>
+<input type="hidden" name="pageNo" value="0" id="pageNo"/>
+<div class="row">
+    <div class="col-lg-12">
+		<ul class="pagination" style="margin-top:-10px;float:right;">
+			#foreach($index in [1..$articles.getTotalPageCount()])
+				<li><a href="javascript:void(0)" onclick="submitForm($index)">$index</a></li>
+			#end
+		</ul>    
+    </div>
+</div>   
+</form>
+<script>
+	function submitForm(pageNo){
+		$('#pageNo').val(pageNo);
+		$('#queryArticlesForm').submit()
+	}
+</script>

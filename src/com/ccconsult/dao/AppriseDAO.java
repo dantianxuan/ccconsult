@@ -40,14 +40,14 @@ public class AppriseDAO extends BaseHibernateDAO<Apprise> {
     public List<Apprise> findByRelId(int relId, int relType) {
         String hql = "from Apprise  where relId=" + relId + " and relType=" + relType
                      + "order by gmtCreate desc";
-        return findPageByQuery(0, Integer.MAX_VALUE, hql, null);
+        return findByQuery(0, Integer.MAX_VALUE, hql, null);
     }
 
     public Apprise findByRelId(int relId, int relType, int creatorId, int creatorRole) {
         String hql = "from Apprise  where relId=" + relId + " and relType=" + relType
                      + " and creator=" + creatorId + " and creatorRole=" + creatorRole
                      + "order by gmtCreate desc";
-        return getLimit(findPageByQuery(0, Integer.MAX_VALUE, hql, null));
+        return getLimit(findByQuery(0, Integer.MAX_VALUE, hql, null));
     }
 
 }
