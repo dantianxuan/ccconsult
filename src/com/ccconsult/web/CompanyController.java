@@ -83,37 +83,37 @@ public class CompanyController extends BaseController {
         CcResult result = serviceTemplate.execute(CcResult.class, new BlankServiceCallBack() {
             @Override
             public CcResult executeService() {
-                if (company.getId() != null && company.getId() > 0) {
-                    Company localCompany = companyDAO.findById(company.getId());
-                    AssertUtil.state(localCompany != null, "文章不存在");
-                    Company.setContent(company.getContent());
-                    Company.setGmtModified(new Date());
-                    Company.setTitle(company.getTitle());
-                    Company.setTopTag(company.getTopPhoto());
-                    Company.setTopPhoto(company.getTopPhoto());
-                    return new CcResult(localArticle);
-                }
-                article.setGmtCreate(new Date());
-                article.setGmtModified(new Date());
-                article.setState(DataStateEnum.NORMAL.getValue());
-                articleDAO.save(article);
-                return new CcResult(article);
+                //                if (company.getId() != null && company.getId() > 0) {
+                //                    Company localCompany = companyDAO.findById(company.getId());
+                //                    AssertUtil.state(localCompany != null, "文章不存在");
+                //                    Company.setContent(company.getContent());
+                //                    Company.setGmtModified(new Date());
+                //                    Company.setTitle(company.getTitle());
+                //                    Company.setTopTag(company.getTopPhoto());
+                //                    Company.setTopPhoto(company.getTopPhoto());
+                //                    return new CcResult(localArticle);
+                //                }
+                //                article.setGmtCreate(new Date());
+                //                article.setGmtModified(new Date());
+                //                article.setState(DataStateEnum.NORMAL.getValue());
+                //                articleDAO.save(article);
+                return new CcResult(null);
             }
         });
         modelMap.put("result", result);
-        return new ModelAndView("content/article");
+        return new ModelAndView("content/company");
     }
 
-    @RequestMapping(value = "backstage/deleteArticle.json")
+    @RequestMapping(value = "backstage/deleteCompany.json")
     public @ResponseBody
     ModelMap deleteArticle(HttpServletRequest request, final String articleId, ModelMap modelMap) {
         modelMap.clear();
         CcResult result = serviceTemplate.execute(CcResult.class, new BlankServiceCallBack() {
             @Override
             public CcResult executeService() {
-                Article article = articleDAO.findById(NumberUtils.toInt(articleId));
-                AssertUtil.state(article != null, "文章不存在");
-                articleDAO.delete(article);
+                //                Article article = articleDAO.findById(NumberUtils.toInt(articleId));
+                //                AssertUtil.state(article != null, "文章不存在");
+                //                articleDAO.delete(article);
                 return new CcResult(true);
             }
         });
