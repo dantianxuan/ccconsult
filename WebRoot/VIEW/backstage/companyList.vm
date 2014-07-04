@@ -1,19 +1,20 @@
-<form id="queryArticlesForm" action="$link.contextPath/backstage/articleList.htm">
+<form id="queryArticlesForm" action="$link.contextPath/backstage/companyList.htm">
+
+  
 <div class="row">
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-body">
-            	#foreach($articleTypeEnum in $enumUtil.getEnumClass("com.ccconsult.enums.ArticleTypeEnum").values())
-				<button type="button" class="btn btn-info" onclick="$('#articleType').val($articleTypeEnum.getValue());submitForm(0)">$articleTypeEnum.getDescription()</button>
-				#end
-				
-				<a  class="btn btn-primary" style="float:right" href="$link.contextPath/backstage/articleEdit.htm" target="_blank">新增文章</a>
-				
+					<div class="form-group">
+				      <label for="inputEmail" class="col-lg-2 control-label">Email</label>
+				      <div class="col-lg-10">
+				        <input type="text" class="form-control" id="inputEmail" placeholder="Email">
+				      </div>
+				    </div>
             </div>
         </div>
     </div>
 </div>
-<input type="hidden" name="type" id="articleType"/>
 <div class="row">
     <div class="col-lg-12">
         <div class="panel panel-default">
@@ -22,21 +23,17 @@
                     <thead>
                     <tr>
                     	<th width="5%">ID</th>
-                        <th width="55%">新闻标题</th>
-                        <th width="10%">数据类型</th>
+                        <th width="55%">公司名称</th>
                         <th width="20%">创建时间</th>
                         <th width="10%">操作</th>
                     </tr>
                     </thead>
                     <tbody>
-                    #foreach($article in $articles.getResult())
+                    #foreach($company in $companys.getResult())
                     <tr>
-                    	<td><a href="$link.contextPath/article.htm?articleId=$article.id">$article.id</td>
-                        <td><a href="$link.contextPath/article.htm?articleId=$article.id">$article.title</td>
-                        <td>	
-                        	$enumUtil.getEnumClass("com.ccconsult.enums.ArticleTypeEnum").getByValue($article.type).getDescription()
-						</td>
-                        <td>$date.format("yyyy-MM-dd HH:mm:ss", $article.gmtModified)</td>
+                    	<td><a href="$link.contextPath/article.htm?articleId=$article.id">$company.id</td>
+                        <td><a href="$link.contextPath/article.htm?articleId=$article.id">$company.name</td>
+                        <td>$date.format("yyyy-MM-dd HH:mm:ss", $company.gmtCreate)</td>
                         <td>
                         	<a href="$link.contextPath/backstage/articleEdit.htm?articleId=$article.id" target="_blank">编辑</a>
                         	<a href="javascript:void(0)" onclick="deleteArticle($article.id)">删除</a>

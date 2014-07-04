@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import com.ccconsult.base.PageList;
 import com.ccconsult.pojo.Company;
+import com.ccconsult.util.StringUtil;
 
 /**
  	* A data access object (DAO) providing persistence and search support for Company entities.
@@ -43,8 +44,13 @@ public class CompanyDAO extends BaseHibernateDAO<Company> {
 
     public PageList<Company> queryByName(int pageNo, int pageSize, String name) {
         Map map = new HashMap<String, Object>();
-        map.put(NAME, name);
-        String hql = "from Company where name like %:name% order by gmtCreate desc";
+        String hql = "";
+        if (StringUtil.isBlank(name)) {
+            hql = "from Company  order by gmtCreate desc";
+        } else {
+            map.put(NAME, name);
+            hql = "from Company where name like :name order by gmtCreate desc";
+        }
         return queryPage(pageNo, pageSize, hql, map);
     }
 
