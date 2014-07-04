@@ -44,7 +44,7 @@
 	                                    </script>
 	                                </div>
 	                               <div class="col-lg-2">
-			                            <button type="submit" class="btn btn-primary col-lg-12">
+			                            <button type="submit" class="btn btn-primary btn-sm col-lg-12">
 			                                注册信息
 			                            </button>	                               
 	                               </div>

@@ -16,18 +16,18 @@ import com.ccconsult.pojo.RegMail;
  * @author jingyu.dan
  * 
  */
-public class MailSenderImpl implements MailSender {
+public class RegMailNotifySender implements NotifySender {
 
     /** 发送邮件 */
     @Autowired
     private JavaMailSender javaMailSender;
 
-    /*
-     * (non-Javadoc)
-     * 
+    /** 
+     * @see com.ccconsult.core.NotifySender#notify(java.lang.Object)
      */
     @Override
-    public void sendMail(RegMail regMail) {
+    public void notify(String senderName, Object playload) {
+        RegMail regMail = (RegMail) playload;
         MimeMessage mailMessage = javaMailSender.createMimeMessage();
         try {
             // 设置utf-8或GBK编码，否则邮件会有乱码
@@ -45,10 +45,6 @@ public class MailSenderImpl implements MailSender {
         } catch (Exception e) {
             throw new CcException(e, "邮件发送失败");
         }
-    }
-
-    public void setJavaMailSender(JavaMailSender javaMailSender) {
-        this.javaMailSender = javaMailSender;
     }
 
 }

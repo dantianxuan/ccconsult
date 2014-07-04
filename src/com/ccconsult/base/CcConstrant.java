@@ -28,6 +28,9 @@ public class CcConstrant {
     /** UPLOAD_FOLDER */
     public final static String UPLOAD_FOLDER             = "UPLOAD_FOLDER";
 
+    public final static String CONSULTANT_PHOTO          = "consultant.jpg";
+    public final static String COUNSELOR_PHOTO           = "counselor.jpg";
+
     /**短消息字符长度*/
     public final static int    COMMON_128_LENGTH         = 128;
 

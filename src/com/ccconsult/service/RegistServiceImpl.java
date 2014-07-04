@@ -10,15 +10,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.ccconsult.base.AbstractService;
 import com.ccconsult.base.AssertUtil;
 import com.ccconsult.base.BlankServiceCallBack;
+import com.ccconsult.base.CcConstrant;
 import com.ccconsult.base.CcException;
 import com.ccconsult.base.CcResult;
-import com.ccconsult.core.MailSender;
+import com.ccconsult.core.NotifySender;
 import com.ccconsult.dao.ConsultantDAO;
 import com.ccconsult.dao.CounselorDAO;
 import com.ccconsult.dao.RegMailDAO;
 import com.ccconsult.pojo.Consultant;
 import com.ccconsult.pojo.Counselor;
 import com.ccconsult.pojo.RegMail;
+import com.ccconsult.util.ValidateUtil;
 import com.ccconsult.view.CounselorVO;
 
 /**
@@ -34,7 +36,7 @@ public class RegistServiceImpl extends AbstractService implements RegistService 
     @Autowired
     private CounselorDAO  counselorDAO;
     @Autowired
-    private MailSender    mailSender;
+    private NotifySender  notifySender;
     @Autowired
     private ConsultantDAO consultantDAO;
 
@@ -47,13 +49,13 @@ public class RegistServiceImpl extends AbstractService implements RegistService 
                 RegMail existRegMail = regMailDAO.findByMail(regMail.getMail());
                 if (existRegMail == null) {
                     regMailDAO.save(regMail);
-                    mailSender.sendMail(regMail);
+                    notifySender.notify(NotifySender.REG_MAIL, regMail);
                 } else {
                     CounselorVO counselorVO = counselorDAO.findByEmail(regMail.getMail());
                     if (counselorVO != null) {
                         throw new CcException("您已经注册过该用户，请直接登录，如果忘记密码请点击忘记密码找回");
                     }
-                    mailSender.sendMail(existRegMail);
+                    notifySender.notify(NotifySender.REG_MAIL, existRegMail);
                 }
                 return new CcResult(regMail);
             }
@@ -73,12 +75,20 @@ public class RegistServiceImpl extends AbstractService implements RegistService 
             public CcResult executeService() {
                 AssertUtil.notNull(consultant, "非法的注册请求");
                 AssertUtil.notBlank(consultant.getEmail(), "用户邮箱不能为空");
+                AssertUtil.state(consultant.getEmail().length() < CcConstrant.COMMON_256_LENGTH,
+                    "注册邮箱不能超过256个字符！");
                 AssertUtil.notBlank(consultant.getName(), "用户名称不能为空");
-                AssertUtil.notBlank(consultant.getMobile(), "请输入手机号码");
+                AssertUtil.state(consultant.getName().length() < CcConstrant.COMMON_128_LENGTH,
+                    "注册用户名称不能超过128个字符！");
+                AssertUtil.state(ValidateUtil.isMobile(consultant.getMobile()), "请输入合法的手机号码");
+                AssertUtil.state(consultant.getPasswd() != null
+                                 && consultant.getPasswd().length() > 6
+                                 && consultant.getPasswd().length() < 20, "密码长度必须在6到20个字符之间");
                 Consultant localJobseeker = consultantDAO.findByEmail(consultant.getEmail());
                 if (localJobseeker != null) {
                     throw new CcException("该用户名称已经被注册！");
                 }
+                consultant.setPhoto(CcConstrant.CONSULTANT_PHOTO);
                 consultantDAO.save(consultant);
                 return new CcResult(consultant);
             }
@@ -102,6 +112,7 @@ public class RegistServiceImpl extends AbstractService implements RegistService 
                 if (innerInterviewerVO != null) {
                     throw new CcException("您已经注册过该用户，请直接登录，如果忘记密码请点击忘记密码找回");
                 }
+                counselor.setPhoto(CcConstrant.COUNSELOR_PHOTO);
                 counselorDAO.save(counselor);
                 return new CcResult(counselor);
             }

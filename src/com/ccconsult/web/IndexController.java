@@ -37,7 +37,7 @@ public class IndexController {
     @RequestMapping(value = "/index.htm", method = RequestMethod.GET)
     public ModelAndView toIndex(HttpServletRequest request, ModelMap modelMap) {
         List<Article> articles = articleDAO.queryList(1, 10, ArticleTypeEnum.WEB_NEWS.getValue());
-        List<Company> companys = companyDAO.findAll();
+        List<Company> companys = companyDAO.queryTopList(10);
         modelMap.put("articles", articles);
         modelMap.put("companys", companys);
         ModelAndView view = new ModelAndView("content/index");

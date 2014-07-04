@@ -15,8 +15,10 @@ public class Company extends com.ccconsult.base.ToString implements java.io.Seri
     private String  description;
     private String  link;
     private Date    gmtCreate;
-    private Integer categoryId;
     private String  mailSuffix;
+    private String  photo;
+    private Date    gmtModified;
+    private Integer topTag;
 
     // Constructors
 
@@ -25,14 +27,16 @@ public class Company extends com.ccconsult.base.ToString implements java.io.Seri
     }
 
     /** full constructor */
-    public Company(String name, String description, String link, Date gmtCreate,
-                   Integer categoryId, String mailSuffix) {
+    public Company(String name, String description, String link, Date gmtCreate, String mailSuffix,
+                   String photo, Date gmtModified, Integer topTag) {
         this.name = name;
         this.description = description;
         this.link = link;
         this.gmtCreate = gmtCreate;
-        this.categoryId = categoryId;
         this.mailSuffix = mailSuffix;
+        this.photo = photo;
+        this.gmtModified = gmtModified;
+        this.topTag = topTag;
     }
 
     // Property accessors
@@ -77,20 +81,36 @@ public class Company extends com.ccconsult.base.ToString implements java.io.Seri
         this.gmtCreate = gmtCreate;
     }
 
-    public Integer getCategoryId() {
-        return this.categoryId;
-    }
-
-    public void setCategoryId(Integer categoryId) {
-        this.categoryId = categoryId;
-    }
-
     public String getMailSuffix() {
         return this.mailSuffix;
     }
 
     public void setMailSuffix(String mailSuffix) {
         this.mailSuffix = mailSuffix;
+    }
+
+    public String getPhoto() {
+        return this.photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
+    public Date getGmtModified() {
+        return this.gmtModified;
+    }
+
+    public void setGmtModified(Date gmtModified) {
+        this.gmtModified = gmtModified;
+    }
+
+    public Integer getTopTag() {
+        return this.topTag;
+    }
+
+    public void setTopTag(Integer topTag) {
+        this.topTag = topTag;
     }
 
 }

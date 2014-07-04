@@ -4,20 +4,30 @@
  */
 package com.ccconsult.web;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ccconsult.base.AssertUtil;
+import com.ccconsult.base.BlankServiceCallBack;
+import com.ccconsult.base.CcResult;
+import com.ccconsult.base.PageList;
 import com.ccconsult.dao.CompanyDAO;
 import com.ccconsult.dao.CounselorDAO;
+import com.ccconsult.enums.ArticleTypeEnum;
+import com.ccconsult.enums.DataStateEnum;
+import com.ccconsult.pojo.Article;
 import com.ccconsult.pojo.Company;
 import com.ccconsult.pojo.Counselor;
 
@@ -45,4 +55,70 @@ public class CompanyController extends BaseController {
         modelMap.put("counselors", counselors);
         return view;
     }
+
+    @RequestMapping(value = "backstage/companyEdit.htm", method = RequestMethod.GET)
+    public ModelAndView toPage(HttpServletRequest request, ModelMap modelMap) {
+        String companyId = request.getParameter("companyId");
+        if (!StringUtils.isBlank(companyId)) {
+            modelMap.put("result", new CcResult(companyDAO.findById(NumberUtils.toInt(companyId))));
+        }
+        ModelAndView view = new ModelAndView("backstage/companyEdit");
+        return view;
+    }
+
+    @RequestMapping(value = "backstage/companyList.htm", method = RequestMethod.GET)
+    public ModelAndView manageArticles(HttpServletRequest request, ModelMap modelMap) {
+        int pageSize = NumberUtils.toInt(request.getParameter("pageSize"));
+        int pageNo = NumberUtils.toInt(request.getParameter("pageNo"));
+        String name = request.getParameter("name");
+        PageList<Company> companys = companyDAO.queryByName(pageNo, pageSize == 0 ? 20 : pageSize,
+            name);
+        modelMap.put("companys", companys);
+        return new ModelAndView("backstage/companyList");
+    }
+
+    @RequestMapping(value = "backstage/companyEdit.htm", params = "action=save", method = RequestMethod.POST)
+    public ModelAndView saveCompany(HttpServletRequest request, final Company company,
+                                    ModelMap modelMap) {
+        CcResult result = serviceTemplate.execute(CcResult.class, new BlankServiceCallBack() {
+            @Override
+            public CcResult executeService() {
+                if (company.getId() != null && company.getId() > 0) {
+                    Company localCompany = companyDAO.findById(company.getId());
+                    AssertUtil.state(localCompany != null, "文章不存在");
+                    Company.setContent(company.getContent());
+                    Company.setGmtModified(new Date());
+                    Company.setTitle(company.getTitle());
+                    Company.setTopTag(company.getTopPhoto());
+                    Company.setTopPhoto(company.getTopPhoto());
+                    return new CcResult(localArticle);
+                }
+                article.setGmtCreate(new Date());
+                article.setGmtModified(new Date());
+                article.setState(DataStateEnum.NORMAL.getValue());
+                articleDAO.save(article);
+                return new CcResult(article);
+            }
+        });
+        modelMap.put("result", result);
+        return new ModelAndView("content/article");
+    }
+
+    @RequestMapping(value = "backstage/deleteArticle.json")
+    public @ResponseBody
+    ModelMap deleteArticle(HttpServletRequest request, final String articleId, ModelMap modelMap) {
+        modelMap.clear();
+        CcResult result = serviceTemplate.execute(CcResult.class, new BlankServiceCallBack() {
+            @Override
+            public CcResult executeService() {
+                Article article = articleDAO.findById(NumberUtils.toInt(articleId));
+                AssertUtil.state(article != null, "文章不存在");
+                articleDAO.delete(article);
+                return new CcResult(true);
+            }
+        });
+        modelMap.put("result", result);
+        return modelMap;
+    }
+
 }

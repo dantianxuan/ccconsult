@@ -55,8 +55,6 @@ public class ServiceTemplateImpl implements ServiceTemplate {
             LogUtil.error(logger, e2, "【系统异常】");
             session.getTransaction().rollback();
             return (T) result;
-        } finally {
-            session.close();
         }
         LogUtil.info(logger, "【退出事务服务模板】", result);
         return (T) result;

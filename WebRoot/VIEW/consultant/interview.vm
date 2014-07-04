@@ -82,7 +82,7 @@
 				#if($apprise.creatorRole==2)
 			  		<div class="col-lg-12">
 				  		<div class="col-lg-1">
-				  			<img src="$link.contextPath/STATIC/image/alipay.jpg" class="img-rounded" style="width: 60px;height: 60px;">
+				  			<img src="$link.contextPath/UPLOAD/$consultant.photo" class="img-rounded" style="width: 60px;height: 60px;">
 				  		</div>
 				  		<div class="col-lg-11">
 				  			<div class="col-lg-10  text-left" >
@@ -118,7 +118,7 @@
 							</div>
 				  		</div>
 				  		<div class="col-lg-1">
-				  			<img src="$link.contextPath/STATIC/image/alipay.jpg" class="img-rounded" style="width: 60px;height: 60px;">
+				  			<img src="$link.contextPath/UPLOAD/$!counselorVO.counselor.photo" class="img-rounded" style="width: 60px;height: 60px;">
 				  		</div>				  		
 				  	</div>
 		  		#end
@@ -151,7 +151,7 @@
 		  		#if($messageVO.message.creatorRole==2)
 			  		<div class="col-lg-12">
 				  		<div class="col-lg-1">
-				  			<img src="$link.contextPath/STATIC/image/alipay.jpg" class="img-rounded" style="width: 60px;height: 60px;">
+				  			<img src="$link.contextPath/UPLOAD/$consultant.photo" class="img-rounded" style="width: 60px;height: 60px;">
 				  		</div>
 				  		<div class="col-lg-11">
 				  			<div class="col-lg-10  text-left" >
@@ -179,7 +179,7 @@
 							</div>
 				  		</div>
 				  		<div class="col-lg-1">
-				  			<img src="$link.contextPath/STATIC/image/alipay.jpg" class="img-rounded" style="width: 60px;height: 60px;">
+				  			<img src="$link.contextPath/UPLOAD/$!counselorVO.counselor.photo" class="img-rounded" style="width: 60px;height: 60px;">
 				  		</div>				  		
 				  	</div>
 		  		#end

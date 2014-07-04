@@ -19,7 +19,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ccconsult.base.AssertUtil;
 import com.ccconsult.base.BlankServiceCallBack;
+import com.ccconsult.base.CcException;
 import com.ccconsult.base.CcResult;
+import com.ccconsult.core.NotifySender;
 import com.ccconsult.dao.AppriseDAO;
 import com.ccconsult.dao.ConsultantDAO;
 import com.ccconsult.dao.CounselorDAO;
@@ -49,6 +51,8 @@ public class InterviewController extends BaseController {
     private InterviewDAO  interviewDAO;
     @Autowired
     private MessageDAO    messageDAO;
+    @Autowired
+    private NotifySender  notifySender;
     @Autowired
     private ConsultantDAO consultantDAO;
     @Autowired
@@ -139,6 +143,44 @@ public class InterviewController extends BaseController {
         modelMap.put("apprises", apprises);
         genMap(modelMap);
         return new ModelAndView("counselor/interview");
+    }
+
+    @RequestMapping(value = "counselor/scheduleInterview.json", method = RequestMethod.POST)
+    public @ResponseBody
+    ModelMap scheduleInterview(final HttpServletRequest request, final String scheduleBegin,
+                               final String scheduleEnd, final String interviewId, ModelMap modelMap) {
+        modelMap.clear();
+
+        CcResult result = serviceTemplate.execute(CcResult.class, new BlankServiceCallBack() {
+            @Override
+            public CcResult executeService() {
+                CounselorVO counselorVO = getCounselorInSession(request.getSession());
+                Interview interview = interviewDAO.findById(NumberUtils.toInt(interviewId));
+                AssertUtil.notNull(interview, "记录不存在，请检查或查询登录");
+                AssertUtil.state(
+                    interview.getCounselorId().equals(counselorVO.getCounselor().getId()),
+                    "当前记录不是您的记录，非法操作");
+                AssertUtil.state(interview.getStep().equals(ConsultStepEnum.CREATE.getValue()),
+                    "当前记录不能设定预约时间");
+                Date begin, end;
+                try {
+                    begin = DateUtil.parseDateNoTime(scheduleBegin, DateUtil.webFormat);
+                    end = DateUtil.parseDateNoTime(scheduleEnd, DateUtil.webFormat);
+                } catch (Exception e) {
+                    throw new CcException("错误的时间格式");
+                }
+                AssertUtil.state(begin.before(end), "您选择的时间倒置");
+                AssertUtil.state(DateUtil.getDiffDays(end, begin) <= 3, "最长时间不能超过3天");
+                interview.setGmtShceduleBegin(begin);
+                interview.setGmtScheduleEnd(end);
+                interview.setStep(ConsultStepEnum.ON_SCHEDULE.getValue());
+                interviewDAO.update(interview);
+                notifySender.notify(NotifySender.INTERVIEW_ON_SCHEDULE, interview);
+                return new CcResult(interview);
+            }
+        });
+        modelMap.put("result", result);
+        return modelMap;
     }
 
     private ModelMap genMap(ModelMap modelMap) {

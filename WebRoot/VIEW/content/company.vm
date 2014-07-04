@@ -1,18 +1,26 @@
 <div class="row">
-    <div class="col-lg-4" >
-        <img src="STATIC/image/alipays.jpg" class="img-thumbnail">
-    </div>
-    <!-- right CONTENT================================ -->
-    <div class="col-lg-8" >
-        <div class="panel panel-default">
-            <div class="panel-body" style="font-size: 13px;">
-                <p style="border-bottom:solid 1px #ddd;padding-bottom:12px;"> $!company.description</p>
-                <a  style="float:right;" href="$!company.link" target="_blank">友情链接：www.alipay.net </a>
-            </div>
-        </div>
-    </div>
+	    <div class="col-lg-4" >
+	        <img src="STATIC/image/alipays.jpg" class="img-thumbnail" style="max-height:240px;">
+	    </div>
+	    <!-- right CONTENT================================ -->
+	    <div class="col-lg-8" >
+	        <div class="panel panel-default">
+	            <div class="panel-body" style="font-size: 13px;">
+	                <p style="border-bottom:solid 1px #ddd;padding-bottom:12px;height:140px;overflow:hidden"> $!company.description</p>
+	                <a  style="float:right;" href="$!company.link" target="_blank">友情链接：www.alipay.net </a>
+	            </div>
+	        </div>
+	    </div>
 </div>
-<br/>
+<div class="row" style="margin-top:12px;margin-bottom:12px;font-size:18px">
+    <div class="col-lg-12">
+		<span class="label label-primary">java技术</span>
+		<span class="label label-success">客服中心</span>
+		<span class="label label-warning">渠道运营</span>
+		<span class="label label-danger">商户接入</span>
+		<span class="label label-info">系统运维</span>    
+    </div>
+  </div>  
 <div class="row">
     <div class="col-lg-12">
         <div class="panel panel-default">

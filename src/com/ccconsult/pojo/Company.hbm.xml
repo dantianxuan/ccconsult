@@ -8,13 +8,13 @@
     <class name="com.ccconsult.pojo.Company" table="company" catalog="ccconsult">
         <id name="id" type="integer">
             <column name="id" />
-            <generator class="native" />
+            <generator class="identity" />
         </id>
         <property name="name" type="string">
             <column name="name" unique="true" />
         </property>
         <property name="description" type="string">
-            <column name="description" length="2048" />
+            <column name="description" length="5000" />
         </property>
         <property name="link" type="string">
             <column name="link" length="1024" />
@@ -22,11 +22,17 @@
         <property name="gmtCreate" type="timestamp">
             <column name="gmt_create" length="19" />
         </property>
-        <property name="categoryId" type="integer">
-            <column name="category_id" />
-        </property>
         <property name="mailSuffix" type="string">
             <column name="mail_suffix" />
+        </property>
+        <property name="photo" type="string">
+            <column name="photo" length="128" />
+        </property>
+        <property name="gmtModified" type="timestamp">
+            <column name="gmt_modified" length="19" />
+        </property>
+        <property name="topTag" type="integer">
+            <column name="top_tag" />
         </property>
     </class>
 </hibernate-mapping>

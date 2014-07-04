@@ -64,36 +64,6 @@
 						</a>			
 						</div>
 					</div>
-				#end
-		 		#foreach($company in $companys)
-					<div class="col-lg-4">
-						<div class="well well-sm" style="height:80px;margin-bottom:4px;background-color:#fff">
-						<a href="$link.contextPath/company.htm?companyId=$company.id">
-								<img src="STATIC/image/alipay.jpg"
-								style="width:60px;height: 60px; float:left" class="img-rounded">
-								<p style="padding-left: 72px;">
-									<small>$company.name</small><br /> 
-									<small>面试官：12人</small><br /> 
-									<small>面试人数：24人</small>
-								</p>
-						</a>			
-						</div>
-					</div>
-				#end
-		 		#foreach($company in $companys)
-					<div class="col-lg-4">
-						<div class="well well-sm" style="height:80px;margin-bottom:4px">
-						<a href="$link.contextPath/company.htm?companyId=$company.id">
-								<img src="STATIC/image/alipay.jpg"
-								style="width:60px;height: 60px; float:left" class="img-rounded">
-								<p style="padding-left: 72px;">
-									<small>$company.name</small><br /> 
-									<small>面试官：12人</small><br /> 
-									<small>面试人数：24人</small>
-								</p>
-						</a>			
-						</div>
-					</div>
 				#end												
 			  </div>
 		</div>

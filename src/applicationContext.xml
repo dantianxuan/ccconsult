@@ -10,6 +10,7 @@
                        http://www.springframework.org/schema/aop/spring-aop-2.5.xsd  
                        http://www.springframework.org/schema/tx  
                        http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+
 	<!-- 配置SessionFactory -->
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
@@ -38,7 +39,19 @@
 	<bean id="registService" class="com.ccconsult.service.RegistServiceImpl"></bean>
 	<bean id="articleService" class="com.ccconsult.service.ArticleServiceImpl"></bean>
 
-	<bean id="mailSender" class="com.ccconsult.core.MailSenderImpl"></bean>
+
+
+	<bean id="regMailNotifySender" class="com.ccconsult.core.RegMailNotifySender"></bean>
+	<bean id="onScheduleNotifySender" class="com.ccconsult.core.OnScheduleNotifySender"></bean>
+	<bean id="notifySender" class="com.ccconsult.core.NotifySenderProxy">
+		<property name="notifySenders">
+			<map>
+				<entry key="REG_MAIL" value-ref="regMailNotifySender" />
+				<entry key="INTERVIEW_ON_SCHEDULE" value-ref="onScheduleNotifySender" />
+			</map>
+		</property>
+	</bean>
+
 	<bean id="javaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 
 
