@@ -6,6 +6,7 @@ package com.ccconsult.base;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import com.ccconsult.dao.HibernateSessionFactory;
 import com.ccconsult.util.LogUtil;
@@ -28,10 +29,7 @@ public class ServiceTemplateImpl implements ServiceTemplate {
     @Override
     public <T> T execute(Class<? extends CcResult> clazz, ServiceCallBack action) {
         CcResult result = null;
-        Session session = getSession();
         try {
-            session = getSession();
-            session.beginTransaction();
             result = clazz.newInstance();
             // 执行校验
             action.check();
@@ -40,20 +38,16 @@ public class ServiceTemplateImpl implements ServiceTemplate {
             if (result == null || !(result instanceof CcResult)) {
                 throw new RuntimeException("逻辑错误");
             }
-            session.getTransaction().commit();
         } catch (CcException e) {
             // 业务异常捕获
             LogUtil.error(logger, e, "【业务异常】");
             result.setCode(e.getCode());
             result.setSuccess(false);
             result.setMessage(e.getLocalizedMessage());
-            session.flush();
-            session.getTransaction().rollback();
             return (T) result;
         } catch (Throwable e2) {
             result.setSuccess(false);
             LogUtil.error(logger, e2, "【系统异常】");
-            session.getTransaction().rollback();
             return (T) result;
         }
         LogUtil.info(logger, "【退出事务服务模板】", result);
@@ -64,9 +58,10 @@ public class ServiceTemplateImpl implements ServiceTemplate {
     public <T> T executeWithTx(Class<? extends CcResult> clazz, ServiceCallBack action) {
         CcResult result = null;
         Session session = getSession();
+        Transaction tx = null;
         try {
-            session = getSession();
-            session.beginTransaction();
+            tx = session.getTransaction();
+            tx.begin();
             result = clazz.newInstance();
             // 执行校验
             action.check();
@@ -75,20 +70,19 @@ public class ServiceTemplateImpl implements ServiceTemplate {
             if (result == null || !(result instanceof CcResult)) {
                 throw new RuntimeException("逻辑错误");
             }
-            session.flush();
-            session.getTransaction().commit();
+            tx.commit();
         } catch (CcException e) {
             // 业务异常捕获
             LogUtil.error(logger, e, "【业务异常】");
             result.setCode(e.getCode());
             result.setSuccess(false);
             result.setMessage(e.getLocalizedMessage());
-            session.getTransaction().rollback();
+            tx.rollback();
             return (T) result;
         } catch (Throwable e2) {
             result.setSuccess(false);
             LogUtil.error(logger, e2, "【系统异常】");
-            session.getTransaction().rollback();
+            tx.rollback();
             return (T) result;
         } finally {
             session.close();

@@ -1,12 +1,16 @@
 package com.ccconsult.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.ccconsult.base.PageList;
 import com.ccconsult.pojo.Company;
 import com.ccconsult.pojo.Counselor;
+import com.ccconsult.util.StringUtil;
 import com.ccconsult.view.CounselorVO;
 
 /**
@@ -47,6 +51,24 @@ public class CounselorDAO extends BaseHibernateDAO<Counselor> {
         queryObject.setParameter(0, value);
         return queryObject.list();
 
+    }
+
+    public PageList<Counselor> queryByName(int pageNo, int pageSize, String name) {
+        Map map = new HashMap<String, Object>();
+        String hql = "";
+        if (StringUtil.isBlank(name)) {
+            hql = "from Counselor  order by gmtCreate desc";
+        } else {
+            map.put(NAME, name);
+            hql = "from Counselor where name like :name order by gmtCreate desc";
+        }
+        return queryPage(pageNo, pageSize, hql, map);
+    }
+
+    public int queryCount(int companyId) {
+        Query queryObject = getSession().createQuery(
+            "select count(*) from Counselor where companyId=" + companyId);
+        return ((Long) queryObject.uniqueResult()).intValue();
     }
 
     public List<Counselor> findByCompanyId(int companyId) {

@@ -75,6 +75,30 @@ public class PageList<T> extends ToString {
             return totalCount / pageSize + 1;
     }
 
+    public int getStart() {
+        return start;
+    }
+
+    public void setStart(int start) {
+        this.start = start;
+    }
+
+    public List<T> getData() {
+        return data;
+    }
+
+    public void setData(List<T> data) {
+        this.data = data;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
+
+    public void setTotalCount(int totalCount) {
+        this.totalCount = totalCount;
+    }
+
     /** 
     * 取每页数据容量 
     */
@@ -85,7 +109,7 @@ public class PageList<T> extends ToString {
     /** 
     * 当前页中的记录 
     */
-    public Object getResult() {
+    public List getResult() {
         return data;
     }
 

@@ -4,32 +4,39 @@
  */
 package com.ccconsult.web;
 
+import java.io.File;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ccconsult.base.AssertUtil;
 import com.ccconsult.base.BlankServiceCallBack;
+import com.ccconsult.base.CcException;
 import com.ccconsult.base.CcResult;
 import com.ccconsult.base.PageList;
 import com.ccconsult.dao.CompanyDAO;
 import com.ccconsult.dao.CounselorDAO;
-import com.ccconsult.enums.ArticleTypeEnum;
-import com.ccconsult.enums.DataStateEnum;
-import com.ccconsult.pojo.Article;
 import com.ccconsult.pojo.Company;
 import com.ccconsult.pojo.Counselor;
+import com.ccconsult.util.LogUtil;
+import com.ccconsult.util.StringUtil;
+import com.ccconsult.view.CompanyBriefVO;
 
 /**
  * 
@@ -38,10 +45,12 @@ import com.ccconsult.pojo.Counselor;
  */
 @Controller
 public class CompanyController extends BaseController {
+    /**日志 */
+    private static final Logger logger = Logger.getLogger(CompanyController.class);
     @Autowired
-    private CompanyDAO   companyDAO;
+    private CompanyDAO          companyDAO;
     @Autowired
-    private CounselorDAO counselorDAO;
+    private CounselorDAO        counselorDAO;
 
     @RequestMapping(value = "/company.htm", method = RequestMethod.GET)
     public ModelAndView handleRequest(HttpServletRequest request, ModelMap modelMap) {
@@ -60,7 +69,7 @@ public class CompanyController extends BaseController {
     public ModelAndView toPage(HttpServletRequest request, ModelMap modelMap) {
         String companyId = request.getParameter("companyId");
         if (!StringUtils.isBlank(companyId)) {
-            modelMap.put("result", new CcResult(companyDAO.findById(NumberUtils.toInt(companyId))));
+            modelMap.put("company", companyDAO.findById(NumberUtils.toInt(companyId)));
         }
         ModelAndView view = new ModelAndView("backstage/companyEdit");
         return view;
@@ -71,33 +80,65 @@ public class CompanyController extends BaseController {
         int pageSize = NumberUtils.toInt(request.getParameter("pageSize"));
         int pageNo = NumberUtils.toInt(request.getParameter("pageNo"));
         String name = request.getParameter("name");
-        PageList<Company> companys = companyDAO.queryByName(pageNo, pageSize == 0 ? 20 : pageSize,
-            name);
-        modelMap.put("companys", companys);
+        PageList<CompanyBriefVO> companyBriefVOs = companyDAO.queryByName(pageNo,
+            pageSize == 0 ? 20 : pageSize, name);
+        modelMap.put("companyBriefVOs", companyBriefVOs);
         return new ModelAndView("backstage/companyList");
     }
 
     @RequestMapping(value = "backstage/companyEdit.htm", params = "action=save", method = RequestMethod.POST)
-    public ModelAndView saveCompany(HttpServletRequest request, final Company company,
+    public ModelAndView saveCompany(final HttpServletRequest request, final Company company,
+                                    @RequestParam final MultipartFile[] localPhoto,
                                     ModelMap modelMap) {
         CcResult result = serviceTemplate.execute(CcResult.class, new BlankServiceCallBack() {
             @Override
             public CcResult executeService() {
-                //                if (company.getId() != null && company.getId() > 0) {
-                //                    Company localCompany = companyDAO.findById(company.getId());
-                //                    AssertUtil.state(localCompany != null, "文章不存在");
-                //                    Company.setContent(company.getContent());
-                //                    Company.setGmtModified(new Date());
-                //                    Company.setTitle(company.getTitle());
-                //                    Company.setTopTag(company.getTopPhoto());
-                //                    Company.setTopPhoto(company.getTopPhoto());
-                //                    return new CcResult(localArticle);
-                //                }
-                //                article.setGmtCreate(new Date());
-                //                article.setGmtModified(new Date());
-                //                article.setState(DataStateEnum.NORMAL.getValue());
-                //                articleDAO.save(article);
-                return new CcResult(null);
+                String fileName = "";
+                try {
+                    for (MultipartFile myfile : localPhoto) {
+                        if (!myfile.isEmpty()) {
+                            LogUtil.info(
+                                logger,
+                                "文件长度: " + myfile.getSize() + "文件类型: " + myfile.getContentType()
+                                        + "文件名称: " + myfile.getName() + "文件原名: "
+                                        + myfile.getOriginalFilename());
+                            String path = request.getSession().getServletContext().getRealPath("/")
+                                          + "UPLOAD";
+                            File parentFile = new File(path);
+                            if (!parentFile.exists()) {
+                                parentFile.mkdirs();
+                            }
+                            fileName = UUID.randomUUID().toString() + myfile.getOriginalFilename();
+                            FileCopyUtils.copy(myfile.getBytes(), new File(path, fileName));
+                        }
+                    }
+                } catch (Exception e) {
+                    LogUtil.error(logger, e, "文件上传失败");
+                    throw new CcException("文件上传失败");
+                }
+                if (!StringUtil.isBlank(fileName)) {
+                    company.setPhoto(fileName);
+                }
+
+                if (company.getId() != null && company.getId() > 0) {
+                    Company localCompany = companyDAO.findById(company.getId());
+                    AssertUtil.state(localCompany != null, "公司信息不存在");
+                    localCompany.setDescription(company.getDescription());
+                    localCompany.setGmtModified(new Date());
+                    localCompany.setLink(company.getLink());
+                    localCompany.setMailSuffix(company.getMailSuffix());
+                    localCompany.setName(company.getName());
+                    localCompany.setTopTag(company.getTopTag());
+                    if (company.getPhoto() != null) {
+                        localCompany.setPhoto(company.getPhoto());
+                    }
+                    companyDAO.update(localCompany);
+                    return new CcResult(localCompany);
+                }
+                company.setGmtCreate(new Date());
+                company.setGmtModified(new Date());
+                companyDAO.save(company);
+                return new CcResult(company);
             }
         });
         modelMap.put("result", result);

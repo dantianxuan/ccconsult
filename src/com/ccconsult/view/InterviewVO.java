@@ -4,7 +4,10 @@
  */
 package com.ccconsult.view;
 
+import java.util.List;
+
 import com.ccconsult.base.ToString;
+import com.ccconsult.pojo.Apprise;
 import com.ccconsult.pojo.Consultant;
 import com.ccconsult.pojo.Interview;
 
@@ -23,6 +26,8 @@ public class InterviewVO extends ToString {
     private Consultant        consultant;
 
     private CounselorVO       counselorVO;
+
+    private List<Apprise>     apprises;
 
     public Interview getInterview() {
         return interview;
@@ -46,6 +51,14 @@ public class InterviewVO extends ToString {
 
     public void setCounselorVO(CounselorVO counselorVO) {
         this.counselorVO = counselorVO;
+    }
+
+    public List<Apprise> getApprises() {
+        return apprises;
+    }
+
+    public void setApprises(List<Apprise> apprises) {
+        this.apprises = apprises;
     }
 
 }

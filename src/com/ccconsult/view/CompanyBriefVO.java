@@ -18,8 +18,6 @@ public class CompanyBriefVO extends ToString {
 
     private Company           company;
 
-    private int               interviewCount;
-
     private int               counselorCount;
 
     public Company getCompany() {
@@ -28,14 +26,6 @@ public class CompanyBriefVO extends ToString {
 
     public void setCompany(Company company) {
         this.company = company;
-    }
-
-    public int getInterviewCount() {
-        return interviewCount;
-    }
-
-    public void setInterviewCount(int interviewCount) {
-        this.interviewCount = interviewCount;
     }
 
     public int getCounselorCount() {

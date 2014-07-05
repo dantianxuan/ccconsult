@@ -37,7 +37,7 @@ public class BaseHibernateDAO<T> implements IBaseHibernateDAO {
     public PageList<T> queryPage(int pageNo, int pageSize, String hql, Map map) {
         int count = getTotalCount(hql, map);
         List<T> list = findByQuery(pageNo, pageSize, hql, map);
-        return new PageList<T>(pageSize * pageNo, count, pageSize, list);
+        return new PageList<T>(pageSize * (pageNo-1), count, pageSize, list);
     }
 
     /**

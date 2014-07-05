@@ -8,8 +8,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 
-import com.ccconsult.enums.DataStateEnum;
+import com.ccconsult.enums.AppriseRelTypeEnum;
 import com.ccconsult.enums.ConsultStepEnum;
+import com.ccconsult.enums.DataStateEnum;
+import com.ccconsult.pojo.Apprise;
 import com.ccconsult.pojo.Interview;
 import com.ccconsult.view.InterviewVO;
 
@@ -29,6 +31,8 @@ public class InterviewDAO extends BaseHibernateDAO<Interview> {
     private CounselorDAO        counselorDAO;
     @Autowired
     private ConsultantDAO       consultantDAO;
+    @Autowired
+    private AppriseDAO          appriseDAO;
     //property constants
     public static final String  CONSULTANT_ID = "consultantId";
     public static final String  COUNSELOR_ID  = "counselorId";
@@ -63,11 +67,7 @@ public class InterviewDAO extends BaseHibernateDAO<Interview> {
             return interviewVOs;
         }
         for (Interview interview : interviews) {
-            InterviewVO interviewVO = new InterviewVO();
-            interviewVO.setInterview(interview);
-            interviewVO.setConsultant(consultantDAO.findById(interview.getConsultantId()));
-            interviewVO.setCounselorVO(counselorDAO.findById(interview.getCounselorId()));
-            interviewVOs.add(interviewVO);
+            interviewVOs.add(consInterviewVO(interview));
         }
         return interviewVOs;
     }
@@ -81,11 +81,22 @@ public class InterviewDAO extends BaseHibernateDAO<Interview> {
             return interviewVOs;
         }
         for (Interview interview : interviews) {
-            InterviewVO interviewVO = new InterviewVO();
-            interviewVO.setInterview(interview);
-            interviewVO.setConsultant(consultantDAO.findById(interview.getConsultantId()));
-            interviewVO.setCounselorVO(counselorDAO.findById(interview.getCounselorId()));
-            interviewVOs.add(interviewVO);
+            interviewVOs.add(consInterviewVO(interview));
+        }
+        return interviewVOs;
+    }
+
+    public List<InterviewVO> findRecentFinished(int size) {
+        String hql = "from Interview  where step>="
+                     + ConsultStepEnum.APPRAISE_CONSULTANT.getValue()
+                     + "and state!=3  order by gmtCreate desc";
+        List<Interview> interviews = findByQuery(0, size, hql, null);
+        List<InterviewVO> interviewVOs = new ArrayList<InterviewVO>();
+        if (CollectionUtils.isEmpty(interviews)) {
+            return interviewVOs;
+        }
+        for (Interview interview : interviews) {
+            interviewVOs.add(consInterviewVO(interview));
         }
         return interviewVOs;
     }
@@ -102,13 +113,20 @@ public class InterviewDAO extends BaseHibernateDAO<Interview> {
             return interviewVOs;
         }
         for (Interview interview : interviews) {
-            InterviewVO interviewVO = new InterviewVO();
-            interviewVO.setInterview(interview);
-            interviewVO.setConsultant(consultantDAO.findById(interview.getConsultantId()));
-            interviewVO.setCounselorVO(counselorDAO.findById(interview.getCounselorId()));
-            interviewVOs.add(interviewVO);
+            interviewVOs.add(consInterviewVO(interview));
         }
         return interviewVOs;
+    }
+
+    private InterviewVO consInterviewVO(Interview interview) {
+        InterviewVO interviewVO = new InterviewVO();
+        interviewVO.setInterview(interview);
+        interviewVO.setConsultant(consultantDAO.findById(interview.getConsultantId()));
+        interviewVO.setCounselorVO(counselorDAO.findById(interview.getCounselorId()));
+        List<Apprise> apprises = appriseDAO.findByRelId(interview.getId(),
+            AppriseRelTypeEnum.INTERVIEW.getValue());
+        interviewVO.setApprises(apprises);
+        return interviewVO;
     }
 
 }

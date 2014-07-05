@@ -1,5 +1,6 @@
 package com.ccconsult.dao;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,10 +8,13 @@ import java.util.Map;
 import org.hibernate.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.CollectionUtils;
 
 import com.ccconsult.base.PageList;
 import com.ccconsult.pojo.Company;
 import com.ccconsult.util.StringUtil;
+import com.ccconsult.view.CompanyBriefVO;
 
 /**
  	* A data access object (DAO) providing persistence and search support for Company entities.
@@ -22,7 +26,12 @@ import com.ccconsult.util.StringUtil;
  */
 
 public class CompanyDAO extends BaseHibernateDAO<Company> {
+
     private static final Logger log         = LoggerFactory.getLogger(CompanyDAO.class);
+
+    @Autowired
+    private CounselorDAO        counselorDAO;
+
     //property constants
     public static final String  NAME        = "name";
     public static final String  DESCRIPTION = "description";
@@ -42,16 +51,25 @@ public class CompanyDAO extends BaseHibernateDAO<Company> {
         }
     }
 
-    public PageList<Company> queryByName(int pageNo, int pageSize, String name) {
+    public PageList<CompanyBriefVO> queryByName(int pageNo, int pageSize, String name) {
         Map map = new HashMap<String, Object>();
         String hql = "";
         if (StringUtil.isBlank(name)) {
             hql = "from Company  order by gmtCreate desc";
         } else {
-            map.put(NAME, name);
+            map.put(NAME, "%" + name + "%");
             hql = "from Company where name like :name order by gmtCreate desc";
         }
-        return queryPage(pageNo, pageSize, hql, map);
+        PageList result = queryPage(pageNo, pageSize, hql, map);
+        if (CollectionUtils.isEmpty(result.getResult())) {
+            return result;
+        }
+        List<CompanyBriefVO> briefs = new ArrayList<CompanyBriefVO>();
+        for (Object object : result.getResult()) {
+            briefs.add(consBrief((Company) object));
+        }
+        result.setData(briefs);
+        return result;
     }
 
     public List findAll() {
@@ -66,9 +84,24 @@ public class CompanyDAO extends BaseHibernateDAO<Company> {
         }
     }
 
-    public List<Company> queryTopList(int size) {
+    public List<CompanyBriefVO> queryTopList(int size) {
         String hql = "from Company  order by topTag desc limit 0," + "size";
         Query query = this.getSession().createQuery(hql);
-        return query.list();
+        List<Company> companys = query.list();
+        List<CompanyBriefVO> companyBriefs = new ArrayList<CompanyBriefVO>();
+        if (CollectionUtils.isEmpty(companys)) {
+            return companyBriefs;
+        }
+        for (Company company : companys) {
+            companyBriefs.add(consBrief(company));
+        }
+        return companyBriefs;
+    }
+
+    private CompanyBriefVO consBrief(Company company) {
+        CompanyBriefVO brif = new CompanyBriefVO();
+        brif.setCompany(company);
+        brif.setCounselorCount(counselorDAO.queryCount(company.getId()));
+        return brif;
     }
 }

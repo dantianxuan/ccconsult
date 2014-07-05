@@ -1,9 +1,7 @@
 <!DOCTYPE html>
-<!-- saved from url=(0031)http://bootswatch.com/cerulean/ -->
-<html lang="ch" xmlns="http://www.w3.org/1999/html">
+<html xmlns="http://www.w3.org/1999/html">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>#if($title) $title #else 真咨网 #end</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="$link.contextPath/STATIC/css/bootstrap.css" rel="stylesheet">
@@ -13,6 +11,7 @@
 	<script src="$link.contextPath/STATIC/js/bootstrap.min.js"></script>
 	<script src="$link.contextPath/STATIC/js/bootswatch.js"></script>
 	<script src="$link.contextPath/STATIC/js/select2.js"></script>
+	<link rel="icon" href="$link.contextPath/STATIC/image/ccconsult.ico" type="image/x-icon">
 </head>
 <body>
 #parse("head.vm")   
@@ -25,7 +24,7 @@
 		    $!screen_content
 		    </div>
 		    <div class="col-lg-3">
-		    #parse("right_banner.vm")
+		    #parse("rightBanner.vm")
 		    </div>
 		</div>
 	</div>

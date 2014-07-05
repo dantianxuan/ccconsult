@@ -19,7 +19,6 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -35,8 +34,6 @@ import com.ccconsult.enums.ConsultStepEnum;
 import com.ccconsult.enums.UserRoleEnum;
 import com.ccconsult.pojo.Consultant;
 import com.ccconsult.pojo.Counselor;
-import com.ccconsult.pojo.Interview;
-import com.ccconsult.util.DateUtil;
 import com.ccconsult.util.LogUtil;
 import com.ccconsult.util.StringUtil;
 import com.ccconsult.util.ValidateUtil;
