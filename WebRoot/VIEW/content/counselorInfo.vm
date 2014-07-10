@@ -5,41 +5,57 @@
   <p class="text-primary">请严格遵守本网服务须知，不要在咨询中透漏任何涉及商业机密的信息！.</p>
 </div>
 <div class="row">
-    <div class="col-lg-12">
+    <div class="col-sm-12">
         <div class="panel panel-default">
             <div class="panel-body">
-					<button type="button" class="btn btn-primary" 
-						onclick="window.location.href='$link.contextPath/consultant/createInterview.htm?counselorId=$!counselorVO.counselor.id'"><span class="glyphicon glyphicon-star">
-						</span>  预约咨询
+	            	#foreach($serviceConfigVO in $!counselorVO.serviceConfigs)
+	        		<button style="margin-right:4px;" type="button" class="btn #if($serviceConfigVO.service.id==4) btn-primary #else btn-warning #end col-sm-2"
+							onclick="$('.serviceArea').addClass('hide');$('#serviceArea_$serviceConfigVO.service.id').removeClass('hide');">
+							#if($velocityCount==0) <span class="glyphicon glyphicon-fire"></span> #end  $serviceConfigVO.service.name
 					</button>
-					<button type="button" class="btn btn-warning"> <span class="glyphicon glyphicon-comment"></span> 站内咨询</button>
-					<HR/>
-					<p class="text-info">预约咨询费用：<span style="font-size:20px;">30</span>元/次，咨询时间不小于10分钟,为保证双方利益，我们会对您的咨询进行<a href="" style="font-size:18px">咨询担保交易</a></p>
+	            	#end
+	            	<hr/>
+	            	#foreach($serviceConfigVO in $!counselorVO.serviceConfigs)
+	            	<div class="alert alert-dismissable alert-success serviceArea #if($velocityCount!=0) hide #end" id="serviceArea_$serviceConfigVO.service.id" >
+						  <h4>欢迎使用$serviceConfigVO.service.name服务!</h4>
+						  <p>$serviceConfigVO.service.description</p>
+						  <p class="text-primary">
+						  	<span style="font-size:20px;">
+						  		<span class="glyphicon glyphicon-copyright-mark"></span>$serviceConfigVO.serviceConfig.price/次
+					  		</span> 
+						    <a class="btn btn-primary" href="$link.contextPath/consultant/consult/create${serviceConfigVO.service.code}Init.htm?serviceConfigId=$serviceConfigVO.serviceConfig.id" style="float:right;"><span class="glyphicon glyphicon-send"></span>  发起咨询</a>		
+				  		  </p>
+					</div>
+				 	#end		
+					<p class="text-info">为保证双方利益，我们会对您的咨询进行<a href="" style="font-size:18px">咨询担保交易</a></p>
        	 	</div>
     	</div>
     </div>
 </div> 
-
 <div class="row">
-    <div class="col-lg-12">
+    <div class="col-sm-12">
         <div class="panel panel-default">
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-lg-2">
-                        <img src="$link.contextPath/UPLOAD/$!counselorVO.counselor.photo" class="img-rounded" style="margin-left:12px;width: 82px;height: 82px;">
+                    <div class="col-sm-2">
+                        <img src="$link.contextPath/UPLOAD/$!counselorVO.counselor.photo" class="img-thumbnail" style="margin-left:12px;width: 82px;height: 82px;">
                     </div>
-                    <div class="col-lg-5">
-	                    <p class="col-lg-12"><strong class=" text-right col-lg-4">名称:</strong>$!counselorVO.counselor.name</p>
-	                    <p class="col-lg-12"><strong class=" text-right col-lg-4">认证邮箱:</strong>******</p>
-	                    <p class="col-lg-12"><strong class=" text-right col-lg-4">公司:</strong>$!counselorVO.company.name</p>
+                    <div class="col-sm-5">
+	                    <p class="col-sm-12"><strong class=" text-right col-sm-4">名称:</strong>$!counselorVO.counselor.name</p>
+	                    <p class="col-sm-12"><strong class=" text-right col-sm-4">认证邮箱:</strong>******</p>
+	                    <p class="col-sm-12"><strong class=" text-right col-sm-4">公司:</strong>$!counselorVO.company.name</p>
                     </div>
-                    <div class="col-lg-5">
-	                    <p class="col-lg-12"><strong class=" text-right col-lg-4">手机:</strong>**********</p>
-	                    <p class="col-lg-12"><strong class=" text-right col-lg-4">部门:</strong>$!counselorVO.counselor.department</p>
+                    <div class="col-sm-5">
+	                    <p class="col-sm-12"><strong class=" text-right col-sm-4">手机:</strong>**********</p>
+	                    <p class="col-sm-12"><strong class=" text-right col-sm-4">部门:</strong>$!counselorVO.counselor.department</p>
                     </div>	
-                </div>
+                    <div class="col-sm-12" style="border-top:solid 1px #ddd;padding-top:12px;margin-bottom:12px;">	
+                    	<span class="label label-primary"><span class="glyphicon glyphicon-tag"></span> 好评率：98%</span> 
+                    	<span class="label label-primary"><span class="glyphicon glyphicon-fire"></span> 活跃度：活跃</span> 
+                    </div>                    
+                </div>              
                 <div class="row">
-                    <div class="col-lg-12" style="border-top:solid 1px #ddd">
+                    <div class="col-sm-12" style="border-top:solid 1px #ddd">
                     	<small>
                         <span style="margin-left:24px;"></span>$!counselorVO.counselor.description
                         </small>

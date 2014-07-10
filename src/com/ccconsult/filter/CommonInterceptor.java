@@ -33,5 +33,4 @@ public class CommonInterceptor extends HandlerInterceptorAdapter {
         return true;
     }
 
-
 }

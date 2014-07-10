@@ -15,8 +15,8 @@ public enum MessageRelTypeEnum {
     /** 文章 */
     ARTICLE(1, "ARTICLE", "文章"),
 
-    /** 面试咨询 */
-    INTERVIEW(2, "INTERVIEW", "面试咨询");
+    /** 咨询 */
+    CONSULT(2, "CONSULT", "咨询");
 
     /** 枚举码 */
     private int    value;

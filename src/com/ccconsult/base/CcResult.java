@@ -49,6 +49,13 @@ public class CcResult extends ToString {
         }
     }
 
+    public static CcResult retFailure(String message) {
+        CcResult result = new CcResult();
+        result.setSuccess(false);
+        result.setMessage(message);
+        return result;
+    }
+
     public CcResult(Object object) {
         this.success = true;
         this.message = "处理成功";

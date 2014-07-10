@@ -28,8 +28,8 @@ public class ResumeDAO extends BaseHibernateDAO<Resume> {
     public static final String  MOBILE          = "mobile";
     public static final String  EMAIL           = "email";
     public static final String  WORK_EXPERIENCE = "workExperience";
-    public static final String  school = "school";
-    public static final String  profession = "profession";
+    public static final String  school          = "school";
+    public static final String  profession      = "profession";
 
     @Override
     public void save(Resume transientInstance) {

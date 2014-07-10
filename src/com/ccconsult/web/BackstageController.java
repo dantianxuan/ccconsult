@@ -18,7 +18,6 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class BackstageController extends BaseController {
 
-
     @RequestMapping(value = "backstage/index.htm", method = RequestMethod.GET)
     public ModelAndView toPage(HttpServletRequest request, ModelMap modelMap) {
         ModelAndView view = new ModelAndView("backstage/index");

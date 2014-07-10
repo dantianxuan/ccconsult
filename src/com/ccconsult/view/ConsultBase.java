@@ -8,33 +8,39 @@ import java.util.List;
 
 import com.ccconsult.base.ToString;
 import com.ccconsult.pojo.Apprise;
+import com.ccconsult.pojo.Consult;
 import com.ccconsult.pojo.Consultant;
-import com.ccconsult.pojo.Interview;
 
 /**
+ * 咨询对象基类
  * 
  * @author jingyudan
- * @version $Id: InterviewVO.java, v 0.1 2014-6-11 下午8:21:25 jingyudan Exp $
+ * @version $Id: CounsultBase.java, v 0.1 2014-6-11 下午8:21:25 jingyudan Exp $
  */
-public class InterviewVO extends ToString {
-
-    /**  */
+public class ConsultBase extends ToString {
     private static final long serialVersionUID = 1L;
 
-    private Interview         interview;
+    /**咨询对象*/
+    protected Consult         consult;
 
-    private Consultant        consultant;
+    /**咨询者*/
+    protected Consultant      consultant;
 
-    private CounselorVO       counselorVO;
+    /**咨询服务*/
+    protected ServiceConfigVO serviceConfigVO;
 
-    private List<Apprise>     apprises;
+    /**咨询师对象*/
+    protected CounselorVO     counselorVO;
 
-    public Interview getInterview() {
-        return interview;
+    /**评价对象*/
+    protected List<Apprise>   apprises;
+
+    public Consult getConsult() {
+        return consult;
     }
 
-    public void setInterview(Interview interview) {
-        this.interview = interview;
+    public void setConsult(Consult consult) {
+        this.consult = consult;
     }
 
     public Consultant getConsultant() {
@@ -59,6 +65,14 @@ public class InterviewVO extends ToString {
 
     public void setApprises(List<Apprise> apprises) {
         this.apprises = apprises;
+    }
+
+    public ServiceConfigVO getServiceConfigVO() {
+        return serviceConfigVO;
+    }
+
+    public void setServiceConfigVO(ServiceConfigVO serviceConfigVO) {
+        this.serviceConfigVO = serviceConfigVO;
     }
 
 }

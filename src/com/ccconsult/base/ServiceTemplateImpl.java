@@ -85,6 +85,7 @@ public class ServiceTemplateImpl implements ServiceTemplate {
             tx.rollback();
             return (T) result;
         } finally {
+            session.flush();
             session.close();
         }
         LogUtil.info(logger, "【退出无事务服务模板】", result);

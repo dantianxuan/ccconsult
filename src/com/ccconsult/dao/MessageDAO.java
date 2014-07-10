@@ -59,4 +59,14 @@ public class MessageDAO extends BaseHibernateDAO<Message> {
         }
         return messagevos;
     }
+
+    public List<Message> queryByRelInfoAndCreator(int relId, int relType, int creator,
+                                                  int creatorRole) {
+        String queryString = "from Message as model where model.relId=" + relId
+                             + " and model.relType=" + relType + " and model.creator="
+                             + creator + " and model.creatorRole=" + creatorRole
+                             + " order by gmtCreate desc";
+        Query queryObject = getSession().createQuery(queryString);
+        return queryObject.list();
+    }
 }

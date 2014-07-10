@@ -1,5 +1,5 @@
 <div class="row">
-	<div class="col-lg-12">
+	<div class="col-sm-12">
 		<div class="panel panel-info">
 			  <div class="panel-body">		  
 			  	<a  href="$link.contextPath/backstage/articleList.htm" class="btn btn-default ">文章管理</a>

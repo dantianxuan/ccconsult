@@ -18,6 +18,7 @@ import com.ccconsult.base.CcConstrant;
 import com.ccconsult.base.CcResult;
 import com.ccconsult.dao.ConsultantDAO;
 import com.ccconsult.dao.CounselorDAO;
+import com.ccconsult.dao.ServiceDAO;
 import com.ccconsult.pojo.Consultant;
 import com.ccconsult.util.StringUtil;
 import com.ccconsult.view.CounselorVO;
@@ -33,6 +34,8 @@ public class LoginController {
     private CounselorDAO  counselorDAO;
     @Autowired
     private ConsultantDAO consultantDAO;
+    @Autowired
+    private ServiceDAO    serviceDAO;
 
     @RequestMapping(value = "/login.htm", params = "action=COUNSELOR", method = RequestMethod.POST)
     public ModelAndView loginInterviewer(HttpServletRequest request, String account,
@@ -49,12 +52,14 @@ public class LoginController {
             return new ModelAndView("content/login");
         }
         request.getSession().setAttribute(CcConstrant.SESSION_COUNSELOR_OBJECT, counselorVO);
+        request.getSession().setAttribute(CcConstrant.ALL_SERVICES, serviceDAO.findAll());
+        request.getSession().removeAttribute(CcConstrant.SESSION_CONSULTANT_OBJECT);
         String redirectUrl = (String) request.getSession().getAttribute("redirectUrl");
-        if (!StringUtil.isBlank(redirectUrl)) {
+        if (!StringUtil.isBlank(redirectUrl) && !redirectUrl.contains("/consultant/")) {
             request.getSession().removeAttribute("redirectUrl");
             return new ModelAndView("redirect:" + redirectUrl);
         }
-        return new ModelAndView("redirect:/counselor/counselorSelf.htm");
+        return new ModelAndView("redirect:/counselor/consult/searchConsult.htm?step=1");
 
     }
 
@@ -72,8 +77,10 @@ public class LoginController {
             return new ModelAndView("content/login");
         }
         request.getSession().setAttribute(CcConstrant.SESSION_CONSULTANT_OBJECT, consultant);
+        request.getSession().setAttribute(CcConstrant.ALL_SERVICES, serviceDAO.findAll());
+        request.getSession().removeAttribute(CcConstrant.SESSION_COUNSELOR_OBJECT);
         String redirectUrl = (String) request.getSession().getAttribute("redirectUrl");
-        if (!StringUtil.isBlank(redirectUrl)) {
+        if (!StringUtil.isBlank(redirectUrl) && !redirectUrl.contains("/counselor/")) {
             request.getSession().removeAttribute("redirectUrl");
             return new ModelAndView("redirect:" + redirectUrl);
         }

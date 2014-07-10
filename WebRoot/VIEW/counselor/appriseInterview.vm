@@ -13,7 +13,7 @@
 #else
 <form  id="appriseInterviewForm">
 <div class="row">
-	<div class="col-lg-12">
+	<div class="col-sm-12">
 			<div class="alert alert-dismissable alert-info">
 			  <strong>感谢您的评价</strong> 
 			  请客观公正的评价您的咨询者，完成评价后才能完成您的咨询
@@ -21,21 +21,21 @@
 	</div>
 </div>
 <div class="row">
-	<div class="col-lg-12">
+	<div class="col-sm-12">
 		<div class="panel panel-default">
 		  <div class="panel-heading"><span class="glyphicon glyphicon-pushpin"></span>咨询者信息</div>
 		  <div class="panel-body">
-		  		<div class="col-lg-12">
-                  	<div class="col-lg-1">
+		  		<div class="col-sm-12">
+                  	<div class="col-sm-1">
                         <img src="$link.contextPath/UPLOAD/$!counselorVO.counselor.photo" class="img-rounded" style="width: 82px;height: 82px;">
                     </div>
-                    <div class="col-lg-11">
-	                    <p class="col-lg-12"><span class=" text-right col-lg-2">名称:</span>$!consultant.name</p>
-	                    <p class="col-lg-12"><span class=" text-right col-lg-2">邮箱:</span>$!consultant.email</p>
-	                    <p class="col-lg-12"><span class=" text-right col-lg-2">手机号码:</span>$!consultant.mobile</p>
+                    <div class="col-sm-11">
+	                    <p class="col-sm-12"><span class=" text-right col-sm-2">名称:</span>$!consultant.name</p>
+	                    <p class="col-sm-12"><span class=" text-right col-sm-2">邮箱:</span>$!consultant.email</p>
+	                    <p class="col-sm-12"><span class=" text-right col-sm-2">手机号码:</span>$!consultant.mobile</p>
                     </div>
                 </div>	
-		  		<div class="col-lg-12" style="border-top:solid 1px #ddd">
+		  		<div class="col-sm-12" style="border-top:solid 1px #ddd">
 						<p>为了让您更了解您的咨询者，您可以查看他的<a  target="_blank" href="$link.contextPath/counselor/consultantResume.htm?consultantId=$!consultant.id"><strong style="font-size:22px;">个人简历</strong></a>或者留言进行了解。 </p>
                 </div>	                
 		  </div>
@@ -44,7 +44,7 @@
 </div>
 
 <div class="row">
-	<div class="col-lg-12">
+	<div class="col-sm-12">
 		<div class="panel panel-default">
 		  <div class="panel-body">
 		  	<input type="radio" name="apprise"  value="1" checked>
@@ -60,7 +60,7 @@
 	</div>
 </div>		  
 <div class="row">
-	<div class="col-lg-12">
+	<div class="col-sm-12">
         <script type="text/plain" id="myEditor" name="message" style="width:100%;height:200px;">$!article.content</script>
         <script type="text/javascript">
 		    $(function(){
@@ -72,7 +72,7 @@
         </script>   
         <br/>
         <input type="hidden" name="relId" value="$interview.id"/>
-        <button type="button" class="btn btn-danger col-lg-2" style="float:right;" onclick="appriseInterview()">完成评价</button>
+        <button type="button" class="btn btn-danger col-sm-2" style="float:right;" onclick="appriseInterview()">完成评价</button>
         <a href="$link.contextPath/counselor/interview.htm?interviewId=$interview.id" class="btn btn-link" style="float:right;">返回记录</a>
 	</div> 	  	
 </div>

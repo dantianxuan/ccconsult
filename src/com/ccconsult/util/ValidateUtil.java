@@ -18,6 +18,9 @@ public class ValidateUtil {
     private static final Pattern CHINA_MOBILE_REGEX = Pattern
                                                         .compile("^(([+]?[0]{0,2}86)|([+]?0{0,2}86-))?1(3|4|5|7|8)\\d{9}$");
 
+    private static final Pattern EMAIL_REGEX        = Pattern
+                                                        .compile("[a-zA-Z0-9_\\-\\.]+@[a-zA-Z0-9]+(\\.(com|cn|org|edu|hk))");
+
     /**
      * 验证是否是大陆手机号
      * 
@@ -26,6 +29,19 @@ public class ValidateUtil {
      */
     public static boolean isMobile(String mobile) {
         if (StringUtil.isNotBlank(mobile) && CHINA_MOBILE_REGEX.matcher(mobile).find()) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 验证是否手机邮箱
+     * 
+     * @param email  邮箱格式
+     * @return       格式正确与否
+     */
+    public static boolean isEmail(String email) {
+        if (StringUtil.isNotBlank(email) && EMAIL_REGEX.matcher(email).find()) {
             return true;
         }
         return false;

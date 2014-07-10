@@ -4,6 +4,8 @@
  */
 package com.ccconsult.view;
 
+import java.util.List;
+
 import com.ccconsult.base.ToString;
 import com.ccconsult.pojo.Company;
 import com.ccconsult.pojo.Counselor;
@@ -18,17 +20,21 @@ import com.ccconsult.pojo.Counselor;
 public class CounselorVO extends ToString {
 
     /**  */
-    private static final long serialVersionUID = 1L;
+    private static final long     serialVersionUID = 1L;
 
     /**面试官*/
-    private Counselor         counselor;
+    private Counselor             counselor;
 
     /**公司信息*/
-    private Company           company;
+    private Company               company;
 
-    public CounselorVO(Counselor counselor, Company company) {
+    private List<ServiceConfigVO> serviceConfigs;
+
+    public CounselorVO(Counselor counselor, Company company, List<ServiceConfigVO> serviceConfigs) {
         this.counselor = counselor;
         this.company = company;
+        this.serviceConfigs = serviceConfigs;
+
     }
 
     public Counselor getCounselor() {
@@ -45,6 +51,14 @@ public class CounselorVO extends ToString {
 
     public void setCompany(Company company) {
         this.company = company;
+    }
+
+    public List<ServiceConfigVO> getServiceConfigs() {
+        return serviceConfigs;
+    }
+
+    public void setServiceConfigs(List<ServiceConfigVO> serviceConfigs) {
+        this.serviceConfigs = serviceConfigs;
     }
 
 }

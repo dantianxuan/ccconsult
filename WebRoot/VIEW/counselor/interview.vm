@@ -12,13 +12,13 @@
 <input type="hidden" id="interviewIdHidden" value="$interview.id">
 #if($interview.step==1)
 <div class="row">
-    <div class="col-lg-12">
+    <div class="col-sm-12">
         <div class="panel panel-default">
 	            <div class="panel-body">
-                <div class="col-lg-12">
+                <div class="col-sm-12">
 	            	<p class="text-primary">请操作完成咨询预约</p>
 	            </div>
-        		<div class="col-lg-12">
+        		<div class="col-sm-12">
 					<button  class="btn btn-primary" onclick="$('#timeScheduleArea').toggle(200);"><span class="glyphicon glyphicon-ok"></span> 接受预约</button>
 					<button  class="btn btn-warning" ><span class="glyphicon glyphicon-remove"></span> 拒绝预约</>
 				</div>
@@ -27,22 +27,22 @@
  	</div>
 </div>
 <div class="row" id="timeScheduleArea" style="display:none;">
-    <div class="col-lg-12">
+    <div class="col-sm-12">
         <div class="panel panel-default">
             <div class="panel-body">
-	            <div class="col-lg-12">
+	            <div class="col-sm-12">
 	            	<p class="text-primary">接受预约后请设定预约时间，请再您设定的时间完成你们的咨询，请再咨询完成后双方进行评价完成咨询，你的预约时间最长能够持续3天，如果3天内未完成预约，咨询将被取消，
 	            	<strong>默认时间为3天</strong></p>
 	            </div>
-            	<div class="col-lg-12">
+            	<div class="col-sm-12">
             	 <div class="panel panel-default">
            			 <div class="panel-body">
-	 	            <div class="col-lg-12">
+	 	            <div class="col-sm-12">
 		            	<p class="text-primary">请确认时间</strong></p>
 		            </div>
-            		<div class="col-lg-5">
+            		<div class="col-sm-5">
 		                <span class="glyphicon glyphicon-dashboard"></span>开始时间<br/>
-		                <div class="input-group date form_datetime1 col-lg-12" data-date-format="yyyy-MM-dd hh:ii"
+		                <div class="input-group date form_datetime1 col-sm-12" data-date-format="yyyy-MM-dd hh:ii"
 		                data-link-field="scheduleBeginHidden">
 		                    <input class="form-control" size="16" type="text" value="$today" >
 		                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
@@ -50,9 +50,9 @@
 							<input type="hidden"  id="scheduleBeginHidden" value="$today" />
 		                </div>
 					</div>
-					<div class="col-lg-5">
+					<div class="col-sm-5">
 						<span class="glyphicon glyphicon-dashboard"></span>结束时间<br/>
-		                <div class="input-group date form_datetime2 col-lg-12" data-date-format="yyyy-MM-dd hh:ii" 
+		                <div class="input-group date form_datetime2 col-sm-12" data-date-format="yyyy-MM-dd hh:ii" 
 		                data-link-field="scheduleEndHidden">
 		                    <input class="form-control" size="16" type="text" value="$after3day" >
 		                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
@@ -63,7 +63,7 @@
 					</div>
 				</div>	
        	 		</div> 
-       	 		<div class="col-lg-12">
+       	 		<div class="col-sm-12">
        	 			<button type="button" onclick="scheduleInterview()" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-arrow-right" ></span>确认预约</button>
        	 		</div> 	       	 			  
             </div>            
@@ -72,7 +72,7 @@
 </div>
 #else
 <div class="row">
-	<div class="col-lg-12">
+	<div class="col-sm-12">
 			<div class="alert alert-dismissable alert-warning">
 			  <strong>恭喜您完成预约</strong> 请您在约定时间联系您的咨询者完成咨询服务.
 			  <H4><span class="glyphicon glyphicon-dashboard"></span>$date.format("yyyy-MM-dd HH:mm:ss",$interview.gmtShceduleBegin)  $date.format("yyyy-MM-dd HH:mm:ss", $interview.gmtScheduleEnd) </4>
@@ -81,21 +81,21 @@
 </div>
 #end	
 <div class="row">
-	<div class="col-lg-12">
+	<div class="col-sm-12">
 		<div class="panel panel-default">
 		  <div class="panel-heading"><span class="glyphicon glyphicon-pushpin"></span>咨询者信息</div>
 		  <div class="panel-body">
-		  		<div class="col-lg-12">
-                  	<div class="col-lg-1">
+		  		<div class="col-sm-12">
+                  	<div class="col-sm-1">
                         <img src="$link.contextPath/UPLOAD/$!counselorVO.counselor.photo" class="img-rounded" style="width: 82px;height: 82px;">
                     </div>
-                    <div class="col-lg-11">
-	                    <p class="col-lg-12"><span class=" text-right col-lg-2">名称:</span>$!consultant.name</p>
-	                    <p class="col-lg-12"><span class=" text-right col-lg-2">邮箱:</span>$!consultant.email</p>
-	                    <p class="col-lg-12"><span class=" text-right col-lg-2">手机号码:</span>$!consultant.mobile</p>
+                    <div class="col-sm-11">
+	                    <p class="col-sm-12"><span class=" text-right col-sm-2">名称:</span>$!consultant.name</p>
+	                    <p class="col-sm-12"><span class=" text-right col-sm-2">邮箱:</span>$!consultant.email</p>
+	                    <p class="col-sm-12"><span class=" text-right col-sm-2">手机号码:</span>$!consultant.mobile</p>
                     </div>
                 </div>	
-		  		<div class="col-lg-12" style="border-top:solid 1px #ddd">
+		  		<div class="col-sm-12" style="border-top:solid 1px #ddd">
 						<p>为了让您更了解您的咨询者，您可以查看他的<a  target="_blank" href="$link.contextPath/counselor/consultantResume.htm?consultantId=$!consultant.id"><strong style="font-size:22px;">个人简历</strong></a>或者留言进行了解。 </p>
                 </div>	                
 		  </div>
@@ -104,11 +104,11 @@
 </div>	
 
 <div class="row">
-	<div class="col-lg-12">
+	<div class="col-sm-12">
 		<div class="panel panel-default">
 		  <div class="panel-heading"><span class="glyphicon glyphicon-pushpin"></span>咨询记录状态</div>
 		  <div class="panel-body">
-                    <div class="col-lg-12" >
+                    <div class="col-sm-12" >
 						  <p>
 							  <a  class="btn btn-sm  btn-success disabled ">创建咨询请求</a>
 							  <span class="glyphicon glyphicon-arrow-right"></span>
@@ -144,7 +144,7 @@
 </div>
 
 <div class="row">
-	<div class="col-lg-12">
+	<div class="col-sm-12">
 		<div class="panel panel-default">
 		  <div class="panel-heading"><span class="glyphicon glyphicon-pushpin"></span>备注信息</div>
 		  <div class="panel-body">
@@ -155,18 +155,18 @@
 </div>
 
 <div class="row">
-	<div class="col-lg-12">
+	<div class="col-sm-12">
 		<div class="panel panel-default">
 		  <div class="panel-heading"><span class="glyphicon glyphicon-comment"></span> 消息留言</div>
 		  <div class="panel-body">
 		  	#foreach($messageVO in $messageVOs)
 		  		#if($messageVO.message.creatorRole==2)
-			  		<div class="col-lg-12">
-				  		<div class="col-lg-1">
+			  		<div class="col-sm-12">
+				  		<div class="col-sm-1">
 				  			<img src="$link.contextPath/UPLOAD/$!message.consultant.photo" class="img-rounded" style="width: 50px;height: 50px;">
 				  		</div>
-				  		<div class="col-lg-11">
-				  			<div class="col-lg-10  text-left" >
+				  		<div class="col-sm-11">
+				  			<div class="col-sm-10  text-left" >
 					  			<div class="panel panel-default">
 								  <div class="panel-body">
 								  		<p class="text-primary" style="border-bottom:solid 1px #ddd">咨询者：$messageVO.consultant.name    <span style="float:right;">
@@ -178,9 +178,9 @@
 				  		</div>
 				  	</div>
 		  		#elseif($messageVO.message.creatorRole==1)
-			  		<div class="col-lg-12">
-				  		<div class="col-lg-11">
-				  			<div class="col-lg-10  text-right col-lg-offset-2" >
+			  		<div class="col-sm-12">
+				  		<div class="col-sm-11">
+				  			<div class="col-sm-10  text-right col-sm-offset-2" >
 					  			<div class="panel panel-default">
 								  <div class="panel-body">
 								  		<p class="text-primary" style="border-bottom:solid 1px #ddd">我 <span style="float:left;">
@@ -190,7 +190,7 @@
 								</div>
 							</div>
 				  		</div>
-				  		<div class="col-lg-1">
+				  		<div class="col-sm-1">
 				  			<img src="$link.contextPath/UPLOAD/$!messageVO.counselor.photo" class="img-rounded" style="width: 50px;height: 50px;">
 				  		</div>				  		
 				  	</div>
@@ -198,7 +198,7 @@
 		  	#end
 		  	#if($interview.step<5)
 		  	<form id="sendMessageForm">
-			<div class="col-lg-12">
+			<div class="col-sm-12">
 				<hr/>
                 <script type="text/plain" id="myEditor" name="message" style="width:100%;height:200px;">$!article.content</script>
                 <script type="text/javascript">
@@ -213,7 +213,7 @@
                 <input type="hidden" name="creatorRole" value="1"/>
                 <input type="hidden" name="creator"  value="$counselorVO.counselor.id"/>
                 <input type="hidden" name="relId" value="$interview.id"/>
-			   <button type="button" class="btn btn-danger col-lg-2" style="float:right;" onclick="sendMessage()">留言</button>
+			   <button type="button" class="btn btn-danger col-sm-2" style="float:right;" onclick="sendMessage()">留言</button>
 		  	</div>
 		  	</form>
 		  	#end

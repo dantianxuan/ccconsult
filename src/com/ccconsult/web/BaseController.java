@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccconsult.base.CcConstrant;
 import com.ccconsult.base.ServiceTemplate;
+import com.ccconsult.dao.ConsultantDAO;
+import com.ccconsult.dao.CounselorDAO;
 import com.ccconsult.pojo.Consultant;
 import com.ccconsult.view.CounselorVO;
 
@@ -23,6 +25,10 @@ public class BaseController {
 
     @Autowired
     protected ServiceTemplate serviceTemplate;
+    @Autowired
+    protected CounselorDAO    counselorDAO;
+    @Autowired
+    protected ConsultantDAO   consultantDAO;
 
     public Consultant getConsultantInSession(HttpSession session) {
         Object consultant = session.getAttribute(CcConstrant.SESSION_CONSULTANT_OBJECT);
@@ -31,6 +37,16 @@ public class BaseController {
         } else {
             return null;
         }
+    }
+
+    public void reflushCouselorSession(int counselorId, HttpSession session) {
+        CounselorVO counselorVO = counselorDAO.findById(counselorId);
+        session.setAttribute(CcConstrant.SESSION_COUNSELOR_OBJECT, counselorVO);
+    }
+
+    public void reflushConsultantSession(int consultantId, HttpSession session) {
+        Consultant consultant = consultantDAO.findById(consultantId);
+        session.setAttribute(CcConstrant.SESSION_COUNSELOR_OBJECT, consultant);
     }
 
     public CounselorVO getCounselorInSession(HttpSession session) {

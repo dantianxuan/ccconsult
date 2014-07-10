@@ -10,6 +10,11 @@
 		<scope>request</scope>
 		<class>org.apache.velocity.tools.view.tools.LinkTool</class>
 	</tool>
+	<toolbox>
+		<key>loop</key>
+		<scope>request</scope>
+		<class>org.apache.velocity.tools.generic.LoopTool</class>
+	</toolbox>
 	<tool>
 		<key>constant</key>
 		<scope>application</scope>
@@ -25,4 +30,10 @@
 		<scope>application</scope>
 		<class>com.ccconsult.util.StringUtil</class>
 	</tool>
+	<tool>
+		<key>fileUtil</key>
+		<scope>application</scope>
+		<class>com.ccconsult.util.FileUtil</class>
+	</tool>
+
 </toolbox>

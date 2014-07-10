@@ -1,4 +1,5 @@
 #set($consultant=$session.getAttribute("SESSION_CONSULTANT_OBJECT"))
+#parse("consultant/consultantGuide.vm")
 <script>
 	function deleteInterview(interviewId){
 		if(!confirm("请确认您要删除该记录")){
@@ -20,73 +21,51 @@
 	}
 </script>   
 <div class="row">
-    <div class="col-lg-12">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-            	欢迎您：大大猫 
-            </div>
-            <div class="panel-body">
-					<a class="btn btn-primary" href="$link.contextPath/consultant/consultantSelf.htm""><span class="glyphicon glyphicon-star"></span>  我的预约</a>
-					<a  class="btn btn-warning" href="$link.contextPath/consultant/consultantSelf.htm"><span class="glyphicon glyphicon-copyright-mark"></span>   账户信息</a>					
-					<a class="btn btn-warning" href="$link.contextPath/consultant/personalInfo.htm"><span class="glyphicon glyphicon-user"></span>  个人信息</a>
-					<a class="btn btn-warning" href="$link.contextPath/consultant/innerMails.htm"> <span class="glyphicon glyphicon-envelope"></span>  站内信箱</a>
-       	 	</div>
-    	</div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-lg-12">
+    <div class="col-sm-12">
         <div class="panel panel-default">
             <div class="panel-heading">
 				  	<ol class="breadcrumb" style="margin:2px;padding:0px;">
-					  <li><a href="javascript:void(0)" onclick="$('.finished').addClass('hide');$('.onwork').removeClass('hide');">未完成</a></li>
+					  <li><a href="javascript:void(0)" onclick="$('.finished').addClass('hide');$('.onwork').removeClass('hide');">未完成<span class="badge">$result.object.data.size()</span></a></li>
 					  <li><a href="javascript:void(0)" onclick="$('.onwork').addClass('hide');$('.finished').removeClass('hide');">已完成</a></li>
 					</ol>
             </div>
             <div class="panel-body">
         		#if($result && $result.object)
-        			#foreach($interviewVO in $result.object)
-        			#set($interview=$interviewVO.interview)
-        			<div class="col-lg-12 #if($interview.step>=5) finished hide  #else onwork #end" id="INTERVIEW_$interviewVO.interview.id">
+        			#foreach($consultBase in $result.object.data)
+        			#set($consult=$consultBase.consult)
+        			#set($counselorVO=$consultBase.counselorVO)
+        			<div class="col-sm-12">
 			            <div class="panel panel-default">
 			                <div class="panel-body">
-								<div class="col-lg-2">
-									<a href="$link.contextPath/consultant/interview.htm?interviewId=$interviewVO.interview.id">
-	                                <img src="$link.contextPath/UPLOAD/$interviewVO.counselorVO.counselor.photo" style="width: 65px;height:65px;" class="img-rounded">
-	                                </a>
-	                            </div>
-	                            <div class="col-lg-10">
+			                		<div class="col-sm-2">
+			                		 	<p style="text-align:center;"><img src="$link.contextPath/UPLOAD/$!counselorVO.counselor.photo" class="img-rounded" style="width: 32px;height: 32px;"/></p>
+			                		 	<p style="text-align:center;"><a target="_blank" href="$link.contextPath/counselorInfo.htm?counselorId=$!counselorVO.counselor.id">$consultBase.counselorVO.counselor.name</a></p>
+			                		</div>
+			                		<div class="col-sm-10" style="border-left:solid 1px #ddd">
 	                                <p  style="border-bottom:solid 1px #ddd">
-	                                	<a href="$link.contextPath/consultant/interview.htm?interviewId=$interviewVO.interview.id"><span class="glyphicon glyphicon-list-alt"></span>详情...</a>                     
 	                                	#if($interview.step<2)
-	                                	<a href="javascript:void(0)" onclick="deleteInterview($interviewVO.interview.id)"><span class="glyphicon glyphicon-remove"></span>删除</a>
+	                                	<a href="javascript:void(0)" onclick="deleteConsult($consult.id)"><span class="glyphicon glyphicon-remove"></span>删除</a>
 	                                	#end
-	                                	面试官：$interviewVO.counselorVO.counselor.name
-	                                	<span style="float: right">$date.format("yyyy-MM-dd HH:mm:ss", $interviewVO.interview.gmtCreate)
+	                                	<span class="label label-primary"><span class="glyphicon glyphicon-tag"></span>咨询类型：$consultBase.service.name</span>
+	                                	<span style="float: right">$date.format("yyyy-MM-dd HH:mm:ss", $consultBase.consult.gmtCreate)
+	                                	<a href="$link.contextPath/consultant/consult/${consultBase.service.code}.htm?consultId=$consultBase.consult.id">详情...</a>
                                 	</p>
 									<p>
-										  <a  class="btn  btn-sm btn-success disabled ">创建预约订单</a>
-										  <span class="glyphicon glyphicon-arrow-right"></span>
-										  <a  class="btn btn-sm
+										  <a  class="btn  btn-sm btn-success disabled col-sm-2" style="margin-right:4px;">创建预约<span class="glyphicon glyphicon-arrow-right"></span></a>
+										  <a  class="btn  btn-sm col-sm-2
 										  	#if($interview.step>1)  btn-success disabled  
 										  	#elseif($interview.step==1) btn-primary   disabled
-										  	#else  btn-default disabled #end">等待咨询师预约通知</a>
-										  <span class="glyphicon glyphicon-arrow-right"></span>
-										  <a  class="btn disabled btn-sm
+										  	#else  btn-default disabled #end"  style="margin-right:4px;">支付完成 <span class="glyphicon glyphicon-arrow-right"></span></a>
+										  <a  class="btn btn-sm col-sm-2
+										  	#if($interview.step>1)  btn-success disabled  
+										  	#elseif($interview.step==1) btn-primary   disabled
+										  	#else  btn-default disabled #end"  style="margin-right:4px;">咨询进行中 <span class="glyphicon glyphicon-arrow-right"></span></a>
+										  <a  class="btn disabled col-sm-2 btn-sm
 										  	#if($interview.step>2)  btn-success disabled  
 										  	#elseif($interview.step==2) btn-primary   
-										  	#else  btn-default disabled #end">进行面试咨询</a>
-										  <span class="glyphicon glyphicon-arrow-right"></span>
-										  <a  class="btn disabled btn-sm
-										  	#if($interview.step>3)  btn-success disabled  
-										  	#elseif($interview.step==3) btn-primary   
-										  	#else  btn-default disabled #end">完成评价</a>
-										  <span class="glyphicon glyphicon-arrow-right"></span>
-										  <a  class="btn  btn-sm disabled">
-										   <span class="glyphicon glyphicon-ok"></span>
-										  </a>
+										  	#else  btn-default disabled #end"  style="margin-right:4px;"><span class="glyphicon glyphicon-ok"></span>咨询完成 </a>
 									  </p>
-	                            </div>
+								  </div>
 			                </div>
 		                </div>
 		            </div>

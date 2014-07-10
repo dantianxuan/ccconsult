@@ -26,14 +26,22 @@
 
 	<bean id="regMailDAO" class="com.ccconsult.dao.RegMailDAO" />
 	<bean id="counselorDAO" class="com.ccconsult.dao.CounselorDAO" />
-	<bean id="interviewDAO" class="com.ccconsult.dao.InterviewDAO" />
 	<bean id="companyDAO" class="com.ccconsult.dao.CompanyDAO" />
 	<bean id="articeDAO" class="com.ccconsult.dao.ArticleDAO" />
 	<bean id="consultantDAO" class="com.ccconsult.dao.ConsultantDAO" />
 	<bean id="messageDAO" class="com.ccconsult.dao.MessageDAO" />
 	<bean id="innerMailDAO" class="com.ccconsult.dao.InnerMailDAO" />
 	<bean id="resumeDAO" class="com.ccconsult.dao.ResumeDAO" />
+	<bean id="consultDAO" class="com.ccconsult.dao.ConsultDAO" />
+	<bean id="interviewConsultDAO" class="com.ccconsult.dao.InterviewConsultDAO" />
+	<bean id="resumeConsultDAO" class="com.ccconsult.dao.ResumeConsultDAO" />
 	<bean id="appriseDAO" class="com.ccconsult.dao.AppriseDAO" />
+	<bean id="serviceDAO" class="com.ccconsult.dao.ServiceDAO" />
+	<bean id="serviceConfigDAO" class="com.ccconsult.dao.ServiceConfigDAO" />
+
+
+	<bean id="consultComponent" class="com.ccconsult.core.ConsultComponentImpl" />
+	<bean id="fileComponent" class="com.ccconsult.core.FileComponentImpl" />
 
 	<bean id="serviceTemplate" class="com.ccconsult.base.ServiceTemplateImpl" />
 	<bean id="registService" class="com.ccconsult.service.RegistServiceImpl"></bean>

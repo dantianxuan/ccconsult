@@ -46,6 +46,7 @@ public class RegistServiceImpl extends AbstractService implements RegistService 
         return serviceTemplate.execute(CcResult.class, new BlankServiceCallBack() {
             @Override
             public CcResult executeService() {
+                AssertUtil.state(ValidateUtil.isEmail(regMail.getMail()), "请输入合法的邮箱账户格式");
                 RegMail existRegMail = regMailDAO.findByMail(regMail.getMail());
                 if (existRegMail == null) {
                     regMailDAO.save(regMail);
@@ -77,6 +78,7 @@ public class RegistServiceImpl extends AbstractService implements RegistService 
                 AssertUtil.notBlank(consultant.getEmail(), "用户邮箱不能为空");
                 AssertUtil.state(consultant.getEmail().length() < CcConstrant.COMMON_256_LENGTH,
                     "注册邮箱不能超过256个字符！");
+                AssertUtil.state(ValidateUtil.isEmail(consultant.getEmail()), "请输入合法的邮箱账户格式");
                 AssertUtil.notBlank(consultant.getName(), "用户名称不能为空");
                 AssertUtil.state(consultant.getName().length() < CcConstrant.COMMON_128_LENGTH,
                     "注册用户名称不能超过128个字符！");

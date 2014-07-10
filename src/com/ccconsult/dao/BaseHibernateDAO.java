@@ -37,7 +37,27 @@ public class BaseHibernateDAO<T> implements IBaseHibernateDAO {
     public PageList<T> queryPage(int pageNo, int pageSize, String hql, Map map) {
         int count = getTotalCount(hql, map);
         List<T> list = findByQuery(pageNo, pageSize, hql, map);
-        return new PageList<T>(pageSize * (pageNo-1), count, pageSize, list);
+        return new PageList<T>(pageSize * (pageNo - 1), count, pageSize, list);
+    }
+
+    /**
+     * 查询服务   
+     * 
+     * @param pageNo
+     * @param pageSize
+     * @param hql
+     * @param map
+     * @return
+     */
+    public List<T> findByHql(String hql) {
+        List<T> result = null;
+        try {
+            Query query = this.getSession().createQuery(hql);
+            result = query.list();
+        } catch (RuntimeException re) {
+            throw re;
+        }
+        return result;
     }
 
     /**
@@ -62,6 +82,33 @@ public class BaseHibernateDAO<T> implements IBaseHibernateDAO {
             }
             query.setFirstResult((pageNo - 1) * pageSize);
             query.setMaxResults(pageSize);
+            result = query.list();
+        } catch (RuntimeException re) {
+            throw re;
+        }
+        return result;
+    }
+
+    /**
+     * 查询服务   
+     * 
+     * @param pageNo
+     * @param pageSize
+     * @param hql
+     * @param map
+     * @return
+     */
+    public List<T> findByQuery(String hql, Map map) {
+        List<T> result = null;
+        try {
+            Query query = this.getSession().createQuery(hql);
+            if (!CollectionUtils.isEmpty(map)) {
+                Iterator it = map.keySet().iterator();
+                while (it.hasNext()) {
+                    Object key = it.next();
+                    query.setParameter(key.toString(), map.get(key));
+                }
+            }
             result = query.list();
         } catch (RuntimeException re) {
             throw re;

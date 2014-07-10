@@ -19,6 +19,9 @@ public class CcConstrant {
     /** CONSULTANT 对象 */
     public final static String SESSION_CONSULTANT_OBJECT = "SESSION_CONSULTANT_OBJECT";
 
+    /** CONSULTANT 对象 */
+    public final static String ALL_SERVICES              = "ALL_SERVICES";
+
     /** ADMIN 对象 */
     public final static String SESSION_ADMIN_OBJECT      = "SESSION_ADMIN_OBJECT";
 
@@ -42,6 +45,9 @@ public class CcConstrant {
 
     /**默认页大小*/
     public final static int    DEFAULT_PAGE_SIZE         = 20;
+
+    /**默认页大小*/
+    public final static String ALT_SEPARATOR             = "@";
 
     public static String getUploadFolder() {
         return UPLOAD_FOLDER;

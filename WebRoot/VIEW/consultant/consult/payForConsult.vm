@@ -1,0 +1,24 @@
+#set($consultant=$session.getAttribute("SESSION_CONSULTANT_OBJECT"))
+#if($result && !$result.success)
+<div class="alert alert-dismissable alert-danger">
+	$result.message
+</div>	
+#else
+#set($consultBase=$result.object)
+#set($serviceConfigVO=$consultBase.serviceConfigVO)
+<div class="alert alert-dismissable alert-warning">
+  	<h2>您当前已创建的一笔咨询请求等待支付</h2>
+	<div class="alert alert-dismissable alert-success">
+		  <h4>欢迎使用$serviceConfigVO.service.name服务!</h4>
+		  <p>$serviceConfigVO.service.description</p>
+		  <p class="text-primary">
+		  	<span style="font-size:20px;">
+		  		<span class="glyphicon glyphicon-copyright-mark"></span>$serviceConfigVO.serviceConfig.price元/次
+	  		</span> 
+  		  </p>
+	</div>
+  	<p style="text-align:right;"><a class="btn btn-default" style="margin-right:12px;">放弃支付</a>
+  	<a class="btn btn-warning" style="margin-right:12px;">已完成支付</a>
+  	<a class="btn btn-primary">去支付</a></p>
+</div>
+#end

@@ -7,7 +7,7 @@
 					</p>
 					#if(!$session.getAttribute("SESSION_COUNSELOR_OBJECT") && !$session.getAttribute("SESSION_CONSULTANT_OBJECT"))
 					<p style="text-align:center;padding-top:4px;border-top:solid 1px #ddd;margin:0px;">
-						<a  href="$link.contextPath/login.htm"  class="btn   btn-warning">登录</a>
+						<a  href="$link.contextPath/login.htm"  class="btn   btn-success">登录</a>
 						<a  href="$link.contextPath/regist/regConsultant.htm" class="btn btn-link" >注册咨询</a>
 						<a  href="$link.contextPath/regist/regCounselorInit.htm" class="btn btn-link" >注册咨询师</a>
 					</p>
@@ -17,30 +17,12 @@
 </div>
 
 <div class="row">
-		<ul class="list-group">
-		  <li class="list-group-item">
-		   	<a href="$link.contextPath/article.htm?articleId=11"><span class="glyphicon glyphicon-fire"></span>求职咨询</a>
-		  </li>
-		  <li class="list-group-item">
-		    <a href="$link.contextPath/article.htm?articleId=12">职业规划咨询</a>
-		  </li>
-		  <li class="list-group-item">
-		    <a href="$link.contextPath/article.htm?articleId=13">企业信息咨询</a>
-		  </li>
-		  <li class="list-group-item">
-		    <a href="$link.contextPath/article.htm?articleId=14">其余咨询...</a>
-		  </li>		  
-		</ul>
-</div>
-
-
-<div class="row">
 	    <div class="panel panel-default">
 	        <div class="panel-heading">
 	            <h3 class="panel-title">联系我们</h3>
 	        </div>
 	        <div class="panel-body">
-	            <div class="col-lg-12" >
+	            <div class="col-sm-12" >
 	                <img src="$link.contextPath/STATIC/image/weibo.png" style="width:60px;height: 60px; float:left" 
 	                class="img-rounded">
 	                <p style="padding-left: 72px;">
@@ -49,7 +31,7 @@
 	                </p>
 	            </div>
 	            <hr/>
-	            <div class="col-lg-12" >
+	            <div class="col-sm-12" >
 	                <img src="$link.contextPath/STATIC/image/weixin.png" style="width:60px;height: 60px; float:left" 
 	                class="img-rounded">
 	                <p style="padding-left: 72px;">

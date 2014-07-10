@@ -7,21 +7,21 @@
 <script src="$link.contextPath/STATIC/js/fileinput.js"></script>
 <link rel="stylesheet" href="$link.contextPath/STATIC/css/fileinput.css"/>
 <div class="row">
-    <div class="col-lg-12">
+    <div class="col-sm-12">
         <div class="panel panel-default">
             <div class="panel-body">
                 <form class="form-horizontal" action="$link.contextPath/backstage/companyEdit.htm?action=save" method="post" enctype="multipart/form-data">
                     <fieldset>
                         <div class="form-group">
-                        	<label  class="col-lg-2 control-label">公司名称</label>
-                            <div class="col-lg-8">
+                        	<label  class="col-sm-2 control-label">公司名称</label>
+                            <div class="col-sm-8">
                                 <input type="text" name="name" class="form-control" placeholder="公司名称" value="$!company.name">
                                 <input type="hidden" name="id" value="$!company.id" >
                             </div>
                         </div>
                         <div class="form-group">   
-                        	<label  class="col-lg-2 control-label">是否置顶</label>                    
-                        	<div class="col-lg-6">
+                        	<label  class="col-sm-2 control-label">是否置顶</label>                    
+                        	<div class="col-sm-6">
                                     <input type="radio" name="topTag" value="1" #if($company.topTag==1) checked #end>
                                     置顶
                                     <input type="radio" name="topTag"  value="2">
@@ -29,33 +29,33 @@
                             </div>                            
                         </div>                    
                       	<div class="form-group">
-                             <label  class="col-lg-2 control-label">公司图片</label>
-                            <div class="col-lg-8">
+                             <label  class="col-sm-2 control-label">公司图片</label>
+                            <div class="col-sm-8">
                                  <img  src="$link.contextPath/UPLOAD/$!company.photo" class="img-rounded photoTitle" style="width: 120px;"/><br/>
                                  <a class="photoTitle" href="javascript:void(0)" onclick="$('#fileUploadInput').show();">单击修改您的头像</a><br/>
                             </div>                            
                     	</div>  
                      	<div class="form-group" id="fileUploadInput" style="display:none;">
-                             <label  class="col-lg-2 control-label">上传头像</label>
-                            <div class="col-lg-8">
+                             <label  class="col-sm-2 control-label">上传头像</label>
+                            <div class="col-sm-8">
                                  <input  type="file" name="localPhoto"  class="file" multiple="false" data-show-upload="false" data-show-caption="true" />
                             </div>	                            
                     	</div> 	                    	
                       	<div class="form-group">
-                             <label  class="col-lg-2 control-label">邮箱后缀</label>
-                            <div class="col-lg-2">
+                             <label  class="col-sm-2 control-label">邮箱后缀</label>
+                            <div class="col-sm-2">
                              <input type="text" name="mailSuffix" class="form-control" placeholder="邮箱后缀" value="$!company.mailSuffix">
                             </div>                            
                     	</div>    
                       	<div class="form-group">
-                             <label  class="col-lg-2 control-label">连接地址</label>
-                            <div class="col-lg-8">
+                             <label  class="col-sm-2 control-label">连接地址</label>
+                            <div class="col-sm-8">
                              <input type="text" name="link" class="form-control" placeholder="友情链接" value="$!company.link">
                             </div>                            
                     	</div>                     	                 		
                         <div class="form-group">
-                         	<label  class="col-lg-2 control-label">公司介绍</label>
-                            <div class="col-lg-10">
+                         	<label  class="col-sm-2 control-label">公司介绍</label>
+                            <div class="col-sm-10">
                                 <script type="text/plain" id="myEditor" name="description" style="width:100%;height:600px;">$!company.description</script>
                                 <script type="text/javascript">
                                		var um = UM.getEditor('myEditor');
@@ -63,10 +63,10 @@
                             </div>
                         </div>
                         <div class="form-group">
-                        	<label  class="col-lg-2 control-label"></label>
-                            <div class="col-lg-10" >
-								<button type="submit" class="btn btn-primary col-lg-2" style="float:right;">保存公司信息</button>                            
-                            	<a href="$link.contextPath/backstage/companyList.htm" class="btn btn-link col-lg-2" style="float:right;">返回公司列表</a>
+                        	<label  class="col-sm-2 control-label"></label>
+                            <div class="col-sm-10" >
+								<button type="submit" class="btn btn-primary col-sm-2" style="float:right;">保存公司信息</button>                            
+                            	<a href="$link.contextPath/backstage/companyList.htm" class="btn btn-link col-sm-2" style="float:right;">返回公司列表</a>
                             </div>
                         </div>
                     </fieldset>

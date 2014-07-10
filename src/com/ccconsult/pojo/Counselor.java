@@ -21,6 +21,9 @@ public class Counselor extends com.ccconsult.base.ToString implements java.io.Se
     private String  photo;
     private String  passwd;
     private String  department;
+    private Integer appriseRate;
+    private Date    lastLogin;
+    private String  city;
 
     // Constructors
 
@@ -31,7 +34,7 @@ public class Counselor extends com.ccconsult.base.ToString implements java.io.Se
     /** full constructor */
     public Counselor(String name, String email, String mobile, Date gmtCreate, Date gmtModified,
                      String description, Integer companyId, String photo, String passwd,
-                     String department) {
+                     String department, Integer appriseRate, Date lastLogin, String city) {
         this.name = name;
         this.email = email;
         this.mobile = mobile;
@@ -42,6 +45,9 @@ public class Counselor extends com.ccconsult.base.ToString implements java.io.Se
         this.photo = photo;
         this.passwd = passwd;
         this.department = department;
+        this.appriseRate = appriseRate;
+        this.lastLogin = lastLogin;
+        this.city = city;
     }
 
     // Property accessors
@@ -132,6 +138,30 @@ public class Counselor extends com.ccconsult.base.ToString implements java.io.Se
 
     public void setDepartment(String department) {
         this.department = department;
+    }
+
+    public Integer getAppriseRate() {
+        return this.appriseRate;
+    }
+
+    public void setAppriseRate(Integer appriseRate) {
+        this.appriseRate = appriseRate;
+    }
+
+    public Date getLastLogin() {
+        return this.lastLogin;
+    }
+
+    public void setLastLogin(Date lastLogin) {
+        this.lastLogin = lastLogin;
+    }
+
+    public String getCity() {
+        return this.city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
 }

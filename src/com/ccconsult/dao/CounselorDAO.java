@@ -12,6 +12,7 @@ import com.ccconsult.pojo.Company;
 import com.ccconsult.pojo.Counselor;
 import com.ccconsult.util.StringUtil;
 import com.ccconsult.view.CounselorVO;
+import com.ccconsult.view.ServiceConfigVO;
 
 /**
  	* A data access object (DAO) providing persistence and search support for Counselor entities.
@@ -25,6 +26,8 @@ import com.ccconsult.view.CounselorVO;
 public class CounselorDAO extends BaseHibernateDAO<Counselor> {
     @Autowired
     private CompanyDAO         companyDAO;
+    @Autowired
+    private ServiceConfigDAO   serviceConfigDAO;
     //property constants
     public static final String NAME        = "name";
     public static final String EMAIL       = "email";
@@ -40,8 +43,7 @@ public class CounselorDAO extends BaseHibernateDAO<Counselor> {
         if (instance == null) {
             return null;
         }
-        Company company = companyDAO.findById(instance.getCompanyId());
-        return new CounselorVO(instance, company);
+        return consVO(instance);
     }
 
     @SuppressWarnings("unchecked")
@@ -82,8 +84,15 @@ public class CounselorDAO extends BaseHibernateDAO<Counselor> {
         if (counselor == null) {
             return null;
         }
+        return consVO(counselor);
+    }
+
+    private CounselorVO consVO(Counselor counselor) {
         Company company = companyDAO.findById(counselor.getCompanyId());
-        return new CounselorVO(counselor, company);
+        List<ServiceConfigVO> serviceConfigVOs = serviceConfigDAO.findByCounselorId(counselor
+            .getId());
+        return new CounselorVO(counselor, company, serviceConfigVOs);
+
     }
 
 }

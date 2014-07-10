@@ -18,16 +18,16 @@
 	<mvc:interceptors>
 		<!-- 多个拦截器,顺序执行 -->
 		<mvc:interceptor>
-			<mvc:mapping path="/counselor/*" />
+			<mvc:mapping path="/counselor/**" />
 			<bean class="com.ccconsult.filter.CounselorAuthorityInterceptor"></bean>
 		</mvc:interceptor>
 		<!-- 多个拦截器,顺序执行 -->
 		<mvc:interceptor>
-			<mvc:mapping path="/consultant/*" />
+			<mvc:mapping path="/consultant/**" />
 			<bean class="com.ccconsult.filter.ConsultantAuthorityInterceptor"></bean>
 		</mvc:interceptor>
 		<mvc:interceptor>
-			<mvc:mapping path="/backstage/*" />
+			<mvc:mapping path="/backstage/**" />
 			<bean class="com.ccconsult.filter.AdminAuthorityInterceptor"></bean>
 		</mvc:interceptor>
 	</mvc:interceptors>

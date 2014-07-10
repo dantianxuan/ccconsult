@@ -5,7 +5,6 @@ package com.ccconsult.web;
 
 import java.io.File;
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,16 +25,18 @@ import com.ccconsult.base.BlankServiceCallBack;
 import com.ccconsult.base.CcConstrant;
 import com.ccconsult.base.CcException;
 import com.ccconsult.base.CcResult;
+import com.ccconsult.base.PageList;
+import com.ccconsult.base.PageQuery;
+import com.ccconsult.core.ConsultComponent;
 import com.ccconsult.dao.ConsultantDAO;
 import com.ccconsult.dao.InnerMailDAO;
-import com.ccconsult.dao.InterviewDAO;
-import com.ccconsult.enums.DataStateEnum;
+import com.ccconsult.enums.ConsultStepEnum;
 import com.ccconsult.enums.UserRoleEnum;
 import com.ccconsult.pojo.Consultant;
 import com.ccconsult.util.LogUtil;
 import com.ccconsult.util.StringUtil;
 import com.ccconsult.util.ValidateUtil;
-import com.ccconsult.view.InterviewVO;
+import com.ccconsult.view.ConsultBase;
 
 /**
  * @author jingyu.dan
@@ -47,29 +48,31 @@ public class ConsultantController extends BaseController {
     /**日志 */
     private static final Logger logger = Logger.getLogger(ConsultantController.class);
     @Autowired
-    private InterviewDAO        interviewDAO;
+    private ConsultComponent    consultComponent;
     @Autowired
     private ConsultantDAO       consultantDAO;
     @Autowired
     private InnerMailDAO        innerMailDAO;
 
     @RequestMapping(value = "/consultant/consultantSelf.htm", method = RequestMethod.GET)
-    public ModelAndView handleRequest(HttpServletRequest request, ModelMap modelMap) {
+    public ModelAndView handleRequest(HttpServletRequest request, final PageQuery query,
+                                      ModelMap modelMap) {
         ModelAndView view = new ModelAndView("consultant/consultantSelf");
         final Consultant consultant = getConsultantInSession(request.getSession());
         CcResult result = serviceTemplate.execute(CcResult.class, new BlankServiceCallBack() {
             @Override
             public CcResult executeService() {
-                List<InterviewVO> interviewVOs = interviewDAO.findInterviewsConsultant(
-                    consultant.getId(), DataStateEnum.NORMAL);
-                return new CcResult(interviewVOs);
+                PageList<ConsultBase> consultBases = consultComponent.queryUnderStepPaged(
+                    ConsultStepEnum.FIHSHED.getValue(), 0, 0, consultant.getId(),
+                    query.getPageSize(), query.getPageNo());
+                return new CcResult(consultBases);
             }
         });
         modelMap.put("result", result);
         return view;
     }
 
-    @RequestMapping(value = "consultant/personalInfo.htm", method = RequestMethod.GET)
+    @RequestMapping(value = "/consultant/personalInfo.htm", method = RequestMethod.GET)
     public ModelAndView showInformation(HttpServletRequest request, ModelMap modelMap) {
 
         Consultant consultant = getConsultantInSession(request.getSession());
@@ -80,7 +83,7 @@ public class ConsultantController extends BaseController {
         return view;
     }
 
-    @RequestMapping(value = "consultant/editPersonalInfo.htm", method = RequestMethod.GET)
+    @RequestMapping(value = "/consultant/editPersonalInfo.htm", method = RequestMethod.GET)
     public ModelAndView toInterview(HttpServletRequest request, ModelMap modelMap) {
 
         Consultant consultant = getConsultantInSession(request.getSession());

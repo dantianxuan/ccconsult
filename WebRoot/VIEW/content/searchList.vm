@@ -1,20 +1,20 @@
 <form id="searchListForm" action="$link.contextPath/searchList.htm" method="POST">
 <div class="row">
-    	<div class="col-lg-6"><input type="text" name="keyword" class="form-control" placeholder="请输入公司名称或咨询师名称搜索" value="$!keyword"/></div>
-	 	<div class="col-lg-2">
+    	<div class="col-sm-6"><input type="text" name="keyword" class="form-control" placeholder="请输入公司名称或咨询师名称搜索" value="$!keyword"/></div>
+	 	<div class="col-sm-2">
 	     	<select class="form-control" name="type" id="select">
 	          <option value="COMPANY"  #if($type=="COMPANY") selected #end >公司</option>
 	          <option value="COUNSELOR"  #if($type=="COUNSELOR") selected #end >咨询师</option>
 	        </select>	 	
  		</div>
-	 	<div class="col-lg-2">	
-	 		<button class="btn btn-danger col-lg-12" type="submit">快速寻找</button>
+	 	<div class="col-sm-2">	
+	 		<button class="btn btn-danger col-sm-12" type="submit">快速寻找</button>
  		</div> 		
 </div>
 
 <br/>
 <div class="row">
-    <div class="col-lg-12">
+    <div class="col-sm-12">
         <div class="panel panel-default">
             <div class="panel-heading">
             	搜索结果如下：
@@ -27,13 +27,13 @@
 	            		#if($type=="COMPANY")
 		            		#set($company=$object.company)	
 							<div class="row">
-			                    <div class="col-lg-12">
+			                    <div class="col-sm-12">
 									<div class="panel panel-default">
 						            	<div class="panel-body">
-	 											<div class="col-lg-2">
+	 											<div class="col-sm-2">
 					                                <img src="$link.contextPath/UPLOAD/$!company.photo" style="width:60px;" class="img-rounded"/>
 					                            </div>
-					                            <div class="col-lg-10" style="border-left:solid 1px #ddd">
+					                            <div class="col-sm-10" style="border-left:solid 1px #ddd">
 					                            	<a href="$link.contextPath/company.htm?companyId=$company.id">$company.name</a>
 					                            	<a href="javascript:void(0)" style="float:right;">注册咨询师人数<span class="badge">$object.counselorCount</span></a>
 					                                <div style="border-top:solid 1px #ddd">$!company.description</div>
@@ -45,15 +45,15 @@
 	            		#elseif($type=="COUNSELOR")
 		            		#set($counselor=$object)	
 							<div class="row">
-			                    <div class="col-lg-12">
+			                    <div class="col-sm-12">
 									<div class="panel panel-default">
 						            	<div class="panel-body">
-	 											<div class="col-lg-2">
+	 											<div class="col-sm-2">
 					                                <img src="$link.contextPath/UPLOAD/$!counselor.photo" style="width: 60px;" class="img-rounded"/><br/>
 					                                <a href="$link.contextPath/consultant/createInterview.htm?counselorId=$!counselor.id" 
 					                                class="btn btn-info btn-xs" style="width:60px">请求预约</a>
 					                            </div>
-					                            <div class="col-lg-10" style="border-left: solid 1px #ddd" >
+					                            <div class="col-sm-10" style="border-left: solid 1px #ddd" >
 					                                <p class="text-warning" style="border-bottom:solid 1px #ddd">
 					                                	<small><span	class="label label-warning">
 					                                	<span class="glyphicon glyphicon-tag"></span>已认证</span><a href="$link.contextPath/counselorInfo.htm?counselorId=$counselor.id">
@@ -76,7 +76,7 @@
 <input type="hidden" name="pageSize" value="$result.object.getPageSize()"/>
 <input type="hidden" name="pageNo" value="$result.object.getCurrentPageNo()" id="pageNo"/>
 <div class="row">
-    <div class="col-lg-12">
+    <div class="col-sm-12">
 		<ul class="pagination" style="margin-top:-10px;float:right;">
 			#if($result.object.getTotalPageCount()>0)
 				#foreach($index in [1..$result.object.getTotalPageCount()])

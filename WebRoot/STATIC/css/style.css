@@ -1,6 +1,6 @@
 .display{
-	display:none;	
+	display:block;	
 }
 .hide{
-	display:block;
+	display:none;
 }

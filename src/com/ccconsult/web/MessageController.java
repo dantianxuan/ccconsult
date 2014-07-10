@@ -18,12 +18,12 @@ import com.ccconsult.base.AssertUtil;
 import com.ccconsult.base.BlankServiceCallBack;
 import com.ccconsult.base.CcConstrant;
 import com.ccconsult.base.CcResult;
-import com.ccconsult.dao.InterviewDAO;
+import com.ccconsult.dao.ConsultDAO;
 import com.ccconsult.dao.MessageDAO;
 import com.ccconsult.enums.MessageRelTypeEnum;
 import com.ccconsult.enums.UserRoleEnum;
+import com.ccconsult.pojo.Consult;
 import com.ccconsult.pojo.Consultant;
-import com.ccconsult.pojo.Interview;
 import com.ccconsult.pojo.Message;
 import com.ccconsult.view.CounselorVO;
 
@@ -35,11 +35,11 @@ import com.ccconsult.view.CounselorVO;
 public class MessageController extends BaseController {
 
     @Autowired
-    private InterviewDAO interviewDAO;
+    private ConsultDAO consultDAO;
     @Autowired
-    private MessageDAO   messageDAO;
+    private MessageDAO messageDAO;
 
-    @RequestMapping(value = "/sendInterviewShotMessage.json", method = RequestMethod.POST)
+    @RequestMapping(value = "/sendShotMessage.json", method = RequestMethod.POST)
     public @ResponseBody
     ModelMap sendMessage(final HttpServletRequest request, final Message message, ModelMap modelMap) {
         modelMap.clear();
@@ -53,10 +53,10 @@ public class MessageController extends BaseController {
                     CounselorVO counselorVO = getCounselorInSession(request.getSession());
                     AssertUtil.notNull(counselorVO, "用户不存在的非法消息，请重新登录");
                 }
-                Interview interview = interviewDAO.findById(message.getRelId());
-                AssertUtil.notNull(interview, "面试咨询信息不存在的非法消息，请重新登录");
+                Consult consult = consultDAO.findById(message.getRelId());
+                AssertUtil.notNull(consult, "关联记录不存在的非法消息，请重新登录");
                 message.setGmtCreate(new Date());
-                message.setRelType(MessageRelTypeEnum.INTERVIEW.getValue());
+                message.setRelType(MessageRelTypeEnum.CONSULT.getValue());
                 AssertUtil.notNull(message, "非法请求");
                 AssertUtil.notBlank(message.getMessage(), "消息内容不能为空");
                 AssertUtil.state(message.getMessage().length() <= CcConstrant.COMMON_4096_LENGTH,

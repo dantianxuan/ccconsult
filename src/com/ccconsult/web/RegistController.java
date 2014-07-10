@@ -175,7 +175,7 @@ public class RegistController {
         if (StringUtils.equals(consultant.getPasswd(), repasswd)) {
             result = registService.regConsultant(consultant);
         } else {
-            result = new CcResult("重复密码输入不一致");
+            result = CcResult.retFailure("重复密码输入不一致");
         }
         if (result.isSuccess()) {
             request.getSession().setAttribute(CcConstrant.SESSION_CONSULTANT_OBJECT,

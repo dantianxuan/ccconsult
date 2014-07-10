@@ -1,37 +1,37 @@
 <form action="$link.contextPath/searchList.htm"  method="POST">
 <div class="row">
-    	<div class="col-lg-6"><input type="text"  name="keyword" class="form-control" placeholder="请输入公司名称或咨询师名称搜索"/></div>
-	 	<div class="col-lg-2">
+    	<div class="col-sm-5"><input type="text"  name="keyword" class="form-control" placeholder="请输入公司名称或咨询师名称搜索"/></div>
+	 	<div class="col-sm-2">
 	     	<select class="form-control" name="type">
 	          <option value="COMPANY">公司</option>
 	          <option value="COUNSELOR">咨询师</option>
 	        </select>	 	
  		</div>
-	 	<div class="col-lg-2">	
-	 		<button class="btn btn-danger col-lg-12" type="submit">快速寻找</button>
- 		</div> 		
+	 	<div class="col-sm-2">	
+	 		<button class="btn btn-danger col-sm-12" type="submit">快速寻找</button>
+ 		</div>
 </div>
 </form>
 <br/>
 <div class="row">
-	<div class="col-lg-5" style="text-align:center;">
+	<div class="col-sm-5" style="text-align:center;">
 		  	<div class="row" style="color:#dd4814">
-		  		<div class="col-lg-12"  >
-					<div class="col-lg-6" style="height:120px;background:#2E3058;color:#fff">
+		  		<div class="col-sm-12"  >
+					<div class="col-sm-6" style="height:120px;background:#2E3058;color:#fff">
 						<H1>真实</H1>
 						公司专属邮箱注册和定期验证激活
 					</div>
-					<div class="col-lg-6" style="height:120px;background:#DF600B;color:#fff">
+					<div class="col-sm-6" style="height:120px;background:#DF600B;color:#fff">
 						<H1>一线</H1>
 						国内外顶尖企业名企的一线雇员
 					</div>
 				</div>
-			  	<div class="col-lg-12">
-					<div class="col-lg-6" style="height:120px;background:#3D8DB3;color:#fff">
+			  	<div class="col-sm-12">
+					<div class="col-sm-6" style="height:120px;background:#3D8DB3;color:#fff">
 						<H1>专一</H1>
 						最专业的公司和最贴近行业前沿的员工
 					</div>
-					<div class="col-lg-6" style="height:120px;background:#0ECE98;color:#fff">
+					<div class="col-sm-6" style="height:120px;background:#0ECE98;color:#fff">
 						<H1>放心</H1>
 						最有价值的咨询和担保交易式咨询
 					</div>
@@ -40,7 +40,7 @@
 	</div>
 	<!-- right CONTENT
        ================================================== -->
-	<div class="col-lg-7">
+	<div class="col-sm-7">
 		<div class="panel panel-default">
 			<div class="panel-body" style="font-size: 13px;height:240px;">
 				<p style="margin: 0px;max-height:193px;overflow:hidden">
@@ -54,13 +54,13 @@
 	</div>
 </div>
 <div class="row">
-	<div class="col-lg-12">
+	<div class="col-sm-12">
 		<div class="panel panel-info">
 			  <div class="panel-heading" style="color:red"><strong><span class="glyphicon glyphicon-tags"></span>  热门面试咨询公司</strong></div>
 			  <div class="panel-body">		  
 		 		#foreach($companyBriefVO in $companyBriefVOs)
-					<div class="col-lg-4">
-						<div class="well well-sm" style="height:80px;margin-bottom:4px;background-color:#fff">
+					<div class="col-sm-4">
+						<div style="height:80px;margin-bottom:4px;background-color:#fff">
 						<a href="$link.contextPath/company.htm?companyId=$companyBriefVO.company.id">
 								<img src="$link.contextPath/UPLOAD/$!companyBriefVO.company.photo"
 								style="width:60px;height: 60px; float:left" class="img-rounded">
@@ -78,32 +78,57 @@
 </div>
 
 <div class="row">
-	<div class="col-lg-12">
+	<div class="col-sm-12">
+		<div class="panel panel-info">
+			  <div class="panel-heading" style="color:red"><strong><span class="glyphicon glyphicon-tags"></span>  热门服务</strong></div>
+			  <div class="panel-body">		  
+		 		#foreach($service in $services)
+					<div class="col-sm-12">
+						<div style="height:80px;margin-bottom:4px;background-color:#fff">
+						<div href="$link.contextPath/company.htm?companyId=$companyBriefVO.company.id">
+								<img src="$link.contextPath/$fileUtil.getPath($service.photo)"
+								style="width:60px;height: 60px; float:left" class="img-rounded">
+								<p style="padding-left: 72px;">
+									<a href="$link.contextPath/service.htm?serviceId=$service.id">$service.name #if($service.id==1) <span class="badge">FREE</span> #end</a> <br/>
+									<small>$service.description</small>
+								</p>
+						</div>			
+						</div>
+					</div>	
+				#end												
+			  </div>
+		</div>
+	</div>
+</div>
+
+
+<div class="row">
+	<div class="col-sm-12">
 		<div class="panel panel-info">
 			  <div class="panel-heading" style="color:red"><strong><span class="glyphicon glyphicon-tags"></span>  咨询动态</strong></div>
 			  <div class="panel-body">		  
-		 		#foreach($interviewVO in $interviewVOs)
+		 		#foreach($consultBase in $consultBases.data)
 		 		<div class="row">
-		 			<div class="col-lg-12" style="border-bottom:solid 1px #ddd;margin-top:4px;margin-bottom:4px;">
-						<div class="col-lg-4">
-							<div class="well well-sm" style="height:80px;margin-bottom:4px;background-color:#fff">
-									<img src="$link.contextPath/UPLOAD/$interviewVO.counselorVO.counselor.photo"
+		 			<div class="col-sm-12" style="border-bottom:solid 1px #ddd;margin-top:4px;margin-bottom:4px;">
+						<div class="col-sm-4">
+							<div  style="height:80px;margin-bottom:4px;background-color:#fff">
+									<img src="$link.contextPath/UPLOAD/$consultBase.counselorVO.counselor.photo"
 									style="width:60px;height: 60px; float:left" class="img-rounded">
 									<p style="padding-left: 72px;">
-										<small>名称:<a href="#">$interviewVO.counselorVO.counselor.name</a></small><br /> 
-										<small>公司:<a href="#">$interviewVO.counselorVO.company.name</a></small><br /> 
-										<small>部门:<a href="#">$interviewVO.counselorVO.counselor.department</a></small><br /> 
+										<small>名称:<a href="$link.contextPath/counselorInfo.htm?counselorId=$consultBase.counselorVO.counselor.id">$consultBase.counselorVO.counselor.name</a></small><br /> 
+										<small>公司:<a href="$link.contextPath/company.htm?companyId=$consultBase.counselorVO.company.id">$consultBase.counselorVO.company.name</a></small><br /> 
+										<small>部门:$consultBase.counselorVO.counselor.department</small><br /> 
 									</p>
 							</div>
 						</div>
-						#foreach($apprise in $interviewVO.apprises)
+						#foreach($apprise in $consultBase.apprises)
 							#if($apprise.creatorRole==2)
 								#set($consultantApprise=$apprise)
 								#break
 							#end
 						#end
-						<div class="well well-sm col-lg-8" style="margin-bottom:4px;font-size:12px;min-height: 80px;background:#fff">
-							  <strong style="font-size:16px;color:#3a87ad">咨询者：$interviewVO.consultant.name：
+						<div class="well well-sm col-sm-8" style="margin-bottom:4px;font-size:12px;min-height: 80px;background:#fff">
+							  <strong style="font-size:16px;color:#3a87ad">咨询者：$consultBase.consultant.name：
 							  	<span class="glyphicon glyphicon-thumbs-up"></span>好评</strong><br/>
 							  <small>
 							  	#if($consultantApprise)$!stringUtil.subMaxString($!consultantApprise.memo,200)#else感觉不错#end

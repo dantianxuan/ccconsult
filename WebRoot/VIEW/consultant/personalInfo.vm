@@ -1,6 +1,7 @@
 #set($consultant=$session.getAttribute("SESSION_CONSULTANT_OBJECT"))
+#parse("consultant/consultantGuide.vm")
 <div class="row">
-	<div class="col-lg-12">
+	<div class="col-sm-12">
 		<div class="alert alert-dismissable alert-warning">
 		   如果您需要修改个人信息，请单击右边的信息修改
 		   <a style="float:right;" href="$link.contextPath/consultant/editPersonalInfo.htm"><span class="glyphicon glyphicon-edit">修改个人信息</span></a>
@@ -8,38 +9,38 @@
 	</div>
 </div>
 <div class="row">
-    <div class="col-lg-12">
+    <div class="col-sm-12">
         <div class="panel panel-default">
             <div class="panel-heading">
             	基本信息  
             </div>
             <div class="panel-body">
-				<div class="col-lg-12" >
-					<div class="col-lg-4">
+				<div class="col-sm-12" >
+					<div class="col-sm-4">
 					 	 <img src="$link.contextPath/UPLOAD/$!consultant.photo" style="width: 120px;heigth:120px;" class="img-rounded">
 					</div>
-					<div class="col-lg-8">
-							<div class="col-lg-12" 	style="border-top:solid 1px #ddd">
-								<div class="col-lg-3">
+					<div class="col-sm-8">
+							<div class="col-sm-12" 	style="border-top:solid 1px #ddd">
+								<div class="col-sm-3">
 								 	<h4 style="text-align:right">个人邮箱</h4>
 								</div>
-								<div class="col-lg-8">
+								<div class="col-sm-8">
 									<p style="padding-top:12px;">$!consultant.email</p>
 								</div>
 							</div>					
-							<div class="col-lg-12" 	style="border-top:solid 1px #ddd">
-								<div class="col-lg-3">
+							<div class="col-sm-12" 	style="border-top:solid 1px #ddd">
+								<div class="col-sm-3">
 								 	<h4 style="text-align:right">姓名</h4>
 								</div>
-								<div class="col-lg-8">
+								<div class="col-sm-8">
 									<p style="padding-top:12px;">$!consultant.name</p>
 								</div>
 							</div>		
-							<div class="col-lg-12" 	style="border-top:solid 1px #ddd;border-bottom:solid 1px #ddd">
-								<div class="col-lg-3">
+							<div class="col-sm-12" 	style="border-top:solid 1px #ddd;border-bottom:solid 1px #ddd">
+								<div class="col-sm-3">
 								 	<h4 style="text-align:right">手机号码</h4>
 								</div>
-								<div class="col-lg-8">
+								<div class="col-sm-8">
 									<p style="padding-top:12px;">$!consultant.mobile</p>
 								</div>
 							</div>	
@@ -50,13 +51,13 @@
     </div>	    
 </div>
 <div class="row">
-    <div class="col-lg-12">
+    <div class="col-sm-12">
         <div class="panel panel-default">
             <div class="panel-heading">
             	个人简介 
             </div>
             <div class="panel-body">
-				<div class="col-lg-12" >
+				<div class="col-sm-12" >
 					$!consultant.description
 				</div>					
        	 	</div>

@@ -5,7 +5,6 @@ package com.ccconsult.web;
 
 import java.io.File;
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,9 +26,11 @@ import com.ccconsult.base.BlankServiceCallBack;
 import com.ccconsult.base.CcConstrant;
 import com.ccconsult.base.CcException;
 import com.ccconsult.base.CcResult;
+import com.ccconsult.base.PageList;
+import com.ccconsult.base.PageQuery;
+import com.ccconsult.core.ConsultComponent;
 import com.ccconsult.dao.CounselorDAO;
 import com.ccconsult.dao.InnerMailDAO;
-import com.ccconsult.dao.InterviewDAO;
 import com.ccconsult.enums.ConsultStepEnum;
 import com.ccconsult.enums.UserRoleEnum;
 import com.ccconsult.pojo.Consultant;
@@ -38,7 +39,7 @@ import com.ccconsult.util.LogUtil;
 import com.ccconsult.util.StringUtil;
 import com.ccconsult.util.ValidateUtil;
 import com.ccconsult.view.CounselorVO;
-import com.ccconsult.view.InterviewVO;
+import com.ccconsult.view.ConsultBase;
 
 /**
  * @author jingyu.dan
@@ -53,7 +54,7 @@ public class CounselorController extends BaseController {
     @Autowired
     private CounselorDAO        counselorDAO;
     @Autowired
-    private InterviewDAO        interviewDAO;
+    private ConsultComponent    consultComponent;
     @Autowired
     private InnerMailDAO        innerMailDAO;
 
@@ -65,18 +66,20 @@ public class CounselorController extends BaseController {
      * @param modelMap
      * @return
      */
-    @RequestMapping(value = "counselorInfo.htm", method = RequestMethod.GET)
-    public ModelAndView counselorSelf(HttpServletRequest request, final String counselorId,
-                                      final ModelMap modelMap) {
+    @RequestMapping(value = "/counselorInfo.htm", method = RequestMethod.GET)
+    public ModelAndView counselorSelf(HttpServletRequest request, final PageQuery query,
+                                      final String counselorId, final ModelMap modelMap) {
         ModelAndView view = new ModelAndView("content/counselorInfo");
         CcResult result = serviceTemplate.execute(CcResult.class, new BlankServiceCallBack() {
             @Override
             public CcResult executeService() {
                 CounselorVO counselorVO = counselorDAO.findById(NumberUtils.toInt(counselorId));
-                List<InterviewVO> interviews = interviewDAO.findUnderStepCounselor(counselorVO
-                    .getCounselor().getId(), ConsultStepEnum.FIHSHED);
+                PageList<ConsultBase> consultBases = consultComponent.queryPaged(
+                    ConsultStepEnum.FIHSHED.getValue(), 0, counselorVO.getCounselor().getId(), 0,
+                    query.getPageSize(), query.getPageNo());
                 modelMap.put("counselorVO", counselorVO);
-                modelMap.put("interviews", interviews);
+
+                modelMap.put("consultBases", consultBases);
                 return new CcResult(true);
             }
         });
@@ -84,16 +87,18 @@ public class CounselorController extends BaseController {
         return view;
     }
 
-    @RequestMapping(value = "counselor/counselorSelf.htm", method = RequestMethod.GET)
-    public ModelAndView counselorSelf(HttpServletRequest request, ModelMap modelMap) {
-        ModelAndView view = new ModelAndView("counselor/counselorSelf");
+    @RequestMapping(value = "/counselor/counselorSelf.htm", method = RequestMethod.GET)
+    public ModelAndView counselorSelf(HttpServletRequest request, final PageQuery query,
+                                      ModelMap modelMap) {
+        ModelAndView view = new ModelAndView("counselor/consult/searchConsult");
         final CounselorVO counselorVO = getCounselorInSession(request.getSession());
         CcResult result = serviceTemplate.execute(CcResult.class, new BlankServiceCallBack() {
             @Override
             public CcResult executeService() {
-                List<InterviewVO> counselors = interviewDAO.findUnderStepCounselor(counselorVO
-                    .getCounselor().getId(), ConsultStepEnum.FIHSHED);
-                return new CcResult(counselors);
+                PageList<ConsultBase> consultBases = consultComponent.queryUnderStepPaged(
+                    ConsultStepEnum.FIHSHED.getValue(), 0, counselorVO.getCounselor().getId(), 0,
+                    query.getPageSize(), query.getPageNo());
+                return new CcResult(consultBases);
             }
         });
         modelMap.put("result", result);

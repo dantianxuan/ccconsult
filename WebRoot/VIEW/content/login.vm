@@ -16,7 +16,7 @@
     }
 </script>
  <div class="row">
-    <div class="col-lg-12">
+    <div class="col-sm-12">
         <div class="panel panel-default">
             <div class="panel-heading">请登录</div>
             <div class="panel-body">
@@ -29,24 +29,24 @@
                 <form class="form-horizontal" id="loginForm" action="$link.contextPath/login.htm" method="post">
                     <fieldset>
                         <div class="form-group">
-                            <label for="inputName" class="col-lg-2 control-label">用户名称</label>
-                            <div class="col-lg-6">
+                            <label for="inputName" class="col-sm-2 control-label">用户名称</label>
+                            <div class="col-sm-6">
                                 <input type="text"  name="account" class="form-control"  placeholder="账户名称为邮箱地址" value="$!account"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="inputPasswd" class="col-lg-2 control-label">用户密码</label>
-                            <div class="col-lg-6">
+                            <label for="inputPasswd" class="col-sm-2 control-label">用户密码</label>
+                            <div class="col-sm-6">
                                 <input type="password"  name="password" class="form-control"  placeholder="账户密码"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="inputPasswd" class="col-lg-2 control-label"></label>
-                            <div class="col-lg-6">
-                                    <button type="button" class="btn btn-primary col-lg-5" onclick="login('CONSULTANT')">
+                            <label for="inputPasswd" class="col-sm-2 control-label"></label>
+                            <div class="col-sm-6">
+                                    <button type="button" class="btn btn-primary col-sm-5" onclick="login('CONSULTANT')">
                                         普通用户登陆
                                     </button>
-                                    <button type="button" class="col-lg-offset-2 btn btn-success col-lg-5" onclick="login('COUNSELOR')">
+                                    <button type="button" class="col-sm-offset-2 btn btn-success col-sm-5" onclick="login('COUNSELOR')">
                                         咨询师登录
                                     </button>
                             </div>

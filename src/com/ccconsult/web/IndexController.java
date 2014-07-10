@@ -15,13 +15,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ccconsult.base.CcConstrant;
+import com.ccconsult.base.PageList;
+import com.ccconsult.core.ConsultComponent;
 import com.ccconsult.dao.ArticleDAO;
 import com.ccconsult.dao.CompanyDAO;
-import com.ccconsult.dao.InterviewDAO;
+import com.ccconsult.dao.ServiceDAO;
 import com.ccconsult.enums.ArticleTypeEnum;
+import com.ccconsult.enums.ConsultStepEnum;
 import com.ccconsult.pojo.Article;
-import com.ccconsult.pojo.Company;
 import com.ccconsult.view.CompanyBriefVO;
+import com.ccconsult.view.ConsultBase;
 
 /**
  * @author jingyu.dan
@@ -31,11 +34,13 @@ import com.ccconsult.view.CompanyBriefVO;
 public class IndexController {
 
     @Autowired
-    private ArticleDAO   articleDAO;
+    private ArticleDAO       articleDAO;
     @Autowired
-    private CompanyDAO   companyDAO;
+    private CompanyDAO       companyDAO;
     @Autowired
-    private InterviewDAO interviewDAO;
+    private ConsultComponent consultComponent;
+    @Autowired
+    private ServiceDAO       serviceDAO;
 
     @RequestMapping(value = "/index.htm", method = RequestMethod.GET)
     public ModelAndView toIndex(HttpServletRequest request, ModelMap modelMap) {
@@ -43,7 +48,10 @@ public class IndexController {
         List<CompanyBriefVO> companyBriefVOs = companyDAO.queryTopList(10);
         modelMap.put("articles", articles);
         modelMap.put("companyBriefVOs", companyBriefVOs);
-        modelMap.put("interviewVOs", interviewDAO.findRecentFinished(10));
+        modelMap.put("services", serviceDAO.findAll());
+        PageList<ConsultBase> consultBases = consultComponent.queryPaged(
+            ConsultStepEnum.FIHSHED.getValue(), 0, 0, 0, 10, 1);
+        modelMap.put("consultBases", consultBases);
         ModelAndView view = new ModelAndView("content/index");
         return view;
     }

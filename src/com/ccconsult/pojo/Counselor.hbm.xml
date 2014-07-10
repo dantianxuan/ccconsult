@@ -32,7 +32,7 @@
             <column name="gmt_modified" length="19" />
         </property>
         <property name="description" type="string">
-            <column name="description" length="2048">
+            <column name="description" length="5000">
                 <comment>个人描述</comment>
             </column>
         </property>
@@ -49,6 +49,15 @@
         </property>
         <property name="department" type="string">
             <column name="department" />
+        </property>
+        <property name="appriseRate" type="integer">
+            <column name="apprise_rate" />
+        </property>
+        <property name="lastLogin" type="timestamp">
+            <column name="last_login" length="19" />
+        </property>
+        <property name="city" type="string">
+            <column name="city" length="256" />
         </property>
     </class>
 </hibernate-mapping>

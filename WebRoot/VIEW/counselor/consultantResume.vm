@@ -1,61 +1,61 @@
 #if($resume)
 <div class="row">
-    <div class="col-lg-12">
+    <div class="col-sm-12">
         <div class="panel panel-default">
             <div class="panel-heading">
             	基本信息
             </div>
             <div class="panel-body">
-				<div class="col-lg-12" >
-					<div class="col-lg-4">
+				<div class="col-sm-12" >
+					<div class="col-sm-4">
 					 	 <img src="$link.contextPath/STATIC/image/alipay.jpg" style="width: 200px;" class="img-rounded">
 					</div>
-					<div class="col-lg-8">
-							<div class="col-lg-12" 	style="border-top:solid 1px #ddd">
-								<div class="col-lg-3">
+					<div class="col-sm-8">
+							<div class="col-sm-12" 	style="border-top:solid 1px #ddd">
+								<div class="col-sm-3">
 								 	<h4 style="text-align:right">真实姓名</h4>
 								</div>
-								<div class="col-lg-8">
+								<div class="col-sm-8">
 									<p style="padding-top:12px;">$!resume.realName</p>
 								</div>
 							</div>		
-							<div class="col-lg-12" 	style="border-top:solid 1px #ddd">
-								<div class="col-lg-3">
+							<div class="col-sm-12" 	style="border-top:solid 1px #ddd">
+								<div class="col-sm-3">
 								 	<h4 style="text-align:right">性别</h4>
 								</div>
-								<div class="col-lg-8">
+								<div class="col-sm-8">
 									<p style="padding-top:12px;">$!resume.sexy</p>
 								</div>
 							</div>	
-							<div class="col-lg-12" 	style="border-top:solid 1px #ddd">
-								<div class="col-lg-3">
+							<div class="col-sm-12" 	style="border-top:solid 1px #ddd">
+								<div class="col-sm-3">
 								 	<h4 style="text-align:right">学历</h4>
 								</div>
-								<div class="col-lg-8">
+								<div class="col-sm-8">
 									<p style="padding-top:12px;">$!resume.education</p>
 								</div>
 							</div>
-							<div class="col-lg-12" 	style="border-top:solid 1px #ddd">
-								<div class="col-lg-3">
+							<div class="col-sm-12" 	style="border-top:solid 1px #ddd">
+								<div class="col-sm-3">
 								 	<h4 style="text-align:right">毕业院校</h4>
 								</div>
-								<div class="col-lg-8">
+								<div class="col-sm-8">
 									<p style="padding-top:12px;">$!resume.school</p>
 								</div>
 							</div>
-							<div class="col-lg-12" 	style="border-top:solid 1px #ddd;border-bottom:solid 1px #ddd">
-								<div class="col-lg-3">
+							<div class="col-sm-12" 	style="border-top:solid 1px #ddd;border-bottom:solid 1px #ddd">
+								<div class="col-sm-3">
 								 	<h4 style="text-align:right">专业</h4>
 								</div>
-								<div class="col-lg-8">
+								<div class="col-sm-8">
 									<p style="padding-top:12px;">$!resume.profession</p>
 								</div>
 							</div>
-							<div class="col-lg-12" 	style="border-top:solid 1px #ddd;border-bottom:solid 1px #ddd">
-								<div class="col-lg-3">
+							<div class="col-sm-12" 	style="border-top:solid 1px #ddd;border-bottom:solid 1px #ddd">
+								<div class="col-sm-3">
 								 	<h4 style="text-align:right">工作年限</h4>
 								</div>
-								<div class="col-lg-8">
+								<div class="col-sm-8">
 									<p style="padding-top:12px;">$!resume.workExperience</p>
 								</div>
 							</div>
@@ -66,7 +66,7 @@
     	</div>
     </div>
     
-	<div class="col-lg-12">
+	<div class="col-sm-12">
         <div class="panel panel-default">
             <div class="panel-heading">
             	简历详情

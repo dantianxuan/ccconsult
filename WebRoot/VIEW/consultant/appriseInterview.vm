@@ -14,7 +14,7 @@
 #else
 <form  id="appriseInterviewForm">
 <div class="row">
-	<div class="col-lg-12">
+	<div class="col-sm-12">
 	<div class="alert alert-dismissable alert-warning">
 	   <strong>咨询师已完成预约</strong><br/>
 	  请对咨询师的服务进行评价，完成评价后咨询师才能获得咨询费用，如果您对本次咨询有异议，可以发起<a href="" style="font-size:18px;"><span class="glyphicon glyphicon-exclamation-sign"></span>申述.</a>
@@ -23,20 +23,20 @@
 </div>
 
 <div class="row">
-	<div class="col-lg-12">
+	<div class="col-sm-12">
 		<div class="panel panel-default">
 		  <div class="panel-body">
-                  	<div class="col-lg-2">
+                  	<div class="col-sm-2">
                         <img src="$link.contextPath/UPLOAD/$!counselorVO.counselor.photo" class="img-rounded" style="width: 82px;height: 82px;">
                     </div>
-                    <div class="col-lg-5">
-	                    <p class="col-lg-12"><strong class=" text-right col-lg-4">名称:</strong>$!counselorVO.counselor.name</p>
-	                    <p class="col-lg-12"><strong class=" text-right col-lg-4">注册邮箱:</strong>$!counselorVO.counselor.email</p>
-	                    <p class="col-lg-12"><strong class=" text-right col-lg-4">公司信息:</strong>$!counselorVO.company.name</p>
+                    <div class="col-sm-5">
+	                    <p class="col-sm-12"><strong class=" text-right col-sm-4">名称:</strong>$!counselorVO.counselor.name</p>
+	                    <p class="col-sm-12"><strong class=" text-right col-sm-4">注册邮箱:</strong>$!counselorVO.counselor.email</p>
+	                    <p class="col-sm-12"><strong class=" text-right col-sm-4">公司信息:</strong>$!counselorVO.company.name</p>
                     </div>
-                    <div class="col-lg-5">
-	                    <p class="col-lg-12"><strong class=" text-right col-lg-4">手机号码</strong>$!counselorVO.counselor.mobile</p>
-	                    <p class="col-lg-12"><strong class=" text-right col-lg-4">部门信息</strong>$!counselorVO.counselor.department</p>
+                    <div class="col-sm-5">
+	                    <p class="col-sm-12"><strong class=" text-right col-sm-4">手机号码</strong>$!counselorVO.counselor.mobile</p>
+	                    <p class="col-sm-12"><strong class=" text-right col-sm-4">部门信息</strong>$!counselorVO.counselor.department</p>
                     </div>
 			</div>  	                
   		</div>
@@ -44,7 +44,7 @@
 </div>
 
 <div class="row">
-	<div class="col-lg-12">
+	<div class="col-sm-12">
 		<div class="panel panel-default">
 		  <div class="panel-body">
 		  	<input type="radio" name="apprise"  value="1" checked>
@@ -60,7 +60,7 @@
 	</div>
 </div>		  
 <div class="row">
-	<div class="col-lg-12">
+	<div class="col-sm-12">
         <script type="text/plain" id="myEditor" name="message" style="width:100%;height:200px;">$!article.content</script>
         <script type="text/javascript">
 		    $(function(){
@@ -72,7 +72,7 @@
         </script>   
         <br/>
         <input type="hidden" name="relId" value="$interview.id"/>
-        <button type="button" class="btn btn-danger col-lg-2" style="float:right;" onclick="appriseInterview()">完成评价</button>
+        <button type="button" class="btn btn-danger col-sm-2" style="float:right;" onclick="appriseInterview()">完成评价</button>
         <a href="$link.contextPath/consultant/interview.htm?interviewId=$interview.id" class="btn btn-link" style="float:right;">返回记录</a>
 	   
 	</div> 	  	
