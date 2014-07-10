@@ -1,0 +1,158 @@
+#set($counselorVO=$session.getAttribute("SESSION_COUNSELOR_OBJECT"))
+#parse("counselor/counselorGuide.vm")    
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">	
+            	我提供的服务
+            </div>
+            <div class="panel-body">
+				<table class="table table-striped table-hover ">
+				  <thead>
+				    <tr>
+				      <th width="10%">ID</th>
+				      <th width="70%">服务名称</th>
+				      <th width="10%">价格</th>
+				      <th width="10%">操作</th>
+				    </tr>
+				  </thead>
+				  <tbody>
+				  #foreach($serviceConfigVO in $counselorVO.serviceConfigs)
+				    <tr class="info">
+				      <td>$serviceConfigVO.service.id</td>
+				      <td>$serviceConfigVO.service.name</td>
+				      <td>$serviceConfigVO.serviceConfig.price</td>
+				      <td>
+				      	#if($serviceConfigVO.service.id==1)
+				      		默认服务
+				      	#else
+				      	<a href="javascript:void(0)" 
+				      		onclick="deleteService($serviceConfigVO.serviceConfig.id)">
+				      			<span class="glyphicon glyphicon-remove-sign"></span>删除
+				      	</a>
+				      	#end
+	      			  </td>
+				    </tr>				  
+				  #end					  
+				  </tbody>
+				</table>              
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">	
+            	可签约服务列表
+            </div>
+            <div class="panel-body">
+				<table class="table table-striped table-hover ">
+				  <thead>
+				    <tr>
+				      <th width="10%">ID</th>
+				      <th width="40%">服务名称</th>
+				      <th width="20%">服务规则</th>
+				      <th width="20%">价格区间</th>
+				      <th width="10%">操作</th>
+				    </tr>
+				  </thead>
+				  <tbody>
+				  #foreach($service in $services)
+				    <tr class="success">
+				      <td>$service.id</td>
+				      <td>$service.name</td>
+				      <td><a target="_blank" href="$link.contextPath/article.htm?articleId=$service.introArticleId">规则详情</a></td>
+				      <td>$service.priceRegion.replace('@','到')/次(单位元)</td>
+				      <td>
+				      	#if($service.id==1)
+				      		默认服务
+				      	#else
+				      	<a href="javascript:void(0)" onclick="showModel($service.id)">
+				      	<span class="glyphicon glyphicon-plus-sign"></span>添加</a>
+				      	#end
+			      	</td>
+				    </tr>				  
+				  #end				  
+				  </tbody>
+				</table>              
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+		<form class="form-horizontal" id="addServiceForm">
+		  <fieldset>      
+			    <legend>签约服务</legend>
+				<div class="alert alert-dismissable alert-warning">
+					<p>请咨询阅读<a href="#">服务条款</a>和签约规则<p>
+					<p class="text-primary"><input type="checkbox"> 我已阅读服务条款并同意本站的服务规则</p>				
+				</div>    
+			    <div class="form-group" style="text-align:center;">
+			    	<input type="hidden" name="serviceId" value="0" id="serviceIdHidden"/>
+			      <label class="col-sm-3 control-label">设定金额单位元</label>
+			      <div class="col-sm-2">
+			        <select class="form-control col-sm-2" name="price">
+			        	#foreach($index in [10..100])
+			        		<option value="$index" >$index元</option>
+			        	#end
+			        </select>      
+			      </div>
+			      <label class="col-sm-2 control-label"> /次 </label>
+			    </div>
+			    <div class="form-group" style="text-align:center;border-top:solid 1px #ddd;">
+			    	<br/>
+			      	<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+			        <button type="button" onclick="addService()"  class="btn btn-primary">签约服务</button>
+			    </div>			    
+		  </fieldset>
+		</form>			    
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+	function showModel(serviceId){
+		$('#serviceIdHidden').val(serviceId);
+		$('#myModal').modal('show');
+	}
+	
+	function addService(){
+		jQuery.ajax({
+             type: "POST",
+             url: "$link.contextPath/counselor/addService.json",
+             data: $('#addServiceForm').serialize(),
+             dataType: "json",
+             success: function(data){
+             	if(data.result.success==true){
+             		window.location.reload();
+             	}else{
+             		alert("添加失败"+data.result.message);
+             	}
+              }
+         });
+	}
+	
+	function deleteService(serviceConfigId){
+	 if(confirm("请确认你要您所提供的服务吗，删除服务不影响您已经在处理中的记录？")){
+		jQuery.ajax({
+             type: "POST",
+             url: "$link.contextPath/counselor/removeService.json",
+             data: {'serviceConfigId':serviceConfigId},
+             dataType: "json",
+             success: function(data){
+             	if(data.result.success==true){
+             		window.location.reload();
+             	}else{
+             		alert("删除失败"+data.result.message);
+             	}
+              }
+         });
+     }
+	}	
+</script>

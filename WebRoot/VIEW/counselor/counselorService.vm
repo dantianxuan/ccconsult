@@ -1,0 +1,31 @@
+#set($counselorVO=$session.getAttribute("SESSION_COUNSELOR_OBJECT"))
+#parse("counselor/counselorGuide.vm") 
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">	
+            	提供服务列表 <a  style="float:right" href="$link.contextPath/counselor/serviceConfig.htm"><span class="glyphicon glyphicon-edit">服务项目修改</span></a>
+            </div>
+            <div class="panel-body">
+				<table class="table table-striped table-hover ">
+				  <thead>
+				    <tr>
+				      <th width="10%">ID</th>
+				      <th width="60%">服务名称</th>
+				      <th width="10%">价格</th>
+				    </tr>
+				  </thead>
+				  <tbody>
+				  #foreach($serviceConfigVO in $!counselorVO.serviceConfigs)
+				    <tr #if($serviceConfigVO.service.id==1 ) class="success" #end>
+				      <td>$serviceConfigVO.serviceConfig.id</td>
+				      <td><a href="$link.contextPah/service.htm?serviceId=$serviceConfigVO.service.id">$serviceConfigVO.service.name</td>
+				      <td>$serviceConfigVO.serviceConfig.price</td>
+				    </tr>				  
+				  #end					  
+				  </tbody>
+				</table>              
+            </div>
+        </div>
+    </div>
+</div>

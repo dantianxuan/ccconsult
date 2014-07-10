@@ -1,0 +1,33 @@
+#set($consultant=$session.getAttribute("SESSION_CONSULTANT_OBJECT"))
+#set($services=$session.getAttribute("ALL_SERVICES"))
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+            	欢迎您：大大猫 
+            </div>
+            <div class="panel-body">
+					<div class="btn-group">
+					  <a class="btn btn-primary" href="$link.contextPath/consultant/consultantSelf.htm""><span class="glyphicon glyphicon-star"></span>  我的预约</a>
+					  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+					  <ul class="dropdown-menu">
+					  	#foreach($service in $services)
+					  		<li><a href="$link.contextPath/counselor/consult/${service.code}List.htm">我的${service.name}</a></li>
+					  	#end
+					  </ul>
+					</div>	
+					
+					<a  class="btn btn-warning" href="$link.contextPath/consultant/consultantSelf.htm"><span class="glyphicon glyphicon-copyright-mark"></span>   账户信息</a>					
+					<div class="btn-group">
+					  <a  href="$link.contextPath/consultant/personalInfo.htm" class="btn btn-warning"><span class="glyphicon glyphicon-user"></span> 个人信息</a>
+					  <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+					  <ul class="dropdown-menu">
+					    <li><a href="$link.contextPath/consultant/editPersonalInfo.htm">个人信息修改</a></li>
+					    <li><a href="$link.contextPath/consultant/showResume.htm">个人简历维护</a></li>
+					  </ul>
+					</div>					
+					<a class="btn btn-warning" href="$link.contextPath/consultant/innerMails.htm"> <span class="glyphicon glyphicon-envelope"></span>  站内信箱</a>
+       	 	</div>
+    	</div>
+    </div>
+</div>
