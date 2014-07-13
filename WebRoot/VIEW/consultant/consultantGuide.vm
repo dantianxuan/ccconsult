@@ -12,7 +12,7 @@
 					  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
 					  <ul class="dropdown-menu">
 					  	#foreach($service in $services)
-					  		<li><a href="$link.contextPath/counselor/consult/${service.code}List.htm">我的${service.name}</a></li>
+					  		<li><a href="$link.contextPath/consultant/consult/searchConsult.htm?serviceId=$service.id">我的${service.name}</a></li>
 					  	#end
 					  </ul>
 					</div>	

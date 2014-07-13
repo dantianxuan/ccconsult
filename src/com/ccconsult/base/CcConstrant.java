@@ -35,6 +35,9 @@ public class CcConstrant {
     public final static String COUNSELOR_PHOTO           = "counselor.jpg";
 
     /**短消息字符长度*/
+    public final static int    FILE_2M_SIZE              = 1024 * 1024 * 2;
+
+    /**短消息字符长度*/
     public final static int    COMMON_128_LENGTH         = 128;
 
     /**短消息字符长度*/

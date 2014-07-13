@@ -4,8 +4,6 @@
  */
 package com.ccconsult.core;
 
-import java.io.File;
-
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ccconsult.enums.FileTypeEnum;
@@ -24,6 +22,7 @@ public interface FileComponent {
      * @param path
      * @return
      */
-    public File uploadFile(MultipartFile myfile, FileTypeEnum fileTypeEnm, String contextPath);
+    public String uploadFile(MultipartFile myfile, FileTypeEnum fileTypeEnm, String contextPath,
+                             int maxSize, String prefixReg);
 
 }

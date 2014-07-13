@@ -49,7 +49,7 @@ public class IndexController {
         modelMap.put("articles", articles);
         modelMap.put("companyBriefVOs", companyBriefVOs);
         modelMap.put("services", serviceDAO.findAll());
-        PageList<ConsultBase> consultBases = consultComponent.queryPaged(
+        PageList<ConsultBase> consultBases = consultComponent.queryPaged(2,
             ConsultStepEnum.FIHSHED.getValue(), 0, 0, 0, 10, 1);
         modelMap.put("consultBases", consultBases);
         ModelAndView view = new ModelAndView("content/index");

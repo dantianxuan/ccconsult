@@ -17,6 +17,7 @@ import com.ccconsult.dao.ConsultantDAO;
 import com.ccconsult.dao.CounselorDAO;
 import com.ccconsult.dao.ServiceConfigDAO;
 import com.ccconsult.dao.ServiceDAO;
+import com.ccconsult.enums.PayStateEnum;
 import com.ccconsult.pojo.Consult;
 import com.ccconsult.view.ConsultBase;
 
@@ -31,9 +32,10 @@ public class ConsultComponentImpl implements ConsultComponent {
      * @see com.ccconsult.core.ConsultComponent#queryPaged()
      */
     @Override
-    public PageList<ConsultBase> queryUnderStepPaged(int step, int serviceId, int counselorId,
-                                                     int consultantId, int pageSize, int pageNo) {
-        PageList pageList = consultDAO.queryUnderStepPaged(step, serviceId, counselorId,
+    public PageList<ConsultBase> queryUnderStepPaged(int payTag, int step, int serviceId,
+                                                     int counselorId, int consultantId,
+                                                     int pageSize, int pageNo) {
+        PageList pageList = consultDAO.queryUnderStepPaged(payTag, step, serviceId, counselorId,
             consultantId, pageSize, pageNo);
         if (CollectionUtils.isEmpty(pageList.getData())) {
             return pageList;
@@ -46,10 +48,10 @@ public class ConsultComponentImpl implements ConsultComponent {
         return pageList;
     }
 
-    public PageList<ConsultBase> queryPaged(int step, int serviceId, int counselorId,
+    public PageList<ConsultBase> queryPaged(int payTag, int step, int serviceId, int counselorId,
                                             int consultantId, int pageSize, int pageNo) {
-        PageList pageList = consultDAO.queryPaged(step, serviceId, counselorId, consultantId,
-            pageSize, pageNo);
+        PageList pageList = consultDAO.queryPaged(payTag, step, serviceId, counselorId,
+            consultantId, pageSize, pageNo);
         if (CollectionUtils.isEmpty(pageList.getData())) {
             return pageList;
         }
@@ -88,7 +90,7 @@ public class ConsultComponentImpl implements ConsultComponent {
         base.setConsult(consult);
         base.setConsultant(consultantDAO.findById(consult.getConsultantId()));
         base.setCounselorVO(counselorDAO.findById(consult.getCounselorId()));
-        base.setServiceConfigVO(serviceConfigDAO.findVoById(consult.getServiceId()));
+        base.setServiceConfigVO(serviceConfigDAO.findVoById(consult.getServiceConfigId()));
         return base;
     }
 

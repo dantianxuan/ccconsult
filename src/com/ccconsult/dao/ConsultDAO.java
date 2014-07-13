@@ -24,6 +24,7 @@ public class ConsultDAO extends BaseHibernateDAO<Consult> {
     public static final String  STEP          = "step";
     public static final String  ORDER_ID      = "orderId";
     public static final String  STATE         = "state";
+    public static final String  PAY_TAG       = "payTag";
     public static final String  SERVICE_ID    = "serviceId";
 
     public Consult findById(java.lang.Integer id) {
@@ -37,8 +38,9 @@ public class ConsultDAO extends BaseHibernateDAO<Consult> {
         }
     }
 
-    public PageList<Consult> queryUnderStepPaged(int step, int serviceId, int counselorId,
-                                                 int consultantId, int pageSize, int pageNo) {
+    public PageList<Consult> queryUnderStepPaged(int payTag, int step, int serviceId,
+                                                 int counselorId, int consultantId, int pageSize,
+                                                 int pageNo) {
 
         Map<String, Object> params = new HashMap<String, Object>();
         params.put(STEP, step);
@@ -47,6 +49,10 @@ public class ConsultDAO extends BaseHibernateDAO<Consult> {
             params.put(SERVICE_ID, serviceId);
             hql += " and serviceId=:serviceId ";
         }
+        if (payTag > 0) {
+            params.put(PAY_TAG, payTag);
+            hql += " and payTag=:payTag ";
+        }
         if (counselorId > 0) {
             params.put(COUNSELOR_ID, counselorId);
             hql += " and counselorId=:counselorId ";
@@ -55,12 +61,12 @@ public class ConsultDAO extends BaseHibernateDAO<Consult> {
             params.put(CONSULTANT_ID, consultantId);
             hql += " and consultantId=:consultantId ";
         }
-        hql += " and payTag=2 order by gmtModified ";
+        hql += " order by gmtModified ";
         return queryPage(pageNo, pageSize, hql, params);
     }
 
-    public PageList<Consult> queryPaged(int step, int serviceId, int counselorId, int consultantId,
-                                        int pageSize, int pageNo) {
+    public PageList<Consult> queryPaged(int payTag, int step, int serviceId, int counselorId,
+                                        int consultantId, int pageSize, int pageNo) {
         Map<String, Object> params = new HashMap<String, Object>();
 
         params.put(STEP, step);
@@ -69,6 +75,10 @@ public class ConsultDAO extends BaseHibernateDAO<Consult> {
             params.put(SERVICE_ID, serviceId);
             hql += " and serviceId=:serviceId ";
         }
+        if (payTag > 0) {
+            params.put(PAY_TAG, payTag);
+            hql += " and payTag=:payTag ";
+        }
         if (counselorId > 0) {
             params.put(COUNSELOR_ID, counselorId);
             hql += " and counselorId=:counselorId ";
@@ -78,7 +88,7 @@ public class ConsultDAO extends BaseHibernateDAO<Consult> {
             hql += " and consultantId=:consultantId ";
         }
 
-        hql += " and payTag=2 order by gmtModified ";
+        hql += " order by gmtModified ";
         return queryPage(pageNo, pageSize, hql, params);
     }
 }

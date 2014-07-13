@@ -7,7 +7,7 @@
 #set($consultBase=$result.object)
 #set($serviceConfigVO=$consultBase.serviceConfigVO)
 <div class="alert alert-dismissable alert-warning">
-  	<h2>您当前已创建的一笔咨询请求等待支付</h2>
+  	<h2>您当前已创建的一笔咨询请求#if($consultBase.consult.payTag==2)已经完成支付#else等待支付#end</h2>
 	<div class="alert alert-dismissable alert-success">
 		  <h4>欢迎使用$serviceConfigVO.service.name服务!</h4>
 		  <p>$serviceConfigVO.service.description</p>
@@ -17,8 +17,10 @@
 	  		</span> 
   		  </p>
 	</div>
-  	<p style="text-align:right;"><a class="btn btn-default" style="margin-right:12px;">放弃支付</a>
-  	<a class="btn btn-warning" style="margin-right:12px;">已完成支付</a>
-  	<a class="btn btn-primary">去支付</a></p>
+	#if($consultBase.consult.payTag!=2)
+	  	<p style="text-align:right;"><a href="$link.contextPath/consultant/consultantSelf.htm"  class="btn btn-default" style="margin-right:12px;">放弃支付</a>
+	  	<a class="btn btn-warning" href="$link.contextPath/consultant/consult/payForConsult.htm?consultId=$consultBase.consult.id" style="margin-right:12px;">已完成支付</a>
+	  	<a class="btn btn-primary">去支付</a></p>
+  	#end
 </div>
 #end

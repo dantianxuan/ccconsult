@@ -55,7 +55,7 @@ public class ConsultInterviewController extends BaseController {
     @Autowired
     private ServiceConfigDAO serviceConfigDAO;
 
-    @RequestMapping(value = "/consultant/consult/createinterviewConsult.htm", method = RequestMethod.GET)
+    @RequestMapping(value = "/consultant/consult/createinterviewConsultInit.htm", method = RequestMethod.GET)
     public ModelAndView handleRequest(HttpServletRequest request, final String serviceConfigId,
                                       ModelMap modelMap) {
         ModelAndView view = new ModelAndView("consultant/consult/createInterviewConsult");

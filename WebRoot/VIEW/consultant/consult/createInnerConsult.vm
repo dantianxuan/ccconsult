@@ -12,7 +12,8 @@
 <form  id="createInnerConsultForm">
 <input type="hidden" name="counselorId" value="$serviceConfigVO.serviceConfig.counselorId"/>
 <input type="hidden" name="consultantId" value="$consultant.id"/>
-<input type="hidden" name="serviceId" value="$serviceConfigVO.serviceConfig.id" />
+<input type="hidden" name="serviceConfigId" value="$serviceConfigVO.serviceConfig.id" />
+<input type="hidden" name="serviceId" value="$serviceConfigVO.service.id" />
 <div class="alert alert-dismissable alert-warning">
   <h4>欢迎您创建$serviceConfigVO.service.name请求</h4>
   <p>请仔细阅读我们的服务流程，以便于您的使用，咨询师回答您的问题后，我们会邮件通知您</p>
@@ -29,7 +30,6 @@
   </p>
   <p class="text-primary">请严格遵守本网服务须知，不要在咨询中询问或透漏任何涉及商业机密的信息！.</p>
 </div>
- 
 #if($result && !$result.success)
 <div class="row">
 	<div class="col-sm-12">

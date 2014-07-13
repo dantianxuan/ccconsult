@@ -69,7 +69,7 @@
 			<props>
 				<!-- 遇到MaxUploadSizeExceededException异常时，自动跳转到/WEB-INF/jsp/error_fileupload.jsp页面 -->
 				<prop
-					key="org.springframework.web.multipart.MaxUploadSizeExceededException">/error.htm</prop>
+					key="org.springframework.web.multipart.MaxUploadSizeExceededException">/error/uploadSoLargeError</prop>
 			</props>
 		</property>
 	</bean>

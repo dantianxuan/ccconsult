@@ -74,7 +74,7 @@ public class CounselorController extends BaseController {
             @Override
             public CcResult executeService() {
                 CounselorVO counselorVO = counselorDAO.findById(NumberUtils.toInt(counselorId));
-                PageList<ConsultBase> consultBases = consultComponent.queryPaged(
+                PageList<ConsultBase> consultBases = consultComponent.queryPaged(2,
                     ConsultStepEnum.FIHSHED.getValue(), 0, counselorVO.getCounselor().getId(), 0,
                     query.getPageSize(), query.getPageNo());
                 modelMap.put("counselorVO", counselorVO);
@@ -95,12 +95,32 @@ public class CounselorController extends BaseController {
         CcResult result = serviceTemplate.execute(CcResult.class, new BlankServiceCallBack() {
             @Override
             public CcResult executeService() {
-                PageList<ConsultBase> consultBases = consultComponent.queryUnderStepPaged(
+                PageList<ConsultBase> consultBases = consultComponent.queryUnderStepPaged(2,
                     ConsultStepEnum.FIHSHED.getValue(), 0, counselorVO.getCounselor().getId(), 0,
                     query.getPageSize(), query.getPageNo());
                 return new CcResult(consultBases);
             }
         });
+        modelMap.put("result", result);
+        return view;
+    }
+
+    @RequestMapping(value = "counselor/consult/searchConsult.htm", method = RequestMethod.GET)
+    public ModelAndView searchConsult(final HttpServletRequest request, final PageQuery query,
+                                      final Integer step, final Integer serviceId, ModelMap modelMap) {
+        ModelAndView view = new ModelAndView("counselor/consult/searchConsult");
+        final CounselorVO counselorVO = getCounselorInSession(request.getSession());
+        CcResult result = serviceTemplate.execute(CcResult.class, new BlankServiceCallBack() {
+            @Override
+            public CcResult executeService() {
+                PageList<ConsultBase> consultBases = consultComponent.queryPaged(2,
+                    step == null ? 0 : step, serviceId == null ? 0 : serviceId, counselorVO
+                        .getCounselor().getId(), 0, query.getPageSize(), query.getPageNo());
+                return new CcResult(consultBases);
+            }
+        });
+        modelMap.put("serviceId", serviceId);
+        modelMap.put("step", step);
         modelMap.put("result", result);
         return view;
     }

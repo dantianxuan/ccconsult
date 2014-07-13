@@ -28,7 +28,10 @@ public enum ConsultStepEnum {
     EXPIRED(4, "EXPIRED", "已过期"),
 
     /** 已拒绝 */
-    REJECT(5, "REJECT", "已拒绝");
+    REJECT(5, "REJECT", "已拒绝"),
+
+    /** 已删除 */
+    DELETE(6, "DELETE", "已删除");
 
     /** 枚举码 */
     private int    value;

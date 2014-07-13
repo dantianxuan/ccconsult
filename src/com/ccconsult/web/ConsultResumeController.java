@@ -3,7 +3,6 @@
  */
 package com.ccconsult.web;
 
-import java.io.File;
 import java.util.Date;
 import java.util.List;
 
@@ -29,7 +28,6 @@ import com.ccconsult.dao.ConsultDAO;
 import com.ccconsult.dao.CounselorDAO;
 import com.ccconsult.dao.MessageDAO;
 import com.ccconsult.dao.ResumeConsultDAO;
-import com.ccconsult.dao.ResumeDAO;
 import com.ccconsult.dao.ServiceConfigDAO;
 import com.ccconsult.enums.ConsultStepEnum;
 import com.ccconsult.enums.DataStateEnum;
@@ -38,7 +36,6 @@ import com.ccconsult.enums.MessageRelTypeEnum;
 import com.ccconsult.enums.PayStateEnum;
 import com.ccconsult.pojo.Consult;
 import com.ccconsult.pojo.Consultant;
-import com.ccconsult.pojo.Resume;
 import com.ccconsult.pojo.ResumeConsult;
 import com.ccconsult.view.ConsultBase;
 import com.ccconsult.view.CounselorVO;
@@ -61,8 +58,6 @@ public class ConsultResumeController extends BaseController {
     @Autowired
     private ConsultComponent consultComponent;
     @Autowired
-    private ResumeDAO        resumeDAO;
-    @Autowired
     private FileComponent    fileComponent;
     @Autowired
     private ResumeConsultDAO resumeConsultDAO;
@@ -73,7 +68,6 @@ public class ConsultResumeController extends BaseController {
     public ModelAndView handleRequest(HttpServletRequest request, final String serviceConfigId,
                                       final ModelMap modelMap) {
         ModelAndView view = new ModelAndView("consultant/consult/createResumeConsult");
-        final Consultant consultant = getConsultantInSession(request.getSession());
         CcResult result = serviceTemplate.execute(CcResult.class, new BlankServiceCallBack() {
             @Override
             public CcResult executeService() {
@@ -84,9 +78,8 @@ public class ConsultResumeController extends BaseController {
                     serviceConfigVO != null
                             && serviceConfigVO.getServiceConfig().getState()
                                 .equals(DataStateEnum.NORMAL.getValue()), "当前服务设定过期或者被修改，请重新预约！");
-                Resume resume = resumeDAO.findByConsultantId(consultant.getId());
-                modelMap.put("resume", resume);
-                return new CcResult(serviceConfigVO);
+                modelMap.put("serviceConfigVO", serviceConfigVO);
+                return new CcResult(true);
             }
         });
         modelMap.put("result", result);
@@ -100,7 +93,7 @@ public class ConsultResumeController extends BaseController {
     @RequestMapping(value = "consultant/consult/createResumeConsult.htm", method = RequestMethod.POST)
     public ModelAndView createResume(final HttpServletRequest request, final Consult consult,
                                      @RequestParam final MultipartFile[] localFile,
-                                     ModelMap modelMap) {
+                                     final ModelMap modelMap) {
         CcResult result = serviceTemplate.executeWithTx(CcResult.class, new BlankServiceCallBack() {
             /** 
              * @see com.ccconsult.base.ServiceCallBack#check()
@@ -115,7 +108,6 @@ public class ConsultResumeController extends BaseController {
                 AssertUtil.notBlank(consult.getGoal(), "请填写您的咨询目的，请检查");
                 AssertUtil.state(consult.getGoal().length() <= CcConstrant.COMMON_4096_LENGTH,
                     "描述问题太长，请简洁描述");
-                AssertUtil.state(localFile != null && localFile.length == 1, "必须上传您的简历文件！");
             }
 
             @Override
@@ -123,12 +115,17 @@ public class ConsultResumeController extends BaseController {
                 String fileName = "";
                 String contextPath = request.getSession().getServletContext().getRealPath("/");
                 for (MultipartFile myfile : localFile) {
-                    if (!myfile.isEmpty()) {
-                        File file = fileComponent.uploadFile(myfile, FileTypeEnum.RESUME,
-                            contextPath);
-                        fileName = file.getName();
-                    }
+                    AssertUtil.state(!myfile.isEmpty(), "必须上传您的简历文件！");
+                    fileName = fileComponent.uploadFile(myfile, FileTypeEnum.RESUME, contextPath,
+                        CcConstrant.FILE_2M_SIZE, "doc|pdf|docx");
                 }
+                ServiceConfigVO serviceConfigVO = serviceConfigDAO.findVoById(consult
+                    .getServiceConfigId());
+                AssertUtil.state(
+                    serviceConfigVO != null
+                            && serviceConfigVO.getServiceConfig().getState()
+                                .equals(DataStateEnum.NORMAL.getValue()), "服务配置对象当前过期，请查询发起咨询");
+                modelMap.put("serviceConfigVO", serviceConfigVO);
                 //创建一个咨询记录
                 consult.setGmtCreate(new Date());
                 consult.setGmtModified(new Date());
@@ -144,6 +141,11 @@ public class ConsultResumeController extends BaseController {
             }
         });
         if (!result.isSuccess()) {
+            ServiceConfigVO serviceConfigVO = serviceConfigDAO.findVoById(consult
+                .getServiceConfigId());
+            modelMap.put("serviceConfigVO", serviceConfigVO);
+            modelMap.put("consult", consult);
+            modelMap.put("result", result);
             return new ModelAndView("consultant/consult/createResumeConsult");
         }
         return new ModelAndView("redirect:/consultant/consult/payForConsult.htm?consultId="
@@ -175,4 +177,31 @@ public class ConsultResumeController extends BaseController {
         modelMap.put("result", result);
         return view;
     }
+
+    //~~~~~~~~~~counselor~~~~~~~~~~~~    @RequestMapping(value = "/consultant/consult/resumeConsult.htm", method = RequestMethod.GET)
+    public ModelAndView innerConsultCounselor(final HttpServletRequest request, final String consultId,
+                                     final ModelMap modelMap) {
+        ModelAndView view = new ModelAndView("counselor/consult/resumeConsult");
+        CcResult result = serviceTemplate.execute(CcResult.class, new BlankServiceCallBack() {
+            @Override
+            public CcResult executeService() {
+                int consuid = NumberUtils.toInt(consultId);
+                AssertUtil.state(consuid > 0, "非法请求！");
+                ConsultBase consultBase = consultComponent.queryById(consuid);
+                Consultant consultant = getConsultantInSession(request.getSession());
+                AssertUtil.state(
+                    consultant != null
+                            && consultBase.getConsultant().getId().equals(consultant.getId()),
+                    "非法请求！");
+                List<MessageVO> messageVOs = messageDAO.queryByRelInfo(consuid,
+                    MessageRelTypeEnum.CONSULT.getValue());
+                modelMap.put("consultBase", consultBase);
+                modelMap.put("messageVOs", messageVOs);
+                return new CcResult(true);
+            }
+        });
+        modelMap.put("result", result);
+        return view;
+    }
+
 }

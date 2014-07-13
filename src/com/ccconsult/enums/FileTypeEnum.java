@@ -12,14 +12,11 @@ package com.ccconsult.enums;
  */
 public enum FileTypeEnum {
 
-    /** 咨询师头像 */
-    COUNSELOR_PHOTO(1, "COUNSELOR_PHOTO", "UPLOAD/COUNSELOR_PHOTO", "咨询师头像"),
-
-    /** 咨询者头像 */
-    CONSULTANT_PHOTO(2, "CONSULTANT_PHOTO", "UPLOAD/CONSULTANT_PHOTO", "咨询者头像"),
+    /** 用户头像 */
+    USER_PHOTO(1, "USER_PHOTO", "UPLOAD/USER_PHOTO", "用户头像"),
 
     /** 服务图片 */
-    SERVICE_PHOTO(3, "SERVICE_PHOTO", "STATIC", "服务图片"),
+    SERVICE_PHOTO(2, "SERVICE_PHOTO", "UPLOAD/SERVICE_PHOTO", "服务图片"),
 
     /** 简历文件 */
     RESUME(10, "RESUME", "UPLOAD/RESUME", "简历文件");
@@ -58,6 +55,21 @@ public enum FileTypeEnum {
     public static FileTypeEnum getByValue(int value) {
         for (FileTypeEnum type : values()) {
             if (type.getValue() == value) {
+                return type;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 通过枚举<code>value</code>获得枚举。
+     * 
+     * @param value 枚举值
+     * @return      枚举对象
+     */
+    public static FileTypeEnum getByCode(String code) {
+        for (FileTypeEnum type : values()) {
+            if (type.getCode().equals(code)) {
                 return type;
             }
         }

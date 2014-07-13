@@ -40,5 +40,8 @@
         <property name="rejectReason" type="string">
             <column name="reject_reason" length="5000" />
         </property>
+        <property name="serviceConfigId" type="integer">
+            <column name="service_config_id" />
+        </property>
     </class>
 </hibernate-mapping>

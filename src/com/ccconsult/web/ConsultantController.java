@@ -31,12 +31,14 @@ import com.ccconsult.core.ConsultComponent;
 import com.ccconsult.dao.ConsultantDAO;
 import com.ccconsult.dao.InnerMailDAO;
 import com.ccconsult.enums.ConsultStepEnum;
+import com.ccconsult.enums.PayStateEnum;
 import com.ccconsult.enums.UserRoleEnum;
 import com.ccconsult.pojo.Consultant;
 import com.ccconsult.util.LogUtil;
 import com.ccconsult.util.StringUtil;
 import com.ccconsult.util.ValidateUtil;
 import com.ccconsult.view.ConsultBase;
+import com.ccconsult.view.CounselorVO;
 
 /**
  * @author jingyu.dan
@@ -57,17 +59,38 @@ public class ConsultantController extends BaseController {
     @RequestMapping(value = "/consultant/consultantSelf.htm", method = RequestMethod.GET)
     public ModelAndView handleRequest(HttpServletRequest request, final PageQuery query,
                                       ModelMap modelMap) {
-        ModelAndView view = new ModelAndView("consultant/consultantSelf");
+        ModelAndView view = new ModelAndView("consultant/consult/searchConsult");
         final Consultant consultant = getConsultantInSession(request.getSession());
         CcResult result = serviceTemplate.execute(CcResult.class, new BlankServiceCallBack() {
             @Override
             public CcResult executeService() {
-                PageList<ConsultBase> consultBases = consultComponent.queryUnderStepPaged(
+                PageList<ConsultBase> consultBases = consultComponent.queryUnderStepPaged(0,
                     ConsultStepEnum.FIHSHED.getValue(), 0, 0, consultant.getId(),
                     query.getPageSize(), query.getPageNo());
                 return new CcResult(consultBases);
             }
         });
+        modelMap.put("result", result);
+        return view;
+    }
+
+    @RequestMapping(value = "consultant/consult/searchConsult.htm", method = RequestMethod.GET)
+    public ModelAndView searchConsult(final HttpServletRequest request, final PageQuery query,
+                                      final Integer step, final Integer serviceId,
+                                      final Integer payTag, ModelMap modelMap) {
+        ModelAndView view = new ModelAndView("consultant/consult/searchConsult");
+        final Consultant consultant = getConsultantInSession(request.getSession());
+        CcResult result = serviceTemplate.execute(CcResult.class, new BlankServiceCallBack() {
+            @Override
+            public CcResult executeService() {
+                PageList<ConsultBase> consultBases = consultComponent.queryPaged(payTag == null ? 0
+                    : payTag, step == null ? 0 : step, serviceId == null ? 0 : serviceId, 0,
+                    consultant.getId(), query.getPageSize(), query.getPageNo());
+                return new CcResult(consultBases);
+            }
+        });
+        modelMap.put("serviceId", serviceId);
+        modelMap.put("step", step);
         modelMap.put("result", result);
         return view;
     }

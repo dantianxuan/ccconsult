@@ -3,15 +3,16 @@
   <p>您可以选择预约咨询或者站内咨询，站内咨询是免费咨询，咨询师会不定时的回答您的咨询问题，如果需要更高质量的咨询，
   请使用付费使用预约咨询,详细内容请点击<a href="#" class="alert-link">真咨网咨询服务条款</a>.</p>
   <p class="text-primary">请严格遵守本网服务须知，不要在咨询中透漏任何涉及商业机密的信息！.</p>
+  <p class="text-info">为保证双方利益，请仔细阅读我们的服务条款和<a  target="_blank" href="$link.contextPath/article.htm?articleId=2" style="font-size:14px">咨询担保交易</a>方式</p>
 </div>
 <div class="row">
     <div class="col-sm-12">
         <div class="panel panel-default">
             <div class="panel-body">
 	            	#foreach($serviceConfigVO in $!counselorVO.serviceConfigs)
-	        		<button style="margin-right:4px;" type="button" class="btn #if($serviceConfigVO.service.id==4) btn-primary #else btn-warning #end col-sm-2"
+	        		<button style="margin-right:4px;" type="button" class="btn #if($serviceConfigVO.service.id==4) btn-info #else btn-warning #end col-sm-2"
 							onclick="$('.serviceArea').addClass('hide');$('#serviceArea_$serviceConfigVO.service.id').removeClass('hide');">
-							#if($velocityCount==0) <span class="glyphicon glyphicon-fire"></span> #end  $serviceConfigVO.service.name
+							#if($foreach.count==4) <span class="glyphicon glyphicon-fire"></span> #end  $serviceConfigVO.service.name
 					</button>
 	            	#end
 	            	<hr/>
@@ -20,14 +21,13 @@
 						  <h4>欢迎使用$serviceConfigVO.service.name服务!</h4>
 						  <p>$serviceConfigVO.service.description</p>
 						  <p class="text-primary">
-						  	<span style="font-size:20px;">
-						  		<span class="glyphicon glyphicon-copyright-mark"></span>$serviceConfigVO.serviceConfig.price/次
+						  	<span style="font-size:24px;">
+						  		<span class="glyphicon glyphicon-copyright-mark"></span>$serviceConfigVO.serviceConfig.price/元次
 					  		</span> 
 						    <a class="btn btn-primary" href="$link.contextPath/consultant/consult/create${serviceConfigVO.service.code}Init.htm?serviceConfigId=$serviceConfigVO.serviceConfig.id" style="float:right;"><span class="glyphicon glyphicon-send"></span>  发起咨询</a>		
 				  		  </p>
 					</div>
 				 	#end		
-					<p class="text-info">为保证双方利益，我们会对您的咨询进行<a href="" style="font-size:18px">咨询担保交易</a></p>
        	 	</div>
     	</div>
     </div>
@@ -46,12 +46,13 @@
 	                    <p class="col-sm-12"><strong class=" text-right col-sm-4">公司:</strong>$!counselorVO.company.name</p>
                     </div>
                     <div class="col-sm-5">
-	                    <p class="col-sm-12"><strong class=" text-right col-sm-4">手机:</strong>**********</p>
-	                    <p class="col-sm-12"><strong class=" text-right col-sm-4">部门:</strong>$!counselorVO.counselor.department</p>
+	                    <p class="col-sm-12"><strong class=" text-right col-sm-4">个人手机:</strong>**********</p>
+	                    <p class="col-sm-12"><strong class=" text-right col-sm-4">所在部门:</strong>$!counselorVO.counselor.department</p>
+	                    <p class="col-sm-12"><strong class=" text-right col-sm-4">所在城市:</strong>$!counselorVO.counselor.city</p>
                     </div>	
                     <div class="col-sm-12" style="border-top:solid 1px #ddd;padding-top:12px;margin-bottom:12px;">	
-                    	<span class="label label-primary"><span class="glyphicon glyphicon-tag"></span> 好评率：98%</span> 
-                    	<span class="label label-primary"><span class="glyphicon glyphicon-fire"></span> 活跃度：活跃</span> 
+                    	<span class="label label-warning"><span class="glyphicon glyphicon-tag"></span> 好评率：98%</span> 
+                    	<span class="label label-warning"><span class="glyphicon glyphicon-fire"></span> 活跃度：活跃</span> 
                     </div>                    
                 </div>              
                 <div class="row">

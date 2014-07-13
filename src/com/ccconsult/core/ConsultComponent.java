@@ -19,16 +19,17 @@ public interface ConsultComponent {
      * 
      * @return
      */
-    public PageList<ConsultBase> queryUnderStepPaged(int step, int serviceId, int counselorId,
-                                                      int consultantId, int pageSize, int pageNo);
+    public PageList<ConsultBase> queryUnderStepPaged(int payTag, int step, int serviceId,
+                                                     int counselorId, int consultantId,
+                                                     int pageSize, int pageNo);
 
     /**
      * 分页查询记录
      * 
      * @return
      */
-    public PageList<ConsultBase> queryPaged(int step, int serviceId, int counselorId,
-                                             int consultantId, int pageSize, int pageNo);
+    public PageList<ConsultBase> queryPaged(int payTag, int step, int serviceId, int counselorId,
+                                            int consultantId, int pageSize, int pageNo);
 
     /**
      * 通过id查询咨询信息

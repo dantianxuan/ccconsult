@@ -85,14 +85,14 @@
 		 		#foreach($service in $services)
 					<div class="col-sm-12">
 						<div style="height:80px;margin-bottom:4px;background-color:#fff">
-						<div href="$link.contextPath/company.htm?companyId=$companyBriefVO.company.id">
+						<a  target="_blank" href="$link.contextPath/article.htm?articleId=$service.introArticleId">
 								<img src="$link.contextPath/$fileUtil.getPath($service.photo)"
 								style="width:60px;height: 60px; float:left" class="img-rounded">
 								<p style="padding-left: 72px;">
-									<a href="$link.contextPath/service.htm?serviceId=$service.id">$service.name #if($service.id==1) <span class="badge">FREE</span> #end</a> <br/>
+									<a target="_blank" href="$link.contextPath/article.htm?articleId=$service.introArticleId">$service.name #if($service.id==1) <span class="badge">FREE</span> #end</a> <br/>
 									<small>$service.description</small>
 								</p>
-						</div>			
+						</a>			
 						</div>
 					</div>	
 				#end												

@@ -7,47 +7,25 @@
 <script type="text/javascript" src="$link.contextPath/STATIC/plugin/umeditor/lang/zh-cn/zh-cn.js"></script>  
 <script src="$link.contextPath/STATIC/js/fileinput.js"></script>
 <link rel="stylesheet" href="$link.contextPath/STATIC/css/fileinput.css"/>
-#if(!$result || !$result.success)
-		$result.message
-#end
-#set($serviceConfigVO=$result.object)
 <form  id="createResumeConsultForm" action="$link.contextPath/consultant/consult/createResumeConsult.htm" method="POST" enctype="multipart/form-data">
 <input type="hidden" name="counselorId" value="$serviceConfigVO.serviceConfig.counselorId"/>
 <input type="hidden" name="consultantId" value="$consultant.id"/>
-<input type="hidden" name="serviceId" value="$serviceConfigVO.serviceConfig.id" />
+<input type="hidden" name="serviceConfigId" value="$serviceConfigVO.serviceConfig.id" />
+<input type="hidden" name="serviceId" value="$serviceConfigVO.service.id" />
 <div class="alert alert-dismissable alert-warning">
   <h4>欢迎您创建$serviceConfigVO.service.name请求</h4>
   <p>请仔细阅读我们的服务流程，以便于您的使用，咨询师回答您的问题后，我们会邮件通知您</p>
   <p>
-	  <a class="btn btn-primary btn-sm disabled">创建预约并完善简历</a>
-	  <span class="glyphicon glyphicon-arrow-right"></span>
-	  <a  class="btn btn-default btn-sm  disabled">咨询师完成简历修改</a>
-	  <span class="glyphicon glyphicon-arrow-right"></span>
-	  <a  class="btn btn-default btn-sm disabled">用户评价</a>
-	  <span class="glyphicon glyphicon-arrow-right "></span>
+	  <a  class="btn btn-primary btn-sm col-sm-2 disabled">创建简历修改咨询 <span class="glyphicon glyphicon-arrow-right"></span></a>
+	  <a  class="btn btn-default btn-sm col-sm-2 disabled">咨询师确认 <span class="glyphicon glyphicon-arrow-right"></span></a>
+	  <a  class="btn btn-default btn-sm col-sm-2 disabled">咨询师对简历修改 <span class="glyphicon glyphicon-arrow-right"></span></a>
+	  <a  class="btn btn-default btn-sm col-sm-2 disabled">完成评价 <span class="glyphicon glyphicon-arrow-right"></span></a>
 	  <a  class="btn btn-sm disabled">
 	   <span class="glyphicon glyphicon-ok"></span>
 	  </a>
   </p>
   <p class="text-primary">请严格遵守本网服务须知，不要在咨询中询问或透漏任何涉及商业机密的信息！.</p>
 </div>
-
-<div class="row">
-	<div class="col-sm-12">
-		<div class="alert alert-dismissable alert-info" style="margin:0px 0px 0px 0px">
-		  <button type="button" class="close" data-dismiss="alert">×</button>
-		 	请您<span style="font-size:18px;color:red">上传一份简历</span>以方便咨询师为您服务，上传过程中请使用word或者pdf格式
-		</div>
-	</div>  	
-</div> 
-<div class="row" style="margin-top:8px;margin-bottom:8px;" id="fileUploadInput">
-    <div class="col-sm-8">
-         <input  type="file" name="localFile"  class="file" multiple="false" data-show-upload="false" data-show-caption="true" />
-    </div>	
-</div> 	 
-#if($resumeFile)
-	您已经上传简历：$resumeFile
-#end
 #if($result && !$result.success)
 <div class="row">
 	<div class="col-sm-12">
@@ -57,10 +35,27 @@
 		</div>
 	</div>     
 </div>
-#end          
+#end  
+<div class="row" style="margin-bottom:8px;" id="fileUploadInput">
+	<div class="col-sm-12">
+		<div class="alert alert-dismissable alert-info" style="margin:0px 0px 0px 0px">
+		  <button type="button" class="close" data-dismiss="alert">×</button>
+		 	请您<span style="font-size:18px;color:red">上传一份简历</span>以方便咨询师为您服务，上传过程中请使用word或者pdf格式
+		</div>
+	</div>  
+    <div class="col-sm-8">
+         <input  type="file" name="localFile"  class="file" multiple="false" data-show-upload="false" data-show-caption="true" />
+    </div>	
+</div> 	         
 <div class="row" id="messageArea">
+	 <div class="col-sm-12">
+		<div class="alert alert-dismissable alert-info" style="margin:0px 0px 0px 0px">
+			<button type="button" class="close" data-dismiss="alert">×</button>
+			请简单描述一下您的需求和目标，以便于咨询师有针对性的对您的简历提出建议和意见！		  
+		</div>
+	</div>
     <div class="col-sm-12">
-        <script type="text/plain" id="myEditor" name="goal" style="width:100%;height:260px;"></script>
+        <script type="text/plain" id="myEditor" name="goal" style="width:100%;height:260px;">$!consult.goal</script>
         <script type="text/javascript">
 	        $(function(){
 	            window.um = UM.getEditor('myEditor', {

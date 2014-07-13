@@ -9,7 +9,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.math.NumberUtils;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -37,13 +36,10 @@ import com.ccconsult.view.CounselorVO;
 @Controller
 public class ServiceController extends BaseController {
 
-    /**日志 */
-    private static final Logger logger = Logger.getLogger(ServiceController.class);
-
     @Autowired
-    private ServiceConfigDAO    serviceConfigDAO;
+    private ServiceConfigDAO serviceConfigDAO;
     @Autowired
-    private ServiceDAO          serviceDAO;
+    private ServiceDAO       serviceDAO;
 
     /**
      * 公共个人信息介绍页面

@@ -4,8 +4,6 @@
  */
 package com.ccconsult.util;
 
-import org.apache.commons.lang.math.NumberUtils;
-
 import com.ccconsult.base.CcConstrant;
 import com.ccconsult.enums.FileTypeEnum;
 
@@ -19,6 +17,7 @@ public class FileUtil {
 
     /**
      * 获取文件的实际路径
+     * 默认路径在default中，是个问号。
      * 
      * @param file
      * @return
@@ -29,11 +28,14 @@ public class FileUtil {
             return path;
         }
         String[] metas = file.split(CcConstrant.ALT_SEPARATOR);
-        if (metas.length != 3) {
+        if (metas.length != 4) {
             return path;
         }
-        FileTypeEnum fileType = FileTypeEnum.getByValue(NumberUtils.toInt(metas[1]));
-        return "/" + fileType.getBasePath() + "/" + file;
+        FileTypeEnum fileType = FileTypeEnum.getByCode(metas[0]);
+        if (fileType == null) {
+            return path;
+        }
+        return "/" + fileType.getBasePath() + "/" + metas[3];
     }
 
     /**

@@ -21,8 +21,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ccconsult.base.AssertUtil;
 import com.ccconsult.base.BlankServiceCallBack;
 import com.ccconsult.base.CcResult;
-import com.ccconsult.base.PageList;
-import com.ccconsult.base.PageQuery;
 import com.ccconsult.core.ConsultComponent;
 import com.ccconsult.dao.ConsultDAO;
 import com.ccconsult.dao.MessageDAO;
@@ -105,26 +103,6 @@ public class ConsultController extends BaseController {
         return view;
     }
 
-    @RequestMapping(value = "counselor/consult/searchConsult.htm", method = RequestMethod.GET)
-    public ModelAndView searchConsult(final HttpServletRequest request, final PageQuery query,
-                                      final Integer step, final Integer serviceId, ModelMap modelMap) {
-        ModelAndView view = new ModelAndView("counselor/consult/searchConsult");
-        final CounselorVO counselorVO = getCounselorInSession(request.getSession());
-        CcResult result = serviceTemplate.execute(CcResult.class, new BlankServiceCallBack() {
-            @Override
-            public CcResult executeService() {
-                PageList<ConsultBase> consultBases = consultComponent.queryPaged(step == null ? 0
-                    : step, serviceId == null ? 0 : serviceId, counselorVO.getCounselor().getId(),
-                    0, query.getPageSize(), query.getPageNo());
-                return new CcResult(consultBases);
-            }
-        });
-        modelMap.put("serviceId", serviceId);
-        modelMap.put("step", step);
-        modelMap.put("result", result);
-        return view;
-    }
-
     //接受预约
     @RequestMapping(value = "counselor/consult/acceptConsult.json", method = RequestMethod.POST)
     public @ResponseBody
@@ -170,6 +148,31 @@ public class ConsultController extends BaseController {
                     UserRoleEnum.COUNSELOR.getValue());
                 AssertUtil.state(!CollectionUtils.isEmpty(messages), "您未能回答任何问题，不能直接完成这次咨询！");
                 consult.setStep(ConsultStepEnum.FIHSHED.getValue());//将状态设定为已经完成
+                consult.setGmtModified(new Date());
+                consultDAO.update(consult);
+                return new CcResult(consult);
+            }
+        });
+        modelMap.put("result", result);
+        return modelMap;
+    }
+
+    //删除预约记录
+    @RequestMapping(value = "consultant/deleteConsult.json", method = RequestMethod.POST)
+    public @ResponseBody
+    ModelMap deleteConsult(final HttpServletRequest request, final Integer consultId,
+                           ModelMap modelMap) {
+        modelMap.clear();
+        CcResult result = serviceTemplate.executeWithTx(CcResult.class, new BlankServiceCallBack() {
+            @Override
+            public CcResult executeService() {
+                AssertUtil.state(consultId != null && consultId > 0, "非法请求，当前记录不存在");
+                Consultant consultant = getConsultantInSession(request.getSession());
+                AssertUtil.notNull(consultant, "当前请求过期，请刷新页面或登录后重试");
+                Consult consult = consultDAO.findById(consultId);
+                AssertUtil.state(consult.getConsultantId().equals(consultant.getId()),
+                    "请不要尝试修改不属于您的记录");
+                consult.setStep(ConsultStepEnum.DELETE.getValue());//将状态设定为已经完成
                 consult.setGmtModified(new Date());
                 consultDAO.update(consult);
                 return new CcResult(consult);

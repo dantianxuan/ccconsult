@@ -12,17 +12,16 @@
 <form  id="createInnerConsultForm">
 <input type="hidden" name="counselorId" value="$serviceConfigVO.serviceConfig.counselorId"/>
 <input type="hidden" name="consultantId" value="$consultant.id"/>
+<input type="hidden" name="serviceConfigId" value="$serviceConfigVO.serviceConfig.id" />
 <input type="hidden" name="serviceId" value="$serviceConfigVO.service.id" />
 <div class="alert alert-dismissable alert-warning">
   <h4>欢迎您创建$serviceConfigVO.service.name请求</h4>
   <p>请仔细阅读我们的服务流程，以便于您的使用，咨询师回答您的问题后，我们会邮件通知您</p>
   <p>
-	  <a class="btn btn-primary btn-sm disabled">创建预约请求</a>
-	  <span class="glyphicon glyphicon-arrow-right"></span>
-	  <a  class="btn btn-default btn-sm  disabled">咨询师回答</a>
-	  <span class="glyphicon glyphicon-arrow-right"></span>
-	  <a  class="btn btn-default btn-sm disabled">咨询者评价</a>
-	  <span class="glyphicon glyphicon-arrow-right "></span>
+	  <a class="btn btn-primary btn-sm disabled">创建预约请求 <span class="glyphicon glyphicon-arrow-right"></span></a>
+	  <a  class="btn btn-default btn-sm  disabled">咨询师预约时间 <span class="glyphicon glyphicon-arrow-right"></span></a>
+	  <a  class="btn btn-default btn-sm disabled">进行模拟面试咨询  <span class="glyphicon glyphicon-arrow-right "></span></a>
+	   <a  class="btn btn-default btn-sm disabled">完成面试评价  <span class="glyphicon glyphicon-arrow-right "></span></a>
 	  <a  class="btn btn-sm disabled">
 	   <span class="glyphicon glyphicon-ok"></span>
 	  </a>
