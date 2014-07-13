@@ -1,0 +1,137 @@
+#set($consultant=$session.getAttribute("SESSION_CONSULTANT_OBJECT"))
+#parse("consultant/consultantGuide.vm")
+<script>
+	function deleteConsult(consultId){
+		if(!confirm("请确认您要删除该记录")){
+			return ;
+		}
+		jQuery.ajax({
+             type: "POST",
+             url: "$link.contextPath/consultant/deleteConsult.json",
+             data: {'consultId':consultId},
+             dataType: "json",
+             success: function(data){
+             	if(data.result.success==true){
+             		$('#CONSULT_'+consultId).remove();
+             	}else{
+             		alert("对不起删除失败，请稍后重试");
+             	}
+              }
+         });
+	}
+</script>   
+<form id="searchConsultForm" action="$link.contextPath/consultant/consult/searchConsult.htm" method="GET"> 
+<input type="hidden" name="pageSize" value="$!result.object.getPageSize()"/>
+<input type="hidden" name="pageNo" value="0" id="pageNoHidden"/>
+<input type="hidden" name="step" #if($step) value="$step" #else value=1 #end  id="stepHidden"/>
+<input type="hidden" name="payTag" #if($payTag) value="$payTag" #else value=1 #end  id="payTagHidden"/>
+<input type="hidden" name="serviceId" #if($serviceId) value="$serviceId" #end  id="serviceIdHidden"/>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+			  	<ol class="breadcrumb" style="margin:2px;padding:0px;">
+			  		<li class="active"><a href="javascript:void(0)"  onclick="queryConsults(1,1,1);">待支付</a></li>
+			  		<li class="active"><a href="javascript:void(0)"  onclick="queryConsults(1,1,2);">待确认</a></li>
+			  		<li class="active"><a href="javascript:void(0)"  onclick="queryConsults(1,2);">进行中</a></li>
+			  		<li class="active"><a href="javascript:void(0)"  onclick="queryConsults(1,3);">已完成</a></li>
+			  		<li class="active"><a href="javascript:void(0)"  onclick="queryConsults(1,5);">已失效</a></li>
+				</ol>
+            </div>
+            <div class="panel-body">
+    			#if($result && $result.object)
+        			#foreach($consultBase in $result.object.data)
+        			#set($consult=$consultBase.consult)
+        			#set($consultant=$consultBase.consultant)
+        			#set($counselorVO=$consultBase.counselorVO)
+        			<div class="col-sm-12" id="CONSULT_$consult.id">
+			            <div class="panel panel-default">
+			                <div class="panel-body">
+			                		<div class="col-sm-2">
+			                		 	<p style="text-align:center;">
+			                		 		<img src="$link.contextPath/UPLOAD/$!counselorVO.counselor.photo" class="img-thumbnail" style="width: 65px;height:65px;"/></p>
+			                		</div>
+			                		<div class="col-sm-10" style="border-left:solid 1px #ddd">
+			                			<div class="col-lg-12">
+			                                <p  style="border-bottom:solid 1px #ddd">
+			                                	<span href="#"><span class="glyphicon glyphicon-tag"></span>咨询类型：$consultBase.serviceConfigVO.service.name</span>
+			                                	<a  class="btn btn-link btn-xs" style="float:right;margin-left:4px;"  href="$link.contextPath/consultant/consult/${consultBase.serviceConfigVO.service.code}.htm?consultId=$consultBase.consult.id"><span class="glyphicon glyphicon-file"></span> 详情...</a>
+			                                	#if($consult.step<2)
+			                                	<a  class="btn btn-link btn-xs" style="float:right" onclick="deleteConsult($consultBase.consult.id)"><span class="glyphicon glyphicon-remove"></span> 删除</a>
+		                                		#end
+		                                	</p>
+	                                	</div>
+	                                	<div class="col-lg-12">
+										<p>
+											  <a  class="btn  btn-xs btn-success disabled col-sm-2" style="margin-right:4px;">创建预约<span class="glyphicon glyphicon-arrow-right"></span></a>
+									  			#if($consult.step==1)
+									  				#if($consult.payTag==2)
+									  					<a  class="btn btn-success disabled col-sm-2 btn-xs " style="margin-right:4px;">支付账单 <span class="glyphicon glyphicon-arrow-right"></a>
+									  				#else
+									  					<a  href="$link.contextPath/consultant/consult/payForConsult.htm?consultId=$consult.id" class="btn btn-primary col-sm-2 btn-xs " style="margin-right:4px;">支付账单 <span class="glyphicon glyphicon-arrow-right"></a>
+									  				#end
+										   			<a  class="btn btn-default disabled col-sm-2 btn-xs " style="margin-right:4px;">咨询师确认 <span class="glyphicon glyphicon-arrow-right"></a>
+										   			<a  class="btn btn-default disabled col-sm-2 btn-xs" style="margin-right:4px;">咨询进行中 <span class="glyphicon glyphicon-arrow-right"></a>
+										   			<a  class="btn btn-default disabled col-sm-2 btn-xs" style="margin-right:4px;">咨询完成 <span class="glyphicon glyphicon-arrow-right"></a>
+										   	  	#end
+									  			#if($consult.step==2)
+									  				<a  class="btn btn-success disabled col-sm-2 btn-xs " style="margin-right:4px;">支付账单 <span class="glyphicon glyphicon-arrow-right"></a>
+										   			<a  class="btn btn-primary disabled col-sm-2 btn-xs " style="margin-right:4px;">咨询师确认 <span class="glyphicon glyphicon-arrow-right"></a>
+										   			<a  class="btn btn-default disabled col-sm-2 btn-xs" style="margin-right:4px;">咨询进行中 <span class="glyphicon glyphicon-arrow-right"></a>
+										   			<a  class="btn btn-default disabled col-sm-2 btn-xs" style="margin-right:4px;">咨询完成 <span class="glyphicon glyphicon-arrow-right"></a>
+										   	  	#end										   	  	
+											   	#if($consult.step==3)
+													<a  class="btn btn-success disabled col-sm-2 btn-xs " style="margin-right:4px;">支付账单 <span class="glyphicon glyphicon-arrow-right"></a>
+										   			<a  class="btn btn-success disabled col-sm-2 btn-xs " style="margin-right:4px;">咨询师确认 <span class="glyphicon glyphicon-arrow-right"></a>
+										   			<a  class="btn btn-success disabled col-sm-2 btn-xs" style="margin-right:4px;">咨询进行中 <span class="glyphicon glyphicon-arrow-right"></a>
+										   			<a  class="btn btn-success disabled col-sm-2 btn-xs" style="margin-right:4px;">咨询完成 <span class="glyphicon glyphicon-arrow-right"></a>											   	
+											   		<a  class="btn btn-success disabled col-sm-2 btn-xs" style="margin-right:4px;"><span class="glyphicon glyphicon-stop"></span>咨询完成 </a>
+											   	#end
+											   	#if($consult.step==5)
+													<a  class="btn btn-success disabled col-sm-2 btn-xs " style="margin-right:4px;">支付账单 <span class="glyphicon glyphicon-arrow-right"></a>
+										   			<a  class="btn btn-success disabled col-sm-2 btn-xs " style="margin-right:4px;">咨询师确认 <span class="glyphicon glyphicon-arrow-right"></a>
+  													<a  class="btn btn-success disabled col-sm-2 btn-xs" style="margin-right:4px;"><span class="glyphicon glyphicon-stop"></span>咨询拒绝 </a>											  
+											    #end
+										  </p>
+										</div>  
+									  	<div class="col-lg-12">
+	                                	<small>ID:$consultBase.consult.id 
+	                                		<span class="glyphicon glyphicon-user"></span> 咨询师：$consultBase.counselorVO.counselor.name
+	                                		<span ><span class="glyphicon glyphicon-time"></span> 创建时间:$date.format("yyyy-MM-dd HH:mm:ss", $consultBase.consult.gmtCreate)
+	                                	</small>
+	                                	</div>										  
+								  	</div>							  	
+			                </div>		          
+		                </div>
+		            </div>
+        			#end
+				    <div class="col-sm-12">
+						<ul class="pagination" style="margin-top:-10px;float:right;">
+							#if($result.object.getTotalPageCount()>=1)
+								#foreach($index in [1..$result.object.getTotalPageCount()])
+									<li><a href="javascript:void(0)" onclick="queryConsults($index)">$index</a></li>
+								#end
+								<li><a href="javascript:void(0)" >一共有$result.object.getTotalCount()条记录</a></li>
+							#end
+						</ul>    
+				    </div>        			
+        		#else
+					 对不起，当前无记录                    		
+        		#end
+            </div>
+        </div>
+    </div>
+</div>
+</form>
+<script>
+	function queryConsults(index,step,payTag){
+		if(step!=undefined ){
+			$('#stepHidden').val(step);
+		}
+		if(payTag!=undefined ){
+			$('#payTagHidden').val(payTag);
+		}		
+		$('#pageNoHidden').val(index);
+		$('#searchConsultForm').submit();
+	}
+</script>

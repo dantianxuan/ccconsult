@@ -1,0 +1,10 @@
+
+<div class="row">
+	<div class="col-sm-12">
+	<div class="jumbotron">
+	  <h3>Sorry！</h3>
+	  <p>请不要在本处上传超过2mb的文件，请控制文件大小！</p>
+	  <p><a class="btn btn-primary btn-lg" onclick="window.location.href = document.referrer;">返回上一页</a></p>
+	</div>
+	</div>
+</div>
