@@ -5,6 +5,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.ccconsult.base.PageList;
+import com.ccconsult.enums.ConsultStepEnum;
 import com.ccconsult.pojo.Consult;
 
 /**
@@ -17,15 +18,16 @@ import com.ccconsult.pojo.Consult;
  */
 
 public class ConsultDAO extends BaseHibernateDAO<Consult> {
-    private static final Logger log           = LoggerFactory.getLogger(ConsultDAO.class);
+    private static final Logger log               = LoggerFactory.getLogger(ConsultDAO.class);
     //property constants
-    public static final String  CONSULTANT_ID = "consultantId";
-    public static final String  COUNSELOR_ID  = "counselorId";
-    public static final String  STEP          = "step";
-    public static final String  ORDER_ID      = "orderId";
-    public static final String  STATE         = "state";
-    public static final String  PAY_TAG       = "payTag";
-    public static final String  SERVICE_ID    = "serviceId";
+    public static final String  CONSULTANT_ID     = "consultantId";
+    public static final String  COUNSELOR_ID      = "counselorId";
+    public static final String  STEP              = "step";
+    public static final String  PAY_TAG           = "payTag";
+    public static final String  SERVICE_ID        = "serviceId";
+    public static final String  GOAL              = "goal";
+    public static final String  REJECT_REASON     = "rejectReason";
+    public static final String  SERVICE_CONFIG_ID = "serviceConfigId";
 
     public Consult findById(java.lang.Integer id) {
         log.debug("getting Consult instance with id: " + id);
@@ -36,6 +38,15 @@ public class ConsultDAO extends BaseHibernateDAO<Consult> {
             log.error("get failed", re);
             throw re;
         }
+    }
+
+    public PageList<Consult> queryInnerConsultByGoal(String keyWord, int pageSize, int pageNo) {
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put(GOAL, "%"+keyWord+"%");
+        String hql = "from Consult where step=" + ConsultStepEnum.FIHSHED.getValue()
+                     + " and goal like :goal";
+        hql += " order by gmtModified ";
+        return queryPage(pageNo, pageSize, hql, params);
     }
 
     public PageList<Consult> queryUnderStepPaged(int payTag, int step, int serviceId,

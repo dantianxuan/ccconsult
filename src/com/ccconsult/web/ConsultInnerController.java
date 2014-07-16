@@ -21,6 +21,8 @@ import com.ccconsult.base.AssertUtil;
 import com.ccconsult.base.BlankServiceCallBack;
 import com.ccconsult.base.CcConstrant;
 import com.ccconsult.base.CcResult;
+import com.ccconsult.base.PageList;
+import com.ccconsult.base.PageQuery;
 import com.ccconsult.core.ConsultComponent;
 import com.ccconsult.dao.ConsultDAO;
 import com.ccconsult.dao.CounselorDAO;
@@ -32,6 +34,7 @@ import com.ccconsult.enums.MessageRelTypeEnum;
 import com.ccconsult.enums.PayStateEnum;
 import com.ccconsult.pojo.Consult;
 import com.ccconsult.pojo.Consultant;
+import com.ccconsult.util.StringUtil;
 import com.ccconsult.view.ConsultBase;
 import com.ccconsult.view.CounselorVO;
 import com.ccconsult.view.MessageVO;
@@ -55,6 +58,23 @@ public class ConsultInnerController extends BaseController {
     @Autowired
     private ServiceConfigDAO serviceConfigDAO;
 
+    @RequestMapping(value = "/searchInnerConsult.htm")
+    public ModelAndView searchConsult(HttpServletRequest request, PageQuery query, ModelMap modelMap) {
+        ModelAndView view = new ModelAndView("content/searchInnerConsult");
+        String keyWord = request.getParameter("keyWord");
+        if (query == null || StringUtil.isBlank(keyWord)) {
+            return view;
+        }
+        PageList<ConsultBase> pageConsult = consultComponent.queryInnerConsultByGoal(keyWord,
+            query.getPageSize(), query.getPageNo());
+        modelMap.put("pageConsult", pageConsult);
+        modelMap.put("query", query);
+        modelMap.put("keyWord", keyWord);
+        return view;
+
+    }
+
+    //~~~~~~~~~~~innerConsult~~~~~~~~~~~~~~~~~~~~
     @RequestMapping(value = "/consultant/consult/createinnerConsultInit.htm", method = RequestMethod.GET)
     public ModelAndView handleRequest(HttpServletRequest request, final String serviceConfigId,
                                       ModelMap modelMap) {
@@ -70,6 +90,27 @@ public class ConsultInnerController extends BaseController {
                             && serviceConfigVO.getServiceConfig().getState()
                                 .equals(DataStateEnum.NORMAL.getValue()), "当前服务设定过期或者被修改，请重新预约！");
                 return new CcResult(serviceConfigVO);
+            }
+        });
+        modelMap.put("result", result);
+        return view;
+    }
+
+    @RequestMapping(value = "/innerConsult.htm", method = RequestMethod.GET)
+    public ModelAndView publicInnerConsult(final HttpServletRequest request,
+                                           final String consultId, final ModelMap modelMap) {
+        ModelAndView view = new ModelAndView("content/innerConsult");
+        CcResult result = serviceTemplate.execute(CcResult.class, new BlankServiceCallBack() {
+            @Override
+            public CcResult executeService() {
+                int consuid = NumberUtils.toInt(consultId);
+                AssertUtil.state(consuid > 0, "非法请求！");
+                ConsultBase consultBase = consultComponent.queryById(consuid);
+                List<MessageVO> messageVOs = messageDAO.queryByRelInfo(consuid,
+                    MessageRelTypeEnum.CONSULT.getValue());
+                modelMap.put("consultBase", consultBase);
+                modelMap.put("messageVOs", messageVOs);
+                return new CcResult(true);
             }
         });
         modelMap.put("result", result);

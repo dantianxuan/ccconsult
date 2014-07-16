@@ -31,14 +31,12 @@ import com.ccconsult.core.ConsultComponent;
 import com.ccconsult.dao.ConsultantDAO;
 import com.ccconsult.dao.InnerMailDAO;
 import com.ccconsult.enums.ConsultStepEnum;
-import com.ccconsult.enums.PayStateEnum;
 import com.ccconsult.enums.UserRoleEnum;
 import com.ccconsult.pojo.Consultant;
 import com.ccconsult.util.LogUtil;
 import com.ccconsult.util.StringUtil;
 import com.ccconsult.util.ValidateUtil;
 import com.ccconsult.view.ConsultBase;
-import com.ccconsult.view.CounselorVO;
 
 /**
  * @author jingyu.dan
@@ -134,7 +132,7 @@ public class ConsultantController extends BaseController {
     public ModelAndView editInformation(final HttpServletRequest request, ModelMap modelMap,
                                         @RequestParam final MultipartFile[] localPhoto,
                                         final Consultant consultant) {
-        CcResult result = serviceTemplate.execute(CcResult.class, new BlankServiceCallBack() {
+        CcResult result = serviceTemplate.executeWithTx(CcResult.class, new BlankServiceCallBack() {
 
             @Override
             public void check() {

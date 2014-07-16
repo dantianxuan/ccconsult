@@ -77,7 +77,7 @@ public class AppriseController extends BaseController {
     ModelMap consultantApprise(final HttpServletRequest request, final Apprise apprise,
                                final ModelMap modelMap) {
         modelMap.clear();
-        CcResult result = serviceTemplate.execute(CcResult.class, new BlankServiceCallBack() {
+        CcResult result = serviceTemplate.executeWithTx(CcResult.class, new BlankServiceCallBack() {
             /** 
              * @see com.ccconsult.base.ServiceCallBack#check()
              */
@@ -125,7 +125,7 @@ public class AppriseController extends BaseController {
     ModelMap interviewerInterview(final HttpServletRequest request, final Apprise apprise,
                                   ModelMap modelMap) {
         modelMap.clear();
-        CcResult result = serviceTemplate.execute(CcResult.class, new BlankServiceCallBack() {
+        CcResult result = serviceTemplate.executeWithTx(CcResult.class, new BlankServiceCallBack() {
             /** 
              * @see com.ccconsult.base.ServiceCallBack#check()
              */

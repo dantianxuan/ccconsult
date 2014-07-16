@@ -55,8 +55,8 @@
 </div>
 <div class="row">
 	<div class="col-sm-12">
-		<div class="panel panel-info">
-			  <div class="panel-heading" style="color:red"><strong><span class="glyphicon glyphicon-tags"></span>  热门面试咨询公司</strong></div>
+		<div class="panel panel-default">
+			  <div class="panel-heading"><strong><span class="glyphicon glyphicon-tags"></span>  热门面试咨询公司</strong></div>
 			  <div class="panel-body">		  
 		 		#foreach($companyBriefVO in $companyBriefVOs)
 					<div class="col-sm-4">
@@ -79,8 +79,8 @@
 
 <div class="row">
 	<div class="col-sm-12">
-		<div class="panel panel-info">
-			  <div class="panel-heading" style="color:red"><strong><span class="glyphicon glyphicon-tags"></span>  热门服务</strong></div>
+		<div class="panel panel-default">
+			  <div class="panel-heading"><strong><span class="glyphicon glyphicon-tags"></span>  热门服务</strong></div>
 			  <div class="panel-body">		  
 		 		#foreach($service in $services)
 					<div class="col-sm-12">
@@ -104,38 +104,35 @@
 
 <div class="row">
 	<div class="col-sm-12">
-		<div class="panel panel-info">
-			  <div class="panel-heading" style="color:red"><strong><span class="glyphicon glyphicon-tags"></span>  咨询动态</strong></div>
+		<div class="panel panel-default">
+			  <div class="panel-heading"><strong><span class="glyphicon glyphicon-tags"></span>  咨询动态</strong></div>
 			  <div class="panel-body">		  
 		 		#foreach($consultBase in $consultBases.data)
-		 		<div class="row">
-		 			<div class="col-sm-12" style="border-bottom:solid 1px #ddd;margin-top:4px;margin-bottom:4px;">
-						<div class="col-sm-4">
-							<div  style="height:80px;margin-bottom:4px;background-color:#fff">
-									<img src="$link.contextPath/UPLOAD/$consultBase.counselorVO.counselor.photo"
-									style="width:60px;height: 60px; float:left" class="img-rounded">
-									<p style="padding-left: 72px;">
-										<small>名称:<a href="$link.contextPath/counselorInfo.htm?counselorId=$consultBase.counselorVO.counselor.id">$consultBase.counselorVO.counselor.name</a></small><br /> 
-										<small>公司:<a href="$link.contextPath/company.htm?companyId=$consultBase.counselorVO.company.id">$consultBase.counselorVO.company.name</a></small><br /> 
-										<small>部门:$consultBase.counselorVO.counselor.department</small><br /> 
-									</p>
-							</div>
-						</div>
-						#foreach($apprise in $consultBase.apprises)
-							#if($apprise.creatorRole==2)
-								#set($consultantApprise=$apprise)
-								#break
-							#end
-						#end
-						<div class="well well-sm col-sm-8" style="margin-bottom:4px;font-size:12px;min-height: 80px;background:#fff">
-							  <strong style="font-size:16px;color:#3a87ad">咨询者：$consultBase.consultant.name：
-							  	<span class="glyphicon glyphicon-thumbs-up"></span>好评</strong><br/>
-							  <small>
-							  	#if($consultantApprise)$!stringUtil.subMaxString($!consultantApprise.memo,200)#else感觉不错#end
-							  </small>
-						</div>
-					</div>	
-				</div>			
+		 			#set($counselorVO=$consultBase.counselorVO)
+		 			#set($consultant=$consultBase.consultant)
+					<div class="col-sm-4">
+							<img src="$link.contextPath/$fileUtil.getPath($consultBase.counselorVO.counselor.photo)"
+									style="width:60px;height: 60px; float:left" class="img-rounded"/>
+							<p style="padding-left: 72px;">
+								<small>
+								<span class="glyphicon glyphicon-user"></span> 咨询师名称：<a href="$link.contextPath/counselorInfo.htm?counselorId=$counselorVO.counselor.id">$!counselorVO.counselor.name</a><br/>
+                    			<span class="glyphicon glyphicon-th-large"></span> 公司名称：<a href="$link.contextPath/company.htm?companyId=$!counselorVO.company.id" >$!counselorVO.company.name</a><br/>
+                				<span class="glyphicon glyphicon-map-marker"></span> 所在城市：$!counselorVO.counselor.city
+                				</small>
+                			</p>									
+					</div>
+					<div class="col-sm-8">
+								#foreach($apprise in $consultBase.apprises)
+									#if($apprise.creatorRole==2)
+										#set($consultantApprise=$apprise)
+										#break
+									#end
+								#end
+								<blockquote style="font-size:12px;padding-top:4px;">
+								  <p class="text-info">#if($consultantApprise) $consultantApprise.memo  #else 感觉不错！ #end</p>
+								  <small>咨询者：$consultant.name</small>
+								</blockquote>								
+					</div>
 				#end												
 			  </div>
 		</div>

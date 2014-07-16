@@ -166,7 +166,7 @@
 
 
         //针对getAllHtml方法，会在对应的head标签中增加该编码设置。
-        //,charset:"utf-8"
+        ,charset:"utf-8"
 
         //常用配置项目
         //,isShow : true    //默认显示编辑器

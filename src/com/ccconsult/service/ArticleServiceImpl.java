@@ -53,7 +53,7 @@ public class ArticleServiceImpl extends AbstractService implements ArticleServic
      */
     @Override
     public CcResult updateArticle(final Article article) {
-        return serviceTemplate.execute(CcResult.class, new BlankServiceCallBack() {
+        return serviceTemplate.executeWithTx(CcResult.class, new BlankServiceCallBack() {
 
             @Override
             public void check() {

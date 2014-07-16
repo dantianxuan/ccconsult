@@ -32,6 +32,13 @@ public interface ConsultComponent {
                                             int consultantId, int pageSize, int pageNo);
 
     /**
+     * 分页查询记录
+     * 
+     * @return
+     */
+    public PageList<ConsultBase> queryInnerConsultByGoal(String goal, int pageSize, int pageNo);
+
+    /**
      * 通过id查询咨询信息
      * 
      * @return

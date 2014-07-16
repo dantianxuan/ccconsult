@@ -7,7 +7,8 @@
 <script type="text/javascript" src="$link.contextPath/STATIC/plugin/umeditor/lang/zh-cn/zh-cn.js"></script>  
 <script src="$link.contextPath/STATIC/js/fileinput.js"></script>
 <link rel="stylesheet" href="$link.contextPath/STATIC/css/fileinput.css"/>
-<form  id="createResumeConsultForm" action="$link.contextPath/consultant/consult/createResumeConsult.htm" method="POST" enctype="multipart/form-data">
+<form  id="createResumeConsultForm" action="$link.contextPath/consultant/consult/createResumeConsult.htm" 
+	method="POST" enctype="multipart/form-data">
 <input type="hidden" name="counselorId" value="$serviceConfigVO.serviceConfig.counselorId"/>
 <input type="hidden" name="consultantId" value="$consultant.id"/>
 <input type="hidden" name="serviceConfigId" value="$serviceConfigVO.serviceConfig.id" />
@@ -44,7 +45,7 @@
 		</div>
 	</div>  
     <div class="col-sm-8">
-         <input  type="file" name="localFile"  class="file" multiple="false" data-show-upload="false" data-show-caption="true" />
+         <input  type="file" name="localFile"  class="file" multiple="false" data-show-upload="false" data-show-caption="true"  />
     </div>	
 </div> 	         
 <div class="row" id="messageArea">

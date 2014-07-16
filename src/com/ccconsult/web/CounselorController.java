@@ -158,7 +158,7 @@ public class CounselorController extends BaseController {
     public ModelAndView editCounselor(final HttpServletRequest request, final Counselor counselor,
                                       @RequestParam final MultipartFile[] localPhoto,
                                       ModelMap modelMap) {
-        CcResult result = serviceTemplate.execute(CcResult.class, new BlankServiceCallBack() {
+        CcResult result = serviceTemplate.executeWithTx(CcResult.class, new BlankServiceCallBack() {
             /** 
              * @see com.ccconsult.base.ServiceCallBack#check()
              */

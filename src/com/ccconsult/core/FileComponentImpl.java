@@ -34,6 +34,7 @@ public class FileComponentImpl implements FileComponent {
     public String uploadFile(MultipartFile myfile, FileTypeEnum fileTypeEnm, String contextPath,
                              int maxByteSize, String prefixReg) {
         File file = null;
+        String uuid = UUID.randomUUID().toString().replace(CcConstrant.ALT_SEPARATOR, "");
         AssertUtil.state(myfile.getSize() <= maxByteSize, "文件太大，不能上传");
         String prefix = myfile.getOriginalFilename().substring(
             myfile.getOriginalFilename().lastIndexOf(".") + 1);
@@ -50,8 +51,7 @@ public class FileComponentImpl implements FileComponent {
                 parentFile.mkdirs();
             }
             //文件名称 文件原始名称+文件类型+uuid
-            String fileName = UUID.randomUUID().toString().replace(CcConstrant.ALT_SEPARATOR, "")
-                              + "." + prefix;
+            String fileName = uuid + "." + prefix;
             file = new File(path, fileName);
             FileCopyUtils.copy(myfile.getBytes(), file);
         } catch (Exception e) {
@@ -60,7 +60,6 @@ public class FileComponentImpl implements FileComponent {
         return fileTypeEnm.getCode() + CcConstrant.ALT_SEPARATOR
                + DateUtil.format(new Date(), DateUtil.longFormat) + CcConstrant.ALT_SEPARATOR
                + myfile.getOriginalFilename().replace(CcConstrant.ALT_SEPARATOR, "")
-               + CcConstrant.ALT_SEPARATOR
-               + UUID.randomUUID().toString().replace(CcConstrant.ALT_SEPARATOR, "") + "." + prefix;
+               + CcConstrant.ALT_SEPARATOR + uuid + "." + prefix;
     }
 }

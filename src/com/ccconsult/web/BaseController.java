@@ -23,6 +23,7 @@ import com.ccconsult.view.CounselorVO;
  */
 public class BaseController {
 
+    /**日志 */
     @Autowired
     protected ServiceTemplate serviceTemplate;
     @Autowired
@@ -57,4 +58,5 @@ public class BaseController {
             return null;
         }
     }
+
 }

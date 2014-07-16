@@ -46,7 +46,7 @@ public class FileUtil {
      */
     public static String getFileName(String file) {
         String[] metas = file.split(CcConstrant.ALT_SEPARATOR);
-        return metas[1];
+        return metas[2];
     }
 
 }

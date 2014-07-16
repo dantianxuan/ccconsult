@@ -15,11 +15,11 @@ import com.ccconsult.dao.AppriseDAO;
 import com.ccconsult.dao.ConsultDAO;
 import com.ccconsult.dao.ConsultantDAO;
 import com.ccconsult.dao.CounselorDAO;
+import com.ccconsult.dao.ResumeConsultDAO;
 import com.ccconsult.dao.ServiceConfigDAO;
-import com.ccconsult.dao.ServiceDAO;
-import com.ccconsult.enums.PayStateEnum;
 import com.ccconsult.pojo.Consult;
 import com.ccconsult.view.ConsultBase;
+import com.ccconsult.view.ResumeConsultVO;
 
 /**
  * 
@@ -64,6 +64,21 @@ public class ConsultComponentImpl implements ConsultComponent {
 
     }
 
+    @Override
+    public PageList<ConsultBase> queryInnerConsultByGoal(String goal, int pageSize, int pageNo) {
+
+        PageList pageList = consultDAO.queryInnerConsultByGoal(goal, pageSize, pageNo);
+        if (CollectionUtils.isEmpty(pageList.getData())) {
+            return pageList;
+        }
+        List<ConsultBase> consultBases = new ArrayList<ConsultBase>();
+        for (Object consult : pageList.getData()) {
+            consultBases.add(consConsultBase((Consult) consult));
+        }
+        pageList.setData(consultBases);
+        return pageList;
+    }
+
     /** 
      * @see com.ccconsult.core.ConsultComponent#queryById(int)
      */
@@ -85,7 +100,13 @@ public class ConsultComponentImpl implements ConsultComponent {
     }
 
     private ConsultBase consConsultBase(Consult consult) {
+
         ConsultBase base = new ConsultBase();
+        if (consult.getServiceId() == 2) {//简历修改服务
+            base = new ResumeConsultVO();
+            ((ResumeConsultVO) base).setResumeConsult(resumeConsultDAO.findByConsultId(consult
+                .getId()));
+        }
         base.setApprises(appriseDAO.findByRelId(consult.getId()));
         base.setConsult(consult);
         base.setConsultant(consultantDAO.findById(consult.getConsultantId()));
@@ -97,6 +118,8 @@ public class ConsultComponentImpl implements ConsultComponent {
     @Autowired
     private CounselorDAO     counselorDAO;
     @Autowired
+    private ResumeConsultDAO resumeConsultDAO;
+    @Autowired
     private ConsultantDAO    consultantDAO;
     @Autowired
     private ConsultDAO       consultDAO;
@@ -104,4 +127,5 @@ public class ConsultComponentImpl implements ConsultComponent {
     private AppriseDAO       appriseDAO;
     @Autowired
     private ServiceConfigDAO serviceConfigDAO;
+
 }

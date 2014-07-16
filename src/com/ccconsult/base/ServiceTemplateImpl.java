@@ -71,6 +71,8 @@ public class ServiceTemplateImpl implements ServiceTemplate {
                 throw new RuntimeException("逻辑错误");
             }
             tx.commit();
+            session.flush(); 
+            session.clear(); 
         } catch (CcException e) {
             // 业务异常捕获
             LogUtil.error(logger, e, "【业务异常】");
@@ -85,7 +87,6 @@ public class ServiceTemplateImpl implements ServiceTemplate {
             tx.rollback();
             return (T) result;
         } finally {
-            session.flush();
             session.close();
         }
         LogUtil.info(logger, "【退出无事务服务模板】", result);

@@ -56,7 +56,7 @@ public class ResumeController extends BaseController {
     public ModelAndView saveArtcile(final HttpServletRequest request, final Resume resume,
                                     ModelMap modelMap) {
 
-        CcResult result = serviceTemplate.execute(CcResult.class, new BlankServiceCallBack() {
+        CcResult result = serviceTemplate.executeWithTx(CcResult.class, new BlankServiceCallBack() {
 
             @Override
             public void check() {
@@ -77,7 +77,7 @@ public class ResumeController extends BaseController {
                     originResume.setSexy(resume.getSexy());
                     originResume.setWorkExperience(resume.getWorkExperience());
                     originResume.setGmtModified(new Date());
-                    resumeDAO.merge(originResume);
+                    resumeDAO.update(originResume);
                 } else {
                     resume.setGmtCreate(new Date());
                     resume.setGmtModified(new Date());

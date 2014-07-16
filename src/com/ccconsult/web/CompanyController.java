@@ -90,7 +90,7 @@ public class CompanyController extends BaseController {
     public ModelAndView saveCompany(final HttpServletRequest request, final Company company,
                                     @RequestParam final MultipartFile[] localPhoto,
                                     ModelMap modelMap) {
-        CcResult result = serviceTemplate.execute(CcResult.class, new BlankServiceCallBack() {
+        CcResult result = serviceTemplate.executeWithTx(CcResult.class, new BlankServiceCallBack() {
             @Override
             public CcResult executeService() {
                 String fileName = "";

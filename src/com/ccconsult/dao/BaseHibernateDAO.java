@@ -143,11 +143,6 @@ public class BaseHibernateDAO<T> implements IBaseHibernateDAO {
 
     }
 
-    public T merge(T detachedInstance) {
-        T t = (T) getSession().merge(detachedInstance);
-        return t;
-    }
-
     public void save(T transientInstance) {
         getSession().save(transientInstance);
     }

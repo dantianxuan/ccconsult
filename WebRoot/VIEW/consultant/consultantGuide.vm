@@ -4,7 +4,7 @@
     <div class="col-sm-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-            	欢迎您：大大猫 
+            	欢迎您：$consultant.name
             </div>
             <div class="panel-body">
 					<div class="btn-group">

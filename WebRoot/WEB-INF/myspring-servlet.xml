@@ -125,4 +125,8 @@
 	</bean>
 	<bean id="validator" class="org.springmodules.validation.bean.BeanValidator"
 		p:configurationLoader-ref="configurationLoader" />
+
+	<mvc:resources mapping="/STATIC/**" location="/STATIC/" />
+	<mvc:resources mapping="/UPLOAD/**" location="/UPLOAD/" />
+
 </beans>
