@@ -1,0 +1,78 @@
+#set($counselorVO=$consultBase.counselorVO)
+<div class="row">
+	<div class="col-sm-12">
+		<div class="panel panel-default">
+		  <div class="panel-heading"><span class="glyphicon glyphicon-pushpin"></span>咨询师信息</div>
+		  <div class="panel-body">
+                  	<div class="col-sm-2">
+                       <a href="$link.contextPath/counselorInfo.htm?counselorId=$!counselorVO.counselor.id" > <img src="$link.contextPath/UPLOAD/$!counselorVO.counselor.photo" class="img-rounded" style="width: 82px;height: 82px;"></a>
+                    </div>
+                    <div class="col-sm-5">
+	                    <p class="col-sm-12"><strong class=" text-right col-sm-5">名称:</strong>$!counselorVO.counselor.name</p>
+	                    <p class="col-sm-12"><strong class=" text-right col-sm-5">注册邮箱:</strong>*******</p>
+	                    <p class="col-sm-12"><strong class=" text-right col-sm-5">公司信息:</strong>$!counselorVO.company.name</p>
+                    </div>
+                    <div class="col-sm-5">
+	                    <p class="col-sm-12"><strong class=" text-right col-sm-5">手机号码</strong>********</p>
+	                    <p class="col-sm-12"><strong class=" text-right col-sm-5">部门信息</strong>$!counselorVO.counselor.department</p>
+                    </div>
+                </div>	
+  		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-sm-12">
+		<div class="panel panel-default">
+		  <div class="panel-heading"><span class="glyphicon glyphicon-pushpin"></span>咨询问题描述</div>
+		  <div class="panel-body">
+		  		$consultBase.consult.goal
+		  </div>
+  		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-sm-12">
+		<div class="panel panel-default">
+		  <div class="panel-heading"><span class="glyphicon glyphicon-comment"></span> 消息留言</div>
+		  <div class="panel-body">
+		  	#foreach($messageVO in $messageVOs)
+		  		#if($messageVO.message.creatorRole==2)
+			  		<div class="col-sm-12">
+				  		<div class="col-sm-1">
+				  			<img src="$link.contextPath/UPLOAD/$consultBase.consultant.photo" class="img-rounded" style="width: 60px;height: 60px;">
+				  		</div>
+				  		<div class="col-sm-11">
+				  			<div class="col-sm-10  text-left" >
+					  			<div class="panel panel-default">
+								  <div class="panel-body">
+								  		<p class="text-primary" style="border-bottom:solid 1px #ddd">我    <span style="float:right;">
+								  		创建时间 $date.format("yyyy-MM-dd HH:mm:ss", $messageVO.message.gmtCreate)</span></p>
+								  		$messageVO.message.message
+								  </div>
+								</div>
+							</div>
+				  		</div>
+				  	</div>
+		  		#elseif($messageVO.message.creatorRole==1)
+			  		<div class="col-sm-12">
+				  		<div class="col-sm-11">
+				  			<div class="col-sm-10  text-right col-sm-offset-2" >
+					  			<div class="panel panel-default">
+								  <div class="panel-body">
+								  		<p class="text-primary" style="border-bottom:solid 1px #ddd">面试官:$messageVO.counselorVO.counselor.name <span style="float:left;">
+								  		创建时间 $date.format("yyyy-MM-dd HH:mm:ss", $messageVO.message.gmtCreate)</span></p>
+								  		$messageVO.message.message
+								  </div>
+								</div>
+							</div>
+				  		</div>
+				  		<div class="col-sm-1">
+				  			<img src="$link.contextPath/UPLOAD/$!counselorVO.counselor.photo" class="img-rounded" style="width: 60px;height: 60px;">
+				  		</div>				  		
+				  	</div>
+		  		#end
+		  	#end
+		  </div>
+		</div>
+	</div>
+</div>

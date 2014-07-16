@@ -1,0 +1,89 @@
+<form action="$link.contextPath/searchInnerConsult.htm"  method="POST" id="searchInnerConsultForm">
+<div class="row">
+    	<div class="col-sm-8"><input type="text"  name="keyWord" class="form-control" placeholder="请输入问题的关键字进行搜索！" value="$!keyWord" /></div>
+	 	<div class="col-sm-2">	
+	 		<button class="btn btn-danger col-sm-12" type="button" onclick="searchInnerConsult(1)">寻找答案</button>
+ 		</div>
+</div>
+<br/>
+<div class="alert alert-dismissable alert-warning">
+  <p>您可以通过关键字搜索到最专业一线从业人员所回答的问题，如果发现您所搜的问题存在各种违规信息（黄色,赌博等危害互联网健康的信息），请举报</p>
+</div>
+<hr/>
+#if($pageConsult)
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+            	查询结果
+            </div>
+            <div class="panel-body">
+              	#if($pageConsult.data.size()==0)
+            		<p>对不起，搜索不到您要的记录</p>
+            	#else
+	            	#foreach($consultBase in $pageConsult.data)
+	            	#set($consult=$consultBase.consult)
+		                    <div class="col-sm-12">
+								<div class="panel panel-default">
+					            	<div class="panel-body">
+				                            <div class="col-sm-12">
+				                                <p class="text-warning" style="border-bottom:solid 1px #ddd">
+				                                	<small>
+				                                	<a href="$link.contextPath/innerConsult.htm?consultId=$consult.id">
+				                                		<span class="glyphicon glyphicon-user"></span> 回答人：$consultBase.counselorVO.counselor.name
+				                                		<span class="glyphicon glyphicon-th-large"></span> 公司信息：$consultBase.counselorVO.company.name
+				                                	</a>
+				                                	</small>  
+				                                <div style="max-height:60px;overflow:hidden">$consult.goal</div>
+				                            </div>
+									</div>
+								</div>
+	                        </div>
+	            	#end            	
+            	#end
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+		<input type="hidden" name="pageSize" #if($query) value=$query.pageSize #else value=20 #end  />
+		<input type="hidden" name="pageNo"   #if($query) value=$query.pageNo   #else value=1  #end  id="pageNoHidden"/>    
+		<ul class="pagination" style="margin-top:-10px;float:right;">
+			#if($pageConsult.getTotalPageCount()>0)
+				#foreach($index in [1..$pageConsult.getTotalPageCount()])
+				<li><a href="javascript:void(0)" onclick="searchInnerConsult($index)">$index</a></li>
+				#end
+				<li><a href="#">记录总数：$pageConsult.getTotalPageCount()</a></li>
+			#end
+		</ul>    
+    </div>
+</div> 
+#end
+<div class="row" style="color:#dd4814;margin-top:24px;text-align:center;">
+	<div class="col-lg-12">
+		<div class="col-sm-3" style="height:120px;background:#2E3058;color:#fff">
+			<H1>真实</H1>
+			公司专属邮箱注册和定期验证激活
+		</div>
+		<div class="col-sm-3" style="height:120px;background:#DF600B;color:#fff">
+			<H1>一线</H1>
+			国内外顶尖企业名企的一线雇员
+		</div>
+		<div class="col-sm-3" style="height:120px;background:#3D8DB3;color:#fff">
+			<H1>专一</H1>
+			最专业的公司和最贴近行业前沿的员工
+		</div>
+		<div class="col-sm-3" style="height:120px;background:#0ECE98;color:#fff">
+			<H1>放心</H1>
+			最有价值的咨询和担保交易式咨询
+		</div>
+	</div>
+</div>
+</form>
+<script >
+	function searchInnerConsult(index){	
+		$('#pageNoHidden').val(index);
+		$('#searchInnerConsultForm').submit();	
+	}
+</script>
