@@ -3,9 +3,7 @@
  */
 package com.ccconsult.web;
 
-import java.io.File;
 import java.util.Date;
-import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -13,7 +11,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,9 +25,12 @@ import com.ccconsult.base.CcResult;
 import com.ccconsult.base.PageList;
 import com.ccconsult.base.PageQuery;
 import com.ccconsult.core.ConsultComponent;
+import com.ccconsult.core.FileComponent;
 import com.ccconsult.dao.ConsultantDAO;
 import com.ccconsult.dao.InnerMailDAO;
 import com.ccconsult.enums.ConsultStepEnum;
+import com.ccconsult.enums.FileTypeEnum;
+import com.ccconsult.enums.PayStateEnum;
 import com.ccconsult.enums.UserRoleEnum;
 import com.ccconsult.pojo.Consultant;
 import com.ccconsult.util.LogUtil;
@@ -52,6 +52,8 @@ public class ConsultantController extends BaseController {
     @Autowired
     private ConsultantDAO       consultantDAO;
     @Autowired
+    private FileComponent       fileComponent;
+    @Autowired
     private InnerMailDAO        innerMailDAO;
 
     @RequestMapping(value = "/consultant/consultantSelf.htm", method = RequestMethod.GET)
@@ -62,9 +64,9 @@ public class ConsultantController extends BaseController {
         CcResult result = serviceTemplate.execute(CcResult.class, new BlankServiceCallBack() {
             @Override
             public CcResult executeService() {
-                PageList<ConsultBase> consultBases = consultComponent.queryUnderStepPaged(0,
-                    ConsultStepEnum.FIHSHED.getValue(), 0, 0, consultant.getId(),
-                    query.getPageSize(), query.getPageNo());
+                PageList<ConsultBase> consultBases = consultComponent.queryPaged(
+                    PayStateEnum.WAIT_FOR_PAY.getValue(), ConsultStepEnum.CREATE.getValue(), 0, 0,
+                    consultant.getId(), query.getPageSize(), query.getPageNo());
                 return new CcResult(consultBases);
             }
         });
@@ -89,6 +91,7 @@ public class ConsultantController extends BaseController {
         });
         modelMap.put("serviceId", serviceId);
         modelMap.put("step", step);
+        modelMap.put("payTag", payTag);
         modelMap.put("result", result);
         return view;
     }
@@ -129,7 +132,7 @@ public class ConsultantController extends BaseController {
     }
 
     @RequestMapping(value = "consultant/editPersonalInfo.htm", params = "action=save", method = RequestMethod.POST)
-    public ModelAndView editInformation(final HttpServletRequest request, ModelMap modelMap,
+    public ModelAndView editPersonalInfo(final HttpServletRequest request, ModelMap modelMap,
                                         @RequestParam final MultipartFile[] localPhoto,
                                         final Consultant consultant) {
         CcResult result = serviceTemplate.executeWithTx(CcResult.class, new BlankServiceCallBack() {
@@ -138,8 +141,8 @@ public class ConsultantController extends BaseController {
             public void check() {
                 AssertUtil.state(ValidateUtil.isMobile(consultant.getMobile()), "请输入正确的手机号！");
                 AssertUtil.notBlank(consultant.getName(), "账户名称不能为空");
-                AssertUtil.state(consultant.getName().length() < CcConstrant.COMMON_128_LENGTH,
-                    "名称不能超过128个字符");
+                AssertUtil.state(consultant.getName().length() < CcConstrant.COMMON_32_LENGTH,
+                    "名称不能超过32个字符");
                 Consultant sessionConsultant = getConsultantInSession(request.getSession());
                 AssertUtil.notNull(sessionConsultant, "当前用户不存在或者页面过期，请刷新或重新登录");
                 AssertUtil.state(sessionConsultant.getId().equals(consultant.getId()),
@@ -154,24 +157,16 @@ public class ConsultantController extends BaseController {
             public CcResult executeService() {
 
                 Consultant localConsultant = consultantDAO.findById(consultant.getId());
+                AssertUtil.state(localConsultant != null, "对不起用户不存在");
                 String fileName = "";
                 try {
+                    String contextPath = request.getSession().getServletContext().getRealPath("/");
                     for (MultipartFile myfile : localPhoto) {
-                        if (!myfile.isEmpty()) {
-                            LogUtil.info(
-                                logger,
-                                "文件长度: " + myfile.getSize() + "文件类型: " + myfile.getContentType()
-                                        + "文件名称: " + myfile.getName() + "文件原名: "
-                                        + myfile.getOriginalFilename());
-                            String path = request.getSession().getServletContext().getRealPath("/")
-                                          + "UPLOAD";
-                            File parentFile = new File(path);
-                            if (!parentFile.exists()) {
-                                parentFile.mkdirs();
-                            }
-                            fileName = UUID.randomUUID().toString() + myfile.getOriginalFilename();
-                            FileCopyUtils.copy(myfile.getBytes(), new File(path, fileName));
+                        if (myfile == null || myfile.isEmpty()) {
+                            continue;
                         }
+                        fileName = fileComponent.uploadFile(myfile, FileTypeEnum.USER_PHOTO,
+                            contextPath, CcConstrant.FILE_2M_SIZE, "jpg|jpeg|png|gif");
                     }
                     if (!StringUtil.isBlank(fileName)) {
                         localConsultant.setPhoto(fileName);

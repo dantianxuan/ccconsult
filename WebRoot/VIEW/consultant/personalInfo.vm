@@ -17,12 +17,12 @@
             <div class="panel-body">
 				<div class="col-sm-12" >
 					<div class="col-sm-4">
-					 	 <img src="$link.contextPath/UPLOAD/$!consultant.photo" style="width: 120px;heigth:120px;" class="img-rounded">
+					 	 <img src="$link.contextPath/$fileUtil.getPath($!consultant.photo)" style="width: 120px;heigth:120px;" class="img-rounded">
 					</div>
 					<div class="col-sm-8">
 							<div class="col-sm-12" 	style="border-top:solid 1px #ddd">
 								<div class="col-sm-3">
-								 	<h4 style="text-align:right">个人邮箱</h4>
+								 	<h4 style="text-align:right">个人邮箱:</h4>
 								</div>
 								<div class="col-sm-8">
 									<p style="padding-top:12px;">$!consultant.email</p>
@@ -30,7 +30,7 @@
 							</div>					
 							<div class="col-sm-12" 	style="border-top:solid 1px #ddd">
 								<div class="col-sm-3">
-								 	<h4 style="text-align:right">姓名</h4>
+								 	<h4 style="text-align:right">姓名:</h4>
 								</div>
 								<div class="col-sm-8">
 									<p style="padding-top:12px;">$!consultant.name</p>
@@ -38,7 +38,7 @@
 							</div>		
 							<div class="col-sm-12" 	style="border-top:solid 1px #ddd;border-bottom:solid 1px #ddd">
 								<div class="col-sm-3">
-								 	<h4 style="text-align:right">手机号码</h4>
+								 	<h4 style="text-align:right">手机号码:</h4>
 								</div>
 								<div class="col-sm-8">
 									<p style="padding-top:12px;">$!consultant.mobile</p>

@@ -28,12 +28,15 @@ import com.ccconsult.dao.ConsultDAO;
 import com.ccconsult.dao.CounselorDAO;
 import com.ccconsult.dao.MessageDAO;
 import com.ccconsult.dao.ServiceConfigDAO;
+import com.ccconsult.dao.ServiceDAO;
 import com.ccconsult.enums.ConsultStepEnum;
 import com.ccconsult.enums.DataStateEnum;
 import com.ccconsult.enums.MessageRelTypeEnum;
 import com.ccconsult.enums.PayStateEnum;
 import com.ccconsult.pojo.Consult;
 import com.ccconsult.pojo.Consultant;
+import com.ccconsult.pojo.Service;
+import com.ccconsult.util.DateUtil;
 import com.ccconsult.util.StringUtil;
 import com.ccconsult.view.ConsultBase;
 import com.ccconsult.view.CounselorVO;
@@ -57,6 +60,8 @@ public class ConsultInnerController extends BaseController {
     private ConsultComponent consultComponent;
     @Autowired
     private ServiceConfigDAO serviceConfigDAO;
+    @Autowired
+    private ServiceDAO       serviceDAO;
 
     @RequestMapping(value = "/searchInnerConsult.htm")
     public ModelAndView searchConsult(HttpServletRequest request, PageQuery query, ModelMap modelMap) {
@@ -136,6 +141,9 @@ public class ConsultInnerController extends BaseController {
                 consult.setGmtCreate(new Date());
                 consult.setStep(ConsultStepEnum.CREATE.getValue());
                 consult.setPayTag(PayStateEnum.PAY_SUCCESS.getValue());//无须支付
+                Service service = serviceDAO.findById(consult.getServiceId());
+                AssertUtil.notNull(service, "服务不存在，请检查");
+                consult.setGmtEffectEnd(DateUtil.addHours(new Date(), service.getEffectTime()));
                 consult.setGmtModified(new Date());
                 consultDAO.save(consult);
                 return new CcResult(consult);

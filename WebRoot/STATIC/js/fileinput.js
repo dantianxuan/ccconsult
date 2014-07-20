@@ -181,7 +181,7 @@
             }
             self.$hidden.val('');
             self.$hidden.attr('name', self.name);
-            self.$element.attr('name', '');
+            self.$element.attr('name', self.name);
             self.$element.val('');
             if (e !== false) {
                 self.$element.trigger('change');

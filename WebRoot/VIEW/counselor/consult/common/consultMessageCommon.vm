@@ -10,6 +10,9 @@
 		<div class="panel panel-default">
 		  <div class="panel-heading"><span class="glyphicon glyphicon-comment"></span> 留言记录</div>
 		  <div class="panel-body">
+		  	#if(!$messageVOs || $messageVOs.size()==0)
+		  		对不起，当前没有留言记录
+		  	#end
 		  	#foreach($messageVO in $messageVOs)
 		  		#if($messageVO.message.creatorRole==2)
 			  		<div class="col-sm-12">
@@ -81,7 +84,6 @@
              data: $('#sendMessageForm').serialize(),
              dataType: "json",
              success: function(data){
-             	console.log(data);
              	if(data.result.success==true){
              		window.location.href=window.location.href;
              	}else{

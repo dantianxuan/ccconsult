@@ -55,7 +55,6 @@
 	                        $('#regEmailForm').submit(function(){
 	                            var email=$('#inputEmail').val();
 	                            var prefix=$('#selectMailSubfix').val();
-	                            console.log(prefix);
 	                            var myRegExp = /[a-z0-9-]{1,30}@[a-z0-9-]{1,65}.[a-z]{3}/;
 	                            if(!myRegExp.test(email+prefix)){
 	                                $('#alertArea').show();

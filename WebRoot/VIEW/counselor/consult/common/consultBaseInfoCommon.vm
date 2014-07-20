@@ -1,0 +1,11 @@
+<div class="row">
+    <div class="col-sm-6">
+        <p class="col-sm-12"><strong class=" text-right col-sm-4">咨询类型:</strong>$!consultBase.serviceConfigVO.service.name</p>
+        <p class="col-sm-12"><strong class=" text-right col-sm-4">支付状态:</strong>$enumUtil.getEnumClass("com.ccconsult.enums.PayStateEnum").getByValue($consultBase.consult.payTag).getDescription()</p>
+        <p class="col-sm-12"><strong class=" text-right col-sm-4">有效期:</strong>$!date.format("yyyy-MM-dd HH:mm:ss", $consultBase.consult.gmtEffectEnd)</p>
+    </div>
+    <div class="col-sm-6">
+     	<p class="col-sm-12"><strong class=" text-right col-sm-4">当前状态:</strong>$enumUtil.getByValue("com.ccconsult.enums.ConsultStepEnum",$consultBase.consult.step).getDescription()</p>
+        <p class="col-sm-12"><strong class=" text-right col-sm-4">创建时间:</strong>$date.format("yyyy-MM-dd HH:mm:ss", $consultBase.consult.gmtCreate)</p>
+    </div>
+</div>

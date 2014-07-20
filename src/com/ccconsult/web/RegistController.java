@@ -3,7 +3,6 @@
  */
 package com.ccconsult.web;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 import java.util.UUID;
@@ -11,41 +10,45 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.math.NumberUtils;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.ccconsult.base.AssertUtil;
+import com.ccconsult.base.BlankServiceCallBack;
 import com.ccconsult.base.CcConstrant;
+import com.ccconsult.base.CcException;
 import com.ccconsult.base.CcResult;
 import com.ccconsult.dao.CompanyDAO;
+import com.ccconsult.dao.RegMailDAO;
+import com.ccconsult.dao.ServiceConfigDAO;
+import com.ccconsult.enums.DataStateEnum;
+import com.ccconsult.pojo.Company;
 import com.ccconsult.pojo.Consultant;
 import com.ccconsult.pojo.Counselor;
 import com.ccconsult.pojo.RegMail;
+import com.ccconsult.pojo.ServiceConfig;
 import com.ccconsult.service.RegistService;
-import com.ccconsult.util.LogUtil;
+import com.ccconsult.util.ValidateUtil;
+import com.ccconsult.view.CounselorVO;
 
 /**
  * @author jingyu.dan
  * 
  */
 @Controller
-public class RegistController {
-
-    /**日志 */
-    private static final Logger logger = Logger.getLogger(RegistController.class);
-
+public class RegistController extends BaseController {
     @Autowired
-    private RegistService       registService;
-
+    private RegistService    registService;
     @Autowired
-    private CompanyDAO          companyDAO;
+    private RegMailDAO       regMailDAO;
+    @Autowired
+    private ServiceConfigDAO serviceConfigDAO;
+    @Autowired
+    private CompanyDAO       companyDAO;
 
     /**
      * 注册面试官init页面
@@ -73,6 +76,7 @@ public class RegistController {
         regMail.setGmtCreate(new Date());
         regMail.setToken(UUID.randomUUID().toString());
         CcResult result = registService.regMail(regMail);
+        modelMap.put("companys", companyDAO.findAll());
         modelMap.put("result", result);
         return view;
     }
@@ -84,17 +88,13 @@ public class RegistController {
      */
     @RequestMapping(value = "regist/regCounselor.htm", method = RequestMethod.GET)
     public ModelAndView initRegInterviewer(String token, ModelMap modelMap) {
-        CcResult result = registService.getRegMainInfo(token);
-        if (!result.isSuccess()) {
-            modelMap.put("result", result);
-            return new ModelAndView("redirect:regist/regCounselorInit.htm");
+        RegMail regMail = regMailDAO.findByToken(token);
+        if (regMail == null) {
+            modelMap.put("message", "记录不存在，请重新注册");
+            return new ModelAndView("error");
         }
-        modelMap.put("result", result);
-        Counselor counselor = new Counselor();
-        counselor.setEmail(((RegMail) result.getObject()).getMail());
-        modelMap.put("counselor", counselor);
-        modelMap.put("regMailId", ((RegMail) result.getObject()).getId());
-        return new ModelAndView("regist/regConsultant");
+        modelMap.put("regMail", regMail);
+        return new ModelAndView("regist/regCounselor");
     }
 
     /**
@@ -102,52 +102,51 @@ public class RegistController {
      * @return
      */
     @RequestMapping(value = "regist/regCounselor.htm", params = "action=regist")
-    public ModelAndView submitRegInterviewer(HttpServletRequest request, Counselor counselor,
-                                             String repasswd,
-                                             @RequestParam MultipartFile[] localPhoto,
-                                             String regMailId, ModelMap modelMap) {
-        CcResult result = null;
-        String fileName = "";
-        try {
-            for (MultipartFile myfile : localPhoto) {
-                if (myfile.isEmpty()) {
-                    System.out.println("文件未上传");
-                } else {
-                    System.out.println("文件长度: " + myfile.getSize() + "文件类型: "
-                                       + myfile.getContentType() + "文件名称: " + myfile.getName()
-                                       + "文件原名: " + myfile.getOriginalFilename());
-                    String path = request.getSession().getServletContext().getRealPath("/")
-                                  + "UPLOAD";
-                    File parentFile = new File(path);
-                    if (!parentFile.exists()) {
-                        parentFile.mkdirs();
-                    }
-                    fileName = UUID.randomUUID().toString() + myfile.getOriginalFilename();
-                    FileCopyUtils.copy(myfile.getBytes(), new File(path, fileName));
-                }
-            }
-            counselor.setGmtCreate(new Date());
-            counselor.setPhoto(fileName);
-            counselor.setGmtModified(new Date());
-            if (StringUtils.equals(counselor.getPasswd(), repasswd)) {
-                result = registService.regCounselor(counselor, NumberUtils.toInt(regMailId));
-            } else {
-                result = new CcResult("重复密码输入不一致");
-            }
+    public ModelAndView submitRegCounselor(final HttpServletRequest request,
+                                           final Counselor counselor, final String repasswd,
+                                           final Integer regMailId, final ModelMap modelMap) {
 
-        } catch (Exception e) {
-            LogUtil.error(logger, e, "文件上传失败");
-            result = new CcResult("文件上传失败");
-        }
+        CcResult result = serviceTemplate.executeWithTx(CcResult.class, new BlankServiceCallBack() {
+            @Override
+            public CcResult executeService() {
+                RegMail regMail = regMailDAO.findById(regMailId);
+                modelMap.put("regMail", regMail);
+                Company company = companyDAO.findByMailSuffix(CcConstrant.ALT_SEPARATOR
+                                                              + regMail.getMail().split(
+                                                                  CcConstrant.ALT_SEPARATOR)[1]);
+                AssertUtil.notNull(company, "公司信息不存在，不能注册");
+                AssertUtil.notNull(regMail, "非法的注册请求");
+                AssertUtil.state(StringUtils.equals(regMail.getMail(), counselor.getEmail()),
+                    "非法的账号，账号被篡改");
+                CounselorVO innerInterviewerVO = counselorDAO.findByEmail(counselor.getEmail());
+                if (innerInterviewerVO != null) {
+                    throw new CcException("您已经注册过该用户，请直接登录，如果忘记密码请点击忘记密码找回");
+                }
+                AssertUtil.state(StringUtils.equals(counselor.getPasswd(), repasswd), "重复密码输入不一致");
+                AssertUtil.state(counselor.getName() != null, "用户昵称不能为空");
+                AssertUtil.state(counselor.getName().length() <= CcConstrant.COMMON_32_LENGTH,
+                    "用户名称长度不能超过32个字符");
+                counselor.setGmtCreate(new Date());
+                counselor.setGmtModified(new Date());
+                counselor.setCompanyId(company.getId());
+                counselorDAO.save(counselor);
+                ServiceConfig serviceConfig = new ServiceConfig();
+                serviceConfig.setCounselorId(counselor.getId());
+                serviceConfig.setGmtCreate(new Date());
+                serviceConfig.setState(DataStateEnum.NORMAL.getValue());
+                serviceConfig.setPrice(0);
+                serviceConfig.setServiceId(1);
+                serviceConfigDAO.save(serviceConfig);
+                return new CcResult(counselor);
+            }
+        });
         if (result.isSuccess()) {
-            request.getSession().setAttribute(CcConstrant.SESSION_COUNSELOR_OBJECT,
-                result.getObject());
+            CounselorVO counselorVO = counselorDAO.findById(((Counselor) result.getObject())
+                .getId());
+            request.getSession().setAttribute(CcConstrant.SESSION_COUNSELOR_OBJECT, counselorVO);
             return new ModelAndView("redirect:/counselor/counselorSelf.htm");
         }
-
         modelMap.put("result", result);
-        modelMap.put("regMailId", regMailId);
-        modelMap.put("counselor", counselor);
         return new ModelAndView("regist/regCounselor");
     }
 
@@ -167,16 +166,36 @@ public class RegistController {
      * @throws Exception
      */
     @RequestMapping(value = "regist/regConsultant.htm", params = "action=regist")
-    public ModelAndView submitRegConsultant(HttpServletRequest request, Consultant consultant,
-                                            String repasswd, ModelMap modelMap) {
-        CcResult result = null;
-        consultant.setGmtCreate(new Date());
-        consultant.setGmtModified(new Date());
-        if (StringUtils.equals(consultant.getPasswd(), repasswd)) {
-            result = registService.regConsultant(consultant);
-        } else {
-            result = CcResult.retFailure("重复密码输入不一致");
-        }
+    public ModelAndView submitRegConsultant(HttpServletRequest request,
+                                            final Consultant consultant, final String repasswd,
+                                            ModelMap modelMap) {
+
+        CcResult result = serviceTemplate.executeWithTx(CcResult.class, new BlankServiceCallBack() {
+            @Override
+            public CcResult executeService() {
+                AssertUtil.notNull(consultant, "非法的注册请求");
+                AssertUtil.notBlank(consultant.getEmail(), "用户邮箱不能为空");
+                AssertUtil.state(consultant.getEmail().length() < CcConstrant.COMMON_256_LENGTH,
+                    "注册邮箱不能超过256个字符！");
+                AssertUtil.state(ValidateUtil.isEmail(consultant.getEmail()), "请输入合法的邮箱账户格式");
+                AssertUtil.notBlank(consultant.getName(), "用户名称不能为空");
+                AssertUtil.state(consultant.getName().length() < CcConstrant.COMMON_128_LENGTH,
+                    "注册用户名称不能超过128个字符！");
+                AssertUtil.state(ValidateUtil.isMobile(consultant.getMobile()), "请输入合法的手机号码");
+                AssertUtil.state(consultant.getPasswd() != null
+                                 && consultant.getPasswd().length() > 6
+                                 && consultant.getPasswd().length() < 20, "密码长度必须在6到20个字符之间");
+                Consultant localJobseeker = consultantDAO.findByEmail(consultant.getEmail());
+                if (localJobseeker != null) {
+                    throw new CcException("该用户名称已经被注册！");
+                }
+                AssertUtil.state(StringUtils.equals(consultant.getPasswd(), repasswd), "重复密码输入不一致");
+                consultant.setGmtCreate(new Date());
+                consultant.setGmtModified(new Date());
+                consultantDAO.save(consultant);
+                return new CcResult(consultant);
+            }
+        });
         if (result.isSuccess()) {
             request.getSession().setAttribute(CcConstrant.SESSION_CONSULTANT_OBJECT,
                 result.getObject());

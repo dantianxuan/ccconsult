@@ -10,14 +10,14 @@
         <div class="panel panel-default">
             <div class="panel-body">
 	            	#foreach($serviceConfigVO in $!counselorVO.serviceConfigs)
-	        		<button style="margin-right:4px;" type="button" class="btn #if($serviceConfigVO.service.id==4) btn-info #else btn-warning #end col-sm-2"
+	        		<button style="margin-right:4px;" type="button" class="btn #if($serviceConfigVO.service.id==4) btn-warning #else btn-warning #end col-sm-2"
 							onclick="$('.serviceArea').addClass('hide');$('#serviceArea_$serviceConfigVO.service.id').removeClass('hide');">
 							#if($foreach.count==4) <span class="glyphicon glyphicon-fire"></span> #end  $serviceConfigVO.service.name
 					</button>
 	            	#end
 	            	<hr/>
 	            	#foreach($serviceConfigVO in $!counselorVO.serviceConfigs)
-	            	<div class="alert alert-dismissable alert-success serviceArea #if($velocityCount!=0) hide #end" id="serviceArea_$serviceConfigVO.service.id" >
+	            	<div class="alert alert-dismissable alert-success serviceArea #if($foreach.count!=1) hide #end" id="serviceArea_$serviceConfigVO.service.id" >
 						  <h4>欢迎使用$serviceConfigVO.service.name服务!</h4>
 						  <p>$serviceConfigVO.service.description</p>
 						  <p class="text-primary">
@@ -38,7 +38,7 @@
             <div class="panel-body">
                 <div class="row">
                     <div class="col-sm-2">
-                        <img src="$link.contextPath/UPLOAD/$!counselorVO.counselor.photo" class="img-thumbnail" style="margin-left:12px;width: 82px;height: 82px;">
+                        <img src="$link.contextPath/$fileUtil.getPath($!counselorVO.counselor.photo)" class="img-thumbnail" style="margin-left:12px;width: 82px;height: 82px;">
                     </div>
                     <div class="col-sm-5">
 	                    <p class="col-sm-12"><strong class=" text-right col-sm-4">名称:</strong>$!counselorVO.counselor.name</p>

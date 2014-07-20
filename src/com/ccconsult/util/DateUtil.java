@@ -93,6 +93,21 @@ public class DateUtil {
         return dateFormat.parse(sDate);
     }
 
+    public static Date parseDate(String sDate, String format) {
+        DateFormat dateFormat = new SimpleDateFormat(format);
+        Date d = null;
+
+        if ((sDate != null) && (sDate.length() == format.length())) {
+            try {
+                d = dateFormat.parse(sDate);
+            } catch (ParseException ex) {
+                return null;
+            }
+        }
+
+        return d;
+    }
+
     public static Date parseDateLongFormat(String sDate) {
         DateFormat dateFormat = new SimpleDateFormat(longFormat);
         Date d = null;

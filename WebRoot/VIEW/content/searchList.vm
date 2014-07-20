@@ -35,7 +35,6 @@
 					                            </div>
 					                            <div class="col-sm-10" style="border-left:solid 1px #ddd">
 					                            	<a href="$link.contextPath/company.htm?companyId=$company.id">$company.name</a>
-					                            	<a href="javascript:void(0)" style="float:right;">注册咨询师人数<span class="badge">$object.counselorCount</span></a>
 					                                <div style="border-top:solid 1px #ddd">$!company.description</div>
 					                            </div>
 										</div>

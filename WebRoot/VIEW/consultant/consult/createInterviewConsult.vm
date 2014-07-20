@@ -1,15 +1,19 @@
 #set($consultant=$session.getAttribute("SESSION_CONSULTANT_OBJECT"))
-<link href="$link.contextPath/STATIC/plugin/umeditor/themes/default/css/umeditor.css" type="text/css" rel="stylesheet">
-<script type="text/javascript" src="$link.contextPath/STATIC/plugin/umeditor/umeditor.config.js"></script>
-<!-- 编辑器源码文件 -->
-<script type="text/javascript" src="$link.contextPath/STATIC/plugin/umeditor/umeditor.js"></script>
-<!-- 语言包文件(建议手动加载语言包，避免在ie下，因为加载语言失败导致编辑器加载失败) -->
-<script type="text/javascript" src="$link.contextPath/STATIC/plugin/umeditor/lang/zh-cn/zh-cn.js"></script>  
-#if(!$result || !$result.success)
-		$result.message
-#else
+<script src="$link.contextPath/STATIC/js/fileinput.js"></script>
+<link rel="stylesheet" href="$link.contextPath/STATIC/css/fileinput.css"/>
+<script src="$link.contextPath/STATIC/js/jquery.form.js"></script>
+<link rel="stylesheet" href="$link.contextPath/STATIC/plugin/ueditor/themes/default/css/ueditor.css" type="text/css">
+
+
+<script type="text/javascript" charset="utf-8" src="$link.contextPath/STATIC/plugin/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="$link.contextPath/STATIC/plugin/ueditor/ueditor.all.js"></script>
+<script type="text/javascript" charset="utf-8" src="$link.contextPath/STATIC/plugin/ueditor/lang/zh-cn/zh-cn.js"></script>
+<script type="text/javascript" charset="utf-8" src="$link.contextPath/STATIC/plugin/ueditor/lang/zh-cn/zh-cn.js"></script>
+<script type="text/javascript" charset="utf-8" src="$link.contextPath/STATIC/js/validator.min.js"></script>
+
+
+<form  id="createInterviewConsultForm" action="$link.contextPath/consultant/consult/createInterviewConsult.htm"  method="POST" enctype="multipart/form-data" role="form" data-toggle="validator">
 #set($serviceConfigVO=$result.object)
-<form  id="createInnerConsultForm">
 <input type="hidden" name="counselorId" value="$serviceConfigVO.serviceConfig.counselorId"/>
 <input type="hidden" name="consultantId" value="$consultant.id"/>
 <input type="hidden" name="serviceConfigId" value="$serviceConfigVO.serviceConfig.id" />
@@ -18,63 +22,122 @@
   <h4>欢迎您创建$serviceConfigVO.service.name请求</h4>
   <p>请仔细阅读我们的服务流程，以便于您的使用，咨询师回答您的问题后，我们会邮件通知您</p>
   <p>
-	  <a class="btn btn-primary btn-sm disabled">创建预约请求 <span class="glyphicon glyphicon-arrow-right"></span></a>
-	  <a  class="btn btn-default btn-sm  disabled">咨询师预约时间 <span class="glyphicon glyphicon-arrow-right"></span></a>
-	  <a  class="btn btn-default btn-sm disabled">进行模拟面试咨询  <span class="glyphicon glyphicon-arrow-right "></span></a>
-	   <a  class="btn btn-default btn-sm disabled">完成面试评价  <span class="glyphicon glyphicon-arrow-right "></span></a>
+	  <a  class="btn btn-primary btn-sm col-sm-2 disabled">创建面试咨询请求 <span class="glyphicon glyphicon-arrow-right"></span></a>
+	  <a  class="btn btn-default btn-sm col-sm-2 disabled">咨询师确认 <span class="glyphicon glyphicon-arrow-right"></span></a>
+	  <a  class="btn btn-default btn-sm col-sm-2 disabled">进行面试咨询 <span class="glyphicon glyphicon-arrow-right"></span></a>
+	  <a  class="btn btn-default btn-sm col-sm-2 disabled">确认评价 <span class="glyphicon glyphicon-arrow-right"></span></a>
 	  <a  class="btn btn-sm disabled">
 	   <span class="glyphicon glyphicon-ok"></span>
 	  </a>
   </p>
   <p class="text-primary">请严格遵守本网服务须知，不要在咨询中询问或透漏任何涉及商业机密的信息！.</p>
 </div>
- 
-#if($result && !$result.success)
-<div class="row">
+<div class="row #if($result && !$result.success)  show  #else hide  #end" id="validMessageInfo"  >
 	<div class="col-sm-12">
 		<div class="alert alert-dismissable alert-danger" style="margin:0px 0px 0px 0px">
 		  <button type="button" class="close" data-dismiss="alert">×</button>
-		  $result.message
+		  <p id="validMessage">$result.message</p>
 		</div>
 	</div>     
 </div>
-#end          
-<div class="row" id="messageArea">
+<div class="row" style="margin-bottom:8px;" id="fileUploadInput">
+	<div class="col-sm-12">
+		<div class="alert alert-dismissable alert-info" style="margin:0px 0px 0px 0px">
+		  <button type="button" class="close" data-dismiss="alert">×</button>
+		 	请您<span style="font-size:18px;color:red">上传一份简历</span>以方便咨询师为您服务，上传过程中请使用word或者pdf格式
+		</div>
+	</div>  
+    <div class="col-sm-8">
+         <input   type="file" name="localFile"  class="file" multiple="false" data-show-upload="false" data-show-caption="true"   />
+    </div>	
+</div> 
+<div class="row" style="margin-bottom:8px;" id="fileUploadInput">
     <div class="col-sm-12">
-        <script type="text/plain" id="myEditor" name="goal" style="width:100%;height:260px;"></script>
-        <script type="text/javascript">
-	        $(function(){
-	            window.um = UM.getEditor('myEditor', {
-	                /* 传入配置参数,可配参数列表看umeditor.config.js */
-	                toolbar: ['undo redo | bold italic underline']
-	            });
-	        });
-        </script>   
+		<div class="alert alert-dismissable alert-info" style="margin:0px 0px 0px 0px">
+		  <button type="button" class="close" data-dismiss="alert">×</button>
+		 	请简单描述一下您的需求和目标，以便于咨询师有针对性的对您的简历提出建议和意见！	
+		</div>
+	    <div class="form-group">
+            <textarea class="form-control" rows="5" placeholder="请简单描述一下您的面试要求" name="goal" data-error="您必须输入你对本次面试的要求" required ></textarea>
+            <div class="help-block with-errors"></div>
+	    </div>
+    </div>	
+</div>	         
+<div class="row" id="messageArea">
+	 <div class="col-sm-12">
+		<div class="alert alert-dismissable alert-info" style="margin:0px 0px 0px 0px">
+			<button type="button" class="close" data-dismiss="alert">×</button>
+			您可以将您的目标招聘信息填入招聘目标中，以便于面试官了解您的目的！		  
+		</div>
+	</div>
+    <div class="col-sm-12">
+  		<script type="text/plain" class="easyui-validatebox" 
+  		id="reviewEditor" name="targetJobInfo" style="width:100%;height:200px;"  required></script>
+       	<script type="text/javascript">
+	        var reviewEditor = UE.getEditor('reviewEditor', {
+			 toolbars: [[
+            'fullscreen', 'source', '|', 'undo', 'redo', '|',
+            'bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'superscript', 'subscript', 'removeformat', 'formatmatch', 'autotypeset', 'blockquote', 'pasteplain', '|', 'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist', 'selectall', 'cleardoc', '|',
+            'rowspacingtop', 'rowspacingbottom', 'lineheight', '|',
+            'customstyle', 'paragraph', 'fontfamily', 'fontsize', '|',
+            'directionalityltr', 'directionalityrtl', 'indent', '|',
+            'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|', 'touppercase', 'tolowercase', '|',
+            'link', 'unlink', 'anchor', '|', 'imagenone', 'imageleft', 'imageright', 'imagecenter', '|',
+            'simpleupload', 'insertimage', 'emotion', 'scrawl', 'insertvideo', 'music', 'attachment', 'map', 'pagebreak', 'template', 'background', '|',
+            'horizontal', 'date', 'time', 'spechars', 'snapscreen', 'wordimage', '|',
+            'inserttable', 'deletetable', 'insertparagraphbeforetable', 'insertrow', 'deleterow', 'insertcol', 'deletecol', 'mergecells', 'mergeright', 'mergedown', 'splittocells', 'splittorows', 'splittocols', 'charts', '|',
+            'help', 'drafts'
+        ]],
+			    autoHeightEnabled: true,
+			    autoFloatEnabled: true
+			});
+ 		</script>		  
     </div>
 </div>
 <hr/>
 <div class="row">
     <div class="col-sm-12" style="text-align:right">
     	<a  href="$link.contextPath/counselorInfo.htm?counselorId=$serviceConfigVO.serviceConfig.counselorId"   class="btn btn-link" >  返回咨询师详情</a>
-		<a  class="btn btn-primary" onclick="createInnerConsult()" >  创建咨询请求</a>
+		<button type="button"  class="btn btn-primary" id="submitInterviewButton" onclick="uploadInterviewReview();return false;" />
+		<span class="glyphicon glyphicon-send"></span> 创建咨询请求</button>
     </div>
 </div>
 </form>
 <script>
-	function createInnerConsult(){
-		jQuery.ajax({
-             type: "POST",
-             url: "$link.contextPath/consultant/consult/createInnerConsult.json",
-             data: $('#createInnerConsultForm').serialize(),
-             dataType: "json",
-             success: function(data){
-             	if(data.result.success==true){
-             		window.location.href="$link.contextPath/consultant/consult/innerConsult.htm?consultId="+data.result.object.id
-             	}else{
-             		alert("创建失败"+data.result.message);
-             	}
-              }
-         });
+	function showArea(message){
+		$('#validMessage').html(message);
+		$('#validMessageInfo').removeClass('hide');
 	}
+	function uploadInterviewReview() {
+			var hideForm = $('#createInterviewConsultForm');
+			if($('input[name=localFile]')==undefined || $('input[name=localFile]').val()==''){
+				showArea('必须上传简历文件');
+				return false;
+			}
+			if(!$('#createInterviewConsultForm').validator()){
+				return false;
+			}
+			var options = {
+				dataType : "json",
+				beforeSubmit : function() {
+					$('#submitInterviewButton').button('loading');
+				},
+				success : function(result) {
+					$('#submitInterviewButton').button('reset');
+					var data = eval(result);
+					if(data.result.success){
+						alert('处理成功，请等待页面跳转！');
+						location.href="$link.contextPath/consultant/consult/payForConsult.htm?consultId="+data.result.object.id;
+					}else{
+						showArea('提交失败：'+data.result.message);
+					}
+				},
+				error : function(result) {
+					$('#submitInterviewButton').button('reset');
+					alert('提交失败，请检查！');
+				}
+			};
+			hideForm.ajaxSubmit(options);
+			return false;
+		}	
 </script>
-#end

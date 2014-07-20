@@ -27,7 +27,8 @@ public class ConsultantAuthorityInterceptor extends HandlerInterceptorAdapter {
             .getAttribute(CcConstrant.SESSION_CONSULTANT_OBJECT);
         if (consultant == null) {
             HttpSession session = request.getSession();
-            if (null != request.getQueryString()) {
+            if (null != request.getQueryString()
+                && !request.getRequestURL().toString().contains("&")) {
                 session
                     .setAttribute("redirectUrl",
                         request.getRequestURL().append("?").append(request.getQueryString())

@@ -15,10 +15,12 @@ import com.ccconsult.dao.AppriseDAO;
 import com.ccconsult.dao.ConsultDAO;
 import com.ccconsult.dao.ConsultantDAO;
 import com.ccconsult.dao.CounselorDAO;
+import com.ccconsult.dao.InterviewConsultDAO;
 import com.ccconsult.dao.ResumeConsultDAO;
 import com.ccconsult.dao.ServiceConfigDAO;
 import com.ccconsult.pojo.Consult;
 import com.ccconsult.view.ConsultBase;
+import com.ccconsult.view.InterviewCounsultVO;
 import com.ccconsult.view.ResumeConsultVO;
 
 /**
@@ -48,6 +50,7 @@ public class ConsultComponentImpl implements ConsultComponent {
         return pageList;
     }
 
+    @Override
     public PageList<ConsultBase> queryPaged(int payTag, int step, int serviceId, int counselorId,
                                             int consultantId, int pageSize, int pageNo) {
         PageList pageList = consultDAO.queryPaged(payTag, step, serviceId, counselorId,
@@ -107,6 +110,11 @@ public class ConsultComponentImpl implements ConsultComponent {
             ((ResumeConsultVO) base).setResumeConsult(resumeConsultDAO.findByConsultId(consult
                 .getId()));
         }
+        if (consult.getServiceId() == 4) {
+            base = new InterviewCounsultVO();
+            ((InterviewCounsultVO) base).setInterviewConsult(interviewConsultDAO
+                .findByConsultId(consult.getId()));
+        }
         base.setApprises(appriseDAO.findByRelId(consult.getId()));
         base.setConsult(consult);
         base.setConsultant(consultantDAO.findById(consult.getConsultantId()));
@@ -116,16 +124,18 @@ public class ConsultComponentImpl implements ConsultComponent {
     }
 
     @Autowired
-    private CounselorDAO     counselorDAO;
+    private CounselorDAO        counselorDAO;
     @Autowired
-    private ResumeConsultDAO resumeConsultDAO;
+    private ResumeConsultDAO    resumeConsultDAO;
     @Autowired
-    private ConsultantDAO    consultantDAO;
+    private ConsultantDAO       consultantDAO;
     @Autowired
-    private ConsultDAO       consultDAO;
+    private InterviewConsultDAO interviewConsultDAO;
     @Autowired
-    private AppriseDAO       appriseDAO;
+    private ConsultDAO          consultDAO;
     @Autowired
-    private ServiceConfigDAO serviceConfigDAO;
+    private AppriseDAO          appriseDAO;
+    @Autowired
+    private ServiceConfigDAO    serviceConfigDAO;
 
 }

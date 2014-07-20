@@ -25,7 +25,6 @@ import com.ccconsult.dao.ArticleDAO;
 import com.ccconsult.enums.ArticleTypeEnum;
 import com.ccconsult.enums.DataStateEnum;
 import com.ccconsult.pojo.Article;
-import com.ccconsult.service.ArticleService;
 
 /**
  * @author jingyu.dan

@@ -5,8 +5,6 @@
 package com.ccconsult.service;
 
 import com.ccconsult.base.CcResult;
-import com.ccconsult.pojo.Consultant;
-import com.ccconsult.pojo.Counselor;
 import com.ccconsult.pojo.RegMail;
 
 /**
@@ -30,20 +28,5 @@ public interface RegistService {
      * @return
      */
     public CcResult getRegMainInfo(String token);
-
-    /**
-     * 注册信息
-     * @param counselor
-     * @param regMailId
-     * @return
-     */
-    public CcResult regCounselor(Counselor counselor, int regMailId);
-
-    /**
-     * 注册一个用户
-     * @param consultant
-     * @return
-     */
-    public CcResult regConsultant(final Consultant consultant);
 
 }

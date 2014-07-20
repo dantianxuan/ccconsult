@@ -2,6 +2,8 @@ package com.ccconsult.pojo;
 
 import java.util.Date;
 
+import com.ccconsult.enums.ConsultStepEnum;
+
 /**
  * Consult entity. @author MyEclipse Persistence Tools
  */
@@ -22,6 +24,7 @@ public class Consult extends com.ccconsult.base.ToString implements java.io.Seri
     private Date    gmtEffectEnd;
     private String  rejectReason;
     private Integer serviceConfigId;
+    private String  indetityCode;
 
     // Constructors
 
@@ -32,7 +35,8 @@ public class Consult extends com.ccconsult.base.ToString implements java.io.Seri
     /** full constructor */
     public Consult(Integer consultantId, Integer counselorId, Integer step, Integer payTag,
                    Integer serviceId, String goal, Date gmtModified, Date gmtCreate,
-                   Date gmtEffectEnd, String rejectReason, Integer serviceConfigId) {
+                   Date gmtEffectEnd, String rejectReason, Integer serviceConfigId,
+                   String indetityCode) {
         this.consultantId = consultantId;
         this.counselorId = counselorId;
         this.step = step;
@@ -44,6 +48,11 @@ public class Consult extends com.ccconsult.base.ToString implements java.io.Seri
         this.gmtEffectEnd = gmtEffectEnd;
         this.rejectReason = rejectReason;
         this.serviceConfigId = serviceConfigId;
+        this.indetityCode = indetityCode;
+    }
+
+    public ConsultStepEnum getStepEnum() {
+        return ConsultStepEnum.getByValue(step);
     }
 
     // Property accessors
@@ -142,6 +151,14 @@ public class Consult extends com.ccconsult.base.ToString implements java.io.Seri
 
     public void setServiceConfigId(Integer serviceConfigId) {
         this.serviceConfigId = serviceConfigId;
+    }
+
+    public String getIndetityCode() {
+        return this.indetityCode;
+    }
+
+    public void setIndetityCode(String indetityCode) {
+        this.indetityCode = indetityCode;
     }
 
 }

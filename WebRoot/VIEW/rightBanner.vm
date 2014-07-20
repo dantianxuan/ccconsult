@@ -8,7 +8,7 @@
 					#if(!$session.getAttribute("SESSION_COUNSELOR_OBJECT") && !$session.getAttribute("SESSION_CONSULTANT_OBJECT"))
 					<p style="text-align:center;padding-top:4px;border-top:solid 1px #ddd;margin:0px;">
 						<a  href="$link.contextPath/login.htm"  class="btn   btn-success">登录</a>
-						<a  href="$link.contextPath/regist/regConsultant.htm" class="btn btn-link" >注册咨询</a>
+						<a  href="$link.contextPath/regist/regConsultant.htm" class="btn btn-link" >注册咨询者</a>
 						<a  href="$link.contextPath/regist/regCounselorInit.htm" class="btn btn-link" >注册咨询师</a>
 					</p>
 					#end

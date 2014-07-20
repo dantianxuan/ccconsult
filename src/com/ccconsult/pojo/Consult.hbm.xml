@@ -43,5 +43,8 @@
         <property name="serviceConfigId" type="integer">
             <column name="service_config_id" />
         </property>
+        <property name="indetityCode" type="string">
+            <column name="indetity_code" length="45" />
+        </property>
     </class>
 </hibernate-mapping>

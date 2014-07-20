@@ -23,6 +23,7 @@ import com.ccconsult.dao.ServiceDAO;
 import com.ccconsult.enums.ArticleTypeEnum;
 import com.ccconsult.enums.ConsultStepEnum;
 import com.ccconsult.pojo.Article;
+import com.ccconsult.util.ResourceUtil;
 import com.ccconsult.view.CompanyBriefVO;
 import com.ccconsult.view.ConsultBase;
 

@@ -14,7 +14,6 @@ import com.ccconsult.pojo.InterviewConsult;
  */
 public class InterviewCounsultVO extends ConsultBase {
 
-    /**  */
     private static final long serialVersionUID = 1L;
 
     private InterviewConsult  interviewConsult;

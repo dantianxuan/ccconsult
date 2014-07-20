@@ -11,6 +11,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 
 import com.ccconsult.base.CcException;
 import com.ccconsult.pojo.RegMail;
+import com.ccconsult.util.ResourceUtil;
 
 /**
  * @author jingyu.dan
@@ -34,16 +35,16 @@ public class RegMailNotifySender implements NotifySender {
             MimeMessageHelper messageHelper = new MimeMessageHelper(mailMessage, true, "utf-8");
             messageHelper.setTo(regMail.getMail());// 接受者
             messageHelper.setFrom("dantianxuan@163.com");// 发送者
-            messageHelper.setSubject("测试邮件");// 主题
+            messageHelper.setSubject("欢迎您注册真咨网");// 主题
             // 邮件内容，注意加参数true，表示启用html格式
-            String link = "http://localhost:8080/ccconstult/regist/regCounselor.htm?token="
+            String link = ResourceUtil.getByKey("webapp_domain") + "regist/regCounselor.htm?token="
                           + regMail.getToken();
             messageHelper.setText(
-                "<html><head></head><body><h1>欢迎注册成为面试官，请使用如下链接完成注册！<br/>" + "<a href=" + link
+                "<html><head></head><body><h1>欢迎注册成为咨询师，请使用如下链接完成注册！<br/>" + "<a href=" + link
                         + ">" + link + "</a>" + "</h1></body></html>", true);
             javaMailSender.send(mailMessage);
         } catch (Exception e) {
-            throw new CcException(e, "邮件发送失败");
+            throw new CcException(e, "邮件发送失败,请检查您的邮箱是否合法或稍后再试");
         }
     }
 

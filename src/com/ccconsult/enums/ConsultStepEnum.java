@@ -60,7 +60,10 @@ public enum ConsultStepEnum {
      * @param value 枚举值
      * @return      枚举对象
      */
-    public static ConsultStepEnum getByValue(int value) {
+    public static ConsultStepEnum getByValue(Integer value) {
+        if (value == null) {
+            return null;
+        }
         for (ConsultStepEnum type : values()) {
             if (type.getValue() == value) {
                 return type;

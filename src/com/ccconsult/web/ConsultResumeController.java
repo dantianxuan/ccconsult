@@ -12,7 +12,6 @@ import org.apache.commons.lang.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,16 +30,18 @@ import com.ccconsult.dao.CounselorDAO;
 import com.ccconsult.dao.MessageDAO;
 import com.ccconsult.dao.ResumeConsultDAO;
 import com.ccconsult.dao.ServiceConfigDAO;
+import com.ccconsult.dao.ServiceDAO;
 import com.ccconsult.enums.ConsultStepEnum;
 import com.ccconsult.enums.DataStateEnum;
 import com.ccconsult.enums.FileTypeEnum;
 import com.ccconsult.enums.MessageRelTypeEnum;
 import com.ccconsult.enums.PayStateEnum;
-import com.ccconsult.enums.UserRoleEnum;
 import com.ccconsult.pojo.Consult;
 import com.ccconsult.pojo.Consultant;
-import com.ccconsult.pojo.Message;
 import com.ccconsult.pojo.ResumeConsult;
+import com.ccconsult.pojo.Service;
+import com.ccconsult.util.CodeGenUtil;
+import com.ccconsult.util.DateUtil;
 import com.ccconsult.util.StringUtil;
 import com.ccconsult.view.ConsultBase;
 import com.ccconsult.view.CounselorVO;
@@ -55,6 +56,8 @@ import com.ccconsult.view.ServiceConfigVO;
 @Controller
 public class ConsultResumeController extends BaseController {
 
+    @Autowired
+    private ServiceDAO       serviceDAO;
     @Autowired
     private CounselorDAO     counselorDAO;
     @Autowired
@@ -137,6 +140,10 @@ public class ConsultResumeController extends BaseController {
                 consult.setGmtModified(new Date());
                 consult.setPayTag(PayStateEnum.WAIT_FOR_PAY.getValue());
                 consult.setStep(ConsultStepEnum.CREATE.getValue());
+                Service service = serviceDAO.findById(consult.getServiceId());
+                AssertUtil.notNull(service, "服务不存在，请检查");
+                consult.setGmtEffectEnd(DateUtil.addHours(new Date(), service.getEffectTime()));
+                consult.setIndetityCode(CodeGenUtil.getFixLenthString(6));
                 consultDAO.save(consult);
                 //创建面试咨询记录
                 ResumeConsult resumeConsult = new ResumeConsult();
@@ -269,8 +276,9 @@ public class ConsultResumeController extends BaseController {
                     consultBase.getConsult().getCounselorId()
                         .equals(counselorVO.getCounselor().getId()), "请不要尝试修改不属于您的记录");
                 ResumeConsult resumeConsult = ((ResumeConsultVO) consultBase).getResumeConsult();
-                AssertUtil.state(StringUtil.isNotBlank(resumeConsult.getReview()),"您未做任何评价不能完成这次咨询");
-                Consult consult=consultBase.getConsult();
+                AssertUtil.state(StringUtil.isNotBlank(resumeConsult.getReview()),
+                    "您未做任何评价不能完成这次咨询");
+                Consult consult = consultBase.getConsult();
                 consult.setStep(ConsultStepEnum.FIHSHED.getValue());//将状态设定为已经完成
                 consult.setGmtModified(new Date());
                 consultDAO.update(consult);

@@ -3,9 +3,7 @@
  */
 package com.ccconsult.web;
 
-import java.io.File;
 import java.util.Date;
-import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,7 +12,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,17 +26,19 @@ import com.ccconsult.base.CcResult;
 import com.ccconsult.base.PageList;
 import com.ccconsult.base.PageQuery;
 import com.ccconsult.core.ConsultComponent;
+import com.ccconsult.core.FileComponent;
 import com.ccconsult.dao.CounselorDAO;
 import com.ccconsult.dao.InnerMailDAO;
 import com.ccconsult.enums.ConsultStepEnum;
+import com.ccconsult.enums.FileTypeEnum;
 import com.ccconsult.enums.UserRoleEnum;
 import com.ccconsult.pojo.Consultant;
 import com.ccconsult.pojo.Counselor;
 import com.ccconsult.util.LogUtil;
 import com.ccconsult.util.StringUtil;
 import com.ccconsult.util.ValidateUtil;
-import com.ccconsult.view.CounselorVO;
 import com.ccconsult.view.ConsultBase;
+import com.ccconsult.view.CounselorVO;
 
 /**
  * @author jingyu.dan
@@ -57,6 +56,8 @@ public class CounselorController extends BaseController {
     private ConsultComponent    consultComponent;
     @Autowired
     private InnerMailDAO        innerMailDAO;
+    @Autowired
+    private FileComponent       fileComponent;
 
     /**
      * 公共个人信息介绍页面
@@ -95,8 +96,8 @@ public class CounselorController extends BaseController {
         CcResult result = serviceTemplate.execute(CcResult.class, new BlankServiceCallBack() {
             @Override
             public CcResult executeService() {
-                PageList<ConsultBase> consultBases = consultComponent.queryUnderStepPaged(2,
-                    ConsultStepEnum.FIHSHED.getValue(), 0, counselorVO.getCounselor().getId(), 0,
+                PageList<ConsultBase> consultBases = consultComponent.queryPaged(2,
+                    ConsultStepEnum.CREATE.getValue(), 0, counselorVO.getCounselor().getId(), 0,
                     query.getPageSize(), query.getPageNo());
                 return new CcResult(consultBases);
             }
@@ -175,8 +176,8 @@ public class CounselorController extends BaseController {
                     counselor.getDepartment().length() < CcConstrant.COMMON_256_LENGTH,
                     "部门长度不能超过256个字符");
                 AssertUtil.notBlank(counselor.getName(), "个人名称不能为空");
-                AssertUtil.state(counselor.getName().length() < CcConstrant.COMMON_128_LENGTH,
-                    "名称不能超过128个字符");
+                AssertUtil.state(counselor.getName().length() < CcConstrant.COMMON_32_LENGTH,
+                    "名称不能超过32个字符");
                 AssertUtil.state(sessionCounselorVO.getCounselor().getId()
                     .equals(counselor.getId()), "非法修改，不是您当前的个人信息");
             }
@@ -187,36 +188,24 @@ public class CounselorController extends BaseController {
                 AssertUtil.notNull(localCounselorVO, "当前用户不存在或者页面过期，请刷新或重新登录");
                 Counselor localCounselor = localCounselorVO.getCounselor();
                 String fileName = "";
-                try {
-                    for (MultipartFile myfile : localPhoto) {
-                        if (!myfile.isEmpty()) {
-                            LogUtil.info(
-                                logger,
-                                "文件长度: " + myfile.getSize() + "文件类型: " + myfile.getContentType()
-                                        + "文件名称: " + myfile.getName() + "文件原名: "
-                                        + myfile.getOriginalFilename());
-                            String path = request.getSession().getServletContext().getRealPath("/")
-                                          + "UPLOAD";
-                            File parentFile = new File(path);
-                            if (!parentFile.exists()) {
-                                parentFile.mkdirs();
-                            }
-                            fileName = UUID.randomUUID().toString() + myfile.getOriginalFilename();
-                            FileCopyUtils.copy(myfile.getBytes(), new File(path, fileName));
-                        }
+                String contextPath = request.getSession().getServletContext().getRealPath("/");
+                for (MultipartFile myfile : localPhoto) {
+                    if (myfile == null || myfile.isEmpty()) {
+                        continue;
                     }
-                    if (!StringUtil.isBlank(fileName)) {
-                        localCounselor.setPhoto(fileName);
-                    }
-                    localCounselor.setGmtModified(new Date());
-                    localCounselor.setDepartment(counselor.getDepartment());
-                    localCounselor.setDescription(counselor.getDescription());
-                    localCounselor.setMobile(counselor.getMobile());
-                    counselorDAO.update(localCounselor);
-                } catch (Exception e) {
-                    LogUtil.error(logger, e, "文件上传失败");
-                    throw new CcException("文件上传失败");
+                    fileName = fileComponent.uploadFile(myfile, FileTypeEnum.USER_PHOTO,
+                        contextPath, CcConstrant.FILE_2M_SIZE, "jpg|jpeg|png|gif");
                 }
+                if (!StringUtil.isBlank(fileName)) {
+                    localCounselor.setPhoto(fileName);
+                }
+                localCounselor.setGmtModified(new Date());
+                localCounselor.setDepartment(counselor.getDepartment());
+                localCounselor.setDescription(counselor.getDescription());
+                localCounselor.setName(counselor.getName());
+                localCounselor.setCity(counselor.getCity());
+                localCounselor.setMobile(counselor.getMobile());
+                counselorDAO.update(localCounselor);
                 return new CcResult(localCounselor);
             }
         });

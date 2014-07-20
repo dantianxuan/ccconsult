@@ -8,6 +8,8 @@ import java.io.Serializable;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
+import com.ccconsult.enums.DataStateEnum;
+
 /**
  * <pre> ToString基类
  * 
@@ -30,4 +32,7 @@ public class ToString implements Serializable {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
 
+    public DataStateEnum getStateEnum(Integer state) {
+        return DataStateEnum.getByValue(state);
+    }
 }

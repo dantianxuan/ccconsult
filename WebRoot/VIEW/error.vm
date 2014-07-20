@@ -3,8 +3,14 @@
 	<div class="col-sm-12">
 	<div class="jumbotron">
 	  <h3>Sorry！</h3>
-	  <p>对不起出错了，你可以选择，刷新页面或者稍后重试，或者联系我们</p>
-	  <p><a class="btn btn-primary btn-lg">报告错误</a></p>
+	  #if($message)
+ 		<p class="text-danger">对不起出错了，原因:$message<br/>
+ 			<small>你可以选择，刷新页面或者稍后重试，或者联系我们..</small>
+ 		</p>
+	  #else
+	  	<p class="text-danger">对不起出错了，你可以选择，刷新页面或者稍后重试，或者联系我们</p>
+		<p class="text-danger"><a class="btn btn-primary btn-lg" href="dantianxuan@qq.com">报告错误</a></p>
+	  #end
 	</div>
 	</div>
 </div>

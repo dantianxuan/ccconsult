@@ -2,6 +2,8 @@ package com.ccconsult.pojo;
 
 import java.util.Date;
 
+import com.ccconsult.enums.ArticleTypeEnum;
+
 /**
  * Article entity. @author MyEclipse Persistence Tools
  */
@@ -19,8 +21,6 @@ public class Article extends com.ccconsult.base.ToString implements java.io.Seri
     private Integer state;
     private String  topTag;
     private Integer type;
-
-    // Constructors
 
     /** default constructor */
     public Article() {

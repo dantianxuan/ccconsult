@@ -74,14 +74,12 @@
 
 <script>
 	function sendMessage(){
-		console.log($('#sendMessageForm').serialize());
 		jQuery.ajax({
              type: "POST",
              url: "$link.contextPath/sendShotMessage.json",
              data: $('#sendMessageForm').serialize(),
              dataType: "json",
              success: function(data){
-             	console.log(data);
              	if(data.result.success==true){
              		window.location.href=window.location.href;
              	}else{

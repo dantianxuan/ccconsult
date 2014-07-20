@@ -2,6 +2,9 @@ package com.ccconsult.pojo;
 
 import java.util.Date;
 
+import com.ccconsult.enums.AppriseRelTypeEnum;
+import com.ccconsult.enums.PayStateEnum;
+
 /**
  * Apprise entity. @author MyEclipse Persistence Tools
  */
@@ -17,6 +20,10 @@ public class Apprise extends com.ccconsult.base.ToString implements java.io.Seri
     private Integer           relId;
     private Date              gmtCreate;
     private Integer           creatorRole;
+
+    public AppriseRelTypeEnum getRelTypeEnum() {
+        return AppriseRelTypeEnum.getByValue(relType);
+    }
 
     // Constructors
 

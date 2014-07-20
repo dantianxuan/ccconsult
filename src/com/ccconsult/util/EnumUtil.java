@@ -34,6 +34,7 @@ public class EnumUtil implements InitializingBean {
      * 
      * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet()
      */
+    @Override
     public void afterPropertiesSet() throws Exception {
     }
 
@@ -153,40 +154,22 @@ public class EnumUtil implements InitializingBean {
         Class<Enum> c = getEnumClass(clazz);
 
         if (c != null) {
-            String methodName = valueMethodMap.get(c);
-            if (StringUtil.isBlank(methodName)) {
-                methodName = "getValue";
-            }
-
+            String methodName = "getByValue";
             Method m = null;
             // 有些Enum只有getCode方法
             try {
-                m = c.getMethod(methodName, new Class[0]);
+                m = c.getMethod(methodName, Integer.class);
             } catch (SecurityException e1) {
                 logger.error("处理异常", e1);
             } catch (NoSuchMethodException e1) {
                 logger.error("处理异常", e1);
                 methodName = "getCode";
             }
-
             try {
                 if (m == null) {
-                    m = c.getMethod(methodName, new Class[0]);
+                    return null;
                 }
-                valueMethodMap.put(c, methodName);
-                EnumSet set = EnumSet.allOf(c);
-
-                if (set != null) {
-                    Object[] o = set.toArray();
-
-                    for (Object item : o) {
-                        Object r = m.invoke(item);
-
-                        if (value.equals(r)) {
-                            return (Enum) item;
-                        }
-                    }
-                }
+                return (Enum) m.invoke(c, value);
             } catch (Exception e) {
                 logger.error("处理异常", e);
             }
@@ -268,7 +251,6 @@ public class EnumUtil implements InitializingBean {
                 logger.error("获取出现异常", e);
             }
         }
-
         return c;
     }
 

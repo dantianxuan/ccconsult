@@ -49,7 +49,10 @@ public enum PayStateEnum {
      * @param value 枚举值
      * @return      枚举对象
      */
-    public static PayStateEnum getByValue(int value) {
+    public static PayStateEnum getByValue(Integer value) {
+        if (value == null) {
+            return null;
+        }
         for (PayStateEnum type : values()) {
             if (type.getValue() == value) {
                 return type;

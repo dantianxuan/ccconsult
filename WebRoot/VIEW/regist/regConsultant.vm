@@ -5,45 +5,48 @@
             <div class="panel-body">
                 <form class="form-horizontal" action="$link.contextPath/regist/regConsultant.htm?action=regist"
                  method="post" enctype="multipart/form-data">
-        			#if($result && !$result.success)
-                		<div class="alert alert-dismissable alert-danger">
-                       		$result.message
-                   	 	</div>
-                    #end
                     <fieldset>
+	        				#if($result && !$result.success)
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"></label>
+                                <div class="col-sm-8">
+                                	<span style="color:red;">$result.message</span>
+                                </div>
+                            </div>	     		        				
+		                    #end 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">注册邮箱</label>
                                 <div class="col-sm-8">
-                                     <input type="text" name="email" class="form-control" placeholder="请使用邮箱就行注册" value="$!consultant.email"/>
+                                     <input type="text" name="email" class="form-control" placeholder="请使用邮箱就行注册" value="$!consultant.email" required/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label  class="col-sm-2 control-label">名称</label>
                                 <div class="col-sm-8">
-                                    <input type="text" name="name" class="form-control" placeholder="请输入您的姓名" value="$!consultant.name"/>
+                                    <input type="text" name="name" class="form-control" placeholder="请输入您的姓名" value="$!consultant.name" required/>
                                 </div>
                             </div>  
                             <div class="form-group">
                                 <label  class="col-sm-2 control-label">手机</label>
                                 <div class="col-sm-8">
-                                    <input type="input" class="form-control"  placeholder="请输入手机号码" name="mobile" value="$!consultant.mobile"/>
+                                    <input type="input" class="form-control"  placeholder="请输入手机号码" name="mobile" value="$!consultant.mobile" required/>
                                 </div>
                             </div>                                                                                
                             <div class="form-group">
                                 <label  class="col-sm-2 control-label">密码</label>
                                 <div class="col-sm-8">
-                                    <input type="password" class="form-control"  placeholder="请输入密码" name="passwd">
+                                    <input type="password" class="form-control"  placeholder="请输入密码" name="passwd" required>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label  class="col-sm-2 control-label">重复密码</label>
                                 <div class="col-sm-8">
-                                    <input type="password" class="form-control"  placeholder="请重复输入密码" name="repasswd">
+                                    <input type="password" class="form-control"  placeholder="请重复输入密码" name="repasswd" required>
                                 </div>
                             </div>
                         	<div class="form-group">
 	                            <div class="col-sm-10 col-sm-offset-2">
-	                                <button type="submit" class="btn btn-danger col-sm-4">注册信息</button>
+	                                <button type="submit" class="btn btn-danger col-sm-2">注册信息</button>
 	                            </div>
                         	</div>
                     </fieldset>

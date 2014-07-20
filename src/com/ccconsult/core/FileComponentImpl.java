@@ -39,7 +39,8 @@ public class FileComponentImpl implements FileComponent {
         String prefix = myfile.getOriginalFilename().substring(
             myfile.getOriginalFilename().lastIndexOf(".") + 1);
         if (!StringUtil.isBlank(prefixReg)) {
-            AssertUtil.state(prefix.matches(prefixReg), "不允许的文件类型");
+            String prefixLower = StringUtil.toLowerCase(prefix);
+            AssertUtil.state(prefixLower.matches(prefixReg), "不允许的文件类型");
         }
         try {
             LogUtil.info(logger,

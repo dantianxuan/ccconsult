@@ -20,7 +20,25 @@
 	#if($consultBase.consult.payTag!=2)
 	  	<p style="text-align:right;"><a href="$link.contextPath/consultant/consultantSelf.htm"  class="btn btn-default" style="margin-right:12px;">放弃支付</a>
 	  	<a class="btn btn-warning" href="$link.contextPath/consultant/consult/payForConsult.htm?consultId=$consultBase.consult.id" style="margin-right:12px;">已完成支付</a>
-	  	<a class="btn btn-primary">去支付</a></p>
+	  	<a class="btn btn-primary" href="javascript:void(0)" onclick="payForConsult($consultBase.consult.id)">去支付</a></p>
   	#end
 </div>
 #end
+<script>
+	//完成请求
+	function payForConsult(consultId){
+		jQuery.ajax({
+             type: "POST",
+             url: "$link.contextPath/consultant/consult/payTempForConsult.json",
+             data: {'consultId':consultId},
+             dataType: "json",
+             success: function(data){
+             	if(data.result.success==true){
+             		window.location.href='$link.contextPath/consultant/consultantSelf.htm';
+             	}else{
+             		alert("发送失败"+data.result.message);
+             	}
+              }
+         });
+	}
+</script>

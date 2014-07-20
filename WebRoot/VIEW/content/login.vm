@@ -1,7 +1,6 @@
 <script language="javascript">
 	function login(action){
 		$('#actionInput').val(action);
-		console.log($('#actionInput').val());
 		var account=$('input[name=account]').val();
     	var password=$('input[name=password]').val();
     	if(account=='' || account==undefined){
@@ -20,14 +19,17 @@
         <div class="panel panel-default">
             <div class="panel-heading">请登录</div>
             <div class="panel-body">
-            	#if($result && !$result.success)
-                <div class="alert alert-dismissable alert-danger">
-                    <button type="button" class="close" data-dismiss="alert">×</button>
-                    <strong>请注意</strong> #if($result.message) $result.message #else 用户或者密码错误  #end
-                </div>
-                #end
                 <form class="form-horizontal" id="loginForm" action="$link.contextPath/login.htm" method="post">
                     <fieldset>
+	        			#if($result && !$result.success)
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"></label>
+                                <div class="col-sm-10">
+                                   <span style="color:red"><span class="glyphicon glyphicon-warning-sign"></span> 登录失败：$result.message</span>
+                                </div>
+                            </div>	
+                            <HR/>	                   	 	
+	                    #end                      
                         <div class="form-group">
                             <label for="inputName" class="col-sm-2 control-label">用户名称</label>
                             <div class="col-sm-6">

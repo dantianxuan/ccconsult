@@ -10,11 +10,11 @@
            http://www.springframework.org/schema/context/spring-context-3.0.xsd     
            http://www.springframework.org/schema/mvc      
            http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
-
-	<context:annotation-config />
+	<mvc:annotation-driven />
+	<mvc:resources mapping="/STATIC/**" location="/STATIC/" />
+	<mvc:resources mapping="/UPLOAD/**" location="/UPLOAD/" />
 	<!-- 把标记了@Controller注解的类转换为bean -->
 	<context:component-scan base-package="com.ccconsult.web" />
-
 	<mvc:interceptors>
 		<!-- 多个拦截器,顺序执行 -->
 		<mvc:interceptor>
@@ -125,8 +125,4 @@
 	</bean>
 	<bean id="validator" class="org.springmodules.validation.bean.BeanValidator"
 		p:configurationLoader-ref="configurationLoader" />
-
-	<mvc:resources mapping="/STATIC/**" location="/STATIC/" />
-	<mvc:resources mapping="/UPLOAD/**" location="/UPLOAD/" />
-
 </beans>

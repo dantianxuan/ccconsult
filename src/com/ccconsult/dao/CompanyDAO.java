@@ -72,6 +72,10 @@ public class CompanyDAO extends BaseHibernateDAO<Company> {
         return result;
     }
 
+    public Company findByMailSuffix(Object mailSuffix) {
+        return getLimit(findByProperty(MAIL_SUFFIX, mailSuffix));
+    }
+
     public List findAll() {
         log.debug("finding all Company instances");
         try {
@@ -80,6 +84,19 @@ public class CompanyDAO extends BaseHibernateDAO<Company> {
             return queryObject.list();
         } catch (RuntimeException re) {
             log.error("find all failed", re);
+            throw re;
+        }
+    }
+
+    public List findByProperty(String propertyName, Object value) {
+        log.debug("finding Company instance with property: " + propertyName + ", value: " + value);
+        try {
+            String queryString = "from Company as model where model." + propertyName + "= ?";
+            Query queryObject = getSession().createQuery(queryString);
+            queryObject.setParameter(0, value);
+            return queryObject.list();
+        } catch (RuntimeException re) {
+            log.error("find by property name failed", re);
             throw re;
         }
     }

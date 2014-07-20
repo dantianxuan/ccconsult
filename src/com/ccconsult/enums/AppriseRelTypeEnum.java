@@ -42,7 +42,10 @@ public enum AppriseRelTypeEnum {
      * @param value 枚举值
      * @return      枚举对象
      */
-    public static AppriseRelTypeEnum getByValue(int value) {
+    public static AppriseRelTypeEnum getByValue(Integer value) {
+        if (value == null) {
+            return null;
+        }
         for (AppriseRelTypeEnum type : values()) {
             if (type.getValue() == value) {
                 return type;

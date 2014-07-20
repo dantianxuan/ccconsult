@@ -38,6 +38,7 @@ public class ServiceTemplateImpl implements ServiceTemplate {
             if (result == null || !(result instanceof CcResult)) {
                 throw new RuntimeException("逻辑错误");
             }
+            getSession().clear();
         } catch (CcException e) {
             // 业务异常捕获
             LogUtil.error(logger, e, "【业务异常】");
@@ -71,8 +72,7 @@ public class ServiceTemplateImpl implements ServiceTemplate {
                 throw new RuntimeException("逻辑错误");
             }
             tx.commit();
-            session.flush(); 
-            session.clear(); 
+            session.clear();
         } catch (CcException e) {
             // 业务异常捕获
             LogUtil.error(logger, e, "【业务异常】");

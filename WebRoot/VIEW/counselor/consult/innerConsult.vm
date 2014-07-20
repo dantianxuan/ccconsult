@@ -1,8 +1,8 @@
 #set($consultant=$session.getAttribute("SESSION_CONSULTANT_OBJECT"))
 #parse("counselor/counselorGuide.vm")
 #set($counselorVO=$consultBase.counselorVO)
-<div class="alert alert-dismissable alert-info">
-  	<p>当前记录状态:<span style="font-size:20px;color:red">$enumUtil.getEnumClass("com.ccconsult.enums.ConsultStepEnum").getByValue($consultBase.consult.step).getDescription()</span></p>
+<div class="alert alert-dismissable alert-success">
+	#parse("counselor/consult/common/consultBaseInfoCommon.vm")
   	#if($consultBase.consult.step==1)
   			<p>	您可以有如下选择：
 			<button  class="btn btn-primary btn-sm" onclick="acceptConsult($consultBase.consult.id)"><span class="glyphicon glyphicon-ok"></span> 接受预约</button>
@@ -12,6 +12,11 @@
 	#if($consultBase.consult.step==2)
 			<p>	您可以有如下选择：
 			<button  class="btn btn-primary btn-sm" onclick="completeConsult($consultBase.consult.id)"><span class="glyphicon glyphicon-stop"></span> 结束咨询</button>
+			</p>
+	#end
+	#if($consultBase.consult.step==3)
+			<p>	您可以有如下选择：
+			<button  class="btn btn-primary btn-sm" onclick="completeConsult($consultBase.consult.id)"><span class="glyphicon glyphicon-stop"></span> 评价该次记录</button>
 			</p>
 	#end
 </div>
@@ -59,7 +64,6 @@
              dataType: "json",
              success: function(data){
              	if(data.result.success==true){
-             		console.log(data.result);
              		window.location.reload();
              	}else{
              		alert("发送失败"+data.result.message);
@@ -76,7 +80,6 @@
              data: {'consultId':consultId},
              dataType: "json",
              success: function(data){
-             	console.log(data);
              	if(data.result.success==true){
              		window.location.reload();
              	}else{
@@ -94,7 +97,6 @@
              data: {'consultId':consultId},
              dataType: "json",
              success: function(data){
-             	console.log(data);
              	if(data.result.success==true){
              		window.location.reload();
              	}else{

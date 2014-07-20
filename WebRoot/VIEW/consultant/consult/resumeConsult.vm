@@ -1,20 +1,52 @@
 <script src="$link.contextPath/STATIC/js/fileinput.js"></script>
 <link rel="stylesheet" href="$link.contextPath/STATIC/css/fileinput.css"/>
 #parse("consultant/consultantGuide.vm")
-<div class="alert alert-dismissable alert-info">
+<div class="alert alert-dismissable alert-success">
+	#parse("consultant/consult/common/consultBaseInfoCommon.vm")
 	#if($consultBase.consult.step==1)
-	  	<p>当前记录状态:<span style="font-size:20px;color:red">$enumUtil.getEnumClass("com.ccconsult.enums.ConsultStepEnum").getByValue($consultBase.consult.step).getDescription()</span>
+	  	<p class="text-primary">当前记录状态:<span style="font-size:20px;color:red">$enumUtil.getByValue("com.ccconsult.enums.ConsultStepEnum",$consultBase.consult.step).getDescription()</span>
 	  	#if($consultBase.consult.payTag!=2)	你必须<a href="$link.contextPath/consultant/consult/payForConsult.htm?consultId=$consultBase.consult.id" 
 	  	class="btn btn-sm btn-primary">支付咨询费用</a>,咨询师才能看到您的信息 #end #if($consultBase.consult.payTag==2) 
 	  	请等待咨询师和您预约时间，咨询师预约号时间后我们会邮件通知您，请住哟关注您的邮件信息 #end</p>	
-	#end
-	#if($consultBase.consult.step==2)
-	  	<p>当前记录状态:<span style="font-size:20px;color:red">$enumUtil.getEnumClass("com.ccconsult.enums.ConsultStepEnum").getByValue($consultBase.consult.step).getDescription()</span>
-	  		
-	  	</p>	
+	#elseif($consultBase.consult.step==2)
+	  	<p class="text-primary">当前记录状态:<span style="font-size:20px;color:red">$enumUtil.getByValue("com.ccconsult.enums.ConsultStepEnum",$consultBase.consult.step).getDescription()</span>
+	  	咨询会在一周内完成您的简历修改，如果到期咨询师还没有完成，您的咨询费会退还到您的账户</p>	
+	#else
+	  	<p class="text-primary">当前记录状态:<span style="font-size:20px;color:red">$enumUtil.getByValue("com.ccconsult.enums.ConsultStepEnum",$consultBase.consult.step).getDescription()</span></p>	
 	#end	
 </div>
 #parse("consultant/consult/common/consultCounselorCommon.vm")
+#if($consultBase.consult.step!=1)
+<div class="row">
+	<div class="col-sm-12">
+		<div class="panel panel-default">
+		  <div class="panel-heading"><span class="glyphicon glyphicon-bookmark"></span>咨询师区域  
+		  #if($consultBase.resumeConsult.review && $consultBase.consult.step==2)	
+		  <a href="javascript:void(0)" onclick="showReviewArea()" style="float:right"><span class="glyphicon glyphicon-edit"></span>修改review信息</a>
+		  #end
+		  </div>
+		  <div class="panel-body">
+					#if($consultBase.resumeConsult.review)
+			  		<div class="col-sm-12 showReviewResumeArea">	
+				  		$!consultBase.resumeConsult.review
+			  		</div>
+				  	<div class="col-sm-12 showReviewResumeArea">
+					  <table class="table" style="margin-bottom:0px;">
+					    <tr>
+					      <td width="20%"><span class="glyphicon glyphicon-paperclip"></span>批注的简历文件</td>
+					      <td width="80%"><span class="glyphicon glyphicon-download-alt"></span><a target="_blank" href="$link.contextPath$fileUtil.getPath($consultBase.resumeConsult.reviewFiles)" >$fileUtil.getFileName($consultBase.resumeConsult.reviewFiles)</a>
+					      <small>请点击下载或直接阅览</small></td>
+					    </tr>
+					  </table>
+				  	</div>
+				  	#else
+				  	对不起咨询师没有对您的简历做任何操作
+				  	#end
+  			</div>
+  		</div>
+	</div>
+</div>
+#end
 <div class="row">
 	<div class="col-sm-12">
 		<div class="panel panel-default">

@@ -98,9 +98,38 @@ public class ConsultController extends BaseController {
                 return new CcResult(consultBase);
             }
         });
-
         modelMap.put("result", result);
         return view;
+    }
+
+    @RequestMapping(value = "/consultant/consult/payTempForConsult.json")
+    public @ResponseBody
+    ModelMap paryTempForConsult(final HttpServletRequest request, final Integer consultId,
+                                ModelMap modelMap) {
+        modelMap.clear();
+        final Consultant consultant = getConsultantInSession(request.getSession());
+        CcResult result = serviceTemplate.executeWithTx(CcResult.class, new BlankServiceCallBack() {
+            @Override
+            public CcResult executeService() {
+
+                AssertUtil.state(consultId != null && consultId > 0, "不合法的请求，当前记录不存在");
+                ConsultBase consultBase = consultComponent.queryById(consultId);
+                AssertUtil.state(consultBase != null, "您所访问的记录不存在");
+                AssertUtil.state(
+                    consultant != null
+                            && consultant.getId().equals(consultBase.getConsultant().getId()),
+                    "非法请求，不是您当前的记录");
+                AssertUtil.state(
+                    !consultBase.getConsult().getPayTag()
+                        .equals(PayStateEnum.PAY_SUCCESS.getValue()), "对不起，当前记录已经支付");
+                Consult consult = consultBase.getConsult();
+                consult.setPayTag(PayStateEnum.PAY_SUCCESS.getValue());
+                consultDAO.update(consult);
+                return new CcResult(true);
+            }
+        });
+        modelMap.put("result", result);
+        return modelMap;
     }
 
     //接受预约

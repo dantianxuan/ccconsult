@@ -1,8 +1,8 @@
 package com.ccconsult.dao;
 
 import com.ccconsult.pojo.InterviewConsult;
+import com.ccconsult.pojo.ResumeConsult;
 
-import java.util.Date;
 import java.util.List;
 import org.hibernate.LockMode;
 import org.hibernate.Query;
@@ -20,31 +20,14 @@ import org.slf4j.LoggerFactory;
  */
 
 public class InterviewConsultDAO extends BaseHibernateDAO<InterviewConsult> {
-    private static final Logger log  = LoggerFactory.getLogger(InterviewConsultDAO.class);
+    private static final Logger log                = LoggerFactory
+                                                       .getLogger(InterviewConsultDAO.class);
     //property constants
-    public static final String  GOAL = "goal";
-
-    public void save(InterviewConsult transientInstance) {
-        log.debug("saving InterviewConsult instance");
-        try {
-            getSession().save(transientInstance);
-            log.debug("save successful");
-        } catch (RuntimeException re) {
-            log.error("save failed", re);
-            throw re;
-        }
-    }
-
-    public void delete(InterviewConsult persistentInstance) {
-        log.debug("deleting InterviewConsult instance");
-        try {
-            getSession().delete(persistentInstance);
-            log.debug("delete successful");
-        } catch (RuntimeException re) {
-            log.error("delete failed", re);
-            throw re;
-        }
-    }
+    public static final String  RESUME_FILE        = "resumeFile";
+    public static final String  CONSULT_ID         = "consultId";
+    public static final String  GMT_SCHEDULE_BEGIN = "gmtScheduleBegin";
+    public static final String  GMT_SCHEDULE_END   = "gmtScheduleEnd";
+    public static final String  TARGET_JOB_INFO    = "targetJobInfo";
 
     public InterviewConsult findById(java.lang.Integer id) {
         log.debug("getting InterviewConsult instance with id: " + id);
@@ -54,19 +37,6 @@ public class InterviewConsultDAO extends BaseHibernateDAO<InterviewConsult> {
             return instance;
         } catch (RuntimeException re) {
             log.error("get failed", re);
-            throw re;
-        }
-    }
-
-    public List findByExample(InterviewConsult instance) {
-        log.debug("finding InterviewConsult instance by example");
-        try {
-            List results = getSession().createCriteria("com.ccconsult.pojo.InterviewConsult")
-                .add(Example.create(instance)).list();
-            log.debug("find by example successful, result size: " + results.size());
-            return results;
-        } catch (RuntimeException re) {
-            log.error("find by example failed", re);
             throw re;
         }
     }
@@ -86,53 +56,8 @@ public class InterviewConsultDAO extends BaseHibernateDAO<InterviewConsult> {
         }
     }
 
-    public List findByGoal(Object goal) {
-        return findByProperty(GOAL, goal);
+    public InterviewConsult findByConsultId(Object consultId) {
+        return getLimit(findByProperty(CONSULT_ID, consultId));
     }
 
-    public List findAll() {
-        log.debug("finding all InterviewConsult instances");
-        try {
-            String queryString = "from InterviewConsult";
-            Query queryObject = getSession().createQuery(queryString);
-            return queryObject.list();
-        } catch (RuntimeException re) {
-            log.error("find all failed", re);
-            throw re;
-        }
-    }
-
-    public InterviewConsult merge(InterviewConsult detachedInstance) {
-        log.debug("merging InterviewConsult instance");
-        try {
-            InterviewConsult result = (InterviewConsult) getSession().merge(detachedInstance);
-            log.debug("merge successful");
-            return result;
-        } catch (RuntimeException re) {
-            log.error("merge failed", re);
-            throw re;
-        }
-    }
-
-    public void attachDirty(InterviewConsult instance) {
-        log.debug("attaching dirty InterviewConsult instance");
-        try {
-            getSession().saveOrUpdate(instance);
-            log.debug("attach successful");
-        } catch (RuntimeException re) {
-            log.error("attach failed", re);
-            throw re;
-        }
-    }
-
-    public void attachClean(InterviewConsult instance) {
-        log.debug("attaching clean InterviewConsult instance");
-        try {
-            getSession().lock(instance, LockMode.NONE);
-            log.debug("attach successful");
-        } catch (RuntimeException re) {
-            log.error("attach failed", re);
-            throw re;
-        }
-    }
 }

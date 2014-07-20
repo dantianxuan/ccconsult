@@ -7,26 +7,46 @@
 <script type="text/javascript" charset="utf-8" src="$link.contextPath/STATIC/plugin/ueditor/lang/zh-cn/zh-cn.js"></script>
 
 #parse("counselor/counselorGuide.vm")
-<div class="alert alert-dismissable alert-info">
-  	<p>当前记录状态:<span style="font-size:20px;color:red">$enumUtil.getEnumClass("com.ccconsult.enums.ConsultStepEnum").getByValue($consultBase.consult.step).getDescription()</span></p>
+<div class="alert alert-dismissable alert-success">
+	#parse("counselor/consult/common/consultBaseInfoCommon.vm")
   	#if($consultBase.consult.step==1)
   			<p>	您可以有如下选择：
-			<button  class="btn btn-primary btn-sm" onclick="acceptConsult($consultBase.consult.id)"><span class="glyphicon glyphicon-ok"></span> 接受预约</button>
-			<button  class="btn btn-warning btn-sm" data-toggle="modal" data-target="#rejectInnerConsult" ><span class="glyphicon glyphicon-remove"></span> 拒绝预约</button>
+			<button  class="btn btn-primary btn-xs" onclick="acceptConsult($consultBase.consult.id)"><span class="glyphicon glyphicon-ok"></span> 接受预约</button>
+			<button  class="btn btn-warning btn-xs" data-toggle="modal" data-target="#rejectConsult" ><span class="glyphicon glyphicon-remove"></span> 拒绝预约</button>
 			</p>		
 	#end
 	#if($consultBase.consult.step==2)
 			<p>	您可以有如下选择：
-			<button  class="btn btn-primary btn-sm" onclick="completeConsult($consultBase.consult.id)"><span class="glyphicon glyphicon-stop"></span> 结束咨询</button>
+			<button  class="btn btn-primary btn-xs" onclick="completeConsult($consultBase.consult.id)"><span class="glyphicon glyphicon-stop"></span> 结束咨询</button>
 			</p>
 	#end
 </div>
-
 #parse("counselor/consult/common/consultConsultantCommon.vm")
+
 <div class="row">
 	<div class="col-sm-12">
-		<div class="panel panel-primary">
-		  <div class="panel-heading"><span class="glyphicon glyphicon-bookmark"></span>咨询师区域  
+		<div class="panel panel-default">
+		  <div class="panel-body">
+			  <table class="table" style="margin-bottom:0px;">
+			    <tr>
+			      <td width="20%"><span class="glyphicon glyphicon-tag">咨询描述：</span></td>
+			      <td width="80%">$consultBase.consult.goal</td>
+			    </tr>				  
+			    <tr>
+			      <td width="20%"><span class="glyphicon glyphicon-paperclip">上传的简历文件：</span></td>
+			      <td width="80%"><span class="glyphicon glyphicon-download-alt"></span><a target="_blank" href="$link.contextPath$fileUtil.getPath($consultBase.resumeConsult.resumeFiles)" >$fileUtil.getFileName($consultBase.resumeConsult.resumeFiles)</a>
+			      <small>请点击下载或直接阅览</small></td>
+			    </tr>
+			  </table>
+	      </div>   
+  		</div>
+	</div>
+</div>
+#if($consultBase.consult.step!=1)
+<div class="row">
+	<div class="col-sm-12">
+		<div class="panel panel-default">
+		  <div class="panel-heading"><span class="glyphicon glyphicon-bookmark"></span> 咨询师区域  
 		  #if($consultBase.resumeConsult.review && $consultBase.consult.step==2)	
 		  <a href="javascript:void(0)" onclick="showReviewArea()" style="float:right"><span class="glyphicon glyphicon-edit"></span>修改review信息</a>
 		  #end
@@ -34,26 +54,25 @@
 		  <div class="panel-body">
 		  		<form id="resumeConsultReviewForm" action="$link.contextPath/counselor/consult/resumeConsultReview.htm"  method="POST" enctype="multipart/form-data">
 					#if($consultBase.resumeConsult.review)
-			  		<div class="col-sm-12 showReviewResumeArea">	
-				  		$!consultBase.resumeConsult.review
-			  		</div>
-				  	<div class="col-sm-12 showReviewResumeArea">
-					  <table class="table" style="margin-bottom:0px;">
+					  <table class="table showReviewResumeArea" style="margin-bottom:0px;">
+				    	<tr>
+					      <td width="20%"><span class="glyphicon glyphicon-tag">修改建议：</span></td>
+					      <td width="80%">$!consultBase.resumeConsult.review</td>
+					    </tr>					  
 					    <tr>
-					      <td width="20%"><span class="glyphicon glyphicon-paperclip"></span>批注的简历文件</td>
+					      <td width="20%"><span class="glyphicon glyphicon-paperclip">批注的简历文件</span></td>
 					      <td width="80%"><span class="glyphicon glyphicon-download-alt"></span><a target="_blank" href="$link.contextPath$fileUtil.getPath($consultBase.resumeConsult.reviewFiles)" >$fileUtil.getFileName($consultBase.resumeConsult.reviewFiles)</a>
 					      <small>请点击下载或直接阅览</small></td>
 					    </tr>
 					  </table>
-				  	</div>
 				  	#end	
 				  	#if($consultBase.consult.step==2)
-				  	<div class="col-sm-12 #if($consultBase.resumeConsult.review) hide  #end" id="reviewResumeArea" >			
+				  	<div class="#if($consultBase.resumeConsult.review) hide  #end" id="reviewResumeArea" >			
 						<div class="alert alert-dismissable alert-info" style="margin:0px 0px 0px 0px">
-						  	<p>请您修改咨询者的简历，或者对他的简历提出建议和意见</p>
+						  	<p>请您修改咨询者的简历，或者对他的简历提出建议和意见,只允许上传word文档和pdf文档</p>
 						</div>  	
 						<br/>
-				        <input  type="file" name="localFile"  class="file" multiple="false" data-show-upload="false" data-show-caption="true"  required />
+				        <input  type="file" name="localFile"  class="file" multiple="false" data-show-upload="false" data-show-caption="true" />
 				        <br/>
 					    <script type="text/plain" id="reviewEditor" name="review" style="width:100%;height:200px;">$!consultBase.resumeConsult.review</script>
 				       <script type="text/javascript">
@@ -78,11 +97,9 @@
 									},
 									success : function(result) {
 										$('#resumeConsultReviewButton').button('reset');
-										console.log(result);
 										var data = eval(result);
-										console.log(data);
 										if(data.result.success){
-											alert('成功上传！');
+											alert('处理成功，请等待页面刷新！');
 											window.location.reload();
 										}else{
 											alert('提交失败：'+data.result.message);
@@ -106,71 +123,12 @@
   		</div>
 	</div>
 </div>
+#end
 
-<div class="row">
-	<div class="col-sm-12">
-		<div class="panel panel-default">
-		  <div class="panel-heading"><span class="glyphicon glyphicon-bookmark"></span>咨询问题描述</div>
-		  <div class="panel-body">
-		  		<div class="col-lg-12">	
-			  		$consultBase.consult.goal
-		  		</div>
-			  	<div class="col-lg-12">
-				  <table class="table" style="margin-bottom:0px;">
-				    <tr>
-				      <td width="20%"><span class="glyphicon glyphicon-paperclip"></span>上传的简历文件</td>
-				      <td width="80%"><span class="glyphicon glyphicon-download-alt"></span><a target="_blank" href="$link.contextPath$fileUtil.getPath($consultBase.resumeConsult.resumeFiles)" >$fileUtil.getFileName($consultBase.resumeConsult.resumeFiles)</a>
-				      <small>请点击下载或直接阅览</small></td>
-				    </tr>
-				  </table>
-			  	</div>
-	      </div>   
-  		</div>
-	</div>
-</div>
 #parse("counselor/consult/common/consultMessageCommon.vm")
 #parse("counselor/consult/common/consultAppraiseCommon.vm")
-
-<div class="modal" id="rejectInnerConsult">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h4 class="modal-title">您拒绝了咨询请求</h4>
-      </div>
-      <div class="modal-body">
-      	<ol>
-		  <li>请确认您拒绝了咨询请求</li>
-		  <li>您可以用简单的话描述一下您拒绝的原因</li>
-		</ol>
-		<textarea class="form-control" rows="3">对不起，最近比较忙</textarea>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-        <button type="button" class="btn btn-primary" onclick="rejectConsult('$consultBase.consult.id')">确认拒绝</button>
-      </div>
-    </div>
-  </div>
-</div>
+#parse("counselor/consult/common/consultRejectCommon.vm")
 <script>
-	//拒绝咨询
-	function rejectConsult(consultId){
-		jQuery.ajax({
-             type: "POST",
-             url: "$link.contextPath/counselor/consult/rejectConsult.json",
-             data: {'consultId':consultId},
-             dataType: "json",
-             success: function(data){
-             	if(data.result.success==true){
-             		console.log(data.result);
-             		window.location.reload();
-             	}else{
-             		alert("发送失败"+data.result.message);
-             	}
-              }
-         });
-	}
-	
 	//接受预约
 	function acceptConsult(consultId){
 		jQuery.ajax({
@@ -179,7 +137,6 @@
              data: {'consultId':consultId},
              dataType: "json",
              success: function(data){
-             	console.log(data);
              	if(data.result.success==true){
              		window.location.reload();
              	}else{
@@ -188,7 +145,6 @@
               }
          });
 	}
-	
 	//完成请求
 	function completeConsult(consultId){
 		jQuery.ajax({
@@ -197,7 +153,6 @@
              data: {'consultId':consultId},
              dataType: "json",
              success: function(data){
-             	console.log(data);
              	if(data.result.success==true){
              		window.location.reload();
              	}else{

@@ -37,6 +37,9 @@ public class CcConstrant {
     /**短消息字符长度*/
     public final static int    FILE_2M_SIZE              = 1024 * 1024 * 2;
 
+    /**字符长度*/
+    public final static int    COMMON_32_LENGTH          = 32;
+
     /**短消息字符长度*/
     public final static int    COMMON_128_LENGTH         = 128;
 
@@ -44,7 +47,7 @@ public class CcConstrant {
     public final static int    COMMON_256_LENGTH         = 256;
 
     /**短消息字符长度*/
-    public final static int    COMMON_4096_LENGTH        = 4096;
+    public final static int    COMMON_4096_LENGTH        = 10000;
 
     /**默认页大小*/
     public final static int    DEFAULT_PAGE_SIZE         = 20;

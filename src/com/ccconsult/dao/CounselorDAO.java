@@ -88,6 +88,9 @@ public class CounselorDAO extends BaseHibernateDAO<Counselor> {
     }
 
     private CounselorVO consVO(Counselor counselor) {
+        if (counselor == null) {
+            return null;
+        }
         Company company = companyDAO.findById(counselor.getCompanyId());
         List<ServiceConfigVO> serviceConfigVOs = serviceConfigDAO.findByCounselorId(counselor
             .getId());

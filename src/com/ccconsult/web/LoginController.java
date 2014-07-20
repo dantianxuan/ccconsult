@@ -44,11 +44,11 @@ public class LoginController {
         CounselorVO counselorVO = counselorDAO.findByEmail(account);
         modelMap.put("account", account);
         if (counselorVO == null) {
-            modelMap.put("result", new CcResult("用户不存在"));
+            modelMap.put("result", CcResult.retFailure("用户不存在"));
             return new ModelAndView("content/login");
         }
         if (!StringUtils.equals(counselorVO.getCounselor().getPasswd(), password)) {
-            modelMap.put("result", new CcResult("密码错误"));
+            modelMap.put("result", CcResult.retFailure("密码错误"));
             return new ModelAndView("content/login");
         }
         request.getSession().setAttribute(CcConstrant.SESSION_COUNSELOR_OBJECT, counselorVO);
@@ -69,11 +69,11 @@ public class LoginController {
         Consultant consultant = consultantDAO.findByEmail(account);
         modelMap.put("account", account);
         if (consultant == null) {
-            modelMap.put("result", new CcResult("用户不存在"));
+            modelMap.put("result", CcResult.retFailure("用户不存在"));
             return new ModelAndView("content/login");
         }
         if (!StringUtils.equals(consultant.getPasswd(), password)) {
-            modelMap.put("result", new CcResult("密码错误"));
+            modelMap.put("result", CcResult.retFailure("密码错误"));
             return new ModelAndView("content/login");
         }
         request.getSession().setAttribute(CcConstrant.SESSION_CONSULTANT_OBJECT, consultant);
