@@ -17,7 +17,7 @@
   <h4>欢迎您创建$serviceConfigVO.service.name请求</h4>
   <p>请仔细阅读我们的服务流程，以便于您的使用，咨询师回答您的问题后，我们会邮件通知您</p>
   <p>
-	  <a  class="btn btn-primary btn-sm col-sm-2 disabled">创建简历修改咨询 <span class="glyphicon glyphicon-arrow-right"></span></a>
+	  <a  class="btn btn-primary btn-sm col-sm-2 disabled">创建咨询 <span class="glyphicon glyphicon-arrow-right"></span></a>
 	  <a  class="btn btn-default btn-sm col-sm-2 disabled">咨询师确认 <span class="glyphicon glyphicon-arrow-right"></span></a>
 	  <a  class="btn btn-default btn-sm col-sm-2 disabled">咨询师对简历修改 <span class="glyphicon glyphicon-arrow-right"></span></a>
 	  <a  class="btn btn-default btn-sm col-sm-2 disabled">完成评价 <span class="glyphicon glyphicon-arrow-right"></span></a>

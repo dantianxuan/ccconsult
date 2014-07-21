@@ -9,8 +9,10 @@
 	  	class="btn btn-sm btn-primary">支付咨询费用</a>,咨询师才能看到您的信息 #end #if($consultBase.consult.payTag==2) 
 	  	请等待咨询师和您预约时间，咨询师预约号时间后我们会邮件通知您，请住哟关注您的邮件信息 #end</p>	
 	#elseif($consultBase.consult.step==2)
-	  	<p class="text-primary">当前记录状态:<span style="font-size:20px;color:red">$enumUtil.getByValue("com.ccconsult.enums.ConsultStepEnum",$consultBase.consult.step).getDescription()</span>
-	  	咨询会在一周内完成您的简历修改，如果到期咨询师还没有完成，您的咨询费会退还到您的账户</p>	
+		<p class="text-primary">	
+		 <strong>恭喜您,当前咨询师已经完成预约</strong> 我们会讲咨询师的信息通过邮件发送给您，请在额定时间内联系您的咨询师完成咨询,预约的时间如下：
+		 <h4><span class="glyphicon glyphicon-dashboard"></span>$date.format("yyyy-MM-dd HH:mm:ss",$consultBase.interviewConsult.gmtScheduleBegin) <span class="glyphicon glyphicon-minus"></span> $date.format("yyyy-MM-dd HH:mm:ss", $consultBase.interviewConsult.gmtScheduleEnd) </h4>	
+		</p>	  	
 	#else
 	  	<p class="text-primary">当前记录状态:<span style="font-size:20px;color:red">
 	  		$enumUtil.getByValue("com.ccconsult.enums.ConsultStepEnum",$consultBase.consult.step).getDescription()</span></p>	
