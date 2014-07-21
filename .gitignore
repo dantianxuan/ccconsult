@@ -7,10 +7,4 @@
 
 .project
 
-src/hibernate.cfg.xml
-
-src/hibernate.cfg.xml
-
-src/hibernate.cfg.xml
-
-src/hibernate.cfg.xml
+*target*
