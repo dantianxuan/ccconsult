@@ -23,7 +23,6 @@ import com.ccconsult.dao.ServiceDAO;
 import com.ccconsult.enums.ArticleTypeEnum;
 import com.ccconsult.enums.ConsultStepEnum;
 import com.ccconsult.pojo.Article;
-import com.ccconsult.util.ResourceUtil;
 import com.ccconsult.view.CompanyBriefVO;
 import com.ccconsult.view.ConsultBase;
 
@@ -45,6 +44,10 @@ public class IndexController {
 
     @RequestMapping(value = "/index.htm", method = RequestMethod.GET)
     public ModelAndView toIndex(HttpServletRequest request, ModelMap modelMap) {
+        String theme = request.getParameter(CcConstrant.THEME);
+        if (theme != null) {
+            request.getSession().setAttribute(CcConstrant.THEME, theme);
+        }
         List<Article> articles = articleDAO.queryList(1, 10, ArticleTypeEnum.WEB_NEWS.getValue());
         List<CompanyBriefVO> companyBriefVOs = companyDAO.queryTopList(10);
         modelMap.put("articles", articles);

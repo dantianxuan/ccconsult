@@ -9,9 +9,9 @@
 	        				#if($result && !$result.success)
                             <div class="form-group">
                                 <label class="col-sm-2 control-label"></label>
-                                <div class="col-sm-8">
-                                	<span style="color:red;">$result.message</span>
-                                </div>
+	                                <div class="col-sm-10">
+	                                   <span style="color:red"><span class="glyphicon glyphicon-warning-sign"></span> 操作失败：$result.message</span>
+	                                </div>
                             </div>	     		        				
 		                    #end 
                             <div class="form-group">

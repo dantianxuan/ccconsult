@@ -18,11 +18,11 @@
   <h4>欢迎您创建$serviceConfigVO.service.name请求</h4>
   <p>请仔细阅读我们的服务流程，以便于您的使用，咨询师回答您的问题后，我们会邮件通知您</p>
   <p>
-	  <a class="btn btn-primary btn-sm disabled">创建预约请求</a>
+	  <a class="btn btn-primary btn-sm disabled">创建站内咨询</a>
 	  <span class="glyphicon glyphicon-arrow-right"></span>
 	  <a  class="btn btn-default btn-sm  disabled">咨询师回答</a>
 	  <span class="glyphicon glyphicon-arrow-right"></span>
-	  <a  class="btn btn-default btn-sm disabled">咨询者评价</a>
+	  <a  class="btn btn-default btn-sm disabled">完成咨询</a>
 	  <span class="glyphicon glyphicon-arrow-right "></span>
 	  <a  class="btn btn-sm disabled">
 	   <span class="glyphicon glyphicon-ok"></span>
@@ -70,6 +70,7 @@
              dataType: "json",
              success: function(data){
              	if(data.result.success==true){
+             		alert("创建成功，请等待页面跳转");
              		window.location.href="$link.contextPath/consultant/consult/innerConsult.htm?consultId="+data.result.object.id
              	}else{
              		alert("创建失败"+data.result.message);

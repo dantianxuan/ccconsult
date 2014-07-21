@@ -3,23 +3,23 @@
 #end
 <div class="row">
 	    <div class="col-sm-4" >
-	        <img src="$link.contextPath/UPLOAD/$!company.photo" class="img-thumbnail" style="max-height:240px;">
+	        <img src="$link.contextPath/$fileUtil.getPath($!company.photo)" class="img-thumbnail" style="max-height:240px;">
 	    </div>
 	    <!-- right CONTENT================================ -->
 	    <div class="col-sm-8" >
 	        <div class="panel panel-default">
 	            <div class="panel-body" style="font-size: 13px;">
 	                <div>$!company.description</div><br/>
-	                <a  style="float:right;" href="http://$!company.link" target="_blank">友情链接</a>
 	            </div>
 	        </div>
 	    </div>
 </div> 
+<br/>
 <div class="row">
     <div class="col-sm-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-            	咨询师列表
+            	咨询师列表  <small style="float:right">注册人数<span class="badge">$counselors.size()</span></small> 
             </div>
             <div class="panel-body">
               	#if(!$counselors)
@@ -31,21 +31,20 @@
 								<div class="panel panel-default">
 					            	<div class="panel-body">
  											<div class="col-sm-2" style="text-align:center;">
-				                                <img src="$link.contextPath/$fileUtil.getPath($!counselor.photo)" style="min-width: 80px;" class="img-thumbnail"/>
+				                               <a href="$link.contextPath/counselorInfo.htm?counselorId=$counselor.id"> <img src="$link.contextPath/$fileUtil.getPath($!counselor.photo)" style="min-width: 80px;" class="img-thumbnail"/></a>
 				                            </div>
 				                            <div class="col-sm-10" style="border-left: solid 1px #ddd" >
 				                                <p class="text-warning" style="border-bottom:solid 1px #ddd">
-				                                	<small>
 				                                	<a href="$link.contextPath/counselorInfo.htm?counselorId=$counselor.id">
 				                                		<span class="glyphicon glyphicon-user"></span> 名称：$counselor.name
 				                                		<span class="glyphicon glyphicon-th-large"></span> 部门：$counselor.department
-				                                		#if($counselor.city)<span class="glyphicon glyphicon-map-marker"></span> 城市：$!counselor.city)#end
-				                                	</a></small>  
-													<span	class="label label-warning" style="float:right;margin-left:4px;">
+				                                		#if($counselor.city)<span class="glyphicon glyphicon-map-marker"></span> 城市：$!counselor.city #end
+				                                	</a>
+													<span	class="label label-primary" style="float:right;margin-left:4px;">
 				                                	<span class="glyphicon glyphicon-tag"></span>专家徽章</span>				                                	
-				                                	<span	class="label label-warning" style="float:right">
+				                                	<span	class="label label-primary" style="float:right">
 				                                	<span class="glyphicon glyphicon-tag"></span>好评率:89%</span></p>
-				                                <div style="min-height:50px;overflow:hidden">$!counselor.description</div>
+				                                <div style="min-height:50px;overflow:hidden"><small>$!counselor.description</small></div>
 				                            </div>
 									</div>
 								</div>

@@ -18,12 +18,10 @@
                        	<div class="alert alert-dismissable alert-warning">
                             <h4>感谢您的注册!</h4>
                             <p>请使用您的公司邮箱进行注册，注册后我们会给您发送邮件，并完善其余信息！</p>
-                        </div>
                         #if($result && !$result.success)
-                		<div class="alert alert-dismissable alert-danger">
-                       		<a href="#" class="alert-link">$result.message</a>
-                   	 	</div>
-                        #end
+	                           <span style="color:red"><span class="glyphicon glyphicon-warning-sign"></span> 操作失败：$result.message</span>
+                        #end                            
+                        </div>
 	                    <form class="form-horizontal" action="$link.contextPath/regist/regCounselorMail.htm" id="regEmailForm">
 	                        <fieldset>
 	                            <div class="form-group">

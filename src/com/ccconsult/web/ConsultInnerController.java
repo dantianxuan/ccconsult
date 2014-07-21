@@ -135,8 +135,8 @@ public class ConsultInnerController extends BaseController {
                 consult.getCounselorId();
                 CounselorVO counselorVO = counselorDAO.findById(consult.getCounselorId());
                 AssertUtil.notNull(counselorVO, "咨询对象不存在，请检查");
-                AssertUtil.notBlank(consult.getGoal(), "咨询对象不存在，请检查");
-                AssertUtil.state(consult.getGoal().length() <= CcConstrant.COMMON_4096_LENGTH,
+                AssertUtil.notBlank(consult.getGoal(), "必须输入您需要咨询的问题");
+                AssertUtil.state(consult.getGoal().length() <= CcConstrant.COMMON_512_LENGTH,
                     "描述问题太长，请简洁描述");
                 consult.setGmtCreate(new Date());
                 consult.setStep(ConsultStepEnum.CREATE.getValue());

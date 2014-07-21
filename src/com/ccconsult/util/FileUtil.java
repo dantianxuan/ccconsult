@@ -23,7 +23,7 @@ public class FileUtil {
      * @return
      */
     public static String getPath(String file) {
-        String path = "/STATIC/image/default.png";
+        String path = "/STATIC/image/unknown.jpg";
         if (StringUtil.isBlank(file)) {
             return path;
         }

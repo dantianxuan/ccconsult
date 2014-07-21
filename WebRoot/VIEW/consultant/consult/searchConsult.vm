@@ -50,7 +50,7 @@
 			                		<div class="col-sm-2">
 			                		 	<p style="text-align:center;">
 			                		 		<a href="$link.contextPath/counselorInfo.htm?counselorId=$!counselorVO.counselor.id">
-			                		 		<img src="$link.contextPath/UPLOAD/$!counselorVO.counselor.photo" class="img-thumbnail" style="width: 65px;height:65px;"/>
+			                		 		<img src="$link.contextPath/$fileUtil.getPath($!counselorVO.counselor.photo)" class="img-thumbnail" style="width: 65px;height:65px;"/>
 			                		 		</a>
 		                		 		</p>
 			                		</div>

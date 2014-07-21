@@ -51,8 +51,12 @@
 	                    <p class="col-sm-12"><strong class=" text-right col-sm-4">所在城市:</strong>$!counselorVO.counselor.city</p>
                     </div>	
                     <div class="col-sm-12" style="border-top:solid 1px #ddd;padding-top:12px;margin-bottom:12px;">	
-                    	<span class="label label-warning"><span class="glyphicon glyphicon-tag"></span> 好评率：98%</span> 
-                    	<span class="label label-warning"><span class="glyphicon glyphicon-fire"></span> 活跃度：活跃</span> 
+						<span	class="label label-primary" style="margin-left:4px;">
+                    	<span class="glyphicon glyphicon-tag"></span>专家徽章</span>		
+                    	<span	class="label label-primary" style="margin-left:4px;">
+                    	<span class="glyphicon glyphicon-tag"></span>人称伯乐</span>						                                			                                	
+                    	<span	class="label label-primary">
+                    	<span class="glyphicon glyphicon-tag"></span>好评率:89%</span>
                     </div>                    
                 </div>              
                 <div class="row">

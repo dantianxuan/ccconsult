@@ -42,8 +42,8 @@
        ================================================== -->
 	<div class="col-sm-7">
 		<div class="panel panel-default">
-			<div class="panel-body" style="font-size: 13px;height:240px;">
-				<p style="margin: 0px;max-height:193px;overflow:hidden">
+			<div class="panel-body" style="height:240px;">
+				<p style="margin: 0px;max-height:198px;overflow:hidden;">
 					#foreach($article in $articles)
 						<a style="color:#000" href="$link.contextPath/article.htm?articleId=$article.id">$article.title</a><br/>
 					#end
@@ -56,34 +56,10 @@
 <div class="row">
 	<div class="col-sm-12">
 		<div class="panel panel-default">
-			  <div class="panel-heading"><strong><span class="glyphicon glyphicon-tags"></span>  热门面试咨询公司</strong></div>
-			  <div class="panel-body">		  
-		 		#foreach($companyBriefVO in $companyBriefVOs)
-					<div class="col-sm-4">
-						<div style="height:80px;margin-bottom:4px;background-color:#fff">
-						<a href="$link.contextPath/company.htm?companyId=$companyBriefVO.company.id">
-								<img src="$link.contextPath/UPLOAD/$!companyBriefVO.company.photo"
-								style="width:60px;height: 60px; float:left" class="img-rounded">
-								<p style="padding-left: 72px;">
-									$companyBriefVO.company.name<br /> 
-									咨询师人数：$companyBriefVO.counselorCount人 
-								</p>
-						</a>			
-						</div>
-					</div>
-				#end												
-			  </div>
-		</div>
-	</div>
-</div>
-
-<div class="row">
-	<div class="col-sm-12">
-		<div class="panel panel-default">
 			  <div class="panel-heading"><strong><span class="glyphicon glyphicon-tags"></span>  热门服务</strong></div>
 			  <div class="panel-body">		  
 		 		#foreach($service in $services)
-					<div class="col-sm-12">
+					<div class="col-sm-6" >
 						<div style="height:80px;margin-bottom:4px;background-color:#fff">
 						<a  target="_blank" href="$link.contextPath/article.htm?articleId=$service.introArticleId">
 								<img src="$link.contextPath/$fileUtil.getPath($service.photo)"
@@ -100,7 +76,29 @@
 		</div>
 	</div>
 </div>
-
+<div class="row">
+	<div class="col-sm-12">
+		<div class="panel panel-default">
+			  <div class="panel-heading"><strong><span class="glyphicon glyphicon-tags"></span>  热门面试咨询公司</strong></div>
+			  <div class="panel-body">		  
+		 		#foreach($companyBriefVO in $companyBriefVOs)
+					<div class="col-sm-4">
+						<div style="height:80px;margin-bottom:4px;background-color:#fff">
+						<a href="$link.contextPath/company.htm?companyId=$companyBriefVO.company.id">
+								<img src="$link.contextPath/$fileUtil.getPath($!companyBriefVO.company.photo)"
+								style="width:60px;height: 60px; float:left" class="img-rounded">
+								<p style="padding-left: 72px;">
+									$companyBriefVO.company.name<br /> 
+									咨询师人数：$companyBriefVO.counselorCount人 
+								</p>
+						</a>			
+						</div>
+					</div>
+				#end												
+			  </div>
+		</div>
+	</div>
+</div>
 
 <div class="row">
 	<div class="col-sm-12">

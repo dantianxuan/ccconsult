@@ -2075,7 +2075,7 @@ fieldset[disabled] .btn-default.active {
   background-color: #aea79f;
   border-color: #aea79f;
 }
-.btn-default .badge {
+.btn-default .ge {
   color: #aea79f;
   background-color: #ffffff;
 }
@@ -2116,7 +2116,7 @@ fieldset[disabled] .btn-primary.active {
   background-color: #dd4814;
   border-color: #dd4814;
 }
-.btn-primary .badge {
+.btn-primary .ge {
   color: #dd4814;
   background-color: #ffffff;
 }
@@ -2157,7 +2157,7 @@ fieldset[disabled] .btn-success.active {
   background-color: #38b44a;
   border-color: #38b44a;
 }
-.btn-success .badge {
+.btn-success .ge {
   color: #38b44a;
   background-color: #ffffff;
 }
@@ -2198,7 +2198,7 @@ fieldset[disabled] .btn-info.active {
   background-color: #772953;
   border-color: #772953;
 }
-.btn-info .badge {
+.btn-info .ge {
   color: #772953;
   background-color: #ffffff;
 }
@@ -2239,7 +2239,7 @@ fieldset[disabled] .btn-warning.active {
   background-color: #efb73e;
   border-color: #efb73e;
 }
-.btn-warning .badge {
+.btn-warning .ge {
   color: #efb73e;
   background-color: #ffffff;
 }
@@ -2280,7 +2280,7 @@ fieldset[disabled] .btn-danger.active {
   background-color: #df382c;
   border-color: #df382c;
 }
-.btn-danger .badge {
+.btn-danger .ge {
   color: #df382c;
   background-color: #ffffff;
 }
@@ -4334,7 +4334,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   vertical-align: baseline;
   white-space: nowrap;
   text-align: center;
-  background-color: #aea79f;
+  background-color: red;
   border-radius: 10px;
 }
 .badge:empty {

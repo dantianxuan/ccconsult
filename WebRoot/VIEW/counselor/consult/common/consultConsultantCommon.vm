@@ -6,7 +6,7 @@
 		  <div class="panel-body">
 		  		<div class="col-sm-12">
                   	<div class="col-sm-1">
-                        <img src="$link.contextPath/UPLOAD/$!consultant.photo" class="img-rounded" style="width: 82px;height: 82px;">
+                        <img src="$link.contextPath/$fileUtil.getPath($!consultant.photo)" class="img-rounded" style="width: 82px;height: 82px;">
                     </div>
                     <div class="col-sm-11">
 	                    <p class="col-sm-12"><span class=" text-right col-sm-2">名称:</span>$!consultant.name</p>

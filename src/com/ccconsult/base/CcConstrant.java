@@ -12,7 +12,8 @@ public class CcConstrant {
 
     /** 用于统计处理时间的时间key */
     public final static String TIME_TOKEN                = "TIME_TOKEN";
-
+    /**主题*/
+    public final static String THEME                     = "theme";
     /** counselor对象 */
     public final static String SESSION_COUNSELOR_OBJECT  = "SESSION_COUNSELOR_OBJECT";
 
@@ -45,6 +46,9 @@ public class CcConstrant {
 
     /**短消息字符长度*/
     public final static int    COMMON_256_LENGTH         = 256;
+
+    /**短消息字符长度*/
+    public final static int    COMMON_512_LENGTH         = 512;
 
     /**短消息字符长度*/
     public final static int    COMMON_4096_LENGTH        = 10000;
