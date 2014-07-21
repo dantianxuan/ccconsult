@@ -35,7 +35,7 @@ public class FileUtil {
         if (fileType == null) {
             return path;
         }
-        return "/" + fileType.getBasePath() + "/" + metas[3];
+        return fileType.getBasePath() + "/" + metas[3];
     }
 
     /**
