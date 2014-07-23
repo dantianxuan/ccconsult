@@ -1,17 +1,33 @@
-<form id="searchListForm" action="$link.contextPath/searchList.htm" method="POST">
 <div class="row">
-    	<div class="col-sm-6"><input type="text" name="keyword" class="form-control" placeholder="请输入公司名称或咨询师名称搜索" value="$!keyword"/></div>
-	 	<div class="col-sm-2">
-	     	<select class="form-control" name="type" id="select">
-	          <option value="COMPANY"  #if($type=="COMPANY") selected #end >公司</option>
-	          <option value="COUNSELOR"  #if($type=="COUNSELOR") selected #end >咨询师</option>
-	        </select>	 	
- 		</div>
-	 	<div class="col-sm-2">	
-	 		<button class="btn btn-danger col-sm-12" type="submit">快速寻找</button>
- 		</div> 		
+    <div class="col-sm-12">
+		<div class="panel panel-default">
+			  <div class="panel-body">		  
+					<div class="col-sm-12" >
+							<div class="col-sm-2">
+								<img src="$link.contextPath/$fileUtil.getPath($service.photo)"
+								style="width:90px;height:90px; float:left" class="img-rounded">
+							</div>
+							<div class="col-sm-9">
+							<blockquote>
+							  	<p class="text-success" style="font-size:16px;">$service.description</p>
+							  <small>$service.name</small>
+							</blockquote>
+							</div>
+					</div>
+					<div class="col-sm-12" style="border-top:solid 1px #ddd">
+						<br/>
+						<form action="$link.contextPath/searchInnerConsult.htm"  method="POST" id="searchInnerConsultForm">
+					    	<div class="col-sm-8"><input type="text"  name="keyWord" class="form-control" placeholder="请输入问题的关键字搜索拥有该服务的咨询师！" value="$!keyWord" /></div>
+						 	<div class="col-sm-2">	
+						 		<button class="btn btn-danger col-sm-12" type="button" onclick="searchInnerConsult(1)">寻找咨询师</button>
+					 		</div>
+						</form>
+					</div>																							
+			  </div>
+		</div>	
+    </div>    
 </div>
-<br/>
+#if($resultList)
 <div class="row">
     <div class="col-sm-12">
         <div class="panel panel-default">
@@ -52,7 +68,6 @@
 					                            <div class="col-sm-10" style="border-left: solid 1px #ddd" >
 					                                <p class="text-warning" style="border-bottom:solid 1px #ddd">
 					                                	<a href="$link.contextPath/counselorInfo.htm?counselorId=$counselor.id">
-					                                		<span class="glyphicon glyphicon-user">名称:</span>$counselor.name
 					                                		<span class="glyphicon glyphicon-user">名称:</span>$counselor.name
 					                                		<span class="glyphicon glyphicon-th-large">部门:</span>$counselor.department
 					                                		#if($counselor.city)<span class="glyphicon glyphicon-map-marker">城市:</span>$!counselor.city #end
@@ -98,4 +113,16 @@ function submitForm(pageNo){
 	$('#searchListForm').submit()
 } 
 </script>
-  
+#else
+<div class="row">
+	<div class="col-sm-12">
+		<div class="panel panel-default">
+			  <div class="panel-heading"><strong><span class="glyphicon glyphicon-tags"></span> 详细说明</strong></div>
+			  <div class="panel-body">		  
+		 		$article.content									
+			  </div>
+		</div>
+	</div>
+</div>
+#end
+</form>

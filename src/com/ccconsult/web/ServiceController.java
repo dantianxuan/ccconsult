@@ -22,9 +22,11 @@ import com.ccconsult.base.AssertUtil;
 import com.ccconsult.base.BlankServiceCallBack;
 import com.ccconsult.base.CcConstrant;
 import com.ccconsult.base.CcResult;
+import com.ccconsult.dao.ArticleDAO;
 import com.ccconsult.dao.ServiceConfigDAO;
 import com.ccconsult.dao.ServiceDAO;
 import com.ccconsult.enums.DataStateEnum;
+import com.ccconsult.pojo.Article;
 import com.ccconsult.pojo.Service;
 import com.ccconsult.pojo.ServiceConfig;
 import com.ccconsult.view.CounselorVO;
@@ -40,6 +42,29 @@ public class ServiceController extends BaseController {
     private ServiceConfigDAO serviceConfigDAO;
     @Autowired
     private ServiceDAO       serviceDAO;
+    @Autowired
+    private ArticleDAO       articleDAO;
+
+    /**
+     * 公共个人信息介绍页面
+     * 
+     * @param request
+     * @param counselorId
+     * @param modelMap
+     * @return
+     */
+    @RequestMapping(value = "/serviceInfo.htm", method = RequestMethod.GET)
+    public ModelAndView serviceInfo(HttpServletRequest request, Integer serviceId,
+                                    final ModelMap modelMap) {
+        Service service = serviceDAO.findById(serviceId);
+        modelMap.put("service", service);
+        if (service != null) {
+            Article article = articleDAO.findById(service.getIntroArticleId());
+            modelMap.put("article", article);
+        }
+        ModelAndView view = new ModelAndView("content/serviceInfo");
+        return view;
+    }
 
     /**
      * 公共个人信息介绍页面

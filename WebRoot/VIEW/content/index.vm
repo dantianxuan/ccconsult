@@ -65,7 +65,7 @@
 								<img src="$link.contextPath/$fileUtil.getPath($service.photo)"
 								style="width:60px;height: 60px; float:left" class="img-rounded">
 								<p style="padding-left: 72px;">
-									<a target="_blank" href="$link.contextPath/article.htm?articleId=$service.introArticleId">$service.name #if($service.id==1) <span class="badge">FREE</span> #end</a> <br/>
+									<a target="_blank" href="$link.contextPath/serviceInfo.htm?serviceId=$service.id">$service.name #if($service.id==1) <span class="badge">FREE</span> #end</a> <br/>
 									<small>$service.description</small>
 								</p>
 						</a>			
