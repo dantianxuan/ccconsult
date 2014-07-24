@@ -1,3 +1,19 @@
+<form id="searchListForm" action="$link.contextPath/searchList.htm" method="POST">
+<div class="row">
+    	<div class="col-sm-6"><input type="text" name="keyword" class="form-control" placeholder="请输入公司名称或咨询师名称搜索" value="$!keyword"/></div>
+	 	<div class="col-sm-2">
+	     	<select class="form-control" name="type" id="select">
+	          <option value="COMPANY"  #if($type=="COMPANY") selected #end >公司</option>
+	          <option value="COUNSELOR"  #if($type=="COUNSELOR") selected #end >咨询师</option>
+	        </select>	 	
+ 		</div>
+	 	<div class="col-sm-2">	
+	 		<button type="submit" class="btn btn-danger col-sm-12" type="submit">快速寻找</button>
+ 		</div> 		
+</div>
+<input type="hidden" value="$service.id" name="serviceId" />
+</form>
+<br/>
 <div class="row">
     <div class="col-sm-12">
 		<div class="panel panel-default">
@@ -14,106 +30,10 @@
 							</blockquote>
 							</div>
 					</div>
-					<div class="col-sm-12" style="border-top:solid 1px #ddd">
-						<br/>
-						<form action="$link.contextPath/searchInnerConsult.htm"  method="POST" id="searchInnerConsultForm">
-					    	<div class="col-sm-8"><input type="text"  name="keyWord" class="form-control" placeholder="请输入问题的关键字搜索拥有该服务的咨询师！" value="$!keyWord" /></div>
-						 	<div class="col-sm-2">	
-						 		<button class="btn btn-danger col-sm-12" type="button" onclick="searchInnerConsult(1)">寻找咨询师</button>
-					 		</div>
-						</form>
-					</div>																							
 			  </div>
 		</div>	
     </div>    
 </div>
-#if($resultList)
-<div class="row">
-    <div class="col-sm-12">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-            	搜索结果如下：
-            </div>
-            <div class="panel-body">
-              	#if(!$result  || !$result.success)
-            		<p>对不起无搜索结果</p>
-            	#else
-	            	#foreach($object in $result.object.getResult())
-	            		#if($type=="COMPANY")
-		            		#set($company=$object.company)	
-							<div class="row">
-			                    <div class="col-sm-12">
-									<div class="panel panel-default">
-						            	<div class="panel-body">
-	 											<div class="col-sm-2">
-					                                <img src="$link.contextPath/$fileUtil.getPath($!company.photo)" style="width:80px;" class="img-rounded"/>
-					                            </div>
-					                            <div class="col-sm-10" style="border-left:solid 1px #ddd">
-					                            	<a href="$link.contextPath/company.htm?companyId=$company.id">$company.name</a>
-					                                <div style="border-top:solid 1px #ddd">$!company.description</div>
-					                            </div>
-										</div>
-									</div>
-		                        </div>
-			                </div>							
-	            		#elseif($type=="COUNSELOR")
-		            		#set($counselor=$object)	
-							 <div class="row">
-			                    <div class="col-sm-12">
-									<div class="panel panel-default">
-						            	<div class="panel-body">
-	 											<div class="col-sm-2" style="text-align:center;">
-					                               <a href="$link.contextPath/counselorInfo.htm?counselorId=$counselor.id"> <img src="$link.contextPath/$fileUtil.getPath($!counselor.photo)" style="min-width: 80px;" class="img-thumbnail"/></a>
-					                            </div>
-					                            <div class="col-sm-10" style="border-left: solid 1px #ddd" >
-					                                <p class="text-warning" style="border-bottom:solid 1px #ddd">
-					                                	<a href="$link.contextPath/counselorInfo.htm?counselorId=$counselor.id">
-					                                		<span class="glyphicon glyphicon-user">名称:</span>$counselor.name
-					                                		<span class="glyphicon glyphicon-th-large">部门:</span>$counselor.department
-					                                		#if($counselor.city)<span class="glyphicon glyphicon-map-marker">城市:</span>$!counselor.city #end
-					                                	</a>
-														<span	class="label label-primary" style="float:right;margin-left:4px;">
-					                                	<span class="glyphicon glyphicon-tag"></span>专家徽章</span>		
-					                                	<span	class="label label-primary" style="float:right;margin-left:4px;">
-					                                	<span class="glyphicon glyphicon-tag"></span>人称伯乐</span>						                                			                                	
-					                                	<span	class="label label-primary" style="float:right">
-					                                	<span class="glyphicon glyphicon-tag"></span>好评率:89%</span>
-					                                	</p>
-					                                	<div style="min-height:50px;overflow:hidden"><small>$!counselor.description</small></div>
-					                            </div>
-										</div>
-									</div>
-		                        </div>
-			                </div>        			            		
-	            		#end
-	            	#end            	
-            	#end
-            </div>
-        </div>
-    </div>
-</div>
-<input type="hidden" name="pageSize" value="$result.object.getPageSize()"/>
-<input type="hidden" name="pageNo" value="$result.object.getCurrentPageNo()" id="pageNo"/>
-<div class="row">
-    <div class="col-sm-12">
-		<ul class="pagination" style="margin-top:-10px;float:right;">
-			#if($result.object.getTotalPageCount()>0)
-				#foreach($index in [1..$result.object.getTotalPageCount()])
-				<li><a href="javascript:void(0)" onclick="submitForm($index)">$index</a></li>
-				#end
-				<li><a href="#">记录总数：$result.object.getTotalPageCount()</a></li>
-			#end
-		</ul>    
-    </div>
-</div>  
-</form>
-<script>
-function submitForm(pageNo){
-	$('#pageNo').val(pageNo);
-	$('#searchListForm').submit()
-} 
-</script>
-#else
 <div class="row">
 	<div class="col-sm-12">
 		<div class="panel panel-default">
@@ -124,5 +44,3 @@ function submitForm(pageNo){
 		</div>
 	</div>
 </div>
-#end
-</form>
