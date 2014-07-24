@@ -1,4 +1,4 @@
-<form action="$link.contextPath/searchList.htm"  method="POST">
+<form action="$link.contextPath/searchList.htm"  method="GET">
 <div class="row">
     	<div class="col-sm-5"><input type="text"  name="keyword" class="form-control" placeholder="请输入公司名称或咨询师名称搜索"/></div>
 	 	<div class="col-sm-2">
@@ -79,7 +79,7 @@
 <div class="row">
 	<div class="col-sm-12">
 		<div class="panel panel-default">
-			  <div class="panel-heading"><strong><span class="glyphicon glyphicon-tags"></span>  热门面试咨询公司</strong></div>
+			  <div class="panel-heading"><strong><span class="glyphicon glyphicon-tags"></span>  热门面试咨询公司</strong> <a href="$link.contextPath/searchList.htm?type=COMPANY" style="float:right">更多...</a></div>
 			  <div class="panel-body">		  
 		 		#foreach($companyBriefVO in $companyBriefVOs)
 					<div class="col-sm-4">

@@ -27,11 +27,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ccconsult.base.AssertUtil;
 import com.ccconsult.base.BlankServiceCallBack;
+import com.ccconsult.base.CcConstrant;
 import com.ccconsult.base.CcException;
 import com.ccconsult.base.CcResult;
 import com.ccconsult.base.PageList;
+import com.ccconsult.core.FileComponent;
 import com.ccconsult.dao.CompanyDAO;
 import com.ccconsult.dao.CounselorDAO;
+import com.ccconsult.enums.FileTypeEnum;
 import com.ccconsult.pojo.Company;
 import com.ccconsult.pojo.Counselor;
 import com.ccconsult.util.LogUtil;
@@ -51,6 +54,8 @@ public class CompanyController extends BaseController {
     private CompanyDAO          companyDAO;
     @Autowired
     private CounselorDAO        counselorDAO;
+    @Autowired
+    private FileComponent       fileComponent;
 
     @RequestMapping(value = "/company.htm", method = RequestMethod.GET)
     public ModelAndView handleRequest(HttpServletRequest request, ModelMap modelMap) {
@@ -94,27 +99,13 @@ public class CompanyController extends BaseController {
             @Override
             public CcResult executeService() {
                 String fileName = "";
-                try {
-                    for (MultipartFile myfile : localPhoto) {
-                        if (!myfile.isEmpty()) {
-                            LogUtil.info(
-                                logger,
-                                "文件长度: " + myfile.getSize() + "文件类型: " + myfile.getContentType()
-                                        + "文件名称: " + myfile.getName() + "文件原名: "
-                                        + myfile.getOriginalFilename());
-                            String path = request.getSession().getServletContext().getRealPath("/")
-                                          + "UPLOAD";
-                            File parentFile = new File(path);
-                            if (!parentFile.exists()) {
-                                parentFile.mkdirs();
-                            }
-                            fileName = UUID.randomUUID().toString() + myfile.getOriginalFilename();
-                            FileCopyUtils.copy(myfile.getBytes(), new File(path, fileName));
-                        }
+                String contextPath = request.getSession().getServletContext().getRealPath("/");
+                for (MultipartFile myfile : localPhoto) {
+                    if (myfile == null || myfile.isEmpty()) {
+                        continue;
                     }
-                } catch (Exception e) {
-                    LogUtil.error(logger, e, "文件上传失败");
-                    throw new CcException("文件上传失败");
+                    fileName = fileComponent.uploadFile(myfile, FileTypeEnum.COMPANY_PHOTO,
+                        contextPath, CcConstrant.FILE_2M_SIZE, "jpg|jpeg|png|gif");
                 }
                 if (!StringUtil.isBlank(fileName)) {
                     company.setPhoto(fileName);
@@ -141,8 +132,12 @@ public class CompanyController extends BaseController {
                 return new CcResult(company);
             }
         });
+        if (result.isSuccess()) {
+            return new ModelAndView("redirect:/backstage/companyEdit.htm?companyId="
+                                    + company.getId());
+        }
         modelMap.put("result", result);
-        return new ModelAndView("content/company");
+        return new ModelAndView("backstage/companyEdit");
     }
 
     @RequestMapping(value = "backstage/deleteCompany.json")

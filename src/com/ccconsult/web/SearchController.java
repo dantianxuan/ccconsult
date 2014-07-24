@@ -33,7 +33,7 @@ public class SearchController {
     @Autowired
     private CounselorDAO counselorDAO;
 
-    @RequestMapping(value = "/searchList.htm", method = RequestMethod.POST)
+    @RequestMapping(value = "/searchList.htm", method = RequestMethod.GET)
     public ModelAndView handleRequest(HttpServletRequest request, String type, ModelMap modelMap) {
         String keyword = request.getParameter("keyword");
         CcResult result = new CcResult(true);

@@ -18,6 +18,9 @@ public enum FileTypeEnum {
     /** 服务图片 */
     SERVICE_PHOTO(2, "SERVICE_PHOTO", "UPLOAD/SERVICE_PHOTO", "服务图片"),
 
+    /** 公司图片 */
+    COMPANY_PHOTO(23, "COMPANY_PHOTO", "UPLOAD/COMPANY_PHOTO", "公司图片"),
+
     /** 简历文件 */
     RESUME(10, "RESUME", "UPLOAD/RESUME", "简历文件");
 

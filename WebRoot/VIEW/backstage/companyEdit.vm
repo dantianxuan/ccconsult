@@ -31,7 +31,7 @@
                       	<div class="form-group">
                              <label  class="col-sm-2 control-label">公司图片</label>
                             <div class="col-sm-8">
-                                 <img  src="$link.contextPath/UPLOAD/$!company.photo" class="img-rounded photoTitle" style="width: 120px;"/><br/>
+                                 <img  src="$link.contextPath/$fileUtil.getPath($!company.photo)" class="img-rounded photoTitle" style="width: 120px;"/><br/>
                                  <a class="photoTitle" href="javascript:void(0)" onclick="$('#fileUploadInput').show();">单击修改您的头像</a><br/>
                             </div>                            
                     	</div>  

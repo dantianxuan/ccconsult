@@ -19,7 +19,7 @@
     <div class="col-sm-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-            	咨询师列表  <small style="float:right">注册人数<span class="badge">$counselors.size()</span></small> 
+            	咨询师列表  <small style="float:right">注册人数<span class="badge">#if($counselors)  $counselors.size() #else 0 #end </span></small> 
             </div>
             <div class="panel-body">
               	#if(!$counselors)
