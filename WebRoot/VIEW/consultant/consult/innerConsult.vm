@@ -1,4 +1,15 @@
 #parse("consultant/consultantGuide.vm")
+<div class="alert alert-dismissable alert-success">
+	#parse("consultant/consult/common/consultBaseInfoCommon.vm")
+	#if($consultBase.consult.step==1)
+	  	<p class="text-primary">当前记录状态:<span style="font-size:20px;color:red">$enumUtil.getByValue("com.ccconsult.enums.ConsultStepEnum",$consultBase.consult.step).getDescription()</span>
+	  	请耐心等待咨询师回答您的问题，如果在有效时间期限内咨询师仍旧未回答您的问题，该问题会关闭</p>		  	
+	#else
+	  	<p class="text-primary">当前记录状态:<span style="font-size:20px;color:red">
+	  		$enumUtil.getByValue("com.ccconsult.enums.ConsultStepEnum",$consultBase.consult.step).getDescription()</span></p>	
+	#end	
+</div>
+
 #parse("consultant/consult/common/consultCounselorCommon.vm")
 <div class="row">
 	<div class="col-sm-12">

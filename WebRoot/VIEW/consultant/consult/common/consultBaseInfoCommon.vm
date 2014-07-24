@@ -2,7 +2,7 @@
     <div class="col-sm-6">
         <p class="col-sm-12"><strong class=" text-right col-sm-4">咨询类型:</strong><a herf="$link.contextPath/article.htm?articleId=$!consultBase.serviceConfigVO.service.introArticleId">$!consultBase.serviceConfigVO.service.name</a></p>
         <p class="col-sm-12"><strong class=" text-right col-sm-4">支付状态:</strong>$enumUtil.getEnumClass("com.ccconsult.enums.PayStateEnum").getByValue($consultBase.consult.payTag).getDescription()</p>
-        <p class="col-sm-12"><strong class=" text-right col-sm-4">记录验证码:</strong>$consultBase.consult.indetityCode</p>
+        <p class="col-sm-12"><strong class=" text-right col-sm-4">记录验证码:</strong>$!consultBase.consult.indetityCode</p>
     </div>
     <div class="col-sm-6">
      	<p class="col-sm-12"><strong class=" text-right col-sm-4">当前状态:</strong>$enumUtil.getByValue("com.ccconsult.enums.ConsultStepEnum",$consultBase.consult.step).getDescription()</p>
