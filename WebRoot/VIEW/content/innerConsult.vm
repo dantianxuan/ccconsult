@@ -6,7 +6,7 @@
 		  <div class="panel-body">
                   	<div class="col-sm-2">
                        <a href="$link.contextPath/counselorInfo.htm?counselorId=$!counselorVO.counselor.id" > 
-                       <img src="$link.contextPath/$link.contextPath($!counselorVO.counselor.photo)" class="img-rounded" style="width: 82px;height: 82px;"></a>
+                       <img src="$link.contextPath/$file.getPath($!counselorVO.counselor.photo)" class="img-rounded" style="width: 82px;height: 82px;"></a>
                     </div>
                     <div class="col-sm-5">
 	                    <p class="col-sm-12"><strong class=" text-right col-sm-5">名称:</strong>$!counselorVO.counselor.name</p>

@@ -5,7 +5,7 @@
 	<artifactId>ccconsult</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name />
+	<name>ccconsult</name>
 	<description />
 	<properties>
 		<spring.version>3.1.1.RELEASE</spring.version>
