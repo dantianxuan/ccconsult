@@ -1,0 +1,44 @@
+#set($consultant=$session.getAttribute("SESSION_CONSULTANT_OBJECT"))
+#if($result && !$result.success)
+<div class="alert alert-dismissable alert-danger">
+	$result.message
+</div>	
+#else
+#set($consultBase=$result.object)
+#set($serviceConfigVO=$consultBase.serviceConfigVO)
+<div class="alert alert-dismissable alert-warning">
+  	<h2>您当前已创建的一笔咨询请求#if($consultBase.consult.payTag==2)已经完成支付#else等待支付#end</h2>
+	<div class="alert alert-dismissable alert-success">
+		  <h4>欢迎使用$serviceConfigVO.service.name服务!</h4>
+		  <p>$serviceConfigVO.service.description</p>
+		  <p class="text-primary">
+		  	<span style="font-size:20px;">
+		  		<span class="glyphicon glyphicon-copyright-mark"></span>$serviceConfigVO.serviceConfig.price元/次
+	  		</span> 
+  		  </p>
+	</div>
+	#if($consultBase.consult.payTag!=2)
+	  	<p style="text-align:right;"><a href="$link.contextPath/consultant/consultantSelf.htm"  class="btn btn-default" style="margin-right:12px;">放弃支付</a>
+	  	<a class="btn btn-warning" href="$link.contextPath/consultant/consult/payForConsult.htm?consultId=$consultBase.consult.id" style="margin-right:12px;">已完成支付</a>
+	  	<a class="btn btn-primary" href="javascript:void(0)" onclick="payForConsult($consultBase.consult.id)">去支付</a></p>
+  	#end
+</div>
+#end
+<script>
+	//完成请求
+	function payForConsult(consultId){
+		jQuery.ajax({
+             type: "POST",
+             url: "$link.contextPath/consultant/consult/payTempForConsult.json",
+             data: {'consultId':consultId},
+             dataType: "json",
+             success: function(data){
+             	if(data.result.success==true){
+             		window.location.href='$link.contextPath/consultant/consultantSelf.htm';
+             	}else{
+             		alert("发送失败"+data.result.message);
+             	}
+              }
+         });
+	}
+</script>
