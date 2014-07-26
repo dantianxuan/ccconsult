@@ -4,19 +4,19 @@
 <div class="alert alert-dismissable alert-success">
 	#parse("counselor/consult/common/consultBaseInfoCommon.vm")
   	#if($consultBase.consult.step==1)
-  			<p>	您可以有如下选择：
-			<button  class="btn btn-primary btn-sm" onclick="acceptConsult($consultBase.consult.id)"><span class="glyphicon glyphicon-ok"></span> 接受预约</button>
-			<button  class="btn btn-warning btn-sm" data-toggle="modal" data-target="#rejectInnerConsult" ><span class="glyphicon glyphicon-remove"></span> 拒绝预约</button>
+  			<p class="text-parimary" style="border-top:solid 1px #ddd">	您可以有如下选择：
+			<button  class="btn btn-primary btn-xs" onclick="acceptConsult($consultBase.consult.id)"><span class="glyphicon glyphicon-ok"></span> 接受预约</button>
+			<button  class="btn btn-default btn-xs" data-toggle="modal" data-target="#rejectConsult" ><span class="glyphicon glyphicon-remove"></span> 拒绝预约</button>
 			</p>		
 	#end
-	#if($consultBase.consult.step==2)
-			<p>	您可以有如下选择：
-			<button  class="btn btn-primary btn-sm" onclick="completeConsult($consultBase.consult.id)"><span class="glyphicon glyphicon-stop"></span> 结束咨询</button>
+	#if($consultBase.consult.step==3)
+			<p class="text-parimary" style="border-top:solid 1px #ddd">	您可以有如下选择：
+			<button  class="btn btn-primary btn-xs" onclick="completeConsult($consultBase.consult.id)"><span class="glyphicon glyphicon-stop"></span> 结束咨询</button>
 			</p>
 	#end
-	#if($consultBase.consult.step==3)
-			<p>	您可以有如下选择：
-			<button  class="btn btn-primary btn-sm" onclick="completeConsult($consultBase.consult.id)"><span class="glyphicon glyphicon-stop"></span> 评价该次记录</button>
+	#if($consultBase.consult.step==4)
+			<p  class="text-parimary" style="border-top:solid 1px #ddd">	您可以有如下选择：
+			<button  class="btn btn-primary btn-xs" onclick="completeConsult($consultBase.consult.id)"><span class="glyphicon glyphicon-stop"></span> 评价该次记录</button>
 			</p>
 	#end
 </div>
@@ -33,45 +33,10 @@
 </div>
 #parse("counselor/consult/common/consultMessageCommon.vm")
 #parse("counselor/consult/common/consultAppraiseCommon.vm")
-<div class="modal" id="rejectInnerConsult">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h4 class="modal-title">您拒绝了咨询请求</h4>
-      </div>
-      <div class="modal-body">
-      	<ol>
-		  <li>请确认您拒绝了咨询请求</li>
-		  <li>您可以用简单的话描述一下您拒绝的原因</li>
-		</ol>
-		<textarea class="form-control" rows="3">对不起，最近比较忙</textarea>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-        <button type="button" class="btn btn-primary" onclick="rejectConsult('$consultBase.consult.id')">确认拒绝</button>
-      </div>
-    </div>
-  </div>
-</div>
+#if($!consultBase.consult.step==1)
+#parse("counselor/consult/common/consultRejectCommon.vm")
+#end
 <script>
-	//拒绝咨询
-	function rejectConsult(consultId){
-		jQuery.ajax({
-             type: "POST",
-             url: "$link.contextPath/counselor/consult/rejectConsult.json",
-             data: {'consultId':consultId},
-             dataType: "json",
-             success: function(data){
-             	if(data.result.success==true){
-             		window.location.reload();
-             	}else{
-             		alert("发送失败"+data.result.message);
-             	}
-              }
-         });
-	}
-	
 	//接受预约
 	function acceptConsult(consultId){
 		jQuery.ajax({

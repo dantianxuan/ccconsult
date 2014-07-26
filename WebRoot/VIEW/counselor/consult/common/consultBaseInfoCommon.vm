@@ -9,3 +9,6 @@
         <p class="col-sm-12"><strong class=" text-right col-sm-4">创建时间:</strong>$date.format("yyyy-MM-dd HH:mm:ss", $consultBase.consult.gmtCreate)</p>
     </div>
 </div>
+#if($consultBase.consult.step==6)
+	<p  class="text-primary" style="border-top:solid 1px #ddd" class="text-primary"><small><span class="glyphicon glyphicon-warning-sign"></span>对不起，咨询师拒绝了您的预约，原因是：$!consultBase.consult.rejectReason</small></p>
+#end

@@ -22,15 +22,18 @@ import com.ccconsult.base.AssertUtil;
 import com.ccconsult.base.BlankServiceCallBack;
 import com.ccconsult.base.CcResult;
 import com.ccconsult.core.ConsultComponent;
+import com.ccconsult.dao.ArticleDAO;
 import com.ccconsult.dao.ConsultDAO;
 import com.ccconsult.dao.MessageDAO;
 import com.ccconsult.enums.ConsultStepEnum;
 import com.ccconsult.enums.MessageRelTypeEnum;
 import com.ccconsult.enums.PayStateEnum;
 import com.ccconsult.enums.UserRoleEnum;
+import com.ccconsult.pojo.Article;
 import com.ccconsult.pojo.Consult;
 import com.ccconsult.pojo.Consultant;
 import com.ccconsult.pojo.Message;
+import com.ccconsult.pojo.Service;
 import com.ccconsult.view.ConsultBase;
 import com.ccconsult.view.CounselorVO;
 
@@ -47,6 +50,8 @@ public class ConsultController extends BaseController {
     private MessageDAO       messageDAO;
     @Autowired
     private ConsultComponent consultComponent;
+    @Autowired
+    private ArticleDAO       articleDAO;
 
     @RequestMapping(value = "counselor/consult/rejectConsult.json", method = RequestMethod.POST)
     public @ResponseBody
@@ -78,7 +83,7 @@ public class ConsultController extends BaseController {
 
     @RequestMapping(value = "/consultant/consult/payForConsult.htm")
     public ModelAndView paryForConsult(final HttpServletRequest request, final Integer consultId,
-                                       final String rejectReason, ModelMap modelMap) {
+                                       ModelMap modelMap) {
         ModelAndView view = new ModelAndView("consultant/consult/payForConsult");
         final Consultant consultant = getConsultantInSession(request.getSession());
         CcResult result = serviceTemplate.execute(CcResult.class, new BlankServiceCallBack() {
@@ -96,6 +101,29 @@ public class ConsultController extends BaseController {
                     !consultBase.getConsult().getPayTag()
                         .equals(PayStateEnum.PAY_SUCCESS.getValue()), "对不起，当前记录已经支付");
                 return new CcResult(consultBase);
+            }
+        });
+        modelMap.put("result", result);
+        return view;
+    }
+
+    @RequestMapping(value = "/consultant/consult/createSuccess.htm")
+    public ModelAndView consultSuccess(final HttpServletRequest request, final Integer consultId,
+                                       final ModelMap modelMap) {
+        ModelAndView view = new ModelAndView("consultant/consult/createSuccess");
+        CcResult result = serviceTemplate.execute(CcResult.class, new BlankServiceCallBack() {
+            @Override
+            public CcResult executeService() {
+
+                AssertUtil.state(consultId != null && consultId > 0, "不合法的请求，当前记录不存在");
+                ConsultBase consultBase = consultComponent.queryById(consultId);
+                modelMap.put("consultBase", consultBase);
+                Service service = consultBase.getServiceConfigVO().getService();
+                if (service != null) {
+                    Article article = articleDAO.findById(service.getIntroArticleId());
+                    modelMap.put("article", article);
+                }
+                return new CcResult(true);
             }
         });
         modelMap.put("result", result);
@@ -124,6 +152,7 @@ public class ConsultController extends BaseController {
                         .equals(PayStateEnum.PAY_SUCCESS.getValue()), "对不起，当前记录已经支付");
                 Consult consult = consultBase.getConsult();
                 consult.setPayTag(PayStateEnum.PAY_SUCCESS.getValue());
+                consult.setStep(ConsultStepEnum.ON_CONSULT.getValue());
                 consultDAO.update(consult);
                 return new CcResult(true);
             }
@@ -147,7 +176,11 @@ public class ConsultController extends BaseController {
                 Consult consult = consultDAO.findById(consultId);
                 AssertUtil.state(consult.getCounselorId()
                     .equals(counselorVO.getCounselor().getId()), "请不要尝试修改不属于您的记录");
-                consult.setStep(ConsultStepEnum.ON_CONSULT.getValue());//检测支付状态
+                if (consult.getPayTag().equals(PayStateEnum.PAY_SUCCESS.getValue())) {
+                    consult.setStep(ConsultStepEnum.ON_CONSULT.getValue());//检测支付状态
+                } else {
+                    consult.setStep(ConsultStepEnum.ON_SCHEDULE.getValue());//检测支付状态
+                }
                 consult.setGmtModified(new Date());
                 consultDAO.update(consult);
                 return new CcResult(consult);

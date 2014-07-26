@@ -2,7 +2,7 @@
  * ccinterviewer.com Inc.
  * Copyright (c) 2014-2014 All Rights Reserved.
  */
-package com.ccconsult.core;
+package com.ccconsult.notify;
 
 import java.util.HashMap;
 import java.util.Map;

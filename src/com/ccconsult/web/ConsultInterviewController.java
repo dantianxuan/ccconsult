@@ -9,7 +9,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.math.NumberUtils;
-import org.apache.commons.lang.math.RandomUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -336,7 +335,7 @@ public class ConsultInterviewController extends BaseController {
                     .getInterviewConsult();
                 setScheduleTime(interviewConsult, scheduleBegin, scheduleEnd);
                 Consult consult = consultBase.getConsult();
-                consult.setStep(ConsultStepEnum.ON_CONSULT.getValue());//将状态设定为进行中
+                consult.setStep(ConsultStepEnum.ON_SCHEDULE.getValue());//将状态设定为进行中
                 consult.setGmtModified(new Date());
                 consultDAO.update(consult);
                 interviewConsultDAO.update(interviewConsult);

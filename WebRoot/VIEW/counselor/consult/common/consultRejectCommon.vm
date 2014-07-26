@@ -10,7 +10,7 @@
 		  <li>请确认您拒绝了咨询请求</li>
 		  <li>您可以用简单的话描述一下您拒绝的原因</li>
 		</ol>
-		<textarea class="form-control" rows="3">对不起，最近比较忙</textarea>
+		<textarea class="form-control" name="rejectReason" rows="3" id="rejectReasonTextArea">对不起，最近比较忙</textarea>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
@@ -25,7 +25,7 @@
 		jQuery.ajax({
              type: "POST",
              url: "$link.contextPath/counselor/consult/rejectConsult.json",
-             data: {'consultId':consultId},
+             data: {'rejectReason':$('#rejectReasonTextArea').val(),'consultId':consultId},
              dataType: "json",
              success: function(data){
              	if(data.result.success==true){

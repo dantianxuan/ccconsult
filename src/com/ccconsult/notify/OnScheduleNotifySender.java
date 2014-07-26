@@ -2,7 +2,7 @@
  * ccinterviewer.com Inc.
  * Copyright (c) 2014-2014 All Rights Reserved.
  */
-package com.ccconsult.core;
+package com.ccconsult.notify;
 
 import javax.mail.internet.MimeMessage;
 
@@ -32,7 +32,7 @@ public class OnScheduleNotifySender implements NotifySender {
     private ConsultantDAO  consultantDAO;
 
     /** 
-     * @see com.ccconsult.core.NotifySender#notify(java.lang.Object)
+     * @see com.ccconsult.notify.NotifySender#notify(java.lang.Object)
      */
     @Override
     public void notify(String senderName, Object playload) {
@@ -44,7 +44,7 @@ public class OnScheduleNotifySender implements NotifySender {
             // 设置utf-8或GBK编码，否则邮件会有乱码
             MimeMessageHelper messageHelper = new MimeMessageHelper(mailMessage, true, "utf-8");
             messageHelper.setTo(consultant.getEmail());// 接受者
-            messageHelper.setFrom("dantianxuan@163.com");// 发送者
+            messageHelper.setFrom(LOCAL_MAIL);// 发送者
             messageHelper.setSubject("欢迎使用真咨网，您的预约信息");// 主题
 
             String content = "<html><head></head><body><h1>欢迎使用真咨网！</h1>"

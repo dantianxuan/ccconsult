@@ -8,7 +8,7 @@
             </div>
             <div class="panel-body">
 					<div class="btn-group">
-					  <a class="btn btn-primary" href="$link.contextPath/consultant/consultantSelf.htm""><span class="glyphicon glyphicon-star"></span>  我的预约</a>
+					  <a class="btn btn-primary" href="$link.contextPath/consultant/consultantSelf.htm""><span class="glyphicon glyphicon-star"></span>  预约记录	(已预约)</a>
 					  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
 					  <ul class="dropdown-menu">
 					  	#foreach($service in $services)

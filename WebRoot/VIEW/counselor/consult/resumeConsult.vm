@@ -10,16 +10,22 @@
 <div class="alert alert-dismissable alert-success">
 	#parse("counselor/consult/common/consultBaseInfoCommon.vm")
   	#if($consultBase.consult.step==1)
-  			<p>	您可以有如下选择：
+  			<p class="text-primary" style="border-top:solid 1px #ddd">	您可以有如下选择：
 			<button  class="btn btn-primary btn-xs" onclick="acceptConsult($consultBase.consult.id)"><span class="glyphicon glyphicon-ok"></span> 接受预约</button>
 			<button  class="btn btn-warning btn-xs" data-toggle="modal" data-target="#rejectConsult" ><span class="glyphicon glyphicon-remove"></span> 拒绝预约</button>
 			</p>		
 	#end
 	#if($consultBase.consult.step==2)
-			<p>	您可以有如下选择：
+			<p class="text-primary" style="border-top:solid 1px #ddd">	请等待咨询者进行支付，如果咨询者在有效期内未进行支付，咨询会被关闭，咨询者支付后我们会邮件通知您完成咨询</p>
+	#end	
+	#if($consultBase.consult.step==3)
+			<p class="text-primary" style="border-top:solid 1px #ddd">	您可以有如下选择：
 			<button  class="btn btn-primary btn-xs" onclick="completeConsult($consultBase.consult.id)"><span class="glyphicon glyphicon-stop"></span> 结束咨询</button>
 			</p>
 	#end
+	#if($consultBase.consult.step==4)
+			<p class="text-primary" style="border-top:solid 1px #ddd">咨询已经完成，感谢您的使用</p>
+	#end	
 </div>
 #parse("counselor/consult/common/consultConsultantCommon.vm")
 
@@ -42,7 +48,7 @@
   		</div>
 	</div>
 </div>
-#if($consultBase.consult.step!=1)
+#if($consultBase.consult.step==3 || $consultBase.consult.step==4 )
 <div class="row">
 	<div class="col-sm-12">
 		<div class="panel panel-default">
@@ -66,7 +72,7 @@
 					    </tr>
 					  </table>
 				  	#end	
-				  	#if($consultBase.consult.step==2)
+				  	#if($consultBase.consult.step==3)
 				  	<div class="#if($consultBase.resumeConsult.review) hide  #end" id="reviewResumeArea" >			
 						<div class="alert alert-dismissable alert-info" style="margin:0px 0px 0px 0px">
 						  	<p>请您修改咨询者的简历，或者对他的简历提出建议和意见,只允许上传word文档和pdf文档</p>

@@ -8,7 +8,6 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.math.NumberUtils;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -21,7 +20,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ccconsult.base.AssertUtil;
 import com.ccconsult.base.BlankServiceCallBack;
 import com.ccconsult.base.CcConstrant;
-import com.ccconsult.base.CcException;
 import com.ccconsult.base.CcResult;
 import com.ccconsult.base.PageList;
 import com.ccconsult.base.PageQuery;
@@ -34,7 +32,6 @@ import com.ccconsult.enums.FileTypeEnum;
 import com.ccconsult.enums.UserRoleEnum;
 import com.ccconsult.pojo.Consultant;
 import com.ccconsult.pojo.Counselor;
-import com.ccconsult.util.LogUtil;
 import com.ccconsult.util.StringUtil;
 import com.ccconsult.util.ValidateUtil;
 import com.ccconsult.view.ConsultBase;
@@ -46,18 +43,14 @@ import com.ccconsult.view.CounselorVO;
  */
 @Controller
 public class CounselorController extends BaseController {
-
-    /**日志 */
-    private static final Logger logger = Logger.getLogger(CounselorController.class);
-
     @Autowired
-    private CounselorDAO        counselorDAO;
+    private CounselorDAO     counselorDAO;
     @Autowired
-    private ConsultComponent    consultComponent;
+    private ConsultComponent consultComponent;
     @Autowired
-    private InnerMailDAO        innerMailDAO;
+    private InnerMailDAO     innerMailDAO;
     @Autowired
-    private FileComponent       fileComponent;
+    private FileComponent    fileComponent;
 
     /**
      * 公共个人信息介绍页面
@@ -96,12 +89,13 @@ public class CounselorController extends BaseController {
         CcResult result = serviceTemplate.execute(CcResult.class, new BlankServiceCallBack() {
             @Override
             public CcResult executeService() {
-                PageList<ConsultBase> consultBases = consultComponent.queryPaged(2,
+                PageList<ConsultBase> consultBases = consultComponent.queryPaged(0,
                     ConsultStepEnum.CREATE.getValue(), 0, counselorVO.getCounselor().getId(), 0,
                     query.getPageSize(), query.getPageNo());
                 return new CcResult(consultBases);
             }
         });
+        modelMap.put("step", 1);
         modelMap.put("result", result);
         return view;
     }
@@ -114,7 +108,7 @@ public class CounselorController extends BaseController {
         CcResult result = serviceTemplate.execute(CcResult.class, new BlankServiceCallBack() {
             @Override
             public CcResult executeService() {
-                PageList<ConsultBase> consultBases = consultComponent.queryPaged(2,
+                PageList<ConsultBase> consultBases = consultComponent.queryPaged(0,
                     step == null ? 0 : step, serviceId == null ? 0 : serviceId, counselorVO
                         .getCounselor().getId(), 0, query.getPageSize(), query.getPageNo());
                 return new CcResult(consultBases);

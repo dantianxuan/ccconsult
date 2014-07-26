@@ -16,6 +16,33 @@
 	    </div>
 </div>
 <div class="row">
+	    <div class="panel panel-default">
+ 			<div class="panel-heading">
+	            分享到朋友圈
+	        </div>	    
+	        <div class="panel-body">
+				<div class="bdsharebuttonbox">
+					<a href="#" class="bds_more" data-cmd="more"></a>
+					<a href="#" class="bds_qzone" data-cmd="qzone"></a>
+					<a href="#" class="bds_tsina" data-cmd="tsina"></a>
+					<a href="#" class="bds_tqq" data-cmd="tqq"></a>
+					<a href="#" class="bds_renren" data-cmd="renren"></a>
+					<a href="#" class="bds_weixin" data-cmd="weixin"></a>
+					</div>
+				<script>window._bd_share_config={"common":{"bdUrl":"www.zhenzi.me",
+				"bdDesc":"一线名企员工告诉您怎样修改您的简历，怎么规划您的职业生涯，怎样的面试是最有效的，真咨网最真实的员工给你提供最有价值的咨询帮助！",
+				"bdSnsKey":{},"bdText":"","bdMini":"8","bdPic":"","bdStyle":"0","bdSize":"24"},
+				"share":{},"image":{
+				"viewList":["qzone","tqf","tsina","tqq","renren","weixin"],
+				"viewText":"分享到：","viewSize":"16"},
+				"selectShare":{"bdContainerClass":"canbeShare",
+				"bdSelectMiniList":["qzone","tqf","tsina","tqq","renren","weixin"]}};
+				with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+				</script>
+	        </div>
+	    </div>
+</div>
+<div class="row">
 	<div class="list-group">
 	  <a   class="list-group-item" style="background:#f5f5f5">
 	    <strong>真咨网常见问题</strong>
@@ -27,8 +54,6 @@
 	  <a href="$link.contextPath/article.htm?articleId=1" class="list-group-item"><span class="glyphicon glyphicon-question-sign"></span> 作为咨询师，我的个人信息会保密码？</a>
 	</div>
 </div>
-
-
 <div class="row">
 	    <div class="panel panel-default">
 	        <div class="panel-heading">

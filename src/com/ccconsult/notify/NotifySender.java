@@ -2,7 +2,7 @@
  * ccinterviewer.com Inc.
  * Copyright (c) 2014-2014 All Rights Reserved.
  */
-package com.ccconsult.core;
+package com.ccconsult.notify;
 
 /**
  * 短信发送接口 
@@ -14,7 +14,8 @@ public interface NotifySender {
 
     public static final String REG_MAIL              = "REG_MAIL";
     public static final String INTERVIEW_ON_SCHEDULE = "INTERVIEW_ON_SCHEDULE";
-    public static final String CONSULTANT_FINISHED   = "CONSULTANT_FINISHED";
+    public static final String FIND_PASSWD           = "FIND_PASSWD";
+    public static final String LOCAL_MAIL            = "ccconsult@163.com";
 
     /**
      * 发送消息

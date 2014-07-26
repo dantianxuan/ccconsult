@@ -4,10 +4,11 @@
 #parse("counselor/consult/common/consultConsultantCommon.vm")
 <div class="alert alert-dismissable alert-success">
 	#parse("counselor/consult/common/consultBaseInfoCommon.vm")
-	<p class="text-primary"> 欢迎您确认您的咨询信息，请向您的咨询者获取咨询验证码，通过该验证码您可以直接确认本次咨询并获得咨询费，如果因为特殊原有无法提供验证码，你需要上传您的咨询证明记录让我们的客服人员介入</p>
-	<p>	
-		<button type="button" class="btn btn-primary" onclick="$('.indetityDiv').addClass('hide');$('#confirmWithIndetityCode').removeClass('hide');">我有验证码</button>
-		<button type="button" class="btn btn-default" onclick="$('.indetityDiv').addClass('hide');$('#confirmWithOutIndetityCode').removeClass('hide');">上传材料确认</button>
+	<p class="text-primary" style="border-top:solid 1px #ddd">	
+	 欢迎您确认您的咨询信息，请向您的咨询者获取咨询验证码，通过该验证码您可以直接确认本次咨询并获得咨询费，如果因为特殊原有无法提供验证码，你需要上传您的咨询证明记录让我们的客服人员介入
+	 <br/>
+		<button type="button" class="btn btn-xs btn-primary" onclick="$('.indetityDiv').addClass('hide');$('#confirmWithIndetityCode').removeClass('hide');">我有验证码</button>
+		<button type="button" class="btn btn-xs btn-default" onclick="$('.indetityDiv').addClass('hide');$('#confirmWithOutIndetityCode').removeClass('hide');">上传材料确认</button>
 	</p>
 </div>
 

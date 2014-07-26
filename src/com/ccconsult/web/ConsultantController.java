@@ -65,11 +65,12 @@ public class ConsultantController extends BaseController {
             @Override
             public CcResult executeService() {
                 PageList<ConsultBase> consultBases = consultComponent.queryPaged(
-                    PayStateEnum.WAIT_FOR_PAY.getValue(), ConsultStepEnum.CREATE.getValue(), 0, 0,
-                    consultant.getId(), query.getPageSize(), query.getPageNo());
+                    PayStateEnum.WAIT_FOR_PAY.getValue(), ConsultStepEnum.ON_SCHEDULE.getValue(),
+                    0, 0, consultant.getId(), query.getPageSize(), query.getPageNo());
                 return new CcResult(consultBases);
             }
         });
+        modelMap.put("step", 2);
         modelMap.put("result", result);
         return view;
     }
@@ -91,7 +92,6 @@ public class ConsultantController extends BaseController {
         });
         modelMap.put("serviceId", serviceId);
         modelMap.put("step", step);
-        modelMap.put("payTag", payTag);
         modelMap.put("result", result);
         return view;
     }
@@ -133,8 +133,8 @@ public class ConsultantController extends BaseController {
 
     @RequestMapping(value = "consultant/editPersonalInfo.htm", params = "action=save", method = RequestMethod.POST)
     public ModelAndView editPersonalInfo(final HttpServletRequest request, ModelMap modelMap,
-                                        @RequestParam final MultipartFile[] localPhoto,
-                                        final Consultant consultant) {
+                                         @RequestParam final MultipartFile[] localPhoto,
+                                         final Consultant consultant) {
         CcResult result = serviceTemplate.executeWithTx(CcResult.class, new BlankServiceCallBack() {
 
             @Override

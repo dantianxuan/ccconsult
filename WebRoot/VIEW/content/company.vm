@@ -19,10 +19,11 @@
     <div class="col-sm-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-            	咨询师列表  <small style="float:right">注册人数<span class="badge">#if($counselors)  $counselors.size() #else 0 #end </span></small> 
+            	咨询师列表  (<small>注册人数<span class="badge">#if($counselors)  $counselors.size() #else 0 #end </span></small>) 
+            	<a href="$link.contextPath/regist/regCounselorInit.htm" style="float:right">我要注册咨询师</a> 
             </div>
             <div class="panel-body">
-              	#if(!$counselors)
+              	#if(!$counselors && $counselors.size()==0)
             		<p>该公司无可咨询人员</p>
             	#else
 	            	#foreach($counselor in $counselors)

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.ccconsult.core;
+package com.ccconsult.notify;
 
 import javax.mail.internet.MimeMessage;
 
@@ -24,7 +24,7 @@ public class RegMailNotifySender implements NotifySender {
     private JavaMailSender javaMailSender;
 
     /** 
-     * @see com.ccconsult.core.NotifySender#notify(java.lang.Object)
+     * @see com.ccconsult.notify.NotifySender#notify(java.lang.Object)
      */
     @Override
     public void notify(String senderName, Object playload) {
@@ -34,7 +34,7 @@ public class RegMailNotifySender implements NotifySender {
             // 设置utf-8或GBK编码，否则邮件会有乱码
             MimeMessageHelper messageHelper = new MimeMessageHelper(mailMessage, true, "utf-8");
             messageHelper.setTo(regMail.getMail());// 接受者
-            messageHelper.setFrom("dantianxuan@163.com");// 发送者
+            messageHelper.setFrom(LOCAL_MAIL);// 发送者
             messageHelper.setSubject("欢迎您注册真咨网");// 主题
             // 邮件内容，注意加参数true，表示启用html格式
             String link = ResourceUtil.getByKey("webapp_domain") + "regist/regCounselor.htm?token="

@@ -7,20 +7,22 @@
 <div class="alert alert-dismissable alert-success">
 	#parse("counselor/consult/common/consultBaseInfoCommon.vm")
   	#if($consultBase.consult.step==1)
-  			<br/>
-  			<p>	您可以有如下选择：
+  			<p class="text-primary" style="border-top:solid 1px #ddd">	您可以有如下选择：
 			<button  class="btn btn-primary btn-xs" onclick="$('#timeScheduleArea').removeClass('hide');"><span class="glyphicon glyphicon-ok"></span> 接受预约</button>
 			<button  class="btn btn-warning btn-xs" data-toggle="modal" data-target="#rejectConsult" ><span class="glyphicon glyphicon-remove"></span> 拒绝预约</button>
-			</p>		
-	#elseif($consultBase.consult.step==2)
-			<br/>
-			<p class="text-primary">	
- 			 <strong>恭喜您完成预约</strong> 请保持您手机的畅通，我们会在您预约的时间内将您的联系方式发送给咨询者，请在面试完成后，向您的咨询者索要面试验证码以便于快速确认,您预约的时间如下：
+			</p>
+	#end
+	#if($consultBase.consult.step==2)
+			<p class="text-primary" style="border-top:solid 1px #ddd">	
+ 			 <strong>恭喜您完成预约</strong> 请等待您的咨询者进行支付，支付后我们会在您预约的时间讲您的联系信息发送给咨询者以完成咨询：
 			 <h4><span class="glyphicon glyphicon-dashboard"></span>$date.format("yyyy-MM-dd HH:mm:ss",$consultBase.interviewConsult.gmtScheduleBegin) <span class="glyphicon glyphicon-minus"></span> $date.format("yyyy-MM-dd HH:mm:ss", $consultBase.interviewConsult.gmtScheduleEnd) </h4>	
 			</p>
-			<hr/>	 
-			<p>			
-			您可以有如下选择：<a  class="btn btn-primary btn-xs"  href="$link.contextPath/counselor/consult/interviewConsultComplete.htm?consultId=$consultBase.consult.id"><span class="glyphicon glyphicon-stop"></span> 结束咨询</a>
+	#end			
+	#if($consultBase.consult.step==3)
+			<p class="text-primary" style="border-top:solid 1px #ddd">	
+ 			 请保持您手机的畅通，请在面试完成后向您的咨询者获取<span style="font-size:20px">确认验证码</span>以便于快速确认,您预约的时间如下：
+			 <h4><span class="glyphicon glyphicon-dashboard"></span>$date.format("yyyy-MM-dd HH:mm:ss",$consultBase.interviewConsult.gmtScheduleBegin) <span class="glyphicon glyphicon-minus"></span> $date.format("yyyy-MM-dd HH:mm:ss", $consultBase.interviewConsult.gmtScheduleEnd) </h4>
+			 您可以有如下选择：<a  class="btn btn-primary btn-xs"  href="$link.contextPath/counselor/consult/interviewConsultComplete.htm?consultId=$consultBase.consult.id"><span class="glyphicon glyphicon-stop"></span> 结束咨询</a>	
 			</p>
 	#end
 #if($consultBase.consult.step==1)
@@ -99,30 +101,6 @@
   		</div>
 	</div>
 </div>
-#if($consultBase.consult.step==3)
-<div class="row">
-	<div class="col-sm-12">
-		<div class="panel panel-default">
-		  <div class="panel-heading"><span class="glyphicon glyphicon-bookmark"></span>咨询评价信息</div>
-		  <div class="panel-body">
-			  <div class="col-lg-12">
-			  <table class="table" style="margin-bottom:0px;">
-				<tr>
-			      <td width="20%"><span class="glyphicon glyphicon-tag"><strong>咨询师评价：</strong></span></td>
-			      <td width="80%">$enumUtil.getByValue("com.ccconsult.enums.ConsultantAppriseEnum",$consultBase.interviewConsult.consultantApprise).getDescription()</td>
-			    </tr>			  
-				<tr>
-			      <td width="20%"><span class="glyphicon glyphicon-tag"><strong>咨询师完结备注：</strong></span></td>
-			      <td width="80%">$consultBase.interviewConsult.consultMemo</td>
-			    </tr>				    
-			  </table>
-			  </div>
-	      </div>   
-  		</div>
-	</div>
-</div>
-#end
-
 #parse("counselor/consult/common/consultMessageCommon.vm")
 #parse("counselor/consult/common/consultAppraiseCommon.vm")
 #parse("counselor/consult/common/consultRejectCommon.vm")

@@ -47,22 +47,21 @@
 	<bean id="registService" class="com.ccconsult.service.RegistServiceImpl"></bean>
 	<bean id="articleService" class="com.ccconsult.service.ArticleServiceImpl"></bean>
 
+	<bean id="regMailNotifySender" class="com.ccconsult.notify.RegMailNotifySender"></bean>
+	<bean id="onScheduleNotifySender" class="com.ccconsult.notify.OnScheduleNotifySender"></bean>
+	<bean id="findPasswdNotifySender" class="com.ccconsult.notify.FindPasswdNotifySender"></bean>
 
-
-	<bean id="regMailNotifySender" class="com.ccconsult.core.RegMailNotifySender"></bean>
-	<bean id="onScheduleNotifySender" class="com.ccconsult.core.OnScheduleNotifySender"></bean>
-	<bean id="notifySender" class="com.ccconsult.core.NotifySenderProxy">
+	<bean id="notifySender" class="com.ccconsult.notify.NotifySenderProxy">
 		<property name="notifySenders">
 			<map>
 				<entry key="REG_MAIL" value-ref="regMailNotifySender" />
 				<entry key="INTERVIEW_ON_SCHEDULE" value-ref="onScheduleNotifySender" />
+				<entry key="FIND_PASSWD" value-ref="findPasswdNotifySender" />
 			</map>
 		</property>
 	</bean>
 
 	<bean id="javaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-
-
 		<property name="host">
 			<value>smtp.163.com</value>
 		</property>
@@ -73,10 +72,10 @@
 			</props>
 		</property>
 		<property name="username">
-			<value>dantianxuan@163.com</value>
+			<value>ccconsult@163.com</value>
 		</property>
 		<property name="password">
-			<value>3145275she</value>
+			<value>3145275dan</value>
 		</property>
 	</bean>
 

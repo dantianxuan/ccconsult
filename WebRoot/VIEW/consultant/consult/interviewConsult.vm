@@ -5,17 +5,17 @@
 	#parse("consultant/consult/common/consultBaseInfoCommon.vm")
 	#if($consultBase.consult.step==1)
 	  	<p class="text-primary">当前记录状态:<span style="font-size:20px;color:red">$enumUtil.getByValue("com.ccconsult.enums.ConsultStepEnum",$consultBase.consult.step).getDescription()</span>
-	  	#if($consultBase.consult.payTag!=2)	你必须<a href="$link.contextPath/consultant/consult/payForConsult.htm?consultId=$consultBase.consult.id" 
-	  	class="btn btn-sm btn-primary">支付咨询费用</a>,咨询师才能看到您的信息 #end #if($consultBase.consult.payTag==2) 
-	  	请等待咨询师和您预约时间，咨询师预约号时间后我们会邮件通知您，请住哟关注您的邮件信息 #end</p>	
-	#elseif($consultBase.consult.step==2)
+	  	请等待咨询师和您预约时间，咨询师预约后后我们会邮件通知您，请仔细关注您的邮件信息</p>	
+	#end
+	#if($consultBase.consult.step==2)
 		<p class="text-primary">	
-		 <strong>恭喜您,当前咨询师已经完成预约</strong> 我们会讲咨询师的信息通过邮件发送给您，请在额定时间内联系您的咨询师完成咨询,预约的时间如下：
+		 <strong>恭喜您,当前咨询师已经完成预约</strong> 我们会讲咨询师的信息通过邮件发送给您，请您
+		 <a class="btn btn-sm btn-primary" href="$link.contextPath/consultant/consult/payForConsult.htm?consultId=$consultBase.consult.id" class="btn btn-parimary">支付咨询费</a>,支付完成后我们会在额定时间内将咨询师的联系方式和信息发送给您,当前预约的时间如下：
 		 <h4><span class="glyphicon glyphicon-dashboard"></span>$date.format("yyyy-MM-dd HH:mm:ss",$consultBase.interviewConsult.gmtScheduleBegin) <span class="glyphicon glyphicon-minus"></span> $date.format("yyyy-MM-dd HH:mm:ss", $consultBase.interviewConsult.gmtScheduleEnd) </h4>	
-		</p>	  	
-	#else
-	  	<p class="text-primary">当前记录状态:<span style="font-size:20px;color:red">
-	  		$enumUtil.getByValue("com.ccconsult.enums.ConsultStepEnum",$consultBase.consult.step).getDescription()</span></p>	
+		</p>	 
+	#end 	
+	#if($consultBase.consult.step==3)
+	  	感谢您的使用，当前本次咨询正在进行中
 	#end	
 </div>
 #parse("consultant/consult/common/consultCounselorCommon.vm")

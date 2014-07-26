@@ -50,7 +50,7 @@
 				  	</div>
 		  		#end
 		  	#end
-		  	#if($consultBase.consult.step==2)
+		  	#if($consultBase.consult.step==1 || $consultBase.consult.step==2 || $consultBase.consult.step==3 )
 		  	<form id="sendMessageForm">
 			<div class="col-sm-12">
 				<hr/>

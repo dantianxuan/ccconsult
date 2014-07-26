@@ -161,7 +161,7 @@ public class ConsultResumeController extends BaseController {
             modelMap.put("result", result);
             return new ModelAndView("consultant/consult/createResumeConsult");
         }
-        return new ModelAndView("redirect:/consultant/consult/payForConsult.htm?consultId="
+        return new ModelAndView("redirect:/consultant/consult/createSuccess.htm?consultId="
                                 + consult.getId());
     }
 

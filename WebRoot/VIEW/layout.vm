@@ -4,6 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>#if($title) $title #else 真咨网 #end</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="baidu-site-verification" content="4576d7b1cc274030ed1988e2504cefc5"/>
     <link rel="stylesheet" href="$link.contextPath/STATIC/css/bootstrap_yellow.css" rel="stylesheet">
     <link rel="stylesheet" href="$link.contextPath/STATIC/css/select2.css" rel="stylesheet">
     <link rel="stylesheet" href="$link.contextPath/STATIC/css/style.css" rel="stylesheet">

@@ -11,6 +11,9 @@
 		<div class="panel panel-default">
 		  <div class="panel-heading"><span class="glyphicon glyphicon-comment"></span> 消息留言</div>
 		  <div class="panel-body">
+		  	#if($messageVOs && $messageVOs.size()==0)
+		  		对不起，没有留言消息
+		  	#end
 		  	#foreach($messageVO in $messageVOs)
 		  		#if($messageVO.message.creatorRole==2)
 			  		<div class="col-sm-12">
@@ -48,6 +51,7 @@
 				  	</div>
 		  		#end
 		  	#end
+		  	#if($!consultBase.consult.step==1 || $!consultBase.consult.step==2 || $!consultBase.consult.step==3)
 		  	<form id="sendMessageForm">
 			<div class="col-sm-12">
 				<hr/>
@@ -67,6 +71,7 @@
 			   <button type="button" class="btn btn-danger col-sm-2" style="float:right;" onclick="sendMessage()">留言</button>
 		  	</div>
 		  	</form>
+		  	#end
 		  </div>
 		</div>
 	</div>

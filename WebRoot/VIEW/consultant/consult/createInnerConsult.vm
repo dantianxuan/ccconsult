@@ -71,7 +71,7 @@
              success: function(data){
              	if(data.result.success==true){
              		alert("创建成功，请等待页面跳转");
-             		window.location.href="$link.contextPath/consultant/consult/innerConsult.htm?consultId="+data.result.object.id
+             		window.location.href="$link.contextPath/consultant/consult/createSuccess.htm?consultId="+data.result.object.id
              	}else{
              		alert("创建失败"+data.result.message);
              	}

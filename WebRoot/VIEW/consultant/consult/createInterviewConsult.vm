@@ -127,7 +127,7 @@
 					var data = eval(result);
 					if(data.result.success){
 						alert('处理成功，请等待页面跳转！');
-						location.href="$link.contextPath/consultant/consult/payForConsult.htm?consultId="+data.result.object.id;
+						location.href="$link.contextPath/consultant/consult/createSuccess.htm?consultId="+data.result.object.id;
 					}else{
 						showArea('提交失败：'+data.result.message);
 					}
