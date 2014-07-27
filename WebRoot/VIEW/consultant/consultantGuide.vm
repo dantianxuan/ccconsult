@@ -17,7 +17,7 @@
 					  </ul>
 					</div>	
 					
-					<a  class="btn btn-warning" href="$link.contextPath/consultant/consultantSelf.htm"><span class="glyphicon glyphicon-copyright-mark"></span>   账户信息</a>					
+					<a  class="btn btn-warning" href="$link.contextPath/consultant/personalAccount.htm"><span class="glyphicon glyphicon-copyright-mark"></span>   账户信息</a>					
 					<div class="btn-group">
 					  <a  href="$link.contextPath/consultant/personalInfo.htm" class="btn btn-warning"><span class="glyphicon glyphicon-user"></span> 个人信息</a>
 					  <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
