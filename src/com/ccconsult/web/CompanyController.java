@@ -4,20 +4,16 @@
  */
 package com.ccconsult.web;
 
-import java.io.File;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,7 +24,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ccconsult.base.AssertUtil;
 import com.ccconsult.base.BlankServiceCallBack;
 import com.ccconsult.base.CcConstrant;
-import com.ccconsult.base.CcException;
 import com.ccconsult.base.CcResult;
 import com.ccconsult.base.PageList;
 import com.ccconsult.core.FileComponent;
@@ -37,7 +32,6 @@ import com.ccconsult.dao.CounselorDAO;
 import com.ccconsult.enums.FileTypeEnum;
 import com.ccconsult.pojo.Company;
 import com.ccconsult.pojo.Counselor;
-import com.ccconsult.util.LogUtil;
 import com.ccconsult.util.StringUtil;
 import com.ccconsult.view.CompanyBriefVO;
 
@@ -48,14 +42,12 @@ import com.ccconsult.view.CompanyBriefVO;
  */
 @Controller
 public class CompanyController extends BaseController {
-    /**日志 */
-    private static final Logger logger = Logger.getLogger(CompanyController.class);
     @Autowired
-    private CompanyDAO          companyDAO;
+    private CompanyDAO    companyDAO;
     @Autowired
-    private CounselorDAO        counselorDAO;
+    private CounselorDAO  counselorDAO;
     @Autowired
-    private FileComponent       fileComponent;
+    private FileComponent fileComponent;
 
     @RequestMapping(value = "/company.htm", method = RequestMethod.GET)
     public ModelAndView handleRequest(HttpServletRequest request, ModelMap modelMap) {

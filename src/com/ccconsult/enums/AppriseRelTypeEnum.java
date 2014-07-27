@@ -12,8 +12,8 @@ package com.ccconsult.enums;
  */
 public enum AppriseRelTypeEnum {
 
-    /** 面试咨询 */
-    INTERVIEW(1, "INTERVIEW", "面试咨询");
+    /** 咨询服务评价 */
+    SERVICE(1, "SERVICE", "咨询服务评价");
 
     /** 枚举码 */
     private int    value;

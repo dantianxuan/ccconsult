@@ -5,24 +5,30 @@
 package com.ccconsult.enums;
 
 /**
- * 评价枚举
+ * 通知枚举
  * 
  * @author jingyu.dan
  * @version $Id: AppriseEnum.java, v 0.1 2014-6-10 下午6:06:53 jingyu.dan Exp $
  */
-public enum AppriseEnum {
+public enum NotifySenderEnum {
 
-    /** 非常好 */
-    VERY_GOOD(1, "VERY_GOOD", "非常好"),
+    /** 注册面试官通知处理器 */
+    REG_MAIL_NOTIFY(1, "REG_MAIL_NOTIFY", "注册面试官消息发送器"),
 
-    /** 很好 */
-    GOOD(2, "GOOD", "很好"),
+    /** 咨询师已经完成预约通知 */
+    ON_SCHEDULE_NOTIFY(2, "ON_SCHEDULE_NOTIFY", "咨询师已经完成预约通知"),
+
+    /**咨询就行中通知(支付完成) */
+    CONSULT_WORKON_NOTIFY(3, "CONSULT_WORKON_NOTIFY", "咨询就行中通知(支付完成)"),
+
+    /**咨询被拒绝通知 */
+    CONSULT_REJECT_NOTIFY(4, "CONSULT_REJECT_NOTIFY", "咨询被拒绝通知"),
+
+    /**找回密码通知 */
+    FINDPASSWD_NOTIFY(5, "FINDPASSWD_NOTIFY", "找回密码通知"),
 
     /** 一般 */
-    NORMAL(3, "NORMAL", "一般"),
-
-    /** 差评 */
-    BAD(4, "BAD", "差评"), ;
+    WORK_TASK_NOTIFY(6, "WORK_TASK_NOTIFY", "工作任务通知"), ;
 
     /** 枚举码 */
     private int    value;
@@ -39,7 +45,7 @@ public enum AppriseEnum {
      * @param code          枚举code
      * @param description   枚举描述
      */
-    private AppriseEnum(int value, String code, String description) {
+    private NotifySenderEnum(int value, String code, String description) {
         this.value = value;
         this.code = code;
         this.description = description;
@@ -51,12 +57,12 @@ public enum AppriseEnum {
      * @param value 枚举值
      * @return      枚举对象
      */
-    public static AppriseEnum getByValue(Integer value) {
+    public static NotifySenderEnum getByValue(Integer value) {
         if (value == null) {
             return null;
         }
-        for (AppriseEnum type : values()) {
-            if (value.equals(type.getValue())) {
+        for (NotifySenderEnum type : values()) {
+            if (type.getValue() == value) {
                 return type;
             }
         }

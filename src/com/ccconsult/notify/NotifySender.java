@@ -12,10 +12,7 @@ package com.ccconsult.notify;
  */
 public interface NotifySender {
 
-    public static final String REG_MAIL              = "REG_MAIL";
-    public static final String INTERVIEW_ON_SCHEDULE = "INTERVIEW_ON_SCHEDULE";
-    public static final String FIND_PASSWD           = "FIND_PASSWD";
-    public static final String LOCAL_MAIL            = "ccconsult@163.com";
+    public static final String LOCAL_MAIL = "ccconsult@163.com";
 
     /**
      * 发送消息

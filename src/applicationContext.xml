@@ -47,19 +47,29 @@
 	<bean id="registService" class="com.ccconsult.service.RegistServiceImpl"></bean>
 	<bean id="articleService" class="com.ccconsult.service.ArticleServiceImpl"></bean>
 
+	<!-- 注册邮件通知处理器 -->
 	<bean id="regMailNotifySender" class="com.ccconsult.notify.RegMailNotifySender"></bean>
+	<!-- 预约时间到时候提醒 -->
 	<bean id="onScheduleNotifySender" class="com.ccconsult.notify.OnScheduleNotifySender"></bean>
+	<!-- 找回密码通知处理器 -->
 	<bean id="findPasswdNotifySender" class="com.ccconsult.notify.FindPasswdNotifySender"></bean>
+	<!-- 咨询进入工作状态通知处理器 -->
+	<bean id="consultWorkOnNotify" class="com.ccconsult.notify.ConsultWorkOnNotify"></bean>
+	<!-- 咨询被拒绝处理器 -->
+	<bean id="consultRejectNotify" class="com.ccconsult.notify.ConsultRejectNotify"></bean>
 
 	<bean id="notifySender" class="com.ccconsult.notify.NotifySenderProxy">
 		<property name="notifySenders">
 			<map>
-				<entry key="REG_MAIL" value-ref="regMailNotifySender" />
-				<entry key="INTERVIEW_ON_SCHEDULE" value-ref="onScheduleNotifySender" />
-				<entry key="FIND_PASSWD" value-ref="findPasswdNotifySender" />
+				<entry key="REG_MAIL_NOTIFY" value-ref="regMailNotifySender" />
+				<entry key="ON_SCHEDULE_NOTIFY" value-ref="onScheduleNotifySender" />
+				<entry key="FINDPASSWD_NOTIFY" value-ref="findPasswdNotifySender" />
+				<entry key="CONSULT_WORKON_NOTIFY" value-ref="consultWorkOnNotify" />
+				<entry key="CONSULT_REJECT_NOTIFY" value-ref="consultRejectNotify" />
 			</map>
 		</property>
 	</bean>
+
 
 	<bean id="javaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<property name="host">

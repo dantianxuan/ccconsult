@@ -1,4 +1,4 @@
-<div class="row" style="border-bottom:solid 1px #ddd">
+<div class="row">
     <div class="col-sm-6">
         <p class="col-sm-12"><strong class=" text-right col-sm-4">咨询类型:</strong><a href="$link.contextPath/serviceInfo.htm?serviceId=$!consultBase.serviceConfigVO.service.id" >$!consultBase.serviceConfigVO.service.name</a></p>
         <p class="col-sm-12"><strong class=" text-right col-sm-4">支付状态:</strong>$enumUtil.getEnumClass("com.ccconsult.enums.PayStateEnum").getByValue($consultBase.consult.payTag).getDescription()</p>
@@ -10,6 +10,14 @@
         <p class="col-sm-12"><strong class=" text-right col-sm-4">有效期:</strong>$!date.format("yyyy-MM-dd HH:mm:ss", $consultBase.consult.gmtEffectEnd)</p>
     </div>
 </div>
-    #if($consultBase.consult.step==6)
-    	<p  style="border-top:solid 1px #ddd" class="text-primary"><span class="glyphicon glyphicon-warning-sign"></span>对不起，咨询师拒绝了您的预约，原因是：$!consultBase.consult.rejectReason</p>
-    #end
+#if($consultBase.consult.step==2)
+	<p  style="border-top:solid 1px #ddd" class="text-primary">
+	恭喜您，您的咨询师确认了您的咨询请求，请<a class="btn btn-xs btn-primary" href="$link.contextPath/consultant/consult/payForConsult.htm?consultId=$consultBase.consult.id">支付咨询费</a>,支付完成后咨询师才能为您服务
+	</p>
+#end
+#if($consultBase.consult.step==6)
+	<p  style="border-top:solid 1px #ddd" class="text-primary"><span class="glyphicon glyphicon-warning-sign"></span>对不起，咨询师拒绝了您的预约，原因是：$!consultBase.consult.rejectReason</p>
+#end
+#if($consultBase.consult.step==4 && !$consultBase.consultantApprise)
+	<p  style="border-top:solid 1px #ddd" class="text-primary">恭喜您完成咨询，您可以选择<a href="$link.contextPath/consultant/consult/appriseConsult.htm?consultId=$consultBase.consult.id" class="btn btn-xs btn-primary" >评价这次咨询</a></p>
+#end

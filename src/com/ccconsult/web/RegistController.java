@@ -28,6 +28,7 @@ import com.ccconsult.dao.CounselorDAO;
 import com.ccconsult.dao.RegMailDAO;
 import com.ccconsult.dao.ServiceConfigDAO;
 import com.ccconsult.enums.DataStateEnum;
+import com.ccconsult.enums.NotifySenderEnum;
 import com.ccconsult.notify.NotifySender;
 import com.ccconsult.pojo.Company;
 import com.ccconsult.pojo.Consultant;
@@ -235,10 +236,10 @@ public class RegistController extends BaseController {
                 Consultant consultant = consultantDAO.findByEmail(accountMail);
                 AssertUtil.state(counselorVO != null || consultant != null, "不存在的合法账号");
                 if (counselorVO != null) {
-                    notifySender.notify(NotifySender.FIND_PASSWD, counselorVO);
+                    notifySender.notify(NotifySenderEnum.FINDPASSWD_NOTIFY.getCode(), counselorVO);
                 }
                 if (consultant != null) {
-                    notifySender.notify(NotifySender.FIND_PASSWD, consultant);
+                    notifySender.notify(NotifySenderEnum.FINDPASSWD_NOTIFY.getCode(), consultant);
                 }
                 return new CcResult(true);
             }

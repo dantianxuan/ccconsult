@@ -13,6 +13,7 @@ import com.ccconsult.base.CcException;
 import com.ccconsult.base.CcResult;
 import com.ccconsult.dao.CounselorDAO;
 import com.ccconsult.dao.RegMailDAO;
+import com.ccconsult.enums.NotifySenderEnum;
 import com.ccconsult.notify.NotifySender;
 import com.ccconsult.pojo.RegMail;
 import com.ccconsult.util.ValidateUtil;
@@ -35,7 +36,6 @@ public class RegistServiceImpl extends AbstractService implements RegistService 
 
     @Override
     public CcResult regMail(final RegMail regMail) {
-
         return serviceTemplate.executeWithTx(CcResult.class, new BlankServiceCallBack() {
             @Override
             public CcResult executeService() {
@@ -43,13 +43,13 @@ public class RegistServiceImpl extends AbstractService implements RegistService 
                 RegMail existRegMail = regMailDAO.findByMail(regMail.getMail());
                 if (existRegMail == null) {
                     regMailDAO.save(regMail);
-                    notifySender.notify(NotifySender.REG_MAIL, regMail);
+                    notifySender.notify(NotifySenderEnum.REG_MAIL_NOTIFY.getCode(), regMail);
                 } else {
                     CounselorVO counselorVO = counselorDAO.findByEmail(regMail.getMail());
                     if (counselorVO != null) {
                         throw new CcException("您已经注册过该用户，请直接登录，如果忘记密码请点击忘记密码找回");
                     }
-                    notifySender.notify(NotifySender.REG_MAIL, existRegMail);
+                    notifySender.notify(NotifySenderEnum.REG_MAIL_NOTIFY.getCode(), existRegMail);
                 }
                 return new CcResult(regMail);
             }

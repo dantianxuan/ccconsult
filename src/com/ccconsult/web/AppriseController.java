@@ -50,11 +50,11 @@ public class AppriseController extends BaseController {
     @Autowired
     private AppriseDAO    appriseDAO;
 
-    @RequestMapping(value = "consultant/appriseInterview.htm", method = RequestMethod.GET)
+    @RequestMapping(value = "consultant/consult/appriseConsult.htm", method = RequestMethod.GET)
     public ModelAndView toConsultantAppriaseInterview(HttpServletRequest request,
                                                       final String consultId,
                                                       final ModelMap modelMap) {
-        ModelAndView view = new ModelAndView("consultant/appriseInterview");
+        ModelAndView view = new ModelAndView("consultant/consult/appriseConsult");
         final Consultant consultant = getConsultantInSession(request.getSession());
         CcResult result = serviceTemplate.execute(CcResult.class, new BlankServiceCallBack() {
             @Override
@@ -72,7 +72,7 @@ public class AppriseController extends BaseController {
         return view;
     }
 
-    @RequestMapping(value = "consultant/appriseInterview.json", method = RequestMethod.POST)
+    @RequestMapping(value = "/consultant/consult/appriseConsult.json", method = RequestMethod.POST)
     public @ResponseBody
     ModelMap consultantApprise(final HttpServletRequest request, final Apprise apprise,
                                final ModelMap modelMap) {
@@ -105,7 +105,7 @@ public class AppriseController extends BaseController {
                 apprise.setGmtCreate(new Date());
                 apprise.setCreator(consultant.getId());
                 apprise.setCreatorRole(UserRoleEnum.CONSULTANT.getValue());
-                apprise.setRelType(AppriseRelTypeEnum.INTERVIEW.getValue());
+                apprise.setRelType(AppriseRelTypeEnum.SERVICE.getValue());
                 Apprise localApprise = appriseDAO.findByRelId(apprise.getRelId(),
                     apprise.getRelType(), apprise.getCreator(), apprise.getCreatorRole());
                 AssertUtil.state(localApprise == null, "对不起，您已经评价了，不能重复评价");
@@ -120,7 +120,7 @@ public class AppriseController extends BaseController {
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~counselor ~~~~~~~~~~~~~~~~~~~~~~~
 
-    @RequestMapping(value = "counselor/appriseInterview.json", method = RequestMethod.POST)
+    @RequestMapping(value = "counselor/consult/appriseConsult.json", method = RequestMethod.POST)
     public @ResponseBody
     ModelMap interviewerInterview(final HttpServletRequest request, final Apprise apprise,
                                   ModelMap modelMap) {
@@ -153,7 +153,7 @@ public class AppriseController extends BaseController {
                 apprise.setGmtCreate(new Date());
                 apprise.setCreator(counselorVO.getCounselor().getId());
                 apprise.setCreatorRole(UserRoleEnum.COUNSELOR.getValue());
-                apprise.setRelType(AppriseRelTypeEnum.INTERVIEW.getValue());
+                apprise.setRelType(AppriseRelTypeEnum.SERVICE.getValue());
                 Apprise localApprise = appriseDAO.findByRelId(apprise.getRelId(),
                     apprise.getRelType(), apprise.getCreator(), apprise.getCreatorRole());
                 AssertUtil.state(localApprise == null, "对不起，您已经评价了，不能重复评价");

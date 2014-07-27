@@ -4,8 +4,6 @@
  */
 package com.ccconsult.view;
 
-import java.util.List;
-
 import com.ccconsult.base.ToString;
 import com.ccconsult.pojo.Apprise;
 import com.ccconsult.pojo.Consult;
@@ -33,7 +31,10 @@ public class ConsultBase extends ToString {
     protected CounselorVO     counselorVO;
 
     /**评价对象*/
-    protected List<Apprise>   apprises;
+    protected Apprise         counselorApprise;
+
+    /**评价对象*/
+    protected Apprise         consultantApprise;
 
     public Consult getConsult() {
         return consult;
@@ -59,12 +60,20 @@ public class ConsultBase extends ToString {
         this.counselorVO = counselorVO;
     }
 
-    public List<Apprise> getApprises() {
-        return apprises;
+    public Apprise getCounselorApprise() {
+        return counselorApprise;
     }
 
-    public void setApprises(List<Apprise> apprises) {
-        this.apprises = apprises;
+    public void setCounselorApprise(Apprise counselorApprise) {
+        this.counselorApprise = counselorApprise;
+    }
+
+    public Apprise getConsultantApprise() {
+        return consultantApprise;
+    }
+
+    public void setConsultantApprise(Apprise consultantApprise) {
+        this.consultantApprise = consultantApprise;
     }
 
     public ServiceConfigVO getServiceConfigVO() {

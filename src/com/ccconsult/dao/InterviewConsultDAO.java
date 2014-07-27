@@ -1,12 +1,8 @@
 package com.ccconsult.dao;
 
 import com.ccconsult.pojo.InterviewConsult;
-import com.ccconsult.pojo.ResumeConsult;
-
 import java.util.List;
-import org.hibernate.LockMode;
 import org.hibernate.Query;
-import org.hibernate.criterion.Example;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

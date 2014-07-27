@@ -39,7 +39,7 @@
 		 			 $date.format("yyyy-MM-dd HH:mm:ss", $consultBase.consult.gmtEffectEnd) 	
 		  		超过该时间后，该咨询会自动关闭	</small>
 		  		<br/>
-		  		<a  style="float:right" class="btn btn-primary" href="$link.contextPath/consultant/consultantSelf.htm" ><span class="glyphicon glyphicon-globe"></span>  转道我的预约</a>
+		  		<a  style="float:right" class="btn btn-primary" href="$link.contextPath/consultant/consultantSelf.htm" ><span class="glyphicon glyphicon-globe"></span>  转到我的预约</a>
 		  		<br/>	
 		  		...	  	
   		  </p> 		  

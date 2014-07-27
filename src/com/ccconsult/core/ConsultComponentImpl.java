@@ -18,6 +18,8 @@ import com.ccconsult.dao.CounselorDAO;
 import com.ccconsult.dao.InterviewConsultDAO;
 import com.ccconsult.dao.ResumeConsultDAO;
 import com.ccconsult.dao.ServiceConfigDAO;
+import com.ccconsult.enums.UserRoleEnum;
+import com.ccconsult.pojo.Apprise;
 import com.ccconsult.pojo.Consult;
 import com.ccconsult.view.ConsultBase;
 import com.ccconsult.view.InterviewCounsultVO;
@@ -115,7 +117,16 @@ public class ConsultComponentImpl implements ConsultComponent {
             ((InterviewCounsultVO) base).setInterviewConsult(interviewConsultDAO
                 .findByConsultId(consult.getId()));
         }
-        base.setApprises(appriseDAO.findByRelId(consult.getId()));
+        List<Apprise> apprises = appriseDAO.findByRelId(consult.getId());
+        if (!CollectionUtils.isEmpty(apprises)) {
+            for (Apprise apprise : apprises) {
+                if (apprise.getCreatorRole().equals(UserRoleEnum.COUNSELOR.getValue())) {
+                    base.setCounselorApprise(apprise);
+                } else {
+                    base.setConsultantApprise(apprise);
+                }
+            }
+        }
         base.setConsult(consult);
         base.setConsultant(consultantDAO.findById(consult.getConsultantId()));
         base.setCounselorVO(counselorDAO.findById(consult.getCounselorId()));

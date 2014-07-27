@@ -3,8 +3,6 @@
  */
 package com.ccconsult.web;
 
-import java.util.Date;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -16,16 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.ccconsult.base.AssertUtil;
-import com.ccconsult.base.BlankServiceCallBack;
 import com.ccconsult.base.CcConstrant;
 import com.ccconsult.base.CcResult;
 import com.ccconsult.dao.ConsultantDAO;
 import com.ccconsult.dao.CounselorDAO;
 import com.ccconsult.dao.ServiceDAO;
-import com.ccconsult.enums.MessageRelTypeEnum;
-import com.ccconsult.enums.UserRoleEnum;
-import com.ccconsult.pojo.Consult;
 import com.ccconsult.pojo.Consultant;
 import com.ccconsult.util.StringUtil;
 import com.ccconsult.view.CounselorVO;

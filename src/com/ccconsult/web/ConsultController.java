@@ -27,8 +27,10 @@ import com.ccconsult.dao.ConsultDAO;
 import com.ccconsult.dao.MessageDAO;
 import com.ccconsult.enums.ConsultStepEnum;
 import com.ccconsult.enums.MessageRelTypeEnum;
+import com.ccconsult.enums.NotifySenderEnum;
 import com.ccconsult.enums.PayStateEnum;
 import com.ccconsult.enums.UserRoleEnum;
+import com.ccconsult.notify.NotifySender;
 import com.ccconsult.pojo.Article;
 import com.ccconsult.pojo.Consult;
 import com.ccconsult.pojo.Consultant;
@@ -52,6 +54,8 @@ public class ConsultController extends BaseController {
     private ConsultComponent consultComponent;
     @Autowired
     private ArticleDAO       articleDAO;
+    @Autowired
+    private NotifySender     notifySender;
 
     @RequestMapping(value = "counselor/consult/rejectConsult.json", method = RequestMethod.POST)
     public @ResponseBody
@@ -74,6 +78,7 @@ public class ConsultController extends BaseController {
                 consult.setGmtModified(new Date());
                 consult.setRejectReason(rejectReason);
                 consultDAO.update(consult);
+                notifySender.notify(NotifySenderEnum.CONSULT_REJECT_NOTIFY.getCode(), consult);
                 return new CcResult(consult);
             }
         });
@@ -154,6 +159,7 @@ public class ConsultController extends BaseController {
                 consult.setPayTag(PayStateEnum.PAY_SUCCESS.getValue());
                 consult.setStep(ConsultStepEnum.ON_CONSULT.getValue());
                 consultDAO.update(consult);
+                notifySender.notify(NotifySenderEnum.CONSULT_WORKON_NOTIFY.getCode(), consult);
                 return new CcResult(true);
             }
         });
@@ -183,6 +189,7 @@ public class ConsultController extends BaseController {
                 }
                 consult.setGmtModified(new Date());
                 consultDAO.update(consult);
+                notifySender.notify(NotifySenderEnum.ON_SCHEDULE_NOTIFY.getCode(), consult);//咨询师完成预约
                 return new CcResult(consult);
             }
         });
