@@ -1,10 +1,14 @@
 package com.ccconsult.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.Query;
+import org.springframework.util.CollectionUtils;
 
 import com.ccconsult.pojo.Consultant;
+import com.ccconsult.pojo.Counselor;
 
 /**
  	* A data access object (DAO) providing persistence and search support for Consultant entities.
@@ -26,6 +30,24 @@ public class ConsultantDAO extends BaseHibernateDAO<Consultant> {
     public Consultant findById(java.lang.Integer id) {
         Consultant instance = (Consultant) getSession().get("com.ccconsult.pojo.Consultant", id);
         return instance;
+    }
+
+    public Map<Integer, Consultant> getByIds(List<Integer> ids) {
+        Map<Integer, Consultant> consultantMap = new HashMap<Integer, Consultant>();
+        if (CollectionUtils.isEmpty(ids)) {
+            return consultantMap;
+        }
+        String hql = "  from Consultant where id  in  (:ids)";
+        Query queryObject = getSession().createQuery(hql);
+        queryObject.setParameterList("ids", ids);
+        List<Consultant> consultants = queryObject.list();
+        if (CollectionUtils.isEmpty(consultants)) {
+            return consultantMap;
+        }
+        for (Consultant consultant : consultants) {
+            consultantMap.put(consultant.getId(), consultant);
+        }
+        return consultantMap;
     }
 
     public List findByProperty(String propertyName, Object value) {

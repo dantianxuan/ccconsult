@@ -34,5 +34,11 @@
         <property name="type" type="integer">
             <column name="type" />
         </property>
+        <property name="hitCount" type="integer">
+            <column name="hit_count" />
+        </property>
+        <property name="replyCount" type="string">
+            <column name="reply_count" length="45" />
+        </property>
     </class>
 </hibernate-mapping>

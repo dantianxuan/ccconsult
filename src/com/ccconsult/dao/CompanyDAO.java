@@ -1,6 +1,5 @@
 package com.ccconsult.dao;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,13 +7,10 @@ import java.util.Map;
 import org.hibernate.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.CollectionUtils;
 
 import com.ccconsult.base.PageList;
 import com.ccconsult.pojo.Company;
 import com.ccconsult.util.StringUtil;
-import com.ccconsult.view.CompanyBriefVO;
 
 /**
  	* A data access object (DAO) providing persistence and search support for Company entities.
@@ -27,18 +23,17 @@ import com.ccconsult.view.CompanyBriefVO;
 
 public class CompanyDAO extends BaseHibernateDAO<Company> {
 
-    private static final Logger log         = LoggerFactory.getLogger(CompanyDAO.class);
-
-    @Autowired
-    private CounselorDAO        counselorDAO;
+    private static final Logger log             = LoggerFactory.getLogger(CompanyDAO.class);
 
     //property constants
-    public static final String  NAME        = "name";
-    public static final String  DESCRIPTION = "description";
-    public static final String  LINK        = "link";
-    public static final String  MAIL_SUFFIX = "mailSuffix";
-    public static final String  PHOTO       = "photo";
-    public static final String  TOP_TAG     = "topTag";
+    public static final String  NAME            = "name";
+    public static final String  DESCRIPTION     = "description";
+    public static final String  LINK            = "link";
+    public static final String  MAIL_SUFFIX     = "mailSuffix";
+    public static final String  PHOTO           = "photo";
+    public static final String  COUNSELOR_COUNT = "counselorCount";
+    public static final String  REG_MOBILE      = "regMobile";
+    public static final String  STATE           = "state";
 
     public Company findById(java.lang.Integer id) {
         log.debug("getting Company instance with id: " + id);
@@ -51,25 +46,16 @@ public class CompanyDAO extends BaseHibernateDAO<Company> {
         }
     }
 
-    public PageList<CompanyBriefVO> queryByName(int pageNo, int pageSize, String name) {
+    public PageList<Company> queryByName(int pageNo, int pageSize, String name) {
         Map map = new HashMap<String, Object>();
         String hql = "";
         if (StringUtil.isBlank(name)) {
             hql = "from Company  order by gmtCreate desc";
         } else {
             map.put(NAME, "%" + name + "%");
-            hql = "from Company where name like :name order by gmtCreate desc";
+            hql = "from Company where state=1 and  name like :name order by gmtCreate desc";
         }
-        PageList result = queryPage(pageNo, pageSize, hql, map);
-        if (CollectionUtils.isEmpty(result.getResult())) {
-            return result;
-        }
-        List<CompanyBriefVO> briefs = new ArrayList<CompanyBriefVO>();
-        for (Object object : result.getResult()) {
-            briefs.add(consBrief((Company) object));
-        }
-        result.setData(briefs);
-        return result;
+        return queryPage(pageNo, pageSize, hql, map);
     }
 
     public Company findByMailSuffix(Object mailSuffix) {
@@ -79,7 +65,7 @@ public class CompanyDAO extends BaseHibernateDAO<Company> {
     public List findAll() {
         log.debug("finding all Company instances");
         try {
-            String queryString = "from Company";
+            String queryString = "from Company where state=1  ";
             Query queryObject = getSession().createQuery(queryString);
             return queryObject.list();
         } catch (RuntimeException re) {
@@ -101,24 +87,11 @@ public class CompanyDAO extends BaseHibernateDAO<Company> {
         }
     }
 
-    public List<CompanyBriefVO> queryTopList(int size) {
-        String hql = "from Company  order by topTag desc limit 0," + "size";
+    public List<Company> queryTopList(int size) {
+        String hql = "from Company  order by counselorCount desc limit 0," + size;
         Query query = this.getSession().createQuery(hql);
         List<Company> companys = query.list();
-        List<CompanyBriefVO> companyBriefs = new ArrayList<CompanyBriefVO>();
-        if (CollectionUtils.isEmpty(companys)) {
-            return companyBriefs;
-        }
-        for (Company company : companys) {
-            companyBriefs.add(consBrief(company));
-        }
-        return companyBriefs;
+        return companys;
     }
 
-    private CompanyBriefVO consBrief(Company company) {
-        CompanyBriefVO brif = new CompanyBriefVO();
-        brif.setCompany(company);
-        brif.setCounselorCount(counselorDAO.queryCount(company.getId()));
-        return brif;
-    }
 }

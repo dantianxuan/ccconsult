@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ccconsult.base.AssertUtil;
@@ -22,6 +23,8 @@ import com.ccconsult.base.BlankServiceCallBack;
 import com.ccconsult.base.CcConstrant;
 import com.ccconsult.base.CcException;
 import com.ccconsult.base.CcResult;
+import com.ccconsult.core.FileComponent;
+import com.ccconsult.dao.AccountDAO;
 import com.ccconsult.dao.CompanyDAO;
 import com.ccconsult.dao.ConsultantDAO;
 import com.ccconsult.dao.CounselorDAO;
@@ -29,13 +32,16 @@ import com.ccconsult.dao.RegMailDAO;
 import com.ccconsult.dao.ServiceConfigDAO;
 import com.ccconsult.enums.DataStateEnum;
 import com.ccconsult.enums.NotifySenderEnum;
+import com.ccconsult.enums.UserRoleEnum;
 import com.ccconsult.notify.NotifySender;
+import com.ccconsult.pojo.Account;
 import com.ccconsult.pojo.Company;
 import com.ccconsult.pojo.Consultant;
 import com.ccconsult.pojo.Counselor;
 import com.ccconsult.pojo.RegMail;
 import com.ccconsult.pojo.ServiceConfig;
 import com.ccconsult.service.RegistService;
+import com.ccconsult.util.StringUtil;
 import com.ccconsult.util.ValidateUtil;
 import com.ccconsult.view.CounselorVO;
 
@@ -59,6 +65,10 @@ public class RegistController extends BaseController {
     private ConsultantDAO    consultantDAO;
     @Autowired
     private CompanyDAO       companyDAO;
+    @Autowired
+    private AccountDAO       accountDAO;
+    @Autowired
+    private FileComponent    fileComponent;
 
     /**
      * 注册面试官init页面
@@ -139,14 +149,22 @@ public class RegistController extends BaseController {
                 counselor.setGmtCreate(new Date());
                 counselor.setGmtModified(new Date());
                 counselor.setCompanyId(company.getId());
-                counselorDAO.save(counselor);
+                counselorDAO.save(counselor);//注册一个用户
+                Account account = new Account();
+                account.setCurrentMoney(new Double(0));
+                account.setFreezingMoney(0);
+                account.setInAllMoney(0);
+                account.setRelRoleId(counselor.getId());
+                account.setRelRoleType(UserRoleEnum.COUNSELOR.getValue());
+                account.setTransAllMoney(0);
+                accountDAO.save(account);//初始化一个账户
                 ServiceConfig serviceConfig = new ServiceConfig();
                 serviceConfig.setCounselorId(counselor.getId());
                 serviceConfig.setGmtCreate(new Date());
                 serviceConfig.setState(DataStateEnum.NORMAL.getValue());
                 serviceConfig.setPrice(0);
                 serviceConfig.setServiceId(1);
-                serviceConfigDAO.save(serviceConfig);
+                serviceConfigDAO.save(serviceConfig);//初始化一个最基本的站内咨询服务
                 return new CcResult(counselor);
             }
         });
@@ -203,6 +221,14 @@ public class RegistController extends BaseController {
                 consultant.setGmtCreate(new Date());
                 consultant.setGmtModified(new Date());
                 consultantDAO.save(consultant);
+                Account account = new Account();
+                account.setCurrentMoney(new Double(0));
+                account.setFreezingMoney(0);
+                account.setInAllMoney(0);
+                account.setRelRoleId(consultant.getId());
+                account.setRelRoleType(UserRoleEnum.CONSULTANT.getValue());
+                account.setTransAllMoney(0);
+                accountDAO.save(account);//初始化一个账户                
                 return new CcResult(consultant);
             }
         });
@@ -247,5 +273,54 @@ public class RegistController extends BaseController {
         modelMap.put("accountMail", accountMail);
         modelMap.put("result", result);
         return view;
+    }
+
+    /**
+     * 注册一个公司信息
+     * 
+     * @return
+     */
+    @RequestMapping(value = "regist/regCompany.htm", method = RequestMethod.GET)
+    public ModelAndView regCompany(HttpServletRequest httpservletrequest, ModelMap modelMap) {
+        ModelAndView view = new ModelAndView("regist/regCompany");
+        return view;
+    }
+
+    /**
+     * 注册公司信息
+     * 
+     * @param request
+     * @param company
+     * @param localPhoto
+     * @param modelMap
+     * @return
+     */
+    @RequestMapping(value = "/regist/regCompanyInfo.htm", method = RequestMethod.POST)
+    public @ResponseBody
+    ModelMap regCompanyJson(final HttpServletRequest request, final Company company,
+                            ModelMap modelMap) {
+        modelMap.clear();
+        CcResult result = serviceTemplate.executeWithTx(CcResult.class, new BlankServiceCallBack() {
+            @Override
+            public CcResult executeService() {
+                AssertUtil.state(ValidateUtil.isMailSubfix(company.getMailSuffix()), "请填写合法的公司邮箱后缀");
+                AssertUtil.state(company.getName() != null
+                                 && company.getName().length() < CcConstrant.COMMON_128_LENGTH,
+                    "请输入合法的公司名称，名称长度不能超过128个字符");
+                AssertUtil.state(
+                    company.getDescription() != null
+                            && company.getDescription().length() < CcConstrant.COMMON_512_LENGTH,
+                    "请输入合法的公司描述，描述长度不能超过512个字符");
+                AssertUtil.state(ValidateUtil.isMobile(company.getRegMobile()),
+                    "请留下您的手机号码，我们会联系您进行审核");
+                company.setState(DataStateEnum.DISABLE.getValue());
+                company.setGmtCreate(new Date());
+                company.setGmtModified(new Date());
+                companyDAO.save(company);
+                return new CcResult(company);
+            }
+        });
+        modelMap.put("result", result);
+        return modelMap;
     }
 }

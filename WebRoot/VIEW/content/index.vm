@@ -81,15 +81,15 @@
 		<div class="panel panel-default">
 			  <div class="panel-heading"><strong><span class="glyphicon glyphicon-tags"></span>  热门面试咨询公司</strong> <a href="$link.contextPath/searchList.htm?type=COMPANY" style="float:right">更多...</a></div>
 			  <div class="panel-body">		  
-		 		#foreach($companyBriefVO in $companyBriefVOs)
+		 		#foreach($company in $companys)
 					<div class="col-sm-4">
 						<div style="height:80px;margin-bottom:4px;background-color:#fff">
-						<a href="$link.contextPath/company.htm?companyId=$companyBriefVO.company.id">
-								<img src="$link.contextPath/$fileUtil.getPath($!companyBriefVO.company.photo)"
+						<a href="$link.contextPath/company.htm?companyId=$company.id">
+								<img src="$link.contextPath/$fileUtil.getPath($!company.photo)"
 								style="width:60px;height: 60px; float:left" class="img-rounded">
 								<p style="padding-left: 72px;">
-									$companyBriefVO.company.name<br /> 
-									咨询师人数：$companyBriefVO.counselorCount人 
+									$company.name<br /> 
+									咨询师人数：$!company.counselorCount人 
 								</p>
 						</a>			
 						</div>

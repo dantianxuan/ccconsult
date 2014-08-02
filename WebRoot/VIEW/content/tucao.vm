@@ -1,0 +1,112 @@
+<script src="$link.contextPath/STATIC/js/jquery.form.js"></script>
+#if($result && $result.isSuccess)
+	#set($company=$result.object)
+#end
+<form class="form-horizontal" action="$link.contextPath/tucao.json" method="post" id="tucaoForm">
+<div class="row">
+	    <div class="col-sm-3" >
+	        <img src="$link.contextPath/STATIC/image/tucao.jpg" class="img-thumbnail">
+	    </div>
+	    <!-- right CONTENT================================ -->
+	    <div class="col-sm-9" >
+	        <div class="panel panel-default">
+	            <div class="panel-body" style="font-size: 13px;padding-bottom:4px;">
+					  <fieldset>
+					    <p>如果您对平台有什么建议和意见，或者有啥要吐槽的，那就放心的来吧。。</p>
+					    <div class="form-group">
+					      <div class="col-sm-12">
+					        <textarea class="form-control" rows="3" id="textArea" name="content" required></textarea>
+					        <span id="warnSpan" style="color:red;display:none"><span class="glyphicon glyphicon-warning-sign"></span><span id="errorMessageSpan"></span></span>
+					      </div>
+					    </div>
+					    <div class="form-group">
+					    	<div class="col-sm-12">
+					        <button type="button" id="submitButton" class="btn btn-sm btn-primary" onclick="return tucao();">我要吐槽</button>
+					      	</div>
+				     	 </div>	
+					  </fieldset>
+	            </div>
+	        </div>
+	    </div>
+</div> 
+</form>
+<script language="javascript">
+	function tucao(){
+		var options = {
+			dataType : "json",
+			beforeSubmit : function() {
+				$('#submitButton').button('loading');
+			},
+			success : function(result) {
+				$('#submitButton').button('reset');
+				if(result.result.success){
+					location.href='$link.contextPath/tucao.htm';
+				}else{	
+					$('#warnSpan').show();
+					$('#errorMessageSpan').html('吐槽失败！'+result.result.message);
+				}
+			},
+			error : function(result) {
+				$('#submitButton').button('reset');
+				$('#warnSpan').show();
+				$('#errorMessageSpan').html('吐槽失败！请稍后再试');
+			}
+		};
+		
+    	$('#tucaoForm').ajaxSubmit(options); 
+        return false; 
+	}
+</script>
+<br/>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+            	吐槽信息(最近20条)
+            </div>
+            <div class="panel-body">
+              	#if(!$pageList && $pageList.getData().size()==0)
+            		<p>无吐槽信息</p>
+            	#else
+	            	#foreach($comment in $pageList.getData())
+		            	 <div class="row">
+		                    <div class="col-sm-12">
+								<div class="panel panel-default">
+					            	<div class="panel-body">
+ 											<div class="col-sm-2" >
+							            		#if($comment.creatorId)
+							            			#if($comment.creatorRole==1)
+							            				<img src="$link.contextPath/$fileUtil.getPath($counselorMap.get($comment.creatorId).photo)" style="width: 72px;height:72px;" class="img-thumbnail"/>
+							            			#elseif($comment.creatorRole==2)
+							            				<img src="$link.contextPath/$fileUtil.getPath($consultantMap.get($comment.creatorId).photo)" style="width: 72px;height:72px;" class="img-thumbnail"/>
+							            			#end
+							            		#else
+							            			<img src="$link.contextPath/$fileUtil.getPath('')" style="width: 72px;height:72px;" class="img-thumbnail"/>
+							            		#end 												
+				                            </div>
+				                            <div class="col-sm-10" style="border-left: solid 1px #ddd" >
+				                                <p class="text-warning" style="border-bottom:solid 1px #ddd">
+												#if($comment.creatorId)
+							            			#if($comment.creatorRole==1)
+							            				<a href="$link.contextPath/counselorInfo.htm?counselorId=$comment.creatorId">用户名称(咨询师):$counselorMap.get($comment.creatorId).name</a>
+							            			#elseif($comment.creatorRole==2)
+							            				用户名称(咨询者):$consultantMap.get($comment.creatorId).name
+							            			#end
+							            		#else
+							            			游客
+							            		#end 						                                
+				                                <span style="float:right">创建时间：$date.format("yyyy-MM-dd HH:mm:ss", $comment.gmtCreate)</span></p>
+			                                	<div style="min-height:50px;overflow:hidden"><small>$!comment.content</small></div>
+				                            </div>
+									</div>
+								</div>
+	                        </div>
+		                </div>
+	            	#end           	
+            	#end
+            </div>
+        </div>
+    </div>
+</div>
+
+

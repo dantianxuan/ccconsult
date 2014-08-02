@@ -18,7 +18,9 @@ public class Company extends com.ccconsult.base.ToString implements java.io.Seri
     private String  mailSuffix;
     private String  photo;
     private Date    gmtModified;
-    private Integer topTag;
+    private Integer counselorCount;
+    private String  regMobile;
+    private Integer state;
 
     // Constructors
 
@@ -28,7 +30,8 @@ public class Company extends com.ccconsult.base.ToString implements java.io.Seri
 
     /** full constructor */
     public Company(String name, String description, String link, Date gmtCreate, String mailSuffix,
-                   String photo, Date gmtModified, Integer topTag) {
+                   String photo, Date gmtModified, Integer counselorCount, String regMobile,
+                   Integer state) {
         this.name = name;
         this.description = description;
         this.link = link;
@@ -36,7 +39,9 @@ public class Company extends com.ccconsult.base.ToString implements java.io.Seri
         this.mailSuffix = mailSuffix;
         this.photo = photo;
         this.gmtModified = gmtModified;
-        this.topTag = topTag;
+        this.counselorCount = counselorCount;
+        this.regMobile = regMobile;
+        this.state = state;
     }
 
     // Property accessors
@@ -105,12 +110,28 @@ public class Company extends com.ccconsult.base.ToString implements java.io.Seri
         this.gmtModified = gmtModified;
     }
 
-    public Integer getTopTag() {
-        return this.topTag;
+    public Integer getCounselorCount() {
+        return this.counselorCount;
     }
 
-    public void setTopTag(Integer topTag) {
-        this.topTag = topTag;
+    public void setCounselorCount(Integer counselorCount) {
+        this.counselorCount = counselorCount;
+    }
+
+    public String getRegMobile() {
+        return this.regMobile;
+    }
+
+    public void setRegMobile(String regMobile) {
+        this.regMobile = regMobile;
+    }
+
+    public Integer getState() {
+        return this.state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
     }
 
 }

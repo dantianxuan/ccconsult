@@ -11,12 +11,13 @@ public class Comment extends com.ccconsult.base.ToString implements java.io.Seri
     // Fields    
 
     private Integer id;
-    private String  comment;
-    private String  themeType;
-    private Integer themeId;
+    private String  content;
     private Date    gmtCreate;
-    private String  creator;
-    private Date    gmtModified;
+    private Integer creatorId;
+    private Integer creatorRole;
+    private Integer relId;
+    private Integer relType;
+    private String  relInfo;
 
     // Constructors
 
@@ -25,14 +26,15 @@ public class Comment extends com.ccconsult.base.ToString implements java.io.Seri
     }
 
     /** full constructor */
-    public Comment(String comment, String themeType, Integer themeId, Date gmtCreate,
-                   String creator, Date gmtModified) {
-        this.comment = comment;
-        this.themeType = themeType;
-        this.themeId = themeId;
+    public Comment(String content, Date gmtCreate, Integer creatorId, Integer creatorRole,
+                   Integer relId, Integer relType, String relInfo) {
+        this.content = content;
         this.gmtCreate = gmtCreate;
-        this.creator = creator;
-        this.gmtModified = gmtModified;
+        this.creatorId = creatorId;
+        this.creatorRole = creatorRole;
+        this.relId = relId;
+        this.relType = relType;
+        this.relInfo = relInfo;
     }
 
     // Property accessors
@@ -45,28 +47,12 @@ public class Comment extends com.ccconsult.base.ToString implements java.io.Seri
         this.id = id;
     }
 
-    public String getComment() {
-        return this.comment;
+    public String getContent() {
+        return this.content;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
-    public String getThemeType() {
-        return this.themeType;
-    }
-
-    public void setThemeType(String themeType) {
-        this.themeType = themeType;
-    }
-
-    public Integer getThemeId() {
-        return this.themeId;
-    }
-
-    public void setThemeId(Integer themeId) {
-        this.themeId = themeId;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public Date getGmtCreate() {
@@ -77,20 +63,44 @@ public class Comment extends com.ccconsult.base.ToString implements java.io.Seri
         this.gmtCreate = gmtCreate;
     }
 
-    public String getCreator() {
-        return this.creator;
+    public Integer getCreatorId() {
+        return this.creatorId;
     }
 
-    public void setCreator(String creator) {
-        this.creator = creator;
+    public void setCreatorId(Integer creatorId) {
+        this.creatorId = creatorId;
     }
 
-    public Date getGmtModified() {
-        return this.gmtModified;
+    public Integer getCreatorRole() {
+        return this.creatorRole;
     }
 
-    public void setGmtModified(Date gmtModified) {
-        this.gmtModified = gmtModified;
+    public void setCreatorRole(Integer creatorRole) {
+        this.creatorRole = creatorRole;
+    }
+
+    public Integer getRelId() {
+        return this.relId;
+    }
+
+    public void setRelId(Integer relId) {
+        this.relId = relId;
+    }
+
+    public Integer getRelType() {
+        return this.relType;
+    }
+
+    public void setRelType(Integer relType) {
+        this.relType = relType;
+    }
+
+    public String getRelInfo() {
+        return this.relInfo;
+    }
+
+    public void setRelInfo(String relInfo) {
+        this.relInfo = relInfo;
     }
 
 }

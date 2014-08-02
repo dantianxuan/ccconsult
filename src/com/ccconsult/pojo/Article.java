@@ -19,6 +19,10 @@ public class Article extends com.ccconsult.base.ToString implements java.io.Seri
     private Integer state;
     private String  topTag;
     private Integer type;
+    private Integer hitCount;
+    private String  replyCount;
+
+    // Constructors
 
     /** default constructor */
     public Article() {
@@ -26,7 +30,7 @@ public class Article extends com.ccconsult.base.ToString implements java.io.Seri
 
     /** full constructor */
     public Article(String title, String content, Date gmtCreate, Date gmtModified, String topPhoto,
-                   Integer state, String topTag, Integer type) {
+                   Integer state, String topTag, Integer type, Integer hitCount, String replyCount) {
         this.title = title;
         this.content = content;
         this.gmtCreate = gmtCreate;
@@ -35,6 +39,8 @@ public class Article extends com.ccconsult.base.ToString implements java.io.Seri
         this.state = state;
         this.topTag = topTag;
         this.type = type;
+        this.hitCount = hitCount;
+        this.replyCount = replyCount;
     }
 
     // Property accessors
@@ -109,6 +115,22 @@ public class Article extends com.ccconsult.base.ToString implements java.io.Seri
 
     public void setType(Integer type) {
         this.type = type;
+    }
+
+    public Integer getHitCount() {
+        return this.hitCount;
+    }
+
+    public void setHitCount(Integer hitCount) {
+        this.hitCount = hitCount;
+    }
+
+    public String getReplyCount() {
+        return this.replyCount;
+    }
+
+    public void setReplyCount(String replyCount) {
+        this.replyCount = replyCount;
     }
 
 }

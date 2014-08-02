@@ -1,0 +1,100 @@
+<link href="$link.contextPath/STATIC/plugin/umeditor/themes/default/css/umeditor.css" type="text/css" rel="stylesheet">
+<script type="text/javascript" src="$link.contextPath/STATIC/plugin/umeditor/umeditor.config.js"></script>
+<script src="$link.contextPath/STATIC/js/jquery.form.js"></script>
+<!-- 编辑器源码文件 -->
+<script type="text/javascript" src="$link.contextPath/STATIC/plugin/umeditor/umeditor.js"></script>
+<!-- 语言包文件(建议手动加载语言包，避免在ie下，因为加载语言失败导致编辑器加载失败) -->
+<script type="text/javascript" src="$link.contextPath/STATIC/plugin/umeditor/lang/zh-cn/zh-cn.js"></script>  
+<script src="$link.contextPath/STATIC/js/fileinput.js"></script>
+<link rel="stylesheet" href="$link.contextPath/STATIC/css/fileinput.css"/>
+<div class="alert alert-dismissable alert-warning">
+  <h4>欢迎您注册一个公司信息</h4>
+  <p>请仔细填写您要注册的公司信息并留下您的电话号码，我们会及时和您联系并审核您的申请.</p>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <form class="form-horizontal" action="$link.contextPath/regist/regCompanyInfo.htm" method="POST" id="regCompanyForm">
+                    <fieldset> 
+                        <div class="form-group hide" id="errorFiled">
+                            <label class="col-sm-2 control-label"></label>
+                                <div class="col-sm-10">
+                                   <span style="color:red"><span class="glyphicon glyphicon-warning-sign"></span> <span id="errorSpan"></span></span>
+                                </div>
+                        </div>	 
+                        <div class="form-group">
+                        	<label  class="col-sm-2 control-label">公司名称</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="name" class="form-control" placeholder="公司名称" required>
+                            </div>
+                        </div> 	                    	
+                      	<div class="form-group">
+                             <label  class="col-sm-2 control-label">邮箱后缀</label>
+                            <div class="col-sm-2">
+                             <input type="text" name="mailSuffix" class="form-control" placeholder="邮箱后缀" required >
+                            </div>                            
+                    	</div>                     	                     	                 		
+                        <div class="form-group">
+                         	<label  class="col-sm-2 control-label">公司介绍</label>
+                            <div class="col-sm-10">
+                                <script type="text/plain" id="myEditor" name="description" style="width:100%;height:200px;"></script>
+                                <script type="text/javascript">
+                               		var um = UM.getEditor('myEditor');
+                                </script>                         
+                            </div>
+                        </div>
+                    	<div class="form-group">
+                             <label  class="col-sm-2 control-label">联系电话</label>
+                            <div class="col-sm-10">
+                             <input type="text" name="regMobile" class="form-control" placeholder="请输入您的联系电话以便于我们审核" required>
+                            </div>                            
+                    	</div>                          
+                        <div class="form-group">
+                        	<label  class="col-sm-2 control-label"></label>
+                            <div class="col-sm-10" >
+								<button type="button" id="submitCompanyButton" onclick="return regCompany();" class="btn btn-primary col-sm-2" style="float:right;">注册公司信息</button>                            
+                            	<a href="$link.contextPath/index.htm" class="btn btn-link col-sm-2" style="float:right;">返回首页</a>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+	function showArea(message){
+		$('#errorSpan').html(message);
+		$('#errorFiled').removeClass('hide');
+	}
+	function regCompany() {
+			if($('input[name=localFile]')==undefined || $('input[name=localFile]').val()==''){
+				showArea('必须上传简历文件');
+				return false;
+			}
+			var options = {
+				dataType : "json",
+				beforeSubmit : function() {
+					$('#submitCompanyButton').button('loading');
+				},
+				success : function(result) {
+					$('#submitCompanyButton').button('reset');
+					var data = eval(result);
+					if(data.result.success){
+						alert('处理成功，请等待我们联系您记性注册！');
+						location.href="$link.contextPath/index.htm;
+					}else{
+						showArea('提交失败：'+data.result.message);
+					}
+				},
+				error : function(result) {
+					$('#submitCompanyButton').button('reset');
+					alert('提交失败，请检查！');
+				}
+			};
+			$('#regCompanyForm').ajaxSubmit(options); 
+        	return false;
+		}	
+</script>
+

@@ -23,7 +23,7 @@ import com.ccconsult.dao.ServiceDAO;
 import com.ccconsult.enums.ArticleTypeEnum;
 import com.ccconsult.enums.ConsultStepEnum;
 import com.ccconsult.pojo.Article;
-import com.ccconsult.view.CompanyBriefVO;
+import com.ccconsult.pojo.Company;
 import com.ccconsult.view.ConsultBase;
 
 /**
@@ -49,9 +49,9 @@ public class IndexController {
             request.getSession().setAttribute(CcConstrant.THEME, theme);
         }
         List<Article> articles = articleDAO.queryList(1, 10, ArticleTypeEnum.WEB_NEWS.getValue());
-        List<CompanyBriefVO> companyBriefVOs = companyDAO.queryTopList(10);
+        List<Company> companys = companyDAO.queryTopList(10);
         modelMap.put("articles", articles);
-        modelMap.put("companyBriefVOs", companyBriefVOs);
+        modelMap.put("companys", companys);
         modelMap.put("services", serviceDAO.findAll());
         PageList<ConsultBase> consultBases = consultComponent.queryPaged(2,
             ConsultStepEnum.FIHSHED.getValue(), 0, 0, 0, 10, 1);

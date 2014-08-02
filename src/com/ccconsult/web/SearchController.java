@@ -17,9 +17,9 @@ import com.ccconsult.base.CcResult;
 import com.ccconsult.base.PageList;
 import com.ccconsult.dao.CompanyDAO;
 import com.ccconsult.dao.CounselorDAO;
+import com.ccconsult.pojo.Company;
 import com.ccconsult.pojo.Counselor;
 import com.ccconsult.util.StringUtil;
-import com.ccconsult.view.CompanyBriefVO;
 
 /**
  * @author jingyu.dan
@@ -43,9 +43,8 @@ public class SearchController {
             .getParameter("pageNo"));
         if (!StringUtil.equals("COUNSELOR", type)) {
             type = "COMPANY";
-            PageList<CompanyBriefVO> companyBriefVOs = companyDAO.queryByName(pageNo, pageSize,
-                keyword);
-            result.setObject(companyBriefVOs);
+            PageList<Company> companys = companyDAO.queryByName(pageNo, pageSize, keyword);
+            result.setObject(companys);
         } else {
             PageList<Counselor> counselors = counselorDAO.queryByName(pageNo, pageSize, keyword);
             result.setObject(counselors);

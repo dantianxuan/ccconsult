@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.hibernate.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.CollectionUtils;
 
 import com.ccconsult.base.PageList;
 import com.ccconsult.pojo.Company;
@@ -40,6 +41,24 @@ public class CounselorDAO extends BaseHibernateDAO<Counselor> {
 
     public Counselor getById(java.lang.Integer id) {
         return (Counselor) getSession().get("com.ccconsult.pojo.Counselor", id);
+    }
+
+    public Map<Integer, Counselor> getByIds(List<Integer> ids) {
+        Map<Integer, Counselor> counselorMap = new HashMap<Integer, Counselor>();
+        if (CollectionUtils.isEmpty(ids)) {
+            return counselorMap;
+        }
+        String hql = "  from Counselor where id  in  (:ids)";
+        Query queryObject = getSession().createQuery(hql);
+        queryObject.setParameterList("ids", ids);
+        List<Counselor> counselors = queryObject.list();
+        if (CollectionUtils.isEmpty(counselors)) {
+            return counselorMap;
+        }
+        for (Counselor counselor : counselors) {
+            counselorMap.put(counselor.getId(), counselor);
+        }
+        return counselorMap;
     }
 
     public CounselorVO findById(java.lang.Integer id) {

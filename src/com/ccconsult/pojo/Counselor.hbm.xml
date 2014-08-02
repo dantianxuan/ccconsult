@@ -59,5 +59,11 @@
         <property name="city" type="string">
             <column name="city" length="256" />
         </property>
+        <property name="consultCount" type="integer">
+            <column name="consult_count" />
+        </property>
+        <property name="appriseCount" type="integer">
+            <column name="apprise_count" />
+        </property>
     </class>
 </hibernate-mapping>

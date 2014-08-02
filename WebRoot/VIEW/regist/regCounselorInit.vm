@@ -47,6 +47,12 @@
 			                            </button>	                               
 	                               </div>
 	                            </div>
+	                            <hr/>
+								<div class="form-group">
+								 	<div class="col-sm-12" style="text-align:right;">
+		                               <a href="$link.contextPath/regist/regCompany.htm"> <span class="glyphicon glyphicon-arrow-right"></span> 没有我所在的公司？那赶快注册一个吧！</a>
+	                            	</div>
+	                            </div>	                            
 	                        </fieldset>
 	                    </form>
 	                    <script language="javascript">

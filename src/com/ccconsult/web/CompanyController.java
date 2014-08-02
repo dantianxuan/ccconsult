@@ -33,7 +33,6 @@ import com.ccconsult.enums.FileTypeEnum;
 import com.ccconsult.pojo.Company;
 import com.ccconsult.pojo.Counselor;
 import com.ccconsult.util.StringUtil;
-import com.ccconsult.view.CompanyBriefVO;
 
 /**
  * 
@@ -77,9 +76,9 @@ public class CompanyController extends BaseController {
         int pageSize = NumberUtils.toInt(request.getParameter("pageSize"));
         int pageNo = NumberUtils.toInt(request.getParameter("pageNo"));
         String name = request.getParameter("name");
-        PageList<CompanyBriefVO> companyBriefVOs = companyDAO.queryByName(pageNo,
-            pageSize == 0 ? 20 : pageSize, name);
-        modelMap.put("companyBriefVOs", companyBriefVOs);
+        PageList<Company> companys = companyDAO.queryByName(pageNo, pageSize == 0 ? 20 : pageSize,
+            name);
+        modelMap.put("companys", companys);
         return new ModelAndView("backstage/companyList");
     }
 
@@ -111,7 +110,6 @@ public class CompanyController extends BaseController {
                     localCompany.setLink(company.getLink());
                     localCompany.setMailSuffix(company.getMailSuffix());
                     localCompany.setName(company.getName());
-                    localCompany.setTopTag(company.getTopTag());
                     if (company.getPhoto() != null) {
                         localCompany.setPhoto(company.getPhoto());
                     }

@@ -26,13 +26,19 @@
             <column name="mail_suffix" />
         </property>
         <property name="photo" type="string">
-            <column name="photo" length="128" />
+            <column name="photo" length="512" />
         </property>
         <property name="gmtModified" type="timestamp">
             <column name="gmt_modified" length="19" />
         </property>
-        <property name="topTag" type="integer">
-            <column name="top_tag" />
+        <property name="counselorCount" type="integer">
+            <column name="counselor_count" />
+        </property>
+        <property name="regMobile" type="string">
+            <column name="reg_mobile" length="45" />
+        </property>
+        <property name="state" type="integer">
+            <column name="state" />
         </property>
     </class>
 </hibernate-mapping>

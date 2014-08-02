@@ -12,9 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.ccconsult.dao.ConsultDAO;
-import com.ccconsult.dao.ConsultantDAO;
-import com.ccconsult.dao.CounselorDAO;
+import com.ccconsult.base.PageList;
+import com.ccconsult.dao.AccountDAO;
+import com.ccconsult.dao.AccountTransDAO;
+import com.ccconsult.enums.UserRoleEnum;
+import com.ccconsult.pojo.Account;
+import com.ccconsult.pojo.AccountTrans;
+import com.ccconsult.pojo.Consultant;
 
 /**
  * @author jingyu.dan
@@ -24,18 +28,23 @@ import com.ccconsult.dao.CounselorDAO;
 public class AccountController extends BaseController {
 
     @Autowired
-    private CounselorDAO  counselorDAO;
+    private AccountDAO      accountDAO;
     @Autowired
-    private ConsultDAO    consultDAO;
-    @Autowired
-    private ConsultantDAO consultantDAO;
+    private AccountTransDAO accountTransDAO;
 
     @RequestMapping(value = "consultant/personalAccount.htm", method = RequestMethod.GET)
-    public ModelAndView toConsultantAppriaseInterview(HttpServletRequest request,
-                                                      final String consultId,
-                                                      final ModelMap modelMap) {
+    public ModelAndView queryAccountInfo(HttpServletRequest request, final Integer consultId,
+                                         final Integer pageSize, final Integer pageNo,
+                                         final Integer transType, final ModelMap modelMap) {
         ModelAndView view = new ModelAndView("consultant/personalAccount");
+        Consultant consultant = getConsultantInSession(request.getSession());
+        Account account = accountDAO.findByRoleIdAndType(consultant.getId(),
+            UserRoleEnum.CONSULTANT.getValue());
+        modelMap.put("account", account);
+        PageList<AccountTrans> accountTrans = accountTransDAO.queryPaged(consultant.getId(),
+            UserRoleEnum.CONSULTANT.getValue(), transType == null ? 0 : transType, 0,
+            pageSize == null ? 20 : pageSize, pageNo == null ? 1 : pageNo);
+        modelMap.put("accountTrans", accountTrans);
         return view;
     }
-
 }

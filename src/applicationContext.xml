@@ -27,7 +27,10 @@
 	<bean id="regMailDAO" class="com.ccconsult.dao.RegMailDAO" />
 	<bean id="counselorDAO" class="com.ccconsult.dao.CounselorDAO" />
 	<bean id="companyDAO" class="com.ccconsult.dao.CompanyDAO" />
+	<bean id="commetDAO" class="com.ccconsult.dao.CommentDAO" />
 	<bean id="articeDAO" class="com.ccconsult.dao.ArticleDAO" />
+	<bean id="accountDAO" class="com.ccconsult.dao.AccountDAO" />
+	<bean id="accountTransDAO" class="com.ccconsult.dao.AccountTransDAO" />
 	<bean id="consultantDAO" class="com.ccconsult.dao.ConsultantDAO" />
 	<bean id="messageDAO" class="com.ccconsult.dao.MessageDAO" />
 	<bean id="innerMailDAO" class="com.ccconsult.dao.InnerMailDAO" />

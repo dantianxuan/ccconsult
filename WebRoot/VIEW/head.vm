@@ -17,14 +17,16 @@
                 #end 
                 <li>
                     <a href="$link.contextPath/searchInnerConsult.htm">咨询问答</a>
-                </li>                          
-                <li>
-                    <a href="$link.contextPath/article.htm?articleId=1">关于我们</a>
-                </li>
+                </li>                                      
                 <li>
                     <a href="$link.contextPath/article.htm?articleId=2">帮助信息</a>
-                </li>                
-
+                </li>   
+                <li>
+                    <a href="$link.contextPath/tucao.htm">我要吐槽</a>
+                </li>    
+                <li>
+                    <a href="$link.contextPath/article.htm?articleId=1">关于我们</a>
+                </li>                             
             </ul>	            
 			#if($session.getAttribute("SESSION_COUNSELOR_OBJECT"))
 			#set($sessionCounselorVO=$session.getAttribute("SESSION_COUNSELOR_OBJECT"))
