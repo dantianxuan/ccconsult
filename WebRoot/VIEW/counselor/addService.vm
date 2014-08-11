@@ -1,0 +1,103 @@
+#set($counselorVO=$session.getAttribute("SESSION_COUNSELOR_OBJECT"))
+#parse("counselor/counselorGuide.vm")  
+#set($service =$application.getAttribute("serviceMap").get("$serviceId"))  
+<div class="row">
+    <div class="col-sm-12">
+			<div class="panel panel-default">
+	            <div class="panel-body">
+	            		<div class="col-sm-2">
+	            		 		<img src="$link.contextPath/$fileUtil.getPath($!service.photo)" class="img-thumbnail" style="width:72px;height:72px;"/>
+	            		</div>
+	            		<div class="col-sm-10" style="border-left:solid 1px #ddd">
+	                        <div class="col-lg-12">
+	            			  <p  style="border-bottom:solid 1px #ddd">
+	                        	<span class="glyphicon glyphicon-tag"></span>$service.name
+	                        	#if($service.id!=1)	
+	                        	<a href="$link.contextPath/serviceInfo.htm?serviceId=$serviceId"  style="float:right;"
+						      		onclick="deleteService($serviceConfig.id)">
+						      			详情
+						      	</a>
+						      	#end
+	                    		</P>
+	                    	</div>
+							<div class="col-lg-12">
+								#set($scheduleType=$enumUtil.getByValue("com.ccconsult.enums.ScheduleTypeEnum",$service.scheduleType))
+								<strong>预约类型：</strong>$scheduleType.getDescription()<br/>
+								<p>$service.description</p>	
+							  </div>					  
+					  	</div>							  	
+	            </div>		          
+            </div>  
+			<div class="panel panel-default">
+	            <div class="panel-body">	            
+					<form class="form-horizontal" id="addServiceForm">
+					  <input type="hidden" name="serviceId" value="$serviceId"/>
+					  <input type="hidden" name="counselorId" value="$counselorVO.counselor.id"/>
+					  <fieldset>
+					    <legend>签约服务</legend>
+						<div class="alert alert-dismissable alert-warning">
+							<p>请咨询阅读<a target="_blank" href="$link.contextPath/article.htm?articleId=1">服务条款</a>和签约规则<p>
+							<p class="text-primary"><input type="checkbox" name="confirm"> 我已阅读服务条款并同意本站的服务规则</p>				
+						</div> 	
+						#if($service.scheduleType==1)
+						<p class="text-primary">预约时间，默认时间设定为下班后的18：30到晚上22：00，每个周期半个小时</p>
+						<div class="panel panel-default">
+						  <div class="panel-body">
+						  	#foreach($time in $scheduleTimeUtil.getScheduleList() )
+						    <div class="col-sm-3" style="text-align:center;"><input type="checkbox" name="workOnTime" value="$foreach.count" #if($foreach.count>=38 && $foreach.count<=44)  checked="checked"  #end> $time </div>
+						    #end
+						  </div>
+						</div>	
+						#end									    
+					    <div class="form-group">
+					    	<div class="col-sm-12" style="text-align:right;">
+					        <a class="btn btn-link" href="$link.contextPath/counselor/serviceConfig.htm">返回我的服务</a>
+					        <button type="button" class="btn btn-primary" onclick="addService(#if($service.scheduleType==1) 'needScehdule' #end); return false;"><span class="glyphicon glyphicon-plus-sign"></span> 添加服务</button>
+					        </div>
+					    </div>
+					  </fieldset>
+					</form>	            						  	
+	            </div>		          
+            </div>                  
+    </div>
+</div>
+<script>
+	function addService(needScehdule){
+		if($("input[name='confirm']:checked").size()==0){
+			$.Zebra_Dialog('<strong>请注意</strong>, 您必须同意我们的条款才能签约服务', {
+			    'type':     'error',
+			    'title':    '对不起，您无法创建服务'
+			});
+			return ;
+		}
+		if(needScehdule && $("input[name='workOnTime']:checked").size()==0){
+			$.Zebra_Dialog('<strong>请注意</strong>, 您没有选择任何服务时间，无法设定服务', {
+			    'type':     'error',
+			    'title':    '对不起，您无法创建服务'
+			});
+			return ;
+		}		
+		
+		jQuery.ajax({
+             type: "POST",
+             url: "$link.contextPath/counselor/addService.json",
+             data: $('#addServiceForm').serialize(),
+             dataType: "json",
+             success: function(data){
+             	if(data.result.success==true){
+             		$.Zebra_Dialog('<strong>恭喜您</strong>, 服务签约成功，新签约的服务会即使生效！');
+             		setTimeout(function(){
+             			window.location.href="$link.contextPath/counselor/counselorService.htm"
+					},2000);
+             	}else{
+             		$.Zebra_Dialog('<strong>请注意</strong>, '+data.result.message, {
+					    'type':     'error',
+					    'title':    '对不起，您无法创建服务'
+					});
+             	}
+              }
+         });
+	}
+	
+</script>
+

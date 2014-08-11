@@ -99,10 +99,11 @@ public class ConsultResumeController extends BaseController {
      * 公司邮箱链接注册
      * @return
      */
-    @RequestMapping(value = "consultant/consult/createResumeConsult.htm", method = RequestMethod.POST)
-    public ModelAndView createResume(final HttpServletRequest request, final Consult consult,
-                                     @RequestParam final MultipartFile[] localFile,
-                                     final ModelMap modelMap) {
+    @RequestMapping(value = "consultant/consult/createResumeConsult.json", method = RequestMethod.POST)
+    public @ResponseBody
+    ModelMap createResume(final HttpServletRequest request, final Consult consult,
+                          @RequestParam final MultipartFile[] localFile, final ModelMap modelMap) {
+        modelMap.clear();
         CcResult result = serviceTemplate.executeWithTx(CcResult.class, new BlankServiceCallBack() {
             /** 
              * @see com.ccconsult.base.ServiceCallBack#check()
@@ -153,16 +154,8 @@ public class ConsultResumeController extends BaseController {
                 return new CcResult(consult);
             }
         });
-        if (!result.isSuccess()) {
-            ServiceConfigVO serviceConfigVO = serviceConfigDAO.findVoById(consult
-                .getServiceConfigId());
-            modelMap.put("serviceConfigVO", serviceConfigVO);
-            modelMap.put("consult", consult);
-            modelMap.put("result", result);
-            return new ModelAndView("consultant/consult/createResumeConsult");
-        }
-        return new ModelAndView("redirect:/consultant/consult/createSuccess.htm?consultId="
-                                + consult.getId());
+        modelMap.put("result", result);
+        return modelMap;
     }
 
     @RequestMapping(value = "/consultant/consult/resumeConsult.htm", method = RequestMethod.GET)

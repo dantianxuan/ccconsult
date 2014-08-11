@@ -21,9 +21,10 @@ public class InterviewConsultDAO extends BaseHibernateDAO<InterviewConsult> {
     //property constants
     public static final String  RESUME_FILE        = "resumeFile";
     public static final String  CONSULT_ID         = "consultId";
-    public static final String  GMT_SCHEDULE_BEGIN = "gmtScheduleBegin";
-    public static final String  GMT_SCHEDULE_END   = "gmtScheduleEnd";
     public static final String  TARGET_JOB_INFO    = "targetJobInfo";
+    public static final String  CONSULTANT_APPRISE = "consultantApprise";
+    public static final String  CONSULT_MEMO       = "consultMemo";
+    public static final String  SCHEDUE_TIME       = "schedueTime";
 
     public InterviewConsult findById(java.lang.Integer id) {
         log.debug("getting InterviewConsult instance with id: " + id);

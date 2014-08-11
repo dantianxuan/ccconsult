@@ -18,6 +18,7 @@ public class InterviewConsult extends com.ccconsult.base.ToString implements jav
     private String  targetJobInfo;
     private Integer consultantApprise;
     private String  consultMemo;
+    private String  schedueTime;
 
     // Constructors
 
@@ -28,7 +29,7 @@ public class InterviewConsult extends com.ccconsult.base.ToString implements jav
     /** full constructor */
     public InterviewConsult(String resumeFile, Integer consultId, Date gmtScheduleBegin,
                             Date gmtScheduleEnd, String targetJobInfo, Integer consultantApprise,
-                            String consultMemo) {
+                            String consultMemo, String schedueTime) {
         this.resumeFile = resumeFile;
         this.consultId = consultId;
         this.gmtScheduleBegin = gmtScheduleBegin;
@@ -36,6 +37,7 @@ public class InterviewConsult extends com.ccconsult.base.ToString implements jav
         this.targetJobInfo = targetJobInfo;
         this.consultantApprise = consultantApprise;
         this.consultMemo = consultMemo;
+        this.schedueTime = schedueTime;
     }
 
     // Property accessors
@@ -102,6 +104,14 @@ public class InterviewConsult extends com.ccconsult.base.ToString implements jav
 
     public void setConsultMemo(String consultMemo) {
         this.consultMemo = consultMemo;
+    }
+
+    public String getSchedueTime() {
+        return this.schedueTime;
+    }
+
+    public void setSchedueTime(String schedueTime) {
+        this.schedueTime = schedueTime;
     }
 
 }

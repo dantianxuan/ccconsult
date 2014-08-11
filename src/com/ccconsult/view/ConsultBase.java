@@ -8,6 +8,7 @@ import com.ccconsult.base.ToString;
 import com.ccconsult.pojo.Apprise;
 import com.ccconsult.pojo.Consult;
 import com.ccconsult.pojo.Consultant;
+import com.ccconsult.pojo.ServiceConfig;
 
 /**
  * 咨询对象基类
@@ -25,7 +26,7 @@ public class ConsultBase extends ToString {
     protected Consultant      consultant;
 
     /**咨询服务*/
-    protected ServiceConfigVO serviceConfigVO;
+    protected ServiceConfig   serviceConfig;
 
     /**咨询师对象*/
     protected CounselorVO     counselorVO;
@@ -76,12 +77,12 @@ public class ConsultBase extends ToString {
         this.consultantApprise = consultantApprise;
     }
 
-    public ServiceConfigVO getServiceConfigVO() {
-        return serviceConfigVO;
+    public ServiceConfig getServiceConfig() {
+        return serviceConfig;
     }
 
-    public void setServiceConfigVO(ServiceConfigVO serviceConfigVO) {
-        this.serviceConfigVO = serviceConfigVO;
+    public void setServiceConfig(ServiceConfig serviceConfig) {
+        this.serviceConfig = serviceConfig;
     }
 
 }

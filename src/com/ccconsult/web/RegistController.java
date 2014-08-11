@@ -23,7 +23,6 @@ import com.ccconsult.base.BlankServiceCallBack;
 import com.ccconsult.base.CcConstrant;
 import com.ccconsult.base.CcException;
 import com.ccconsult.base.CcResult;
-import com.ccconsult.core.FileComponent;
 import com.ccconsult.dao.AccountDAO;
 import com.ccconsult.dao.CompanyDAO;
 import com.ccconsult.dao.ConsultantDAO;
@@ -41,7 +40,6 @@ import com.ccconsult.pojo.Counselor;
 import com.ccconsult.pojo.RegMail;
 import com.ccconsult.pojo.ServiceConfig;
 import com.ccconsult.service.RegistService;
-import com.ccconsult.util.StringUtil;
 import com.ccconsult.util.ValidateUtil;
 import com.ccconsult.view.CounselorVO;
 
@@ -67,8 +65,6 @@ public class RegistController extends BaseController {
     private CompanyDAO       companyDAO;
     @Autowired
     private AccountDAO       accountDAO;
-    @Autowired
-    private FileComponent    fileComponent;
 
     /**
      * 注册面试官init页面
@@ -150,6 +146,8 @@ public class RegistController extends BaseController {
                 counselor.setGmtModified(new Date());
                 counselor.setCompanyId(company.getId());
                 counselorDAO.save(counselor);//注册一个用户
+                company.setCounselorCount(company.getCounselorCount() + 1);
+                companyDAO.update(company);
                 Account account = new Account();
                 account.setCurrentMoney(new Double(0));
                 account.setFreezingMoney(0);
@@ -162,7 +160,6 @@ public class RegistController extends BaseController {
                 serviceConfig.setCounselorId(counselor.getId());
                 serviceConfig.setGmtCreate(new Date());
                 serviceConfig.setState(DataStateEnum.NORMAL.getValue());
-                serviceConfig.setPrice(0);
                 serviceConfig.setServiceId(1);
                 serviceConfigDAO.save(serviceConfig);//初始化一个最基本的站内咨询服务
                 return new CcResult(counselor);

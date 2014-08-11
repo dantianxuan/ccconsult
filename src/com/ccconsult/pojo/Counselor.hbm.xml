@@ -65,5 +65,8 @@
         <property name="appriseCount" type="integer">
             <column name="apprise_count" />
         </property>
+        <property name="levelId" type="integer">
+            <column name="level_id" />
+        </property>
     </class>
 </hibernate-mapping>

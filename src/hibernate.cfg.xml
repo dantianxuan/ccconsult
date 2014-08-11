@@ -65,6 +65,9 @@
 		<mapping resource="com/ccconsult/pojo/ResumeConsult.hbm.xml" />
 		<mapping resource="com/ccconsult/pojo/Account.hbm.xml" />
 		<mapping resource="com/ccconsult/pojo/AccountTrans.hbm.xml" />
+		<mapping resource="com/ccconsult/pojo/DiagMessage.hbm.xml" />
+		<mapping resource="com/ccconsult/pojo/Diag.hbm.xml" />
+		<mapping resource="com/ccconsult/pojo/Level.hbm.xml" />
 
 	</session-factory>
 

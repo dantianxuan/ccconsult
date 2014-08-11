@@ -57,8 +57,8 @@
 	<div class="col-sm-12">
 		<div class="panel panel-default">
 			  <div class="panel-heading"><strong><span class="glyphicon glyphicon-tags"></span>  热门服务</strong></div>
-			  <div class="panel-body">		  
-		 		#foreach($service in $services)
+			  <div class="panel-body">	
+		 		#foreach($service in $application.getAttribute('serviceList'))
 					<div class="col-sm-6" >
 						<div style="height:80px;margin-bottom:4px;background-color:#fff">
 						<a  target="_blank" href="$link.contextPath/article.htm?articleId=$service.introArticleId">

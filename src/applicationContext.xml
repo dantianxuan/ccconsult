@@ -41,6 +41,7 @@
 	<bean id="appriseDAO" class="com.ccconsult.dao.AppriseDAO" />
 	<bean id="serviceDAO" class="com.ccconsult.dao.ServiceDAO" />
 	<bean id="serviceConfigDAO" class="com.ccconsult.dao.ServiceConfigDAO" />
+	<bean id="levelDAO" class="com.ccconsult.dao.LevelDAO" />
 
 
 	<bean id="consultComponent" class="com.ccconsult.core.ConsultComponentImpl" />
@@ -89,6 +90,18 @@
 		</property>
 		<property name="password">
 			<value>3145275dan</value>
+		</property>
+	</bean>
+
+	<!-- 等级缓存加载器 -->
+	<bean id="levelCacheLoader" class="com.ccconsult.core.cache.LevelCacheLoader"></bean>
+	<bean id="serviceCacheLoader" class="com.ccconsult.core.cache.ServiceCacheLoader"></bean>
+	<bean id="cachedComponent" class="com.ccconsult.core.cache.CachedComponentImpl">
+		<property name="cacheLoaders">
+			<map>
+				<entry key="LEVEL_CACHE" value-ref="levelCacheLoader" />
+				<entry key="SERVICE_CACHE" value-ref="serviceCacheLoader" />
+			</map>
 		</property>
 	</bean>
 

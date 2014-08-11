@@ -41,14 +41,15 @@ import com.ccconsult.pojo.Consult;
 import com.ccconsult.pojo.Consultant;
 import com.ccconsult.pojo.InterviewConsult;
 import com.ccconsult.pojo.Service;
+import com.ccconsult.pojo.ServiceConfig;
 import com.ccconsult.util.CodeGenUtil;
 import com.ccconsult.util.DateUtil;
+import com.ccconsult.util.ScheduleTimeUtil;
 import com.ccconsult.util.StringUtil;
 import com.ccconsult.view.ConsultBase;
 import com.ccconsult.view.CounselorVO;
 import com.ccconsult.view.InterviewCounsultVO;
 import com.ccconsult.view.MessageVO;
-import com.ccconsult.view.ServiceConfigVO;
 
 /**
  * @author jingyu.dan
@@ -83,12 +84,12 @@ public class ConsultInterviewController extends BaseController {
             public CcResult executeService() {
                 int configId = NumberUtils.toInt(serviceConfigId);
                 AssertUtil.state(configId > 0, "非法的创建请求！");
-                ServiceConfigVO serviceConfigVO = serviceConfigDAO.findVoById(configId);
+                ServiceConfig serviceConfig = serviceConfigDAO.findById(configId);
                 AssertUtil.state(
-                    serviceConfigVO != null
-                            && serviceConfigVO.getServiceConfig().getState()
-                                .equals(DataStateEnum.NORMAL.getValue()), "当前服务设定过期或者被修改，请重新预约！");
-                return new CcResult(serviceConfigVO);
+                    serviceConfig != null
+                            && serviceConfig.getState().equals(DataStateEnum.NORMAL.getValue()),
+                    "当前服务设定过期或者被修改，请重新预约！");
+                return new CcResult(serviceConfig);
             }
         });
         modelMap.put("result", result);
@@ -102,7 +103,7 @@ public class ConsultInterviewController extends BaseController {
     @RequestMapping(value = "/consultant/consult/createInterviewConsult.htm", method = RequestMethod.POST)
     public @ResponseBody
     ModelMap createInterviewJson(final HttpServletRequest request, final Consult consult,
-                                 final String targetJobInfo,
+                                 final String scheduleTime, final String scheduleDay,
                                  @RequestParam final MultipartFile[] localFile,
                                  final ModelMap modelMap) {
         modelMap.clear();
@@ -131,13 +132,13 @@ public class ConsultInterviewController extends BaseController {
                     fileName = fileComponent.uploadFile(myfile, FileTypeEnum.RESUME, contextPath,
                         CcConstrant.FILE_2M_SIZE, "doc|pdf|docx");
                 }
-                ServiceConfigVO serviceConfigVO = serviceConfigDAO.findVoById(consult
+                ServiceConfig serviceConfig = serviceConfigDAO.findById(consult
                     .getServiceConfigId());
                 AssertUtil.state(
-                    serviceConfigVO != null
-                            && serviceConfigVO.getServiceConfig().getState()
-                                .equals(DataStateEnum.NORMAL.getValue()), "服务配置对象当前过期，请查询发起咨询");
-                modelMap.put("serviceConfigVO", serviceConfigVO);
+                    serviceConfig != null
+                            && serviceConfig.getState().equals(DataStateEnum.NORMAL.getValue()),
+                    "服务配置对象当前过期，请查询发起咨询");
+                modelMap.put("serviceConfig", serviceConfig);
                 //创建一个咨询记录
                 consult.setGmtCreate(new Date());
                 consult.setGmtModified(new Date());
@@ -145,14 +146,33 @@ public class ConsultInterviewController extends BaseController {
                 consult.setStep(ConsultStepEnum.CREATE.getValue());
                 Service service = serviceDAO.findById(consult.getServiceId());
                 AssertUtil.notNull(service, "服务不存在，请检查");
+                //查询当天预约的信息
+                List<String> myScheduleTime = ScheduleTimeUtil.getSchuleTime(serviceConfig
+                    .getWorkOnTime());
+
+                AssertUtil.state(myScheduleTime.contains(scheduleTime), "对不起，该时间段不能预约");
+                AssertUtil.notBlank(scheduleDay, "预约日期必须正常设置");
+                int day = NumberUtils.toInt(scheduleDay);
+                String times = ScheduleTimeUtil.getScheduleMap().get(scheduleTime);
+                Date scheduleBegin = DateUtil.parseDate(
+                    DateUtil.format(DateUtil.addDays(new Date(), day), "yyyy-MM-dd ")
+                            + ScheduleTimeUtil.getBegin(times), "yyyy-MM-dd HH:mm");
+                Date scheduleEnd = DateUtil.parseDate(
+                    DateUtil.format(DateUtil.addDays(new Date(), day), "yyyy-MM-dd ")
+                            + ScheduleTimeUtil.getEnd(times), "yyyy-MM-dd HH:mm");
+                AssertUtil.state(scheduleBegin.after(new Date()), "对不起，当前预约时间已经过期，请重新选择");
+
                 consult.setGmtEffectEnd(DateUtil.addHours(new Date(), service.getEffectTime()));
                 consult.setIndetityCode(CodeGenUtil.getFixLenthString(6));
                 consultDAO.save(consult);
 
                 //创建面试咨询记录
                 InterviewConsult interviewConsult = new InterviewConsult();
+                interviewConsult.setGmtScheduleBegin(scheduleBegin);
+                interviewConsult.setGmtScheduleEnd(scheduleEnd);
+                interviewConsult.setSchedueTime(scheduleDay + CcConstrant.ALT_SEPARATOR
+                                                + scheduleTime);
                 interviewConsult.setConsultId(consult.getId());
-                interviewConsult.setTargetJobInfo(targetJobInfo);
                 interviewConsult.setResumeFile(fileName);
                 interviewConsultDAO.save(interviewConsult);
                 return new CcResult(consult);

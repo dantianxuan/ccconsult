@@ -39,8 +39,6 @@ public class IndexController {
     private CompanyDAO       companyDAO;
     @Autowired
     private ConsultComponent consultComponent;
-    @Autowired
-    private ServiceDAO       serviceDAO;
 
     @RequestMapping(value = "/index.htm", method = RequestMethod.GET)
     public ModelAndView toIndex(HttpServletRequest request, ModelMap modelMap) {
@@ -52,7 +50,6 @@ public class IndexController {
         List<Company> companys = companyDAO.queryTopList(10);
         modelMap.put("articles", articles);
         modelMap.put("companys", companys);
-        modelMap.put("services", serviceDAO.findAll());
         PageList<ConsultBase> consultBases = consultComponent.queryPaged(2,
             ConsultStepEnum.FIHSHED.getValue(), 0, 0, 0, 10, 1);
         modelMap.put("consultBases", consultBases);

@@ -40,5 +40,9 @@
 		<scope>application</scope>
 		<class>com.ccconsult.util.FileUtil</class>
 	</tool>
-
+	<tool>
+		<key>scheduleTimeUtil</key>
+		<scope>application</scope>
+		<class>com.ccconsult.util.ScheduleTimeUtil</class>
+	</tool>
 </toolbox>

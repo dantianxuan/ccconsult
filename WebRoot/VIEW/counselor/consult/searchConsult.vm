@@ -25,6 +25,7 @@
         			#set($consult=$consultBase.consult)
         			#set($consultant=$consultBase.consultant)
         			#set($counselorVO=$consultBase.counselorVO)
+        			#set($service=$application.getAttribute("serviceMap").get("$consultBase.serviceConfig.serviceId"))	
 			            <div class="panel panel-default">
 			                <div class="panel-body">
 			                		<div class="col-sm-1" style="font-size:30px;">
@@ -36,8 +37,8 @@
 			                		<div class="col-sm-9" style="border-left:solid 1px #ddd">
 		                                <div class="col-lg-12">
                             			  <p  style="border-bottom:solid 1px #ddd">
-		                                	<span class="glyphicon glyphicon-tag"></span> 咨询类型：$consultBase.serviceConfigVO.service.name
-		                                	<a class="btn btn-link btn-xs" style="float:right"  href="$link.contextPath/counselor/consult/${consultBase.serviceConfigVO.service.code}.htm?consultId=$consultBase.consult.id">详情...</a>
+		                                	<span class="glyphicon glyphicon-tag"></span> 咨询类型：$service.name
+		                                	<a class="btn btn-link btn-xs" style="float:right"  href="$link.contextPath/counselor/consult/${service.code}.htm?consultId=$consultBase.consult.id">详情...</a>
 	                                		</P>
 	                                	</div>
 										<div class="col-lg-12">

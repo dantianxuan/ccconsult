@@ -13,9 +13,9 @@ public class ServiceConfig extends com.ccconsult.base.ToString implements java.i
     private Integer id;
     private Integer counselorId;
     private Integer serviceId;
-    private Integer price;
     private Date    gmtCreate;
     private Integer state;
+    private String  workOnTime;
 
     // Constructors
 
@@ -23,19 +23,14 @@ public class ServiceConfig extends com.ccconsult.base.ToString implements java.i
     public ServiceConfig() {
     }
 
-    /** minimal constructor */
-    public ServiceConfig(Integer price) {
-        this.price = price;
-    }
-
     /** full constructor */
-    public ServiceConfig(Integer counselorId, Integer serviceId, Integer price, Date gmtCreate,
-                         Integer state) {
+    public ServiceConfig(Integer counselorId, Integer serviceId, Date gmtCreate, Integer state,
+                         String workOnTime) {
         this.counselorId = counselorId;
         this.serviceId = serviceId;
-        this.price = price;
         this.gmtCreate = gmtCreate;
         this.state = state;
+        this.workOnTime = workOnTime;
     }
 
     // Property accessors
@@ -64,14 +59,6 @@ public class ServiceConfig extends com.ccconsult.base.ToString implements java.i
         this.serviceId = serviceId;
     }
 
-    public Integer getPrice() {
-        return this.price;
-    }
-
-    public void setPrice(Integer price) {
-        this.price = price;
-    }
-
     public Date getGmtCreate() {
         return this.gmtCreate;
     }
@@ -86,6 +73,14 @@ public class ServiceConfig extends com.ccconsult.base.ToString implements java.i
 
     public void setState(Integer state) {
         this.state = state;
+    }
+
+    public String getWorkOnTime() {
+        return this.workOnTime;
+    }
+
+    public void setWorkOnTime(String workOnTime) {
+        this.workOnTime = workOnTime;
     }
 
 }

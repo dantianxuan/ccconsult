@@ -13,6 +13,8 @@
 	<script src="$link.contextPath/STATIC/js/bootswatch.js"></script>
 	<script src="$link.contextPath/STATIC/js/select2.js"></script>
 	<link rel="icon" href="$link.contextPath/STATIC/image/ccconsult.ico" type="image/x-icon">
+	<link href="$link.contextPath/STATIC/plugin/ZebraDialog/css/flat/zebra_dialog.css" type="text/css" rel="stylesheet">
+	<script type="text/javascript" src="$link.contextPath/STATIC/plugin/ZebraDialog/javascript/zebra_dialog.js"></script>
 </head>
 <body>
 #parse("head.vm")   

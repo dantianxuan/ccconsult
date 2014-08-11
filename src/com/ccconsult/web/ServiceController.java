@@ -20,15 +20,17 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ccconsult.base.AssertUtil;
 import com.ccconsult.base.BlankServiceCallBack;
-import com.ccconsult.base.CcConstrant;
 import com.ccconsult.base.CcResult;
 import com.ccconsult.dao.ArticleDAO;
 import com.ccconsult.dao.ServiceConfigDAO;
 import com.ccconsult.dao.ServiceDAO;
+import com.ccconsult.enums.CacheEnum;
 import com.ccconsult.enums.DataStateEnum;
+import com.ccconsult.enums.ScheduleTypeEnum;
 import com.ccconsult.pojo.Article;
 import com.ccconsult.pojo.Service;
 import com.ccconsult.pojo.ServiceConfig;
+import com.ccconsult.util.StringUtil;
 import com.ccconsult.view.CounselorVO;
 
 /**
@@ -56,13 +58,30 @@ public class ServiceController extends BaseController {
     @RequestMapping(value = "/serviceInfo.htm", method = RequestMethod.GET)
     public ModelAndView serviceInfo(HttpServletRequest request, Integer serviceId,
                                     final ModelMap modelMap) {
-        Service service = serviceDAO.findById(serviceId);
+        Service service = (Service) cachedComponent.getCache(CacheEnum.SERVICE_CACHE.getCode(),
+            String.valueOf(serviceId));
         modelMap.put("service", service);
         if (service != null) {
             Article article = articleDAO.findById(service.getIntroArticleId());
             modelMap.put("article", article);
         }
         ModelAndView view = new ModelAndView("content/serviceInfo");
+        return view;
+    }
+
+    /**
+     * 公共个人信息介绍页面
+     * 
+     * @param request
+     * @param counselorId
+     * @param modelMap
+     * @return
+     */
+    @RequestMapping(value = "/counselor/addService.htm", method = RequestMethod.GET)
+    public ModelAndView addService(HttpServletRequest request, Integer serviceId,
+                                   final ModelMap modelMap) {
+        modelMap.put("serviceId", serviceId);
+        ModelAndView view = new ModelAndView("counselor/addService");
         return view;
     }
 
@@ -100,11 +119,19 @@ public class ServiceController extends BaseController {
                 AssertUtil.notNull(serviceConfig, "非法请求");
                 Service service = serviceDAO.findById(serviceConfig.getServiceId());
                 AssertUtil.notNull(service, "服务项目不存在");
-                String[] priceRegions = service.getPriceRegion().replace("[", "").replace("]", "")
-                    .split(CcConstrant.ALT_SEPARATOR);
-                AssertUtil.state(NumberUtils.toInt(priceRegions[0]) <= serviceConfig.getPrice()
-                                 && serviceConfig.getPrice() <= NumberUtils.toInt(priceRegions[1]),
-                    "价格请设置在在预定区间");
+                AssertUtil.state(
+                    sessionCounselorVO.getCounselor().getId()
+                        .equals(serviceConfig.getCounselorId()), "非法请求，请不要尝试修改别人的记录");
+                if (service.getScheduleType() == ScheduleTypeEnum.SCHEDULE_TIME.getValue()) {
+                    AssertUtil.state(StringUtil.isNotBlank(serviceConfig.getWorkOnTime()),
+                        "请设定预约时间");
+                    String[] scheduleTimes = serviceConfig.getWorkOnTime().split(",");
+                    AssertUtil.state(scheduleTimes.length > 0, "请设定预约时间");
+                    for (int index = 0; index < scheduleTimes.length; index++) {
+                        int scheduleTime = NumberUtils.toInt(scheduleTimes[index]);
+                        AssertUtil.state(scheduleTime > 0 && scheduleTime <= 48, "不合法的时间设定");
+                    }
+                }
                 List<ServiceConfig> serviceConfigs = serviceConfigDAO
                     .findByCounselorIdAndServiceId(sessionCounselorVO.getCounselor().getId(),
                         serviceConfig.getServiceId());

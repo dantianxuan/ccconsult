@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccconsult.base.CcConstrant;
 import com.ccconsult.base.ServiceTemplate;
+import com.ccconsult.core.cache.CachedComponent;
 import com.ccconsult.dao.ConsultantDAO;
 import com.ccconsult.dao.CounselorDAO;
 import com.ccconsult.pojo.Consultant;
@@ -30,6 +31,8 @@ public class BaseController {
     protected CounselorDAO    counselorDAO;
     @Autowired
     protected ConsultantDAO   consultantDAO;
+    @Autowired
+    protected CachedComponent cachedComponent;
 
     public Consultant getConsultantInSession(HttpSession session) {
         Object consultant = session.getAttribute(CcConstrant.SESSION_CONSULTANT_OBJECT);

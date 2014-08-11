@@ -1,18 +1,11 @@
 #set($consultant=$session.getAttribute("SESSION_CONSULTANT_OBJECT"))
 #parse("consultant/consultantGuide.vm")
 <div class="row">
-	<div class="col-sm-12">
-		<div class="alert alert-dismissable alert-warning">
-		   如果您需要修改个人信息，请单击右边的信息修改
-		   <a style="float:right;" href="$link.contextPath/consultant/editPersonalInfo.htm"><span class="glyphicon glyphicon-edit">修改个人信息</span></a>
-		</div>
-	</div>
-</div>
-<div class="row">
     <div class="col-sm-12">
         <div class="panel panel-default">
             <div class="panel-heading">
             	基本信息  
+            	<a style="float:right;" href="$link.contextPath/consultant/editPersonalInfo.htm"><span class="glyphicon glyphicon-edit">修改个人信息</span></a>
             </div>
             <div class="panel-body">
 				<div class="col-sm-12" >

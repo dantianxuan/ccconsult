@@ -130,7 +130,7 @@ public class ConsultComponentImpl implements ConsultComponent {
         base.setConsult(consult);
         base.setConsultant(consultantDAO.findById(consult.getConsultantId()));
         base.setCounselorVO(counselorDAO.findById(consult.getCounselorId()));
-        base.setServiceConfigVO(serviceConfigDAO.findVoById(consult.getServiceConfigId()));
+        base.setServiceConfig(serviceConfigDAO.findById(consult.getServiceConfigId()));
         return base;
     }
 

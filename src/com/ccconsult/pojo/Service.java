@@ -19,6 +19,7 @@ public class Service extends com.ccconsult.base.ToString implements java.io.Seri
     private String  code;
     private Integer effectTime;
     private String  photo;
+    private Integer scheduleType;
 
     // Constructors
 
@@ -29,7 +30,7 @@ public class Service extends com.ccconsult.base.ToString implements java.io.Seri
     /** full constructor */
     public Service(String name, String description, String priceRegion, String gmtCreate,
                    String gmtModified, String state, Integer introArticleId, String code,
-                   Integer effectTime, String photo) {
+                   Integer effectTime, String photo, Integer scheduleType) {
         this.name = name;
         this.description = description;
         this.priceRegion = priceRegion;
@@ -40,6 +41,7 @@ public class Service extends com.ccconsult.base.ToString implements java.io.Seri
         this.code = code;
         this.effectTime = effectTime;
         this.photo = photo;
+        this.scheduleType = scheduleType;
     }
 
     // Property accessors
@@ -130,6 +132,14 @@ public class Service extends com.ccconsult.base.ToString implements java.io.Seri
 
     public void setPhoto(String photo) {
         this.photo = photo;
+    }
+
+    public Integer getScheduleType() {
+        return this.scheduleType;
+    }
+
+    public void setScheduleType(Integer scheduleType) {
+        this.scheduleType = scheduleType;
     }
 
 }

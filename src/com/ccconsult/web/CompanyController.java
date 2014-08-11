@@ -58,6 +58,7 @@ public class CompanyController extends BaseController {
         List<Counselor> counselors = counselorDAO.findByCompanyId(companyId);
         modelMap.put("company", company);
         modelMap.put("counselors", counselors);
+        modelMap.put("levels", counselors);
         return view;
     }
 

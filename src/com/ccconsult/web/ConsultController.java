@@ -25,6 +25,7 @@ import com.ccconsult.core.ConsultComponent;
 import com.ccconsult.dao.ArticleDAO;
 import com.ccconsult.dao.ConsultDAO;
 import com.ccconsult.dao.MessageDAO;
+import com.ccconsult.enums.CacheEnum;
 import com.ccconsult.enums.ConsultStepEnum;
 import com.ccconsult.enums.MessageRelTypeEnum;
 import com.ccconsult.enums.NotifySenderEnum;
@@ -123,7 +124,9 @@ public class ConsultController extends BaseController {
                 AssertUtil.state(consultId != null && consultId > 0, "不合法的请求，当前记录不存在");
                 ConsultBase consultBase = consultComponent.queryById(consultId);
                 modelMap.put("consultBase", consultBase);
-                Service service = consultBase.getServiceConfigVO().getService();
+                Service service = (Service) cachedComponent.getCache(
+                    CacheEnum.SERVICE_CACHE.getCode(),
+                    String.valueOf(consultBase.getServiceConfig().getId()));
                 if (service != null) {
                     Article article = articleDAO.findById(service.getIntroArticleId());
                     modelMap.put("article", article);

@@ -16,14 +16,14 @@
         <property name="serviceId" type="integer">
             <column name="service_id" />
         </property>
-        <property name="price" type="integer">
-            <column name="price" not-null="true" />
-        </property>
         <property name="gmtCreate" type="timestamp">
             <column name="gmt_create" length="19" />
         </property>
         <property name="state" type="integer">
             <column name="state" />
+        </property>
+        <property name="workOnTime" type="string">
+            <column name="work_on_time" length="45" />
         </property>
     </class>
 </hibernate-mapping>

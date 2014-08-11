@@ -11,9 +11,10 @@ import org.springframework.util.CollectionUtils;
 import com.ccconsult.base.PageList;
 import com.ccconsult.pojo.Company;
 import com.ccconsult.pojo.Counselor;
+import com.ccconsult.pojo.Level;
+import com.ccconsult.pojo.ServiceConfig;
 import com.ccconsult.util.StringUtil;
 import com.ccconsult.view.CounselorVO;
-import com.ccconsult.view.ServiceConfigVO;
 
 /**
  	* A data access object (DAO) providing persistence and search support for Counselor entities.
@@ -29,15 +30,22 @@ public class CounselorDAO extends BaseHibernateDAO<Counselor> {
     private CompanyDAO         companyDAO;
     @Autowired
     private ServiceConfigDAO   serviceConfigDAO;
+    @Autowired
+    private LevelDAO           levelDAO;
     //property constants
-    public static final String NAME        = "name";
-    public static final String EMAIL       = "email";
-    public static final String MOBILE      = "mobile";
-    public static final String DESCRIPTION = "description";
-    public static final String COMPANY_ID  = "companyId";
-    public static final String PHOTO       = "photo";
-    public static final String PASSWD      = "passwd";
-    public static final String DEPARTMENT  = "department";
+    public static final String NAME          = "name";
+    public static final String EMAIL         = "email";
+    public static final String MOBILE        = "mobile";
+    public static final String DESCRIPTION   = "description";
+    public static final String COMPANY_ID    = "companyId";
+    public static final String PHOTO         = "photo";
+    public static final String PASSWD        = "passwd";
+    public static final String DEPARTMENT    = "department";
+    public static final String APPRISE_RATE  = "appriseRate";
+    public static final String CITY          = "city";
+    public static final String CONSULT_COUNT = "consultCount";
+    public static final String APPRISE_COUNT = "appriseCount";
+    public static final String LEVEL_ID      = "levelId";
 
     public Counselor getById(java.lang.Integer id) {
         return (Counselor) getSession().get("com.ccconsult.pojo.Counselor", id);
@@ -115,9 +123,9 @@ public class CounselorDAO extends BaseHibernateDAO<Counselor> {
             return null;
         }
         Company company = companyDAO.findById(counselor.getCompanyId());
-        List<ServiceConfigVO> serviceConfigVOs = serviceConfigDAO.findByCounselorId(counselor
-            .getId());
-        return new CounselorVO(counselor, company, serviceConfigVOs);
+        List<ServiceConfig> serviceConfigs = serviceConfigDAO.findByCounselorId(counselor.getId());
+        Level level = levelDAO.findById(counselor.getLevelId());
+        return new CounselorVO(counselor, company, serviceConfigs);
 
     }
 

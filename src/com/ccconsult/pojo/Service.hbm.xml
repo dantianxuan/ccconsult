@@ -40,5 +40,8 @@
         <property name="photo" type="string">
             <column name="photo" length="256" />
         </property>
+        <property name="scheduleType" type="integer">
+            <column name="schedule_type" />
+        </property>
     </class>
 </hibernate-mapping>

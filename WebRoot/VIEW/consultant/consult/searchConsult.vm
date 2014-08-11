@@ -12,9 +12,12 @@
              dataType: "json",
              success: function(data){
              	if(data.result.success==true){
-             		$('#CONSULT_'+consultId).remove();
+             	 	window.location.reload();
              	}else{
-             		alert("对不起删除失败，请稍后重试");
+					$.Zebra_Dialog('<strong>请注意</strong>,'+data.result.message, {
+					    'type':     'error',
+					    'title':    '对不起，操作失败'
+					});             	
              	}
               }
          });
@@ -52,12 +55,13 @@
 			                		</div>
 			                		<div class="col-sm-2">
 			                		 		<img src="$link.contextPath/$fileUtil.getPath($!counselorVO.counselor.photo)" class="img-thumbnail" style="width:72px;height:72px;"/>
-			                		</div>			                
+			                		</div>		
+			                		#set($service=$application.getAttribute("serviceMap").get("$consultBase.serviceConfig.serviceId"))	                
 			                		<div class="col-sm-9" style="border-left:solid 1px #ddd">
 			                			<div class="col-lg-12">
 			                                <p  style="border-bottom:solid 1px #ddd">
-			                                	<span href="#"><span class="glyphicon glyphicon-tag"></span>咨询类型：$consultBase.serviceConfigVO.service.name</span>
-			                                	<a  class="btn btn-link btn-xs" style="float:right;margin-left:4px;"  href="$link.contextPath/consultant/consult/${consultBase.serviceConfigVO.service.code}.htm?consultId=$consultBase.consult.id"><span class="glyphicon glyphicon-file"></span> 详情...</a>
+			                                	<span href="#"><span class="glyphicon glyphicon-tag"></span>咨询类型：$service.name</span>
+			                                	<a  class="btn btn-link btn-xs" style="float:right;margin-left:4px;"  href="$link.contextPath/consultant/consult/${service.code}.htm?consultId=$consultBase.consult.id"><span class="glyphicon glyphicon-file"></span> 详情...</a>
 			                                	#if($consult.step<2)
 			                                	<a  class="btn btn-link btn-xs" style="float:right" onclick="deleteConsult($consultBase.consult.id)"><span class="glyphicon glyphicon-remove"></span> 删除</a>
 		                                		#end
@@ -67,25 +71,21 @@
 										<p>
 											  <a  class="btn  btn-xs btn-success disabled col-sm-2" style="margin-right:4px;">创建预约<span class="glyphicon glyphicon-arrow-right"></span></a>
 									  			#if($consult.step==1)
-									  				<a  class="btn btn-primary disabled col-sm-2 btn-xs " style="margin-right:4px;">咨询师预约 <span class="glyphicon glyphicon-arrow-right"></a>
 									  				<a  class="btn btn-default disabled col-sm-2 btn-xs " style="margin-right:4px;">支付咨询费 <span class="glyphicon glyphicon-arrow-right"></a>
 										   			<a  class="btn btn-default disabled col-sm-2 btn-xs" style="margin-right:4px;">进行咨询 <span class="glyphicon glyphicon-arrow-right"></a>
 										   			<a  class="btn btn-default disabled col-sm-2 btn-xs" style="margin-right:4px;">咨询完成 <span class="glyphicon glyphicon-arrow-right"></a>
 										   	  	#end
 									  			#if($consult.step==2)
-	  								  				<a  class="btn btn-success disabled col-sm-2 btn-xs " style="margin-right:4px;">咨询师预约 <span class="glyphicon glyphicon-arrow-right"></a>
 									  				<a  class="btn btn-primary disabled col-sm-2 btn-xs " style="margin-right:4px;">支付咨询费 <span class="glyphicon glyphicon-arrow-right"></a>
 										   			<a  class="btn btn-default disabled col-sm-2 btn-xs" style="margin-right:4px;">进行咨询 <span class="glyphicon glyphicon-arrow-right"></a>
 										   			<a  class="btn btn-default disabled col-sm-2 btn-xs" style="margin-right:4px;">咨询完成 <span class="glyphicon glyphicon-arrow-right"></a>
 										   	  	#end										   	  	
 											   	#if($consult.step==3)
-	  								  				<a  class="btn btn-success disabled col-sm-2 btn-xs " style="margin-right:4px;">咨询师预约 <span class="glyphicon glyphicon-arrow-right"></a>
 									  				<a  class="btn btn-success disabled col-sm-2 btn-xs " style="margin-right:4px;">支付咨询费 <span class="glyphicon glyphicon-arrow-right"></a>
 										   			<a  class="btn btn-primary disabled col-sm-2 btn-xs" style="margin-right:4px;">进行咨询 <span class="glyphicon glyphicon-arrow-right"></a>
 										   			<a  class="btn btn-default disabled col-sm-2 btn-xs" style="margin-right:4px;">咨询完成 <span class="glyphicon glyphicon-arrow-right"></a>
 											   	#end
 											   	#if($consult.step==4)
-													<a  class="btn btn-success disabled col-sm-2 btn-xs " style="margin-right:4px;">咨询师预约 <span class="glyphicon glyphicon-arrow-right"></a>
 									  				<a  class="btn btn-success disabled col-sm-2 btn-xs " style="margin-right:4px;">支付咨询费 <span class="glyphicon glyphicon-arrow-right"></a>
 										   			<a  class="btn btn-success disabled col-sm-2 btn-xs" style="margin-right:4px;">进行咨询 <span class="glyphicon glyphicon-arrow-right"></a>
 										   			<a  class="btn btn-success disabled col-sm-2 btn-xs" style="margin-right:4px;">咨询完成 <span class="glyphicon glyphicon-arrow-right"></a>										  

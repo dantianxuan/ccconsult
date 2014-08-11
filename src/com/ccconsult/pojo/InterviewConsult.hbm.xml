@@ -31,5 +31,8 @@
         <property name="consultMemo" type="string">
             <column name="consult_memo" length="1024" />
         </property>
+        <property name="schedueTime" type="string">
+            <column name="schedue_time" length="256" />
+        </property>
     </class>
 </hibernate-mapping>

@@ -42,9 +42,9 @@
 				                                		#if($counselor.city)<span class="glyphicon glyphicon-map-marker"></span> 城市：$!counselor.city #end
 				                                	</a>
 													<span	class="label label-primary" style="float:right;margin-left:4px;">
-				                                	<span class="glyphicon glyphicon-tag"></span>专家徽章</span>				                                	
+				                                	<span class="glyphicon glyphicon-tag"></span>$application.getAttribute('levelMap').get("$!counselor.levelId").name</span>				                                	
 				                                	<span	class="label label-primary" style="float:right">
-				                                	<span class="glyphicon glyphicon-tag"></span>好评率:89%</span></p>
+				                                	<span class="glyphicon glyphicon-tag"></span>好评率:$!counselor.appriseRate%</span></p>
 				                                <div style="min-height:50px;overflow:hidden"><small>$!counselor.description</small></div>
 				                            </div>
 									</div>
