@@ -145,6 +145,8 @@ public class RegistController extends BaseController {
                 counselor.setGmtCreate(new Date());
                 counselor.setGmtModified(new Date());
                 counselor.setCompanyId(company.getId());
+                counselor.setLastLogin(new Date());
+                counselor.setLevelId(1);
                 counselorDAO.save(counselor);//注册一个用户
                 company.setCounselorCount(company.getCounselorCount() + 1);
                 companyDAO.update(company);
