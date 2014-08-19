@@ -1,64 +1,80 @@
 <form action="$link.contextPath/searchList.htm"  method="GET">
 <div class="row">
-    	<div class="col-sm-5"><input type="text"  name="keyword" class="form-control" placeholder="请输入公司名称或咨询师名称搜索"/></div>
-	 	<div class="col-sm-2">
-	     	<select class="form-control" name="type">
-	          <option value="COMPANY">公司</option>
-	          <option value="COUNSELOR">咨询师</option>
-	        </select>	 	
- 		</div>
-	 	<div class="col-sm-2">	
-	 		<button class="btn btn-danger col-sm-12" type="submit">快速寻找</button>
- 		</div>
-</div>
-</form>
-<br/>
-<div class="row">
-	<div class="col-sm-5" style="text-align:center;">
-		  	<div class="row" style="color:#dd4814">
-		  		<div class="col-sm-12"  >
-					<div class="col-sm-6" style="height:120px;background:#2E3058;color:#fff">
-						<H1>真实</H1>
-						公司专属邮箱注册和定期验证激活
-					</div>
-					<div class="col-sm-6" style="height:120px;background:#DF600B;color:#fff">
-						<H1>一线</H1>
-						国内外顶尖企业名企的一线雇员
-					</div>
+    <div class="col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-body">
+				<div class="row">
+				    	<div class="col-sm-5"><input type="text"  name="keyword" class="form-control" placeholder="请输入公司名称或咨询师名称搜索"/></div>
+					 	<div class="col-sm-2">
+					     	<select class="form-control" name="type">
+					          <option value="COMPANY">公司</option>
+					          <option value="COUNSELOR">咨询师</option>
+					        </select>	 	
+				 		</div>
+					 	<div class="col-sm-2">	
+					 		<button class="btn btn-danger col-sm-12" type="submit">快速寻找</button>
+				 		</div>
 				</div>
-			  	<div class="col-sm-12">
-					<div class="col-sm-6" style="height:120px;background:#3D8DB3;color:#fff">
-						<H1>专一</H1>
-						最专业的公司和最贴近行业前沿的员工
+				</form>
+				<br/>
+				<div class="row">
+					<div class="col-sm-5" style="text-align:center;">
+						  	<div class="row" style="color:#dd4814">
+						  		<div class="col-sm-12"  >
+									<div class="col-sm-6" style="height:120px;background:#2E3058;color:#fff">
+										<H1>真实</H1>
+										公司专属邮箱注册和定期验证激活
+									</div>
+									<div class="col-sm-6" style="height:120px;background:#DF600B;color:#fff">
+										<H1>一线</H1>
+										国内外顶尖企业名企的一线雇员
+									</div>
+								</div>
+							  	<div class="col-sm-12">
+									<div class="col-sm-6" style="height:120px;background:#3D8DB3;color:#fff">
+										<H1>专一</H1>
+										最专业的公司和最贴近行业前沿的员工
+									</div>
+									<div class="col-sm-6" style="height:120px;background:#0ECE98;color:#fff">
+										<H1>放心</H1>
+										最有价值的咨询和担保交易式咨询
+									</div>
+								</div>	
+							</div>		
 					</div>
-					<div class="col-sm-6" style="height:120px;background:#0ECE98;color:#fff">
-						<H1>放心</H1>
-						最有价值的咨询和担保交易式咨询
+					<!-- right CONTENT
+				       ================================================== -->
+					<div class="col-sm-7">
+						<div class="panel panel-default">
+							<div class="panel-body" style="height:240px;">
+								<p style="margin: 0px;max-height:198px;overflow:hidden;">
+									#foreach($article in $articles)
+										<a style="color:#000" href="$link.contextPath/article.htm?articleId=$article.id">$article.title</a><br/>
+									#end
+								</p>
+								<a href="$link.contextPath/articles.htm" style="float:right">更多信息</a>
+							</div>
+						</div>
 					</div>
-				</div>	
-			</div>		
-	</div>
-	<!-- right CONTENT
-       ================================================== -->
-	<div class="col-sm-7">
-		<div class="panel panel-default">
-			<div class="panel-body" style="height:240px;">
-				<p style="margin: 0px;max-height:198px;overflow:hidden;">
-					#foreach($article in $articles)
-						<a style="color:#000" href="$link.contextPath/article.htm?articleId=$article.id">$article.title</a><br/>
-					#end
-				</p>
-				<a href="$link.contextPath/articles.htm" style="float:right">更多信息</a>
-			</div>
-		</div>
-	</div>
+				</div>            
+            
+            
+            </div>
+        </div>
+    </div>
 </div>
+
 <div class="row">
 	<div class="col-sm-12">
 		<div class="panel panel-default">
-			  <div class="panel-heading"><strong><span class="glyphicon glyphicon-tags"></span>  热门服务</strong></div>
-			  <div class="panel-body">	
-		 		#foreach($service in $application.getAttribute('serviceList'))
+		 <div class="panel-body">	
+			<ul class="nav nav-tabs">
+			  <li class="active"><a href="#company" data-toggle="tab">一线名企</a></li>
+			</ul>
+			<div id="myTabContent" class="tab-content">
+			  <div class="tab-pane fade active in" id="company">
+			  <br/>
+				#foreach($service in $application.getAttribute('serviceList'))
 					<div class="col-sm-6" >
 						<div style="height:80px;margin-bottom:4px;background-color:#fff">
 						<a  target="_blank" href="$link.contextPath/article.htm?articleId=$service.introArticleId">
@@ -71,11 +87,15 @@
 						</a>			
 						</div>
 					</div>	
-				#end												
+				#end			  
 			  </div>
+  			</div>
+			</div>
+		
 		</div>
 	</div>
 </div>
+
 <div class="row">
 	<div class="col-sm-12">
 		<div class="panel panel-default">
@@ -100,6 +120,7 @@
 	</div>
 </div>
 
+#if($consultBases.data && $consultBases.data.size()>0)
 <div class="row">
 	<div class="col-sm-12">
 		<div class="panel panel-default">
@@ -136,3 +157,4 @@
 		</div>
 	</div>
 </div>
+#end

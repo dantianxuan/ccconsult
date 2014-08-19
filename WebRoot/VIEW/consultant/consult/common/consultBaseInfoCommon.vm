@@ -21,4 +21,4 @@
 #end
 #if($consultBase.consult.step==4 && !$consultBase.consultantApprise)
 	<p  style="border-top:solid 1px #ddd" class="text-primary">恭喜您完成咨询，您可以选择<a href="$link.contextPath/consultant/consult/appriseConsult.htm?consultId=$consultBase.consult.id" class="btn btn-xs btn-primary" >评价这次咨询</a></p>
-#end
+#end            

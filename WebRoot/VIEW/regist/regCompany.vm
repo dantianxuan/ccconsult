@@ -7,22 +7,16 @@
 <script type="text/javascript" src="$link.contextPath/STATIC/plugin/umeditor/lang/zh-cn/zh-cn.js"></script>  
 <script src="$link.contextPath/STATIC/js/fileinput.js"></script>
 <link rel="stylesheet" href="$link.contextPath/STATIC/css/fileinput.css"/>
-<div class="alert alert-dismissable alert-warning">
-  <h4>欢迎您注册一个公司信息</h4>
-  <p>请仔细填写您要注册的公司信息并留下您的电话号码，我们会及时和您联系并审核您的申请.</p>
-</div>
 <div class="row">
     <div class="col-sm-12">
         <div class="panel panel-default">
             <div class="panel-body">
+				<div class="alert alert-dismissable alert-warning">
+				  <h4>欢迎您注册一个公司信息</h4>
+				  <p>请仔细填写您要注册的公司信息并留下您的电话号码，我们会及时和您联系并审核您的申请.</p>
+				</div>            
                 <form class="form-horizontal" action="$link.contextPath/regist/regCompanyInfo.htm" method="POST" id="regCompanyForm">
-                    <fieldset> 
-                        <div class="form-group hide" id="errorFiled">
-                            <label class="col-sm-2 control-label"></label>
-                                <div class="col-sm-10">
-                                   <span style="color:red"><span class="glyphicon glyphicon-warning-sign"></span> <span id="errorSpan"></span></span>
-                                </div>
-                        </div>	 
+                    <fieldset>  
                         <div class="form-group">
                         	<label  class="col-sm-2 control-label">公司名称</label>
                             <div class="col-sm-10">
@@ -31,21 +25,20 @@
                         </div> 	                    	
                       	<div class="form-group">
                              <label  class="col-sm-2 control-label">邮箱后缀</label>
-                            <div class="col-sm-2">
-                             <input type="text" name="mailSuffix" class="form-control" placeholder="邮箱后缀" required >
+                            <div class="col-sm-4">
+                             <input type="text" name="mailSuffix" class="form-control" placeholder="邮箱后缀。例如:@live.com" required >
                             </div>                            
                     	</div>                     	                     	                 		
                         <div class="form-group">
                          	<label  class="col-sm-2 control-label">公司介绍</label>
-                            <div class="col-sm-10">
-                                <script type="text/plain" id="myEditor" name="description" style="width:100%;height:200px;"></script>
-                                <script type="text/javascript">
-                               		var um = UM.getEditor('myEditor');
-                                </script>                         
+                            <div class="col-sm-10"> 
+ 								<textarea class="form-control" rows="10" placeholder="请简单描述一下您的面试要求" 
+						         name="description" data-error="您必须输入你对本次面试的要求"  ></textarea>
+						        <span class="help-block">您可以描述一下您的需求，以便于咨询师迅速的了解您的述求</span>                                                          
                             </div>
                         </div>
                     	<div class="form-group">
-                             <label  class="col-sm-2 control-label">联系电话</label>
+                             <label  class="col-sm-2 control-label">联系手机</label>
                             <div class="col-sm-10">
                              <input type="text" name="regMobile" class="form-control" placeholder="请输入您的联系电话以便于我们审核" required>
                             </div>                            
@@ -53,7 +46,7 @@
                         <div class="form-group">
                         	<label  class="col-sm-2 control-label"></label>
                             <div class="col-sm-10" >
-								<button type="button" id="submitCompanyButton" onclick="return regCompany();" class="btn btn-primary col-sm-2" style="float:right;">注册公司信息</button>                            
+								<button type="button" id="submitCompanyButton" onclick="regCompany();" class="btn btn-primary col-sm-2" style="float:right;">注册公司信息</button>                            
                             	<a href="$link.contextPath/index.htm" class="btn btn-link col-sm-2" style="float:right;">返回首页</a>
                             </div>
                         </div>
@@ -64,15 +57,37 @@
     </div>
 </div>
 <script>
-	function showArea(message){
-		$('#errorSpan').html(message);
-		$('#errorFiled').removeClass('hide');
-	}
 	function regCompany() {
-			if($('input[name=localFile]')==undefined || $('input[name=localFile]').val()==''){
-				showArea('必须上传简历文件');
-				return false;
+			
+			if($('input[name=name]')==undefined || $('input[name=name]').val()==''){
+				$.Zebra_Dialog('<strong>请注意</strong>, 公司名称必须输入', {
+					    'type':     'error',
+					    'title':    '对不起请检查您的输入'
+				});	
+				return true;		
 			}
+			if($('input[name=mailSuffix]')==undefined || $('input[name=mailSuffix]').val()==''){
+				$.Zebra_Dialog('<strong>请注意</strong>, 必须输入公司邮箱后缀', {
+					    'type':     'error',
+					    'title':    '对不起请检查您的输入'
+				});	
+				return true;		
+			}
+			if($('input[name=regMobile]')==undefined || $('input[name=regMobile]').val()==''){
+				$.Zebra_Dialog('<strong>请注意</strong>, 必须输入您的联系方式', {
+					    'type':     'error',
+					    'title':    '对不起请检查您的输入'
+				});	
+				return true;		
+			}	
+			if($('textarea[name=description]')==undefined || $('textarea[name=description]').val()==''){
+				$.Zebra_Dialog('<strong>请注意</strong>, 必须输入公司的描述信息', {
+					    'type':     'error',
+					    'title':    '对不起请检查您的输入'
+				});	
+				return true;		
+			}				
+								
 			var options = {
 				dataType : "json",
 				beforeSubmit : function() {
@@ -82,15 +97,23 @@
 					$('#submitCompanyButton').button('reset');
 					var data = eval(result);
 					if(data.result.success){
-						alert('处理成功，请等待我们联系您记性注册！');
-						location.href="$link.contextPath/index.htm;
+							$.Zebra_Dialog('<strong>恭喜您</strong>, 请耐心等待我们的工作人员联系您完成注册，感谢您的支持！');
+		             		setTimeout(function(){
+		             			location.href="$link.contextPath/index.htm";
+							},3000);
 					}else{
-						showArea('提交失败：'+data.result.message);
+						$.Zebra_Dialog('<strong>请注意</strong>,'+data.result.message, {
+							    'type':     'error',
+							    'title':    '对不起注册失败'
+						});							
 					}
 				},
 				error : function(result) {
 					$('#submitCompanyButton').button('reset');
-					alert('提交失败，请检查！');
+					$.Zebra_Dialog('<strong>请注意</strong>,当前无法注册请稍后再试', {
+						    'type':     'error',
+						    'title':    '对不起注册失败'
+					});						
 				}
 			};
 			$('#regCompanyForm').ajaxSubmit(options); 

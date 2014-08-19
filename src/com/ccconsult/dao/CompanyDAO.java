@@ -62,6 +62,10 @@ public class CompanyDAO extends BaseHibernateDAO<Company> {
         return getLimit(findByProperty(MAIL_SUFFIX, mailSuffix));
     }
 
+    public Company findByName(Object name) {
+        return getLimit(findByProperty(NAME, name));
+    }
+
     public List findAll() {
         log.debug("finding all Company instances");
         try {
@@ -88,7 +92,7 @@ public class CompanyDAO extends BaseHibernateDAO<Company> {
     }
 
     public List<Company> queryTopList(int size) {
-        String hql = "from Company  order by counselorCount desc limit 0," + size;
+        String hql = "from Company where state=1   order by counselorCount desc limit 0," + size;
         Query query = this.getSession().createQuery(hql);
         List<Company> companys = query.list();
         return companys;

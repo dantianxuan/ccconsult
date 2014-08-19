@@ -3,19 +3,21 @@
 	#set($company=$result.object)
 #end
 <form class="form-horizontal" action="$link.contextPath/tucao.json" method="post" id="tucaoForm">
+
 <div class="row">
-	    <div class="col-sm-3" >
-	        <img src="$link.contextPath/STATIC/image/tucao.jpg" class="img-thumbnail">
-	    </div>
-	    <!-- right CONTENT================================ -->
-	    <div class="col-sm-9" >
-	        <div class="panel panel-default">
-	            <div class="panel-body" style="font-size: 13px;padding-bottom:4px;">
+    <div class="col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-body">
+  				<div class="col-sm-3" >
+			        <img src="$link.contextPath/STATIC/image/tucao.jpg" class="img-thumbnail">
+			    </div>
+			    <!-- right CONTENT================================ -->
+			    <div class="col-sm-9" >
 					  <fieldset>
 					    <p>如果您对平台有什么建议和意见，或者有啥要吐槽的，那就放心的来吧。。</p>
 					    <div class="form-group">
 					      <div class="col-sm-12">
-					        <textarea class="form-control" rows="3" id="textArea" name="content" required></textarea>
+					        <textarea class="form-control" rows="4" id="textArea" name="content" required></textarea>
 					        <span id="warnSpan" style="color:red;display:none"><span class="glyphicon glyphicon-warning-sign"></span><span id="errorMessageSpan"></span></span>
 					      </div>
 					    </div>
@@ -25,10 +27,12 @@
 					      	</div>
 				     	 </div>	
 					  </fieldset>
-	            </div>
-	        </div>
-	    </div>
+			    </div>          
+            </div>
+        </div>
+    </div>
 </div> 
+
 </form>
 <script language="javascript">
 	function tucao(){

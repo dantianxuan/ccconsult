@@ -1,20 +1,22 @@
 #if($result && $result.isSuccess)
 	#set($company=$result.object)
 #end
+
 <div class="row">
-	    <div class="col-sm-4" >
-	        <img src="$link.contextPath/$fileUtil.getPath($!company.photo)" class="img-thumbnail" style="max-height:240px;">
-	    </div>
-	    <!-- right CONTENT================================ -->
-	    <div class="col-sm-8" >
-	        <div class="panel panel-default">
-	            <div class="panel-body" style="font-size: 13px;">
-	                <div>$!company.description</div><br/>
-	            </div>
-	        </div>
-	    </div>
+    <div class="col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-body">
+		        <div class="col-sm-3" >    
+		     		<img src="$link.contextPath/$fileUtil.getPath($!company.photo)" class="img-thumbnail" style="max-height:240px;">
+			    </div>
+			    <!-- right CONTENT================================ -->
+			    <div class="col-sm-9" >
+			                <div>$!company.description</div><br/>
+			    </div>            
+            </div>
+        </div>
+    </div>
 </div> 
-<br/>
 <div class="row">
     <div class="col-sm-12">
         <div class="panel panel-default">

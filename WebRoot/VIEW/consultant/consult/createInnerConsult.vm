@@ -75,9 +75,7 @@
 				             success: function(data){
 				             	if(data.result.success==true){
 									$.Zebra_Dialog('<strong>恭喜您</strong>, 预约创建，请仔细阅读创建创建信息详情！');
-				             		setTimeout(function(){
-				             			window.location.href="$link.contextPath/consultant/consult/createSuccess.htm?consultId="+data.result.object.id
-									},2000);				             		
+			             			window.location.href="$link.contextPath/consultant/consult/createSuccess.htm?consultId="+data.result.object.id
 				             	}else{
 									$.Zebra_Dialog('<strong>请注意</strong>, '+data.result.message, {
 									    'type':     'error',

@@ -8,7 +8,6 @@ import org.hibernate.Query;
 import org.springframework.util.CollectionUtils;
 
 import com.ccconsult.pojo.Consultant;
-import com.ccconsult.pojo.Counselor;
 
 /**
  	* A data access object (DAO) providing persistence and search support for Consultant entities.

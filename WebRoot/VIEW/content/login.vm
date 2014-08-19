@@ -4,11 +4,11 @@
 		var account=$('input[name=account]').val();
     	var password=$('input[name=password]').val();
     	if(account=='' || account==undefined){
-    		alert('登陆名称不能为空');
+    		$.Zebra_Dialog('<strong>请注意</strong>, 登录名称不能为空！');
     		return ;
     	}
 		if(password=='' || password==undefined){
-    		alert('密码不能为空');
+    		$.Zebra_Dialog('<strong>请注意</strong>, 密码不能为空！');
     		return ;
     	}
         $('#loginForm').submit();

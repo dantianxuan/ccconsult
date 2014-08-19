@@ -87,7 +87,7 @@
              	if(data.result.success==true){
              		$.Zebra_Dialog('<strong>恭喜您</strong>, 服务签约成功，新签约的服务会即使生效！');
              		setTimeout(function(){
-             			window.location.href="$link.contextPath/counselor/counselorService.htm"
+             			window.location.href="$link.contextPath/counselor/serviceConfig.htm"
 					},2000);
              	}else{
              		$.Zebra_Dialog('<strong>请注意</strong>, '+data.result.message, {

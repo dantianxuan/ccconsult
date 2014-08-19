@@ -24,6 +24,18 @@
 	</appender>
 
 
+	<appender name="SMS-DIGEST-APPENDER" class="org.apache.log4j.RollingFileAppender">
+		<param name="file" value="${webApp.root}/WEB-INF/logs/sms-digest.log" />
+		<param name="append" value="true" />
+		<param name="encoding" value="UTF-8" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="%d [%X{loginUserEmail}/%X{loginUserID}/%X{remoteAddr}/%X{clientId} - %X{requestURIWithQueryString}] %-5p %c{2} - %m%n" />
+		</layout>
+	</appender>
+
+
+
 	<appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern" value="%d - %c -%-4r [%t] %-5p %x - %m%n" />
@@ -42,6 +54,13 @@
 		<appender-ref ref="SERVICE-DIGEST-APPENDER" />
 		<appender-ref ref="CONSOLE" />
 	</logger>
+
+	<logger name="SMS-DIGEST" additivity="true">
+		<level value="INFO" />
+		<appender-ref ref="SMS-DIGEST-APPENDER" />
+		<appender-ref ref="CONSOLE" />
+	</logger>
+
 
 	<root>
 		<!-- root 整体设置过滤优先级，如果appender 没有设置filter或Threshold 默认采用该级别，定义的logger不在其中（即不会被过滤掉）。 -->

@@ -27,9 +27,11 @@ import com.ccconsult.dao.AccountDAO;
 import com.ccconsult.dao.CompanyDAO;
 import com.ccconsult.dao.ConsultantDAO;
 import com.ccconsult.dao.CounselorDAO;
+import com.ccconsult.dao.MobileTokenDAO;
 import com.ccconsult.dao.RegMailDAO;
 import com.ccconsult.dao.ServiceConfigDAO;
 import com.ccconsult.enums.DataStateEnum;
+import com.ccconsult.enums.MobileTokenEnum;
 import com.ccconsult.enums.NotifySenderEnum;
 import com.ccconsult.enums.UserRoleEnum;
 import com.ccconsult.notify.NotifySender;
@@ -37,6 +39,7 @@ import com.ccconsult.pojo.Account;
 import com.ccconsult.pojo.Company;
 import com.ccconsult.pojo.Consultant;
 import com.ccconsult.pojo.Counselor;
+import com.ccconsult.pojo.MobileToken;
 import com.ccconsult.pojo.RegMail;
 import com.ccconsult.pojo.ServiceConfig;
 import com.ccconsult.service.RegistService;
@@ -65,6 +68,8 @@ public class RegistController extends BaseController {
     private CompanyDAO       companyDAO;
     @Autowired
     private AccountDAO       accountDAO;
+    @Autowired
+    private MobileTokenDAO   mobileTokenDAO;
 
     /**
      * 注册面试官init页面
@@ -120,7 +125,8 @@ public class RegistController extends BaseController {
     @RequestMapping(value = "regist/regCounselor.htm", params = "action=regist")
     public ModelAndView submitRegCounselor(final HttpServletRequest request,
                                            final Counselor counselor, final String repasswd,
-                                           final Integer regMailId, final ModelMap modelMap) {
+                                           final String token, final Integer regMailId,
+                                           final ModelMap modelMap) {
 
         CcResult result = serviceTemplate.executeWithTx(CcResult.class, new BlankServiceCallBack() {
             @Override
@@ -138,6 +144,10 @@ public class RegistController extends BaseController {
                 if (innerInterviewerVO != null) {
                     throw new CcException("您已经注册过该用户，请直接登录，如果忘记密码请点击忘记密码找回");
                 }
+                MobileToken mobileToken = mobileTokenDAO.getByTypeAndMobile(
+                    MobileTokenEnum.REG_COUNSELOR.getValue(), counselor.getMobile());
+                AssertUtil.state(mobileToken != null && mobileToken.getToken().equals(token),
+                    "验证码信息不正确，无法注册");
                 AssertUtil.state(StringUtils.equals(counselor.getPasswd(), repasswd), "重复密码输入不一致");
                 AssertUtil.state(counselor.getName() != null, "用户昵称不能为空");
                 AssertUtil.state(counselor.getName().length() <= CcConstrant.COMMON_32_LENGTH,
@@ -195,7 +205,7 @@ public class RegistController extends BaseController {
     @RequestMapping(value = "regist/regConsultant.htm", params = "action=regist")
     public ModelAndView submitRegConsultant(HttpServletRequest request,
                                             final Consultant consultant, final String repasswd,
-                                            ModelMap modelMap) {
+                                            final String token, ModelMap modelMap) {
 
         CcResult result = serviceTemplate.executeWithTx(CcResult.class, new BlankServiceCallBack() {
             @Override
@@ -205,9 +215,16 @@ public class RegistController extends BaseController {
                 AssertUtil.state(consultant.getEmail().length() < CcConstrant.COMMON_256_LENGTH,
                     "注册邮箱不能超过256个字符！");
                 AssertUtil.state(ValidateUtil.isEmail(consultant.getEmail()), "请输入合法的邮箱账户格式");
+                AssertUtil.notBlank(token, "验证码信息不能为空");
                 AssertUtil.notBlank(consultant.getName(), "用户名称不能为空");
                 AssertUtil.state(consultant.getName().length() < CcConstrant.COMMON_128_LENGTH,
                     "注册用户名称不能超过128个字符！");
+
+                MobileToken mobileToken = mobileTokenDAO.getByTypeAndMobile(
+                    MobileTokenEnum.REG_CONSULTANT.getValue(), consultant.getMobile());
+                AssertUtil.state(mobileToken != null && mobileToken.getToken().equals(token),
+                    "验证码信息不正确，无法注册");
+
                 AssertUtil.state(ValidateUtil.isMobile(consultant.getMobile()), "请输入合法的手机号码");
                 AssertUtil.state(consultant.getPasswd() != null
                                  && consultant.getPasswd().length() > 6
@@ -237,7 +254,7 @@ public class RegistController extends BaseController {
             return new ModelAndView("redirect:/consultant/consultantSelf.htm?consultantId="
                                     + consultant.getId());
         }
-
+        modelMap.put("token", token);
         modelMap.put("result", result);
         modelMap.put("consultant", consultant);
         return new ModelAndView("regist/regConsultant");
@@ -310,8 +327,11 @@ public class RegistController extends BaseController {
                     company.getDescription() != null
                             && company.getDescription().length() < CcConstrant.COMMON_512_LENGTH,
                     "请输入合法的公司描述，描述长度不能超过512个字符");
-                AssertUtil.state(ValidateUtil.isMobile(company.getRegMobile()),
-                    "请留下您的手机号码，我们会联系您进行审核");
+                AssertUtil.state(ValidateUtil.isMobile(company.getRegMobile()), "请留下合法的手机号码！");
+                Company localCompany = companyDAO.findByMailSuffix(company.getMailSuffix());
+                AssertUtil.state(localCompany == null, "对不起这个公司已经注册过了！");
+                localCompany = companyDAO.findByName(company.getName());
+                AssertUtil.state(localCompany == null, "对不起这个公司已经注册过了！");
                 company.setState(DataStateEnum.DISABLE.getValue());
                 company.setGmtCreate(new Date());
                 company.setGmtModified(new Date());

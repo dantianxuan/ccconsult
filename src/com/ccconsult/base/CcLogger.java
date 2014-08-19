@@ -15,5 +15,8 @@ import org.apache.log4j.Logger;
 public class CcLogger {
 
     /**服务摘要*/
-    public Logger serviceDigest = Logger.getLogger("SERVICE-DIGEST");
+    public static final Logger serviceDigest = Logger.getLogger("SERVICE-DIGEST");
+
+    /**短信摘要*/
+    public static final Logger smsDigest     = Logger.getLogger("SMS-DIGEST");
 }

@@ -1,5 +1,6 @@
 package com.ccconsult.dao;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import org.slf4j.Logger;
@@ -42,7 +43,7 @@ public class ConsultDAO extends BaseHibernateDAO<Consult> {
 
     public PageList<Consult> queryInnerConsultByGoal(String keyWord, int pageSize, int pageNo) {
         Map<String, Object> params = new HashMap<String, Object>();
-        params.put(GOAL, "%"+keyWord+"%");
+        params.put(GOAL, "%" + keyWord + "%");
         String hql = "from Consult where step=" + ConsultStepEnum.FIHSHED.getValue()
                      + " and goal like :goal";
         hql += " order by gmtModified ";

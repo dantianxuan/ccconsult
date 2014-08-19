@@ -83,7 +83,6 @@ public class CounselorDAO extends BaseHibernateDAO<Counselor> {
         Query queryObject = getSession().createQuery(queryString);
         queryObject.setParameter(0, value);
         return queryObject.list();
-
     }
 
     public PageList<Counselor> queryByName(int pageNo, int pageSize, String name) {
