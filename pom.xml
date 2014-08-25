@@ -341,7 +341,7 @@
 						</goals>
 						<configuration>
 							<sources>
-								<source>src/main/home</source>
+								<source>src/main/core</source>
 								<source>src/main/web</source>
 								<source>src/main/notify</source>
 								<source>src/main/dao</source>
