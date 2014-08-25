@@ -23,20 +23,20 @@ import com.ccconsult.base.CcConstrant;
 import com.ccconsult.base.CcResult;
 import com.ccconsult.base.PageList;
 import com.ccconsult.base.PageQuery;
+import com.ccconsult.base.enums.ConsultStepEnum;
+import com.ccconsult.base.enums.FileTypeEnum;
+import com.ccconsult.base.enums.UserRoleEnum;
+import com.ccconsult.base.util.StringUtil;
+import com.ccconsult.base.util.ValidateUtil;
 import com.ccconsult.core.ConsultComponent;
 import com.ccconsult.core.FileComponent;
 import com.ccconsult.dao.CounselorDAO;
 import com.ccconsult.dao.InnerMailDAO;
-import com.ccconsult.enums.ConsultStepEnum;
-import com.ccconsult.enums.FileTypeEnum;
-import com.ccconsult.enums.UserRoleEnum;
 import com.ccconsult.pojo.Consultant;
 import com.ccconsult.pojo.Counselor;
-import com.ccconsult.util.StringUtil;
-import com.ccconsult.util.ValidateUtil;
-import com.ccconsult.view.ConsultBase;
-import com.ccconsult.view.CounselorVO;
 import com.ccconsult.web.BaseController;
+import com.ccconsult.web.view.ConsultBase;
+import com.ccconsult.web.view.CounselorVO;
 
 /**
  * @author jingyu.dan

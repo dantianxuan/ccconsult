@@ -23,12 +23,12 @@
 	<tool>
 		<key>enumUtil</key>
 		<scope>application</scope>
-		<class>com.ccconsult.util.EnumUtil</class>
+		<class>com.ccconsult.base.util.EnumUtil</class>
 	</tool>
 	<tool>
 		<key>stringUtil</key>
 		<scope>application</scope>
-		<class>com.ccconsult.util.StringUtil</class>
+		<class>com.ccconsult.base.util.StringUtil</class>
 	</tool>
 	<tool>
 		<key>enumUtils</key>
@@ -38,11 +38,11 @@
 	<tool>
 		<key>fileUtil</key>
 		<scope>application</scope>
-		<class>com.ccconsult.util.FileUtil</class>
+		<class>com.ccconsult.base.util.FileUtil</class>
 	</tool>
 	<tool>
 		<key>scheduleTimeUtil</key>
 		<scope>application</scope>
-		<class>com.ccconsult.util.ScheduleTimeUtil</class>
+		<class>com.ccconsult.base.util.ScheduleTimeUtil</class>
 	</tool>
 </toolbox>

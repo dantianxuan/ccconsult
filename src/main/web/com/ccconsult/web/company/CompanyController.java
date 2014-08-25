@@ -26,13 +26,13 @@ import com.ccconsult.base.BlankServiceCallBack;
 import com.ccconsult.base.CcConstrant;
 import com.ccconsult.base.CcResult;
 import com.ccconsult.base.PageList;
+import com.ccconsult.base.enums.FileTypeEnum;
+import com.ccconsult.base.util.StringUtil;
 import com.ccconsult.core.FileComponent;
 import com.ccconsult.dao.CompanyDAO;
 import com.ccconsult.dao.CounselorDAO;
-import com.ccconsult.enums.FileTypeEnum;
 import com.ccconsult.pojo.Company;
 import com.ccconsult.pojo.Counselor;
-import com.ccconsult.util.StringUtil;
 import com.ccconsult.web.BaseController;
 
 /**

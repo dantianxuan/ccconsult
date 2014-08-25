@@ -7,11 +7,11 @@ import org.hibernate.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 
-import com.ccconsult.enums.UserRoleEnum;
+import com.ccconsult.base.enums.UserRoleEnum;
 import com.ccconsult.pojo.Consultant;
 import com.ccconsult.pojo.Message;
-import com.ccconsult.view.CounselorVO;
-import com.ccconsult.view.MessageVO;
+import com.ccconsult.web.view.CounselorVO;
+import com.ccconsult.web.view.MessageVO;
 
 /**
  	* A data access object (DAO) providing persistence and search support for Message entities.

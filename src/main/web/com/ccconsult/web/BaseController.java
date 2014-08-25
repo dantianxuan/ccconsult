@@ -14,7 +14,7 @@ import com.ccconsult.core.cache.CachedComponent;
 import com.ccconsult.dao.ConsultantDAO;
 import com.ccconsult.dao.CounselorDAO;
 import com.ccconsult.pojo.Consultant;
-import com.ccconsult.view.CounselorVO;
+import com.ccconsult.web.view.CounselorVO;
 
 /**
  * 

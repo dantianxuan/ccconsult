@@ -15,12 +15,12 @@ import org.apache.log4j.Logger;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
+import com.ccconsult.base.enums.CacheEnum;
+import com.ccconsult.base.util.LogUtil;
 import com.ccconsult.core.cache.LoacalCacheLoader;
 import com.ccconsult.core.cache.CachedComponent;
-import com.ccconsult.enums.CacheEnum;
 import com.ccconsult.pojo.Level;
 import com.ccconsult.pojo.Service;
-import com.ccconsult.util.LogUtil;
 
 /**
  * 系统初始化监听器
@@ -48,32 +48,36 @@ public class ApplicationInitListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent arg0) {
 
-        springContext = WebApplicationContextUtils.getWebApplicationContext(arg0
-            .getServletContext());
-        CachedComponent cachedComponent = (CachedComponent) springContext
-            .getBean("cachedComponent");
-        LogUtil.info(logger, "初始化等级数据");
-        //初始化基本的等级信息
-        List<Level> levels = (List<Level>) cachedComponent.getCache(
-            CacheEnum.LEVEL_CACHE.getCode(), LoacalCacheLoader.ALL);
-        arg0.getServletContext().setAttribute("levelList", levels);
-        //初始化基本的
-        Map<String, Level> levelMap = new HashMap<String, Level>();
-        for (Level level : levels) {
-            levelMap.put(String.valueOf(level.getId()), level);
-        }
-        arg0.getServletContext().setAttribute("levelMap", levelMap);
+        try {
+            springContext = WebApplicationContextUtils.getWebApplicationContext(arg0
+                .getServletContext());
+            CachedComponent cachedComponent = (CachedComponent) springContext
+                .getBean("cachedComponent");
+            LogUtil.info(logger, "初始化等级数据");
+            //初始化基本的等级信息
+            List<Level> levels = (List<Level>) cachedComponent.getCache(
+                CacheEnum.LEVEL_CACHE.getCode(), LoacalCacheLoader.ALL);
+            arg0.getServletContext().setAttribute("levelList", levels);
+            //初始化基本的
+            Map<String, Level> levelMap = new HashMap<String, Level>();
+            for (Level level : levels) {
+                levelMap.put(String.valueOf(level.getId()), level);
+            }
+            arg0.getServletContext().setAttribute("levelMap", levelMap);
 
-        //初始化基本的等级信息
-        LogUtil.info(logger, "初始化服务信息");
-        List<Service> services = (List<Service>) cachedComponent.getCache(
-            CacheEnum.SERVICE_CACHE.getCode(), LoacalCacheLoader.ALL);
-        arg0.getServletContext().setAttribute("serviceList", services);
-        Map<String, Service> serviceMap = new HashMap<String, Service>();
-        for (Service service : services) {
-            serviceMap.put(String.valueOf(service.getId()), service);
+            //初始化基本的等级信息
+            LogUtil.info(logger, "初始化服务信息");
+            List<Service> services = (List<Service>) cachedComponent.getCache(
+                CacheEnum.SERVICE_CACHE.getCode(), LoacalCacheLoader.ALL);
+            arg0.getServletContext().setAttribute("serviceList", services);
+            Map<String, Service> serviceMap = new HashMap<String, Service>();
+            for (Service service : services) {
+                serviceMap.put(String.valueOf(service.getId()), service);
+            }
+            arg0.getServletContext().setAttribute("serviceMap", serviceMap);
+        } catch (Exception e) {
+            LogUtil.error(logger, e, "初始化错误");
         }
-        arg0.getServletContext().setAttribute("serviceMap", serviceMap);
     }
 
 }

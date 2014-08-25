@@ -20,13 +20,13 @@ import com.ccconsult.base.BlankServiceCallBack;
 import com.ccconsult.base.CcException;
 import com.ccconsult.base.CcLogger;
 import com.ccconsult.base.CcResult;
+import com.ccconsult.base.enums.MobileTokenEnum;
+import com.ccconsult.base.util.CodeGenUtil;
+import com.ccconsult.base.util.DateUtil;
+import com.ccconsult.base.util.LogUtil;
+import com.ccconsult.base.util.ValidateUtil;
 import com.ccconsult.dao.MobileTokenDAO;
-import com.ccconsult.enums.MobileTokenEnum;
 import com.ccconsult.pojo.MobileToken;
-import com.ccconsult.util.CodeGenUtil;
-import com.ccconsult.util.DateUtil;
-import com.ccconsult.util.LogUtil;
-import com.ccconsult.util.ValidateUtil;
 import com.cloopen.rest.sdk.CCPRestSDK;
 
 /**

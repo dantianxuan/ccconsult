@@ -20,16 +20,16 @@
 		<!-- 多个拦截器,顺序执行 -->
 		<mvc:interceptor>
 			<mvc:mapping path="/counselor/**" />
-			<bean class="com.ccconsult.filter.CounselorAuthorityInterceptor"></bean>
+			<bean class="com.ccconsult.core.filter.CounselorAuthorityInterceptor"></bean>
 		</mvc:interceptor>
 		<!-- 多个拦截器,顺序执行 -->
 		<mvc:interceptor>
 			<mvc:mapping path="/consultant/**" />
-			<bean class="com.ccconsult.filter.ConsultantAuthorityInterceptor"></bean>
+			<bean class="com.ccconsult.core.filter.ConsultantAuthorityInterceptor"></bean>
 		</mvc:interceptor>
 		<mvc:interceptor>
 			<mvc:mapping path="/backstage/**" />
-			<bean class="com.ccconsult.filter.AdminAuthorityInterceptor"></bean>
+			<bean class="com.ccconsult.core.filter.AdminAuthorityInterceptor"></bean>
 		</mvc:interceptor>
 	</mvc:interceptors>
 	<!-- 启动Spring MVC的注解功能，完成请求和注解POJO的映射 -->

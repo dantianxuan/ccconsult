@@ -9,8 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.ccconsult.base.PageList;
+import com.ccconsult.base.util.StringUtil;
 import com.ccconsult.pojo.Company;
-import com.ccconsult.util.StringUtil;
 
 /**
  	* A data access object (DAO) providing persistence and search support for Company entities.

@@ -16,14 +16,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ccconsult.base.CcConstrant;
 import com.ccconsult.base.PageList;
+import com.ccconsult.base.enums.ArticleTypeEnum;
+import com.ccconsult.base.enums.ConsultStepEnum;
 import com.ccconsult.core.ConsultComponent;
 import com.ccconsult.dao.ArticleDAO;
 import com.ccconsult.dao.CompanyDAO;
-import com.ccconsult.enums.ArticleTypeEnum;
-import com.ccconsult.enums.ConsultStepEnum;
 import com.ccconsult.pojo.Article;
 import com.ccconsult.pojo.Company;
-import com.ccconsult.view.ConsultBase;
+import com.ccconsult.web.view.ConsultBase;
 
 /**
  * @author jingyu.dan

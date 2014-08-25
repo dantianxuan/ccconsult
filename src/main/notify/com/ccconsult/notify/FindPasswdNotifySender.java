@@ -4,7 +4,7 @@
 package com.ccconsult.notify;
 
 import com.ccconsult.pojo.Consultant;
-import com.ccconsult.view.CounselorVO;
+import com.ccconsult.web.view.CounselorVO;
 
 /**
  * 寻找密码通知发送器

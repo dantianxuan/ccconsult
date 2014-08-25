@@ -21,9 +21,9 @@ import com.ccconsult.base.AssertUtil;
 import com.ccconsult.base.BlankServiceCallBack;
 import com.ccconsult.base.CcResult;
 import com.ccconsult.base.PageList;
+import com.ccconsult.base.enums.ArticleTypeEnum;
+import com.ccconsult.base.enums.DataStateEnum;
 import com.ccconsult.dao.ArticleDAO;
-import com.ccconsult.enums.ArticleTypeEnum;
-import com.ccconsult.enums.DataStateEnum;
 import com.ccconsult.pojo.Article;
 
 /**

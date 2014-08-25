@@ -21,24 +21,24 @@ import com.ccconsult.base.BlankServiceCallBack;
 import com.ccconsult.base.CcConstrant;
 import com.ccconsult.base.CcException;
 import com.ccconsult.base.CcResult;
+import com.ccconsult.base.enums.DataStateEnum;
+import com.ccconsult.base.enums.MobileTokenEnum;
+import com.ccconsult.base.enums.UserRoleEnum;
+import com.ccconsult.core.service.RegistService;
 import com.ccconsult.dao.AccountDAO;
 import com.ccconsult.dao.CompanyDAO;
 import com.ccconsult.dao.CounselorDAO;
 import com.ccconsult.dao.MobileTokenDAO;
 import com.ccconsult.dao.RegMailDAO;
 import com.ccconsult.dao.ServiceConfigDAO;
-import com.ccconsult.enums.DataStateEnum;
-import com.ccconsult.enums.MobileTokenEnum;
-import com.ccconsult.enums.UserRoleEnum;
 import com.ccconsult.pojo.Account;
 import com.ccconsult.pojo.Company;
 import com.ccconsult.pojo.Counselor;
 import com.ccconsult.pojo.MobileToken;
 import com.ccconsult.pojo.RegMail;
 import com.ccconsult.pojo.ServiceConfig;
-import com.ccconsult.service.RegistService;
-import com.ccconsult.view.CounselorVO;
 import com.ccconsult.web.BaseController;
+import com.ccconsult.web.view.CounselorVO;
 
 /**
  * @author jingyu.dan

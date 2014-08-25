@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ccconsult.pojo.Service;
 import com.ccconsult.pojo.ServiceConfig;
-import com.ccconsult.view.ServiceConfigVO;
+import com.ccconsult.web.view.ServiceConfigVO;
 
 /**
  	* A data access object (DAO) providing persistence and search support for ServiceConfig entities.

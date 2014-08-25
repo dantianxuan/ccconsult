@@ -18,14 +18,14 @@ import com.ccconsult.base.AssertUtil;
 import com.ccconsult.base.BlankServiceCallBack;
 import com.ccconsult.base.CcConstrant;
 import com.ccconsult.base.CcResult;
+import com.ccconsult.base.enums.MessageRelTypeEnum;
+import com.ccconsult.base.enums.UserRoleEnum;
 import com.ccconsult.dao.ConsultDAO;
 import com.ccconsult.dao.MessageDAO;
-import com.ccconsult.enums.MessageRelTypeEnum;
-import com.ccconsult.enums.UserRoleEnum;
 import com.ccconsult.pojo.Consult;
 import com.ccconsult.pojo.Consultant;
 import com.ccconsult.pojo.Message;
-import com.ccconsult.view.CounselorVO;
+import com.ccconsult.web.view.CounselorVO;
 
 /**
  * @author jingyu.dan

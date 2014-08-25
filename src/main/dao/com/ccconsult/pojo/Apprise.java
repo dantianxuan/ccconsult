@@ -2,7 +2,7 @@ package com.ccconsult.pojo;
 
 import java.util.Date;
 
-import com.ccconsult.enums.AppriseRelTypeEnum;
+import com.ccconsult.base.enums.AppriseRelTypeEnum;
 
 /**
  * Apprise entity. @author MyEclipse Persistence Tools

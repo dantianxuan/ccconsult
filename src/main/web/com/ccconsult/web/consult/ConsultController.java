@@ -21,25 +21,25 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ccconsult.base.AssertUtil;
 import com.ccconsult.base.BlankServiceCallBack;
 import com.ccconsult.base.CcResult;
+import com.ccconsult.base.enums.CacheEnum;
+import com.ccconsult.base.enums.ConsultStepEnum;
+import com.ccconsult.base.enums.MessageRelTypeEnum;
+import com.ccconsult.base.enums.NotifySenderEnum;
+import com.ccconsult.base.enums.PayStateEnum;
+import com.ccconsult.base.enums.UserRoleEnum;
 import com.ccconsult.core.ConsultComponent;
 import com.ccconsult.dao.ArticleDAO;
 import com.ccconsult.dao.ConsultDAO;
 import com.ccconsult.dao.MessageDAO;
-import com.ccconsult.enums.CacheEnum;
-import com.ccconsult.enums.ConsultStepEnum;
-import com.ccconsult.enums.MessageRelTypeEnum;
-import com.ccconsult.enums.NotifySenderEnum;
-import com.ccconsult.enums.PayStateEnum;
-import com.ccconsult.enums.UserRoleEnum;
 import com.ccconsult.notify.NotifySender;
 import com.ccconsult.pojo.Article;
 import com.ccconsult.pojo.Consult;
 import com.ccconsult.pojo.Consultant;
 import com.ccconsult.pojo.Message;
 import com.ccconsult.pojo.Service;
-import com.ccconsult.view.ConsultBase;
-import com.ccconsult.view.CounselorVO;
 import com.ccconsult.web.BaseController;
+import com.ccconsult.web.view.ConsultBase;
+import com.ccconsult.web.view.CounselorVO;
 
 /**
  * @author jingyu.dan

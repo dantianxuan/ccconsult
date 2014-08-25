@@ -3,8 +3,8 @@
  */
 package com.ccconsult.notify;
 
+import com.ccconsult.base.util.ResourceUtil;
 import com.ccconsult.pojo.RegMail;
-import com.ccconsult.util.ResourceUtil;
 
 /**
  * @author jingyu.dan

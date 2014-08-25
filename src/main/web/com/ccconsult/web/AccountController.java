@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ccconsult.base.PageList;
+import com.ccconsult.base.enums.UserRoleEnum;
 import com.ccconsult.dao.AccountDAO;
 import com.ccconsult.dao.AccountTransDAO;
-import com.ccconsult.enums.UserRoleEnum;
 import com.ccconsult.pojo.Account;
 import com.ccconsult.pojo.AccountTrans;
 import com.ccconsult.pojo.Consultant;

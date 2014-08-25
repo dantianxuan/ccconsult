@@ -21,15 +21,15 @@ import com.ccconsult.base.BlankServiceCallBack;
 import com.ccconsult.base.CcConstrant;
 import com.ccconsult.base.CcException;
 import com.ccconsult.base.CcResult;
+import com.ccconsult.base.enums.MobileTokenEnum;
+import com.ccconsult.base.enums.UserRoleEnum;
+import com.ccconsult.base.util.ValidateUtil;
 import com.ccconsult.dao.AccountDAO;
 import com.ccconsult.dao.ConsultantDAO;
 import com.ccconsult.dao.MobileTokenDAO;
-import com.ccconsult.enums.MobileTokenEnum;
-import com.ccconsult.enums.UserRoleEnum;
 import com.ccconsult.pojo.Account;
 import com.ccconsult.pojo.Consultant;
 import com.ccconsult.pojo.MobileToken;
-import com.ccconsult.util.ValidateUtil;
 import com.ccconsult.web.BaseController;
 
 /**

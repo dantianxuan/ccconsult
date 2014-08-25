@@ -9,12 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 
 import com.ccconsult.base.PageList;
+import com.ccconsult.base.util.StringUtil;
 import com.ccconsult.pojo.Company;
 import com.ccconsult.pojo.Counselor;
 import com.ccconsult.pojo.Level;
 import com.ccconsult.pojo.ServiceConfig;
-import com.ccconsult.util.StringUtil;
-import com.ccconsult.view.CounselorVO;
+import com.ccconsult.web.view.CounselorVO;
 
 /**
  	* A data access object (DAO) providing persistence and search support for Counselor entities.

@@ -6,12 +6,12 @@ package com.ccconsult.notify;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.ccconsult.base.util.DateUtil;
 import com.ccconsult.dao.ConsultInterviewDAO;
 import com.ccconsult.dao.ConsultantDAO;
 import com.ccconsult.pojo.Consult;
 import com.ccconsult.pojo.ConsultInterview;
 import com.ccconsult.pojo.Consultant;
-import com.ccconsult.util.DateUtil;
 
 /**
  * 咨询师预约了您的信息通知器

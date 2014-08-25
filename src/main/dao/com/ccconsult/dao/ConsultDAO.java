@@ -4,8 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import com.ccconsult.base.PageList;
-import com.ccconsult.enums.ConsultStepEnum;
+import com.ccconsult.base.enums.ConsultStepEnum;
 import com.ccconsult.pojo.Consult;
 
 /**

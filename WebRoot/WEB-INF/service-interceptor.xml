@@ -10,10 +10,9 @@
          http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
          http://www.springframework.org/schema/webflow-config http://www.springframework.org/schema/webflow-config/spring-webflow-config-2.0.xsd"
 	default-autowire="byName">
-	
+
 	<!-- prod service 摘要日志拦截器 -->
-	<bean id="serviceDigestLogInterceptor"
-		class="com.ccconsult.aop.ServiceDigestLogInterceptor"></bean>
+	<bean id="serviceDigestLogInterceptor" class="com.ccconsult.core.aop.ServiceDigestLogInterceptor"></bean>
 
 	<!-- Facade实现层日志拦截器配置，拦截所有*Facade类的所有方法 -->
 	<bean id="serviceDigestLogInterceptorProxyCreator"
@@ -27,6 +26,6 @@
 			<value>*Service</value>
 		</property>
 	</bean>
-	
+
 
 </beans>

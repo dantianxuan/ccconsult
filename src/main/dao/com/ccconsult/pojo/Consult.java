@@ -2,7 +2,7 @@ package com.ccconsult.pojo;
 
 import java.util.Date;
 
-import com.ccconsult.enums.ConsultStepEnum;
+import com.ccconsult.base.enums.ConsultStepEnum;
 
 /**
  * Consult entity. @author MyEclipse Persistence Tools

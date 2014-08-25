@@ -16,12 +16,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ccconsult.base.CcConstrant;
 import com.ccconsult.base.CcResult;
+import com.ccconsult.base.util.StringUtil;
 import com.ccconsult.dao.ConsultantDAO;
 import com.ccconsult.dao.CounselorDAO;
 import com.ccconsult.dao.ServiceDAO;
 import com.ccconsult.pojo.Consultant;
-import com.ccconsult.util.StringUtil;
-import com.ccconsult.view.CounselorVO;
+import com.ccconsult.web.view.CounselorVO;
 
 /**
  * @author jingyu.dan

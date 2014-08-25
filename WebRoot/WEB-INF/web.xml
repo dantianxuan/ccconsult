@@ -19,7 +19,7 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
 			classpath:applicationContext.xml,
-			/WEB-INF/service-interceptor.xml
+			/WEB-INF/service-interceptor.xml,
 			/WEB-INF/myspring-servlet.xml
 		</param-value>
 	</context-param>

@@ -21,17 +21,17 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ccconsult.base.AssertUtil;
 import com.ccconsult.base.BlankServiceCallBack;
 import com.ccconsult.base.CcResult;
+import com.ccconsult.base.enums.CacheEnum;
+import com.ccconsult.base.enums.DataStateEnum;
+import com.ccconsult.base.enums.ScheduleTypeEnum;
+import com.ccconsult.base.util.StringUtil;
 import com.ccconsult.dao.ArticleDAO;
 import com.ccconsult.dao.ServiceConfigDAO;
 import com.ccconsult.dao.ServiceDAO;
-import com.ccconsult.enums.CacheEnum;
-import com.ccconsult.enums.DataStateEnum;
-import com.ccconsult.enums.ScheduleTypeEnum;
 import com.ccconsult.pojo.Article;
 import com.ccconsult.pojo.Service;
 import com.ccconsult.pojo.ServiceConfig;
-import com.ccconsult.util.StringUtil;
-import com.ccconsult.view.CounselorVO;
+import com.ccconsult.web.view.CounselorVO;
 
 /**
  * @author jingyu.dan

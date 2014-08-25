@@ -24,10 +24,10 @@ import com.ccconsult.base.BlankServiceCallBack;
 import com.ccconsult.base.CcConstrant;
 import com.ccconsult.base.CcException;
 import com.ccconsult.base.CcResult;
+import com.ccconsult.base.enums.FileTypeEnum;
+import com.ccconsult.base.util.FileUtil;
+import com.ccconsult.base.util.LogUtil;
 import com.ccconsult.core.FileComponent;
-import com.ccconsult.enums.FileTypeEnum;
-import com.ccconsult.util.FileUtil;
-import com.ccconsult.util.LogUtil;
 
 /**
  * 

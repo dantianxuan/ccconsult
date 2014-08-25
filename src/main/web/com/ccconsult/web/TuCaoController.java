@@ -24,15 +24,15 @@ import com.ccconsult.base.BlankServiceCallBack;
 import com.ccconsult.base.CcConstrant;
 import com.ccconsult.base.CcResult;
 import com.ccconsult.base.PageList;
+import com.ccconsult.base.enums.CommentRelTypeEnum;
+import com.ccconsult.base.enums.UserRoleEnum;
+import com.ccconsult.base.util.StringUtil;
 import com.ccconsult.dao.CommentDAO;
 import com.ccconsult.dao.ConsultantDAO;
 import com.ccconsult.dao.CounselorDAO;
-import com.ccconsult.enums.CommentRelTypeEnum;
-import com.ccconsult.enums.UserRoleEnum;
 import com.ccconsult.pojo.Comment;
 import com.ccconsult.pojo.Consultant;
-import com.ccconsult.util.StringUtil;
-import com.ccconsult.view.CounselorVO;
+import com.ccconsult.web.view.CounselorVO;
 
 /**
  * @author jingyu.dan
