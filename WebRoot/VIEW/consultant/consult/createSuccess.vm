@@ -11,7 +11,7 @@
         <div class="panel panel-default">
             <div class="panel-body">
 				<div class="alert alert-dismissable alert-warning">	
-						 <h3>恭喜您，成功创建了一次咨询请求</h3>
+						<h2>您当前已创建的一笔咨询请求#if($consultBase.consult.payTag==2)已经完成支付#else等待支付#end</h2>
 						<div class="panel panel-default">
 							  <div class="panel-body">		  
 									<div class="col-sm-12" >
@@ -33,19 +33,20 @@
 						  	#if($consultBase.consult.payTag==2)
 						  		您的服务无需预约，请耐心等待您的咨询师回答您的问题
 						  	#else
-						  		请耐心等待您的咨询师和您预约时间，咨询师预约完成后我们会通过邮件的方式通知您，请注意查收您的邮箱
+						  		请在规定时间内完成支付，如果在设定时间之前10分钟仍旧未能完成支付，您的咨询将被取消
 						  	#end
-						  	<hr/>
-						 		<small>有效期<span class="glyphicon glyphicon-dashboard"></span>
-						 			$date.format("yyyy-MM-dd HH:mm:ss",$consultBase.consult.gmtCreate)
-						 			 <span class="glyphicon glyphicon-minus"></span> 
-						 			 $date.format("yyyy-MM-dd HH:mm:ss", $consultBase.consult.gmtEffectEnd) 	
-						  		超过该时间后，该咨询会自动关闭	</small>
-						  		<br/>
-						  		<a  style="float:right" class="btn btn-primary" href="$link.contextPath/consultant/consultantSelf.htm" ><span class="glyphicon glyphicon-globe"></span>  转到我的预约</a>
-						  		<br/>	
-						  		...	  	
-				  		  </p> 		  
+				  		  </p> 
+							<p style="text-align:right;border-top:solid 1px #ddd;padding-top:4px;">
+						  	#if($consultBase.consult.step==1 && $consultBase.consult.payTag!=2)
+						  		<a class="btn btn-primary" href="javascript:void(0)" onclick="payForConsult($consultBase.consult.id)"> <span class="glyphicon glyphicon-copyright-mark"></span> 去支付</a>
+						  	#end
+						  	<a class="btn btn-link" href="$link.contextPath/consultant/consultantSelf.htm" > 转到我的预约</a>
+						  	</p>
+					 		<small>有效期<span class="glyphicon glyphicon-dashboard"></span>
+					 			$date.format("yyyy-MM-dd HH:mm:ss",$consultBase.consult.gmtCreate)
+					 			 <span class="glyphicon glyphicon-minus"></span> 
+					 			 $date.format("yyyy-MM-dd HH:mm:ss", $consultBase.consult.gmtEffectEnd) 	
+					  		超过该时间后，该咨询会自动关闭	</small>					  				  		   
 					</div>
 				#end
             </div>

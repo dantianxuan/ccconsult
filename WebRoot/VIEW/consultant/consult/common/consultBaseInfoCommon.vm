@@ -2,7 +2,13 @@
 <div class="row">
     <div class="col-sm-6">
         <p class="col-sm-12"><strong class=" text-right col-sm-4">咨询类型:</strong><a href="$link.contextPath/serviceInfo.htm?serviceId=$!service.id" >$!service.name</a></p>
-        <p class="col-sm-12"><strong class=" text-right col-sm-4">支付状态:</strong>$enumUtil.getEnumClass("com.ccconsult.enums.PayStateEnum").getByValue($consultBase.consult.payTag).getDescription()</p>
+        <p class="col-sm-12"><strong class=" text-right col-sm-4">支付状态:</strong> 
+        	#if($consultBase.consult.payTag==1)
+        		<a href="$link.contextPath//consultant/consult/createSuccess.htm?consultId=$consultBase.consult.id">$enumUtil.getEnumClass("com.ccconsult.enums.PayStateEnum").getByValue($consultBase.consult.payTag).getDescription()</a>
+        	#else
+        		$enumUtil.getEnumClass("com.ccconsult.enums.PayStateEnum").getByValue($consultBase.consult.payTag).getDescription()
+        	#end
+        </p>
         <p class="col-sm-12"><strong class=" text-right col-sm-4">记录验证码:</strong>$!consultBase.consult.indetityCode</p>
     </div>
     <div class="col-sm-6">

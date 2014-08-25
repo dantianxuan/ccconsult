@@ -38,6 +38,14 @@
 		<load-on-startup>10</load-on-startup>
 	</servlet>
 	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>/STATIC/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>/UPLOAD/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
 		<servlet-name>myspring</servlet-name>
 		<url-pattern>*.htm</url-pattern>
 	</servlet-mapping>

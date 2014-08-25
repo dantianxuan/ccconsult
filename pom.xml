@@ -296,6 +296,13 @@
 			<version>14.0-rc2</version>
 		</dependency>
 
+		<dependency>
+			<groupId>com.cloopen.rest</groupId>
+			<artifactId>CCP_REST_SDK_JAVA</artifactId>
+			<version>v2.6.2r</version>
+		</dependency>
+
+
 		<!-- lunce -->
 		<!-- <dependency> -->
 		<!-- <groupId>org.apache.lucene</groupId> -->
@@ -320,17 +327,29 @@
 		<!-- </dependency> -->
 	</dependencies>
 	<build>
-		<sourceDirectory>${basedir}/src</sourceDirectory>
-		<outputDirectory>${basedir}/WebRoot/WEB-INF/classes</outputDirectory>
-		<resources>
-			<resource>
-				<directory>${basedir}/src</directory>
-				<excludes>
-					<exclude>**/*.java</exclude>
-				</excludes>
-			</resource>
-		</resources>
 		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>1.1</version>
+				<executions>
+					<execution>
+						<id>add-source</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>add-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>src/main/home</source>
+								<source>src/main/web</source>
+								<source>src/main/notify</source>
+								<source>src/main/dao</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<artifactId>maven-war-plugin</artifactId>
 				<configuration>
@@ -341,6 +360,7 @@
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
+					<encoding>UTF-8</encoding>
 					<source>1.6</source>
 					<target>1.6</target>
 				</configuration>
