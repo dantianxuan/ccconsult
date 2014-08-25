@@ -1,0 +1,1 @@
+mvn install:install-file -Dfile=/Users/jingyudan/MyBench/GITHOME/ccconsult/WebRoot/WEB-INF/lib/CCP_REST_SDK_JAVA_v2.6.2r.jar -DgroupId=com.cloopen.rest -DartifactId=CCP_REST_SDK_JAVA -Dversion=v2.6.2r -Dpackaging=jar

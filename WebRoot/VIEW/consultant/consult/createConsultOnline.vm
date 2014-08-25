@@ -1,0 +1,122 @@
+#set($consultant=$session.getAttribute("SESSION_CONSULTANT_OBJECT"))
+<script src="$link.contextPath/STATIC/js/fileinput.js"></script>
+<link rel="stylesheet" href="$link.contextPath/STATIC/css/fileinput.css"/>
+<script src="$link.contextPath/STATIC/js/jquery.form.js"></script>
+#set($serviceConfig=$result.object)
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-body">
+				 <div class="alert alert-dismissable alert-warning">
+					  <h4>欢迎您创建$application.getAttribute(	'serviceMap').get("$serviceConfig.serviceId").name请求</h4>
+					  <p>请仔细阅读我们的服务流程，以便于您的使用，咨询师回答您的问题后，我们会邮件通知您</p>
+					  <p>
+						  <a  class="btn btn-primary btn-sm col-sm-2 disabled">创建咨询 <span class="glyphicon glyphicon-arrow-right"></span></a>
+						  <a  class="btn btn-default btn-sm col-sm-2 disabled">咨询师确认 <span class="glyphicon glyphicon-arrow-right"></span></a>
+						  <a  class="btn btn-default btn-sm col-sm-2 disabled">进行面试咨询 <span class="glyphicon glyphicon-arrow-right"></span></a>
+						  <a  class="btn btn-default btn-sm col-sm-2 disabled">确认评价 <span class="glyphicon glyphicon-arrow-right"></span></a>
+						  <a  class="btn btn-sm disabled">
+						   <span class="glyphicon glyphicon-ok"></span>
+						  </a>
+					  </p>
+					  <p class="text-primary">请严格遵守本网服务须知，不要在咨询中询问或透漏任何涉及商业机密的信息！.</p>
+				</div>      
+				<hr/>      
+                 <form class="form-horizontal"  id="createConsultOnlineForm" action="$link.contextPath/consultant/consult/createConsultOnline.json" 
+                  method="POST" enctype="multipart/form-data" role="form" data-toggle="validator">
+					<input type="hidden" name="counselorId" value="$serviceConfig.counselorId"/>
+					<input type="hidden" name="consultantId" value="$consultant.id"/>
+					<input type="hidden" name="serviceConfigId" value="$serviceConfig.id" />
+					<input type="hidden" name="serviceId" value="$serviceConfig.serviceId" />                    
+                    <fieldset>      
+							<div class="form-group">
+			                    <label class="col-lg-2 control-label">选择日期</label>
+			                    <div class="col-lg-10" style="padding-top:9px;">
+			                        	<label><input type="radio" name="scheduleDay"  value="1" checked="checked"> 今天</label>
+			                         	<label><input type="radio" name="scheduleDay"  value="2"> 明天</label>
+			                          	<label><input type="radio" name="scheduleDay"  value="3"> 后天</label>
+			                    </div>
+			                  </div> 
+                            <div class="form-group">
+								 <label  class="col-lg-2 control-label">选择预约时间段</label>
+							      <div class="col-lg-10">
+							      	<div class="row">
+										#foreach($time in $scheduleTimeUtil.getSchuleTime($serviceConfig.workOnTime))
+									    	<div class="col-sm-3" style="text-align:left;">
+									    	<input type="radio" name="scheduleTime" value="$time">$scheduleTimeUtil.getScheduleMap().get($time) 
+									    	</div>
+									    #end	
+									    </div>						         	
+							      </div>
+                            </div>
+                            <div class="form-group">
+						      <label for="textArea" class="col-lg-2 control-label">咨询目标和说明</label>
+						      <div class="col-lg-10">
+						         <textarea class="form-control" rows="15" placeholder="请简单描述一下您的面试要求" 
+						         name="goal" data-error="您必须输入你对本次面试的要求"  ></textarea>
+						        <span class="help-block">您可以描述一下您的需求，以便于咨询师迅速的了解您的述求</span>
+						      </div>
+                            </div>                                                                                
+                            <div class="form-group">
+								<div class="col-sm-12" style="text-align:right">
+							    	<a  href="$link.contextPath/counselorInfo.htm?counselorId=$serviceConfig.counselorId"   class="btn btn-link" >  返回咨询师详情</a>
+									<button type="button"  class="btn btn-primary" id="submitOnlineButton" onclick="uploadOnline();return false;" />
+									<span class="glyphicon glyphicon-send"></span> 创建咨询请求</button>
+							    </div>   
+                            </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+	function uploadOnline() {
+			var hideForm = $('#createConsultOnlineForm');
+			if($("input[name='scheduleTime']:checked").size()==0){
+				$.Zebra_Dialog('<strong>请注意</strong>, 您没有选择任何服务时间，无法设定服务', {
+				    'type':     'error',
+				    'title':    '对不起，您无法创建服务'
+				});
+				return  false;
+			}
+			if($("textarea[name='goal']").val()==''){
+				$.Zebra_Dialog('<strong>请注意</strong>, 您必须描述您的面试目的和要求', {
+				    'type':     'error',
+				    'title':    '对不起，您无法创建服务'
+				});
+				return  false;
+			}					
+				
+			var options = {
+				dataType : "json",
+				beforeSubmit : function() {
+					$('#submitOnlineButton').button('loading');
+				},
+				success : function(result) {
+					$('#submitOnlineButton').button('reset');
+					var data = eval(result);
+						if(data.result.success==true){
+		             		$.Zebra_Dialog('预约创建成功，请等待页面跳转!');
+		             		setInterval(function(){
+		             			window.location.href="$link.contextPath/consultant/consult/createSuccess.htm?consultId="+data.result.object.id;
+							},2000);
+		             	}else{
+		             		$.Zebra_Dialog('<strong>请注意</strong>, '+data.result.message, {
+							    'type':     'error',
+							    'title':    '对不起，您无法创建服务'
+							});
+		             	}
+				},
+				error : function(result) {
+					$('#submitOnlineButton').button('reset');
+					$.Zebra_Dialog('<strong>请注意</strong>,', {
+							    'type':     'warn',
+							    'title':    '对不起，创建失败，请稍后再试'
+					});
+				}
+			};
+			hideForm.ajaxSubmit(options);
+			return false;
+		}	
+</script>
