@@ -1,7 +1,7 @@
 package com.ccconsult.base.util;
 
 /**
- * Alipay.com Inc.
+ * ccconsult.com Inc.
  * Copyright (c) 2004-2011 All Rights Reserved.
  */
 

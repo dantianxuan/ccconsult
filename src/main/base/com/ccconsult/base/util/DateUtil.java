@@ -17,7 +17,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateUtils;
 
 /**
- * @author shi_jason This file is for iwallet-biz-common
+ * @author jingyu.dan
  */
 public class DateUtil {
 

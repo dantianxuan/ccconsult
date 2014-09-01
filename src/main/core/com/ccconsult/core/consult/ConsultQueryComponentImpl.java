@@ -28,7 +28,7 @@ import com.ccconsult.web.view.CounsultInterviewVO;
 import com.ccconsult.web.view.CounsultOnlineVO;
 
 /**
- * 
+ * ˙
  * @author jingyudan
  * @version $Id: CounsultComponentImpl.java, v 0.1 2014-7-7 下午10:15:33 jingyudan Exp $
  */
