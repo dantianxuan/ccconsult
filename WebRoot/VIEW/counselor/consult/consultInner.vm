@@ -1,0 +1,58 @@
+#set($consultant=$session.getAttribute("SESSION_CONSULTANT_OBJECT"))
+#set($counselorVO=$consultBase.counselorVO)
+<div class="alert alert-dismissable alert-success">
+	<div class="row" style="padding-bottom:4px;">
+	    <div class="col-sm-12">   
+	    	#if($consultBase.consult.step==2)	
+				<a  class="btn btn-primary" href="javascript:void(0)" onclick="completeConsult($consultBase.consult.id)">
+					 结束咨询 </a>	
+				<a  class="btn btn-link"  data-toggle="modal" data-target="#rejectConsult" >
+					 拒绝咨询 </a>
+	    	#end
+	    	<a  class="btn  btn-link" style="float:right"  onclick="javascript:history.go(-1);" >
+					 返回上一页 </a>						
+	 	</div>
+	</div>
+	<hr style="margin:0px;">
+	#parse("counselor/consult/common/consultBaseInfoCommon.vm")
+</div>
+#parse("counselor/consult/common/consultConsultantCommon.vm")
+<div class="row">
+	<div class="col-sm-12">
+		<div class="panel panel-default">
+		  <div class="panel-heading"><span class="glyphicon glyphicon-bookmark"></span>咨询问题描述</div>
+		  <div class="panel-body">
+		  		$consultBase.consult.goal
+		  </div>
+  		</div>
+	</div>
+</div>
+#parse("counselor/consult/common/consultMessageCommon.vm")
+#parse("counselor/consult/common/consultAppraiseCommon.vm")
+#if($!consultBase.consult.step==2)
+#parse("counselor/consult/common/consultRejectCommon.vm")
+#end
+<script>
+	//完成请求
+	function completeConsult(consultId){
+		jQuery.ajax({
+             type: "POST",
+             url: "$link.contextPath/counselor/consult/completeConsult.json",
+             data: {'consultId':consultId},
+             dataType: "json",
+             success: function(data){
+				if(data.result.success==true){
+					$.Zebra_Dialog('操作成功！');
+             		setInterval(function(){
+             			window.location.reload();
+					},2000);										
+             	}else{
+					$.Zebra_Dialog('<strong>请注意</strong>, '+data.result.message, {
+					    'type':     'error',
+					    'title':    '对不起，操作失败'
+					});				             	
+             	}    
+              }
+         });
+	}
+</script>

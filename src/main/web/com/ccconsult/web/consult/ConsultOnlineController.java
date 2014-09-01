@@ -28,7 +28,7 @@ import com.ccconsult.base.enums.PayStateEnum;
 import com.ccconsult.base.util.CodeGenUtil;
 import com.ccconsult.base.util.DateUtil;
 import com.ccconsult.base.util.ScheduleTimeUtil;
-import com.ccconsult.core.ConsultComponent;
+import com.ccconsult.core.consult.ConsultQueryComponent;
 import com.ccconsult.dao.ConsultDAO;
 import com.ccconsult.dao.ConsultOnlineDAO;
 import com.ccconsult.dao.CounselorDAO;
@@ -63,7 +63,7 @@ public class ConsultOnlineController extends BaseController {
     @Autowired
     private ServiceDAO       serviceDAO;
     @Autowired
-    private ConsultComponent consultComponent;
+    private ConsultQueryComponent consultComponent;
     @Autowired
     private ServiceConfigDAO serviceConfigDAO;
 
@@ -145,7 +145,7 @@ public class ConsultOnlineController extends BaseController {
                     DateUtil.format(DateUtil.addDays(new Date(), day), "yyyy-MM-dd ")
                             + ScheduleTimeUtil.getEnd(times), "yyyy-MM-dd HH:mm");
                 AssertUtil.state(scheduleBegin.after(new Date()), "对不起，当前预约时间已经过期，请重新选择");
-
+                consult.setGmtEffectBegin(new Date());
                 consult.setGmtEffectEnd(DateUtil.addHours(new Date(), service.getEffectTime()));
                 consult.setIndetityCode(CodeGenUtil.getFixLenthString(6));
                 consultDAO.save(consult);
@@ -192,7 +192,7 @@ public class ConsultOnlineController extends BaseController {
     }
 
     //----------counselor--------------------
-    @RequestMapping(value = "/counselor/consult/consultOnline.htm", method = RequestMethod.GET)
+    @RequestMapping(value = "/counselor/consult/goConsultOnline.htm", method = RequestMethod.GET)
     public ModelAndView counselorInnerConsult(final HttpServletRequest request,
                                               final String consultId, final ModelMap modelMap) {
         ModelAndView view = new ModelAndView("/counselor/consult/consultOnline");
@@ -214,7 +214,6 @@ public class ConsultOnlineController extends BaseController {
                 return new CcResult(true);
             }
         });
-        genMap(modelMap);
         modelMap.put("result", result);
         return view;
     }
@@ -239,21 +238,8 @@ public class ConsultOnlineController extends BaseController {
                 return new CcResult(true);
             }
         });
-        genMap(modelMap);
         modelMap.put("result", result);
         return view;
-    }
-
-    private ModelMap genMap(ModelMap modelMap) {
-        Date now = new Date();
-        modelMap.put("today", DateUtil.format(now, DateUtil.noSecondFormat));
-        modelMap.put("after3day",
-            DateUtil.format(DateUtil.addDays(now, 3), DateUtil.noSecondFormat));
-        modelMap.put("after2day",
-            DateUtil.format(DateUtil.addDays(now, 2), DateUtil.noSecondFormat));
-        modelMap.put("todayOffWork6", DateUtil.format(now, DateUtil.webFormat) + " 18:00");
-        modelMap.put("todayOffWork22", DateUtil.format(now, DateUtil.webFormat) + " 22:00");
-        return modelMap;
     }
 
 }

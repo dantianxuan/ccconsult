@@ -49,13 +49,13 @@
         			<div class="col-sm-12" id="CONSULT_$consult.id">
 			            <div class="panel panel-default">
 			                <div class="panel-body">
-									<div class="col-sm-1" style="font-size:30px;">
+			                		#set($service=$application.getAttribute("serviceMap").get("$consultBase.serviceConfig.serviceId"))	 
+									<div class="col-sm-1" style="font-size:50px;">
 			                			<strong>$foreach.count</strong>
 			                		</div>
 			                		<div class="col-sm-2">
-			                		 		<img src="$link.contextPath/$fileUtil.getPath($!counselorVO.counselor.photo)" class="img-thumbnail" style="width:72px;height:72px;"/>
+			                		 		<img src="$link.contextPath/$fileUtil.getPath($service.photo)" class="img-thumbnail" style="width:72px;height:72px;"/>
 			                		</div>		
-			                		#set($service=$application.getAttribute("serviceMap").get("$consultBase.serviceConfig.serviceId"))	                
 			                		<div class="col-sm-9" style="border-left:solid 1px #ddd">
 			                			<div class="col-lg-12">
 			                                <p  style="border-bottom:solid 1px #ddd">
@@ -71,22 +71,23 @@
 											  <a  class="btn  btn-xs btn-success disabled col-sm-2" style="margin-right:4px;">创建预约<span class="glyphicon glyphicon-arrow-right"></span></a>
 									  			#if($consult.step==1)
 									  				<a  href="$link.contextPath//consultant/consult/createSuccess.htm?consultId=$consultBase.consult.id" class="btn btn-primary  col-sm-2 btn-xs " style="margin-right:4px;">支付咨询费 <span class="glyphicon glyphicon-arrow-right"></a>
-										   			<a  class="btn btn-default disabled col-sm-2 btn-xs" style="margin-right:4px;">进行咨询 <span class="glyphicon glyphicon-arrow-right"></a>
+										   			<a  class="btn btn-default disabled col-sm-2 btn-xs" style="margin-right:4px;">咨询进行中 <span class="glyphicon glyphicon-arrow-right"></a>
 										   			<a  class="btn btn-default disabled col-sm-2 btn-xs" style="margin-right:4px;">咨询完成 <span class="glyphicon glyphicon-arrow-right"></a>
 										   	  	#end
 									  			#if($consult.step==2)
-									  				<a  class="btn btn-primary disabled col-sm-2 btn-xs " style="margin-right:4px;">支付咨询费 <span class="glyphicon glyphicon-arrow-right"></a>
-										   			<a  class="btn btn-default disabled col-sm-2 btn-xs" style="margin-right:4px;">进行咨询 <span class="glyphicon glyphicon-arrow-right"></a>
+										   			<a  class="btn btn-primary  col-sm-2 btn-xs" style="margin-right:4px;" 
+										   			href="$link.contextPath/consultant/consult/go${service.code}.htm?consultId=$consultBase.consult.id"
+										   			>咨询进行中 <span class="glyphicon glyphicon-arrow-right"></a>
 										   			<a  class="btn btn-default disabled col-sm-2 btn-xs" style="margin-right:4px;">咨询完成 <span class="glyphicon glyphicon-arrow-right"></a>
 										   	  	#end										   	  	
 											   	#if($consult.step==3)
 									  				<a  class="btn btn-success disabled col-sm-2 btn-xs " style="margin-right:4px;">支付咨询费 <span class="glyphicon glyphicon-arrow-right"></a>
-										   			<a  class="btn btn-primary disabled col-sm-2 btn-xs" style="margin-right:4px;">进行咨询 <span class="glyphicon glyphicon-arrow-right"></a>
+										   			<a  class="btn btn-primary disabled col-sm-2 btn-xs" style="margin-right:4px;">咨询进行中 <span class="glyphicon glyphicon-arrow-right"></a>
 										   			<a  class="btn btn-default disabled col-sm-2 btn-xs" style="margin-right:4px;">咨询完成 <span class="glyphicon glyphicon-arrow-right"></a>
 											   	#end
 											   	#if($consult.step==4)
 									  				<a  class="btn btn-success disabled col-sm-2 btn-xs " style="margin-right:4px;">支付咨询费 <span class="glyphicon glyphicon-arrow-right"></a>
-										   			<a  class="btn btn-success disabled col-sm-2 btn-xs" style="margin-right:4px;">进行咨询 <span class="glyphicon glyphicon-arrow-right"></a>
+										   			<a  class="btn btn-success disabled col-sm-2 btn-xs" style="margin-right:4px;">咨询进行中 <span class="glyphicon glyphicon-arrow-right"></a>
 										   			<a  class="btn btn-success disabled col-sm-2 btn-xs" style="margin-right:4px;">咨询完成 <span class="glyphicon glyphicon-arrow-right"></a>										  
 											    #end
 											   	#if($consult.step==5)
@@ -102,7 +103,8 @@
 										</div>  
 									  	<div class="col-lg-12">
 	                                	<small>ID:$consultBase.consult.id 
-	                                		<span class="glyphicon glyphicon-user"></span> 咨询师：$consultBase.counselorVO.counselor.name
+	                                		<span class="glyphicon glyphicon-user"></span>
+	                                			<a href="$link.contextPath/counselorInfo.htm?counselorId=$consultBase.counselorVO.counselor.id"> 咨询师：$consultBase.counselorVO.counselor.name</a>
 	                                		<span ><span class="glyphicon glyphicon-time"></span> 创建时间:$date.format("yyyy-MM-dd HH:mm:ss", $consultBase.consult.gmtCreate)
 	                                	</small>
 	                                	</div>										  

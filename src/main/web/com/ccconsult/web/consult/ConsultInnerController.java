@@ -3,7 +3,6 @@
  */
 package com.ccconsult.web.consult;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,26 +18,19 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ccconsult.base.AssertUtil;
 import com.ccconsult.base.BlankServiceCallBack;
-import com.ccconsult.base.CcConstrant;
 import com.ccconsult.base.CcResult;
 import com.ccconsult.base.PageList;
 import com.ccconsult.base.PageQuery;
-import com.ccconsult.base.enums.ConsultStepEnum;
 import com.ccconsult.base.enums.DataStateEnum;
 import com.ccconsult.base.enums.MessageRelTypeEnum;
-import com.ccconsult.base.enums.PayStateEnum;
-import com.ccconsult.base.util.CodeGenUtil;
-import com.ccconsult.base.util.DateUtil;
+import com.ccconsult.base.enums.UserRoleEnum;
 import com.ccconsult.base.util.StringUtil;
-import com.ccconsult.core.ConsultComponent;
-import com.ccconsult.dao.ConsultDAO;
-import com.ccconsult.dao.CounselorDAO;
+import com.ccconsult.core.consult.ConsultInnerComponent;
+import com.ccconsult.core.consult.ConsultQueryComponent;
 import com.ccconsult.dao.MessageDAO;
 import com.ccconsult.dao.ServiceConfigDAO;
-import com.ccconsult.dao.ServiceDAO;
 import com.ccconsult.pojo.Consult;
 import com.ccconsult.pojo.Consultant;
-import com.ccconsult.pojo.Service;
 import com.ccconsult.web.BaseController;
 import com.ccconsult.web.view.ConsultBase;
 import com.ccconsult.web.view.CounselorVO;
@@ -53,17 +45,13 @@ import com.ccconsult.web.view.ServiceConfigVO;
 public class ConsultInnerController extends BaseController {
 
     @Autowired
-    private CounselorDAO     counselorDAO;
+    private ConsultInnerComponent consultInnerComponent;
     @Autowired
-    private ConsultDAO       consultDAO;
+    private MessageDAO            messageDAO;
     @Autowired
-    private MessageDAO       messageDAO;
+    private ConsultQueryComponent      consultComponent;
     @Autowired
-    private ConsultComponent consultComponent;
-    @Autowired
-    private ServiceConfigDAO serviceConfigDAO;
-    @Autowired
-    private ServiceDAO       serviceDAO;
+    private ServiceConfigDAO      serviceConfigDAO;
 
     @RequestMapping(value = "/searchConsultInner.htm")
     public ModelAndView searchConsult(HttpServletRequest request, PageQuery query, ModelMap modelMap) {
@@ -132,23 +120,10 @@ public class ConsultInnerController extends BaseController {
         CcResult result = serviceTemplate.executeWithTx(CcResult.class, new BlankServiceCallBack() {
             @Override
             public CcResult executeService() {
-                Consultant consultant = getConsultantInSession(request.getSession());
-                AssertUtil.notNull(consultant, "不合法的用户");
-                consult.getCounselorId();
-                CounselorVO counselorVO = counselorDAO.findById(consult.getCounselorId());
-                AssertUtil.notNull(counselorVO, "咨询对象不存在，请检查");
-                AssertUtil.notBlank(consult.getGoal(), "必须输入您需要咨询的问题");
-                AssertUtil.state(consult.getGoal().length() <= CcConstrant.COMMON_512_LENGTH,
-                    "描述问题太长，请简洁描述");
-                consult.setGmtCreate(new Date());
-                consult.setStep(ConsultStepEnum.ON_CONSULT.getValue());
-                consult.setPayTag(PayStateEnum.PAY_SUCCESS.getValue());//无须支付
-                Service service = serviceDAO.findById(consult.getServiceId());
-                AssertUtil.notNull(service, "服务不存在，请检查");
-                consult.setGmtEffectEnd(DateUtil.addHours(new Date(), service.getEffectTime()));
-                consult.setGmtModified(new Date());
-                consult.setIndetityCode(CodeGenUtil.getFixLenthString(6));
-                consultDAO.save(consult);
+                AssertUtil.state(
+                    validInSession(consult.getConsultantId(), UserRoleEnum.CONSULTANT,
+                        request.getSession()), "不合法的操作");
+                consultInnerComponent.createConsult(consult);
                 return new CcResult(consult);
             }
         });

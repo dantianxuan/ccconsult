@@ -1,9 +1,4 @@
 #set($consultant=$session.getAttribute("SESSION_CONSULTANT_OBJECT"))
-#if($result && !$result.success)
-<div class="alert alert-dismissable alert-danger">
-	$result.message
-</div>	
-#else
 #set($consultBase=$result.object)
 #set($serviceConfigVO=$consultBase.serviceConfigVO)
 <div class="alert alert-dismissable alert-warning">
@@ -24,21 +19,3 @@
   	#end
 </div>
 #end
-<script>
-	//完成请求
-	function payForConsult(consultId){
-		jQuery.ajax({
-             type: "POST",
-             url: "$link.contextPath/consultant/consult/payTempForConsult.json",
-             data: {'consultId':consultId},
-             dataType: "json",
-             success: function(data){
-             	if(data.result.success==true){
-             		window.location.href='$link.contextPath/consultant/consultantSelf.htm';
-             	}else{
-             		alert("发送失败"+data.result.message);
-             	}
-              }
-         });
-	}
-</script>

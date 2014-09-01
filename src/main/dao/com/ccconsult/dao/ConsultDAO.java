@@ -1,12 +1,18 @@
 package com.ccconsult.dao;
 
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import org.apache.commons.lang.time.DateUtils;
+import org.hibernate.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.ccconsult.base.PageList;
 import com.ccconsult.base.enums.ConsultStepEnum;
+import com.ccconsult.base.util.DateUtil;
 import com.ccconsult.pojo.Consult;
 
 /**
@@ -29,6 +35,7 @@ public class ConsultDAO extends BaseHibernateDAO<Consult> {
     public static final String  GOAL              = "goal";
     public static final String  REJECT_REASON     = "rejectReason";
     public static final String  SERVICE_CONFIG_ID = "serviceConfigId";
+    public static final String  PRICE             = "price";
 
     public Consult findById(java.lang.Integer id) {
         log.debug("getting Consult instance with id: " + id);
@@ -75,6 +82,15 @@ public class ConsultDAO extends BaseHibernateDAO<Consult> {
         }
         hql += " order by gmtModified ";
         return queryPage(pageNo, pageSize, hql, params);
+    }
+
+    public List<Consult> queryToday() {
+        String today = DateUtil.format(new Date(), DateUtil.webFormat);
+        String end = DateUtil.format(DateUtils.addDays(new Date(), 1), DateUtil.webFormat);
+        String hql = "from Consult where step=2 and  gmtEffectBegin>='" + today
+                     + "' order by gmtEffectBegin";
+        Query query = this.getSession().createQuery(hql);
+        return query.list();
     }
 
     public PageList<Consult> queryPaged(int payTag, int step, int serviceId, int counselorId,

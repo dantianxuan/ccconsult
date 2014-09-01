@@ -1,9 +1,4 @@
 #set($consultant=$session.getAttribute("SESSION_CONSULTANT_OBJECT"))
-#if($result && !$result.success)
-<div class="alert alert-dismissable alert-danger">
-	$result.message
-</div>	
-#else
 #set($serviceConfig=$consultBase.serviceConfig)
 #set($service=$application.getAttribute("serviceMap").get("$serviceConfig.serviceId"))
 <div class="row">
@@ -38,7 +33,7 @@
 				  		  </p> 
 							<p style="text-align:right;border-top:solid 1px #ddd;padding-top:4px;">
 						  	#if($consultBase.consult.step==1 && $consultBase.consult.payTag!=2)
-						  		<a class="btn btn-primary" href="javascript:void(0)" onclick="payForConsult($consultBase.consult.id)"> <span class="glyphicon glyphicon-copyright-mark"></span> 去支付</a>
+						  		<a class="btn btn-sm btn-primary" href="javascript:void(0)" onclick="payForConsult($consultBase.consult.id)"> <span class="glyphicon glyphicon-copyright-mark"></span> 去支付</a>
 						  	#end
 						  	<a class="btn btn-link" href="$link.contextPath/consultant/consultantSelf.htm" > 转到我的预约</a>
 						  	</p>
@@ -48,8 +43,31 @@
 					 			 $date.format("yyyy-MM-dd HH:mm:ss", $consultBase.consult.gmtEffectEnd) 	
 					  		超过该时间后，该咨询会自动关闭	</small>					  				  		   
 					</div>
-				#end
             </div>
         </div>
     </div>
 </div>
+<script>
+	//完成请求
+	function payForConsult(consultId){
+		jQuery.ajax({
+             type: "POST",
+             url: "$link.contextPath/consultant/consult/payTempForConsult.json",
+             data: {'consultId':consultId},
+             dataType: "json",
+             success: function(data){
+             	if(data.result.success==true){
+					$.Zebra_Dialog('支付成功！');
+             		setInterval(function(){
+             			window.location.href="$link.contextPath/consultant/consultantSelf.htm"
+					},2000);										
+             	}else{
+					$.Zebra_Dialog('<strong>请注意</strong>, '+data.result.message, {
+					    'type':     'error',
+					    'title':    '对不起，操作失败'
+					});				             	
+             	}
+              }
+         });
+	}
+</script>

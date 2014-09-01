@@ -26,13 +26,12 @@ import com.ccconsult.base.PageList;
 import com.ccconsult.base.PageQuery;
 import com.ccconsult.base.enums.ConsultStepEnum;
 import com.ccconsult.base.enums.FileTypeEnum;
-import com.ccconsult.base.enums.PayStateEnum;
 import com.ccconsult.base.enums.UserRoleEnum;
 import com.ccconsult.base.util.LogUtil;
 import com.ccconsult.base.util.StringUtil;
 import com.ccconsult.base.util.ValidateUtil;
-import com.ccconsult.core.ConsultComponent;
-import com.ccconsult.core.FileComponent;
+import com.ccconsult.core.consult.ConsultQueryComponent;
+import com.ccconsult.core.file.FileComponent;
 import com.ccconsult.dao.ConsultantDAO;
 import com.ccconsult.dao.InnerMailDAO;
 import com.ccconsult.pojo.Consultant;
@@ -49,7 +48,7 @@ public class ConsultantController extends BaseController {
     /**日志 */
     private static final Logger logger = Logger.getLogger(ConsultantController.class);
     @Autowired
-    private ConsultComponent    consultComponent;
+    private ConsultQueryComponent    consultComponent;
     @Autowired
     private ConsultantDAO       consultantDAO;
     @Autowired
@@ -65,9 +64,9 @@ public class ConsultantController extends BaseController {
         CcResult result = serviceTemplate.execute(CcResult.class, new BlankServiceCallBack() {
             @Override
             public CcResult executeService() {
-                PageList<ConsultBase> consultBases = consultComponent.queryPaged(
-                    PayStateEnum.WAIT_FOR_PAY.getValue(), ConsultStepEnum.ON_CONSULT.getValue(), 0,
-                    0, consultant.getId(), query.getPageSize(), query.getPageNo());
+                PageList<ConsultBase> consultBases = consultComponent.queryPaged(0,
+                    ConsultStepEnum.ON_CONSULT.getValue(), 0, 0, consultant.getId(),
+                    query.getPageSize(), query.getPageNo());
                 return new CcResult(consultBases);
             }
         });

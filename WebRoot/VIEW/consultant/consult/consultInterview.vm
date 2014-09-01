@@ -1,25 +1,55 @@
 <script src="$link.contextPath/STATIC/js/fileinput.js"></script>
 <link rel="stylesheet" href="$link.contextPath/STATIC/css/fileinput.css"/>
-#parse("consultant/consultantGuide.vm")
 <div class="alert alert-dismissable alert-success">
+	<div class="row" >
+	    <div class="col-sm-12" style="padding-bottom:4px;">   
+	    	#if($consultBase.consult.step==2)	
+				<a  class="btn btn-sm btn-primary" href="javascript:void(0)" >
+					 确认咨询完成 </a>		
+				<a  class="btn btn-link" href="javascript:void(0)" >
+					 咨询失败 </a>							 	    		
+	    	#end
+	    	#if($consultBase.consult.step==3 && $consultBase.consultantApprise)	
+				<a  class="btn btn-sm btn-primary" href="javascript:void(0)" >
+					 评价咨询师 </a>			    		
+	    	#end	    	
+			<a  class="btn btn-link" style="float:right" href="javascript:void(0)" onclick="deleteConsult()">
+			<span class="glyphicon glyphicon-remove"></span> 删除记录</a>	
+	    	<a  class="btn  btn-link" style="float:right"  onclick="javascript:history.go(-1);" ><span class="glyphicon glyphicon-arrow-left"></span>
+					 返回上一页 </a>				
+	 	</div>
+	</div>
+	<hr style="margin:0px;">
 	#parse("consultant/consult/common/consultBaseInfoCommon.vm")
-	#if($consultBase.consult.step==1)
-	  	<p class="text-primary">当前记录状态:<span style="font-size:20px;color:red">$enumUtil.getByValue("com.ccconsult.enums.ConsultStepEnum",$consultBase.consult.step).getDescription()</span>
-	  	请等待咨询师和您预约时间，咨询师预约后后我们会邮件通知您，请仔细关注您的邮件信息</p>	
-	#end
-	#if($consultBase.consult.step==2)
-		<p class="text-primary">	
-		 当前预约的时间如下:
-		 <h4><span class="glyphicon glyphicon-dashboard"></span>$date.format("yyyy-MM-dd HH:mm:ss",$consultBase.interviewConsult.gmtScheduleBegin) <span class="glyphicon glyphicon-minus"></span> $date.format("yyyy-MM-dd HH:mm:ss", $consultBase.consultInterview.gmtScheduleEnd) </h4>	
-		</p>	 
-	#end 	
-	#if($consultBase.consult.step==3)
-		<p class="text-primary">	
- 		 <strong>恭喜您，当前记录正处于咨询状态，您可以通过在咨询师和您预约的时间内拨打咨询师电话就行咨询。在咨询完成后请讲验证码发送给咨询师以便于咨询师完成验证,当前预约的时间如下:<br/>
-		 <h4><span class="glyphicon glyphicon-dashboard"></span>$date.format("yyyy-MM-dd HH:mm:ss",$consultBase.interviewConsult.gmtScheduleBegin) <span class="glyphicon glyphicon-minus"></span> $date.format("yyyy-MM-dd HH:mm:ss", $consultBase.consultInterview.gmtScheduleEnd) </h4>	
-	 	</p>
-	#end	
+	<hr style="margin:0px;">
+	<p class="text-info">	
+	 <strong>您预约了如下时间进行咨询，在预约前半小时我们会将咨询师联系方式发送给您，请在咨询完成后请进行评价和确认，如果未能正确完成咨询,请点击咨询失败进行取消:<br/>
+	 <h4><span class="glyphicon glyphicon-dashboard"></span>$date.format("yyyy-MM-dd HH:mm:ss",$consultBase.consultInterview.gmtScheduleBegin) <span class="glyphicon glyphicon-minus"></span> $date.format("yyyy-MM-dd HH:mm:ss", $consultBase.consultInterview.gmtScheduleEnd) </h4>	
+ 	</p>
 </div>
+<script>
+function deleteConsult(){
+		jQuery.ajax({
+             type: "POST",
+             url: "$link.contextPath/consultant/deleteConsult.json",
+             data: {"consultId":'$consultBase.consult.id','service':'$service.code'},
+             dataType: "json",
+             success: function(data){
+             	if(data.result.success==true){
+					$.Zebra_Dialog('删除成功！');
+             		setInterval(function(){
+             			window.location.href="$link.contextPath/consultant/consultantSelf.htm"
+					},2000);										
+             	}else{
+					$.Zebra_Dialog('<strong>请注意</strong>, '+data.result.message, {
+					    'type':     'error',
+					    'title':    '对不起，操作失败'
+					});				             	
+             	}
+              }
+         });
+	}
+</script>
 #parse("consultant/consult/common/consultCounselorCommon.vm")
 <div class="row">
 	<div class="col-sm-12">

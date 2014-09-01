@@ -85,7 +85,7 @@ public class AppriseController extends BaseController {
             public void check() {
                 AssertUtil.state((apprise.getRelId() != null && apprise.getRelId() > 0), "面试记录不存在");
                 AssertUtil.notNull(
-                    (apprise.getApprise() != null && AppriseEnum.getByValue(apprise.getApprise()) != null),
+                    (apprise.getScore() != null && AppriseEnum.getByValue(apprise.getScore()) != null),
                     "请评价");
                 if (!StringUtil.isBlank(apprise.getMemo())) {
                     AssertUtil.state(apprise.getMemo().length() < CcConstrant.COMMON_4096_LENGTH,
@@ -133,7 +133,7 @@ public class AppriseController extends BaseController {
             public void check() {
                 AssertUtil.state((apprise.getRelId() != null && apprise.getRelId() > 0), "面试记录不存在");
                 AssertUtil.notNull(
-                    (apprise.getApprise() != null && AppriseEnum.getByValue(apprise.getApprise()) != null),
+                    (apprise.getScore() != null && AppriseEnum.getByValue(apprise.getScore()) != null),
                     "请评价");
                 if (!StringUtil.isBlank(apprise.getMemo())) {
                     AssertUtil.state(apprise.getMemo().length() < CcConstrant.COMMON_4096_LENGTH,

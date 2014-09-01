@@ -11,7 +11,7 @@
 					  			<div class="panel panel-success">
 								  <div class="panel-body">
 										<p class="text-primary" style="border-bottom:solid 1px #ddd">
-								  		评价：$enumUtil.getEnumClass("com.ccconsult.enums.AppriseEnum").getByValue($consultBase.counselorApprise.apprise).getDescription()
+								  		评价：$enumUtil.getEnumClass("com.ccconsult.base.enums.AppriseEnum").getByValue($consultBase.counselorApprise.apprise).getDescription()
 								  		<span style="float:left;">
 								  		创建时间 $date.format("yyyy-MM-dd HH:mm:ss", $consultBase.counselorApprise.gmtCreate)</span></p>
 								  		#if($consultBase.counselorApprise.memo) $apprise.memo  #else 他很懒，什么也没有写  #end
@@ -34,7 +34,7 @@
 					  			<div class="panel panel-success">
 								  <div class="panel-body">
 								  		<p class="text-primary" style="border-bottom:solid 1px #ddd">
-								  		评价：$enumUtil.getByValue("com.ccconsult.enums.AppriseEnum",$consultBase.consultantApprise.apprise).getDescription()
+								  		评价：$enumUtil.getByValue("com.ccconsult.base.enums.AppriseEnum",$consultBase.consultantApprise.apprise).getDescription()
 								  		<span style="float:right;">
 								  		创建时间 $date.format("yyyy-MM-dd HH:mm:ss", $consultBase.consultantApprise.gmtCreate)</span></p>
 								  		#if($consultBase.consultantApprise.memo) $consultBase.consultantApprise.memo  #else 他很懒，什么也没有写  #end

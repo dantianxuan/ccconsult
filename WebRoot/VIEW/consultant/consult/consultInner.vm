@@ -1,12 +1,38 @@
-#parse("consultant/consultantGuide.vm")
 <div class="alert alert-dismissable alert-success">
-	#parse("consultant/consult/common/consultBaseInfoCommon.vm")
-	#if($consultBase.consult.step==1)
-	  	<p class="text-primary">当前记录状态:<span style="font-size:20px;color:red">$enumUtil.getByValue("com.ccconsult.enums.ConsultStepEnum",$consultBase.consult.step).getDescription()</span>
-	  	请耐心等待确认并回答您的问题，如果在有效时间期限内咨询师仍旧未回答您的问题，该问题会关闭</p>		  	
-	#end	
+	<div class="row" style="padding-bottom:4px;" >
+	    <div class="col-sm-12">   	
+			<a  class="btn btn-link" style="float:right" href="javascript:void(0)" onclick="deleteConsult()">
+			<span class="glyphicon glyphicon-remove"></span> 删除记录</a>
+	    	<a  class="btn  btn-link" style="float:right"  onclick="javascript:history.go(-1);" ><span class="glyphicon glyphicon-arrow-left"></span>
+					 返回上一页 </a>									
+	 	</div>
+	</div>
+	<hr style="margin:0px;">
+	#parse("consultant/consult/common/consultBaseInfoCommon.vm")  	
 </div>
-
+<script>
+	function deleteConsult(){
+		jQuery.ajax({
+             type: "POST",
+             url: "$link.contextPath/consultant/deleteConsult.json",
+             data: {"consultId":'$consultBase.consult.id','service':'$service.code'},
+             dataType: "json",
+             success: function(data){
+             	if(data.result.success==true){
+					$.Zebra_Dialog('删除成功！');
+             		setInterval(function(){
+             			window.location.href="$link.contextPath/consultant/consultantSelf.htm"
+					},2000);										
+             	}else{
+					$.Zebra_Dialog('<strong>请注意</strong>, '+data.result.message, {
+					    'type':     'error',
+					    'title':    '对不起，操作失败'
+					});				             	
+             	}
+              }
+         });
+	}
+</script>
 #parse("consultant/consult/common/consultCounselorCommon.vm")
 <div class="row">
 	<div class="col-sm-12">

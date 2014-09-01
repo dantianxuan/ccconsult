@@ -34,9 +34,6 @@
         <property name="gmtCreate" type="timestamp">
             <column name="gmt_create" length="19" />
         </property>
-        <property name="gmtEffectEnd" type="timestamp">
-            <column name="gmt_effect_end" length="19" />
-        </property>
         <property name="rejectReason" type="string">
             <column name="reject_reason" length="5000" />
         </property>
@@ -45,6 +42,15 @@
         </property>
         <property name="indetityCode" type="string">
             <column name="indetity_code" length="45" />
+        </property>
+        <property name="gmtEffectBegin" type="timestamp">
+            <column name="gmt_effect_begin" length="19" />
+        </property>
+        <property name="gmtEffectEnd" type="timestamp">
+            <column name="gmt_effect_end" length="19" />
+        </property>
+        <property name="price" type="double">
+            <column name="price" precision="22" scale="0" />
         </property>
     </class>
 </hibernate-mapping>

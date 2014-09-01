@@ -27,11 +27,11 @@ import com.ccconsult.base.enums.MessageRelTypeEnum;
 import com.ccconsult.base.enums.NotifySenderEnum;
 import com.ccconsult.base.enums.PayStateEnum;
 import com.ccconsult.base.enums.UserRoleEnum;
-import com.ccconsult.core.ConsultComponent;
+import com.ccconsult.core.consult.ConsultQueryComponent;
+import com.ccconsult.core.notify.NotifySender;
 import com.ccconsult.dao.ArticleDAO;
 import com.ccconsult.dao.ConsultDAO;
 import com.ccconsult.dao.MessageDAO;
-import com.ccconsult.notify.NotifySender;
 import com.ccconsult.pojo.Article;
 import com.ccconsult.pojo.Consult;
 import com.ccconsult.pojo.Consultant;
@@ -53,7 +53,7 @@ public class ConsultController extends BaseController {
     @Autowired
     private MessageDAO       messageDAO;
     @Autowired
-    private ConsultComponent consultComponent;
+    private ConsultQueryComponent consultComponent;
     @Autowired
     private ArticleDAO       articleDAO;
     @Autowired
@@ -121,7 +121,6 @@ public class ConsultController extends BaseController {
         CcResult result = serviceTemplate.execute(CcResult.class, new BlankServiceCallBack() {
             @Override
             public CcResult executeService() {
-
                 AssertUtil.state(consultId != null && consultId > 0, "不合法的请求，当前记录不存在");
                 ConsultBase consultBase = consultComponent.queryById(consultId);
                 modelMap.put("consultBase", consultBase);

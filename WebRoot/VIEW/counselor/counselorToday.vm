@@ -1,0 +1,33 @@
+<link rel="stylesheet" type="text/css" href="$link.contextPath/STATIC/plugin/VerticalTimeline/css/component.css" />
+<script src="$link.contextPath/STATIC/plugin/VerticalTimeline/js/modernizr.custom.js"></script>
+#parse("counselor/counselorGuide.vm")
+<div class="row">
+	<div class="col-sm-12">
+		<div class="panel panel-default">
+		  <div class="panel-heading"><span class="glyphicon glyphicon-bookmark"></span>待办事项<span class="badge">$consultBases.size()</span></div>
+		  <div class="panel-body">
+		  	<div class="col-sm-12">
+				<div class="main">
+					<ul class="cbp_tmtimeline">
+						#foreach($consultBase in $consultBases)
+						#set($service=$application.getAttribute("serviceMap").get("$consultBase.serviceConfig.serviceId"))	
+						<li>
+							<time class="cbp_tmtime">
+							<span>$date.format("yyyy-MM-dd",$consultBase.consult.gmtEffectBegin)</span> <span>$date.format("HH:mm",$consultBase.consult.gmtEffectBegin)</span>
+							</time>
+							<div class="cbp_tmicon cbp_tmicon-phone"></div>
+							<div class="cbp_tmlabel">
+								<a href="$link.contextPath/counselor/consult/go${service.code}.htm?consultId=$consultBase.consult.id">$service.name</a><BR/>
+								<p><small>$consultBase.consult.goal</small></p>
+							</div>
+						</li>						
+						#end												
+					</ul>
+				</div>	
+			</div>
+	
+			  
+		  </div>
+  		</div>
+	</div>
+</div>

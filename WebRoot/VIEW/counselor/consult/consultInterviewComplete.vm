@@ -1,0 +1,118 @@
+#set($counselorVO=$session.getAttribute("SESSION_COUNSELOR_OBJECT"))
+<script src="$link.contextPath/STATIC/js/jquery.form.js"></script>
+<script src="$link.contextPath/STATIC/js/validator.min.js"></script>
+<script src="$link.contextPath/STATIC/plugin/raty/jquery.raty.js"></script>
+<div class="alert alert-dismissable alert-success">
+	<div class="row" style="padding-bottom:4px;" >
+	    <div class="col-sm-12">   
+	    	<a  class="btn btn-link" onclick="$('.indetityDiv').addClass('hide');$('#confirmWithOutIndetityCode').removeClass('hide');"> <span class="glyphicon glyphicon-info-sign"></span> 无法获取验证码，我要提交材料</a>	
+	    	<a  class="btn  btn-link" style="float:right"  href="$link.contextPath/ccconsult/article.htm?articleId=$service.id" target="_blank">
+	    	<span class="glyphicon glyphicon-question-sign"></span>
+					 咨询帮助信息 </a>		
+	    	<a  class="btn  btn-link" style="float:right"  onclick="javascript:history.go(-1);" >
+					 返回上一页 </a>	 	
+	 	</div>
+	</div>
+	<hr style="margin:0px;">	
+	#parse("counselor/consult/common/consultBaseInfoCommon.vm")
+	<p class="text-info" style="border-top:solid 1px #ddd">	
+	 欢迎您确认您的咨询信息，请向您的咨询者获取咨询验证码，通过该验证码您可以直接确认本次咨询并获得咨询费，如果因为特殊原有无法提供验证码，你需要上传您的咨询证明记录让我们的客服人员介入
+	</p>	
+</div>
+<div class="row " >
+	<div class="col-sm-12">
+		<div class="panel panel-default">
+		  <div class="panel-heading"><span class="glyphicon glyphicon-bookmark"></span>确认咨询信息</div>
+		  <div class="panel-body">
+			  <div class="col-lg-12">
+				<form class="form-horizontal"  method="POST"  action="$link.contextPath/counselor/consult/confirmInterview.json"  id="confirmWithIndetityCodeForm">
+					<input type="hidden" value="$consultBase.consult.id" name="consultId" />
+				  <fieldset>
+				    <div class="form-group">
+				      <label  class="col-lg-2 control-label">咨询确认码</label>
+				      <div class="col-lg-10">
+				        <input type="text" class="form-control" name="indentityCode" placeholder="请输入您的咨询者持有的咨询验证码以完成本次咨询" required />
+				      </div>
+				    </div>
+			    	<div class="form-group">
+					      <label  class="col-sm-2 control-label">咨询者评分</label>
+					      <div class="col-sm-10">
+					      	<p> <span id="start"></span> <span id="startScore"></span></p>
+					      	<p class="text-primary"><small>请对您的咨询者进行一个简单的能力评估，评价良好的咨询者有助于简历一个属于您的人才库，评价不对咨询者开放。</small></p>
+					      </div>
+				      </div>
+				    </div>
+					<div class="form-group">
+					      <label for="textArea" class="col-lg-2 control-label">咨询完结备注</label>
+					      <div class="col-lg-10">
+					        <textarea class="form-control" rows="5" name="memo" required ></textarea>
+					        <span class="help-block">请填入咨询备注，例如咨询的感受和对该咨询者的一些建议等.</span>
+					      </div>
+				    </div>				    
+				    <div class="form-group">
+				      <div class="col-lg-10 col-lg-offset-2">
+				        <button type="button" class="btn btn-primary" onclick="confirmWithIndetityCode()">完成验证</button>
+				      </div>
+				    </div>
+				  </fieldset>
+				</form>
+	      </div>   
+  		</div>
+	</div>
+</div>
+<script>
+	$('#start').raty({
+	  cancel   	: true,
+	  cancelOff	: '$link.contextPath/STATIC/plugin/raty/img/cancel-off-big.png',
+	  cancelOn 	: '$link.contextPath/STATIC/plugin/raty/img/cancel-off-big.png',
+	  half     	:  false,
+	  number   	:  10,
+	  scoreName : 'score',
+	  score	   	:  8,
+  	  target    : '#startScore',
+      targetFormat: '评分: {score}',    
+	  starHalf 	: '$link.contextPath/STATIC/plugin/raty/img/star-half-big.png',
+	  starOff  	: '$link.contextPath/STATIC/plugin/raty/img/star-off-big.png',
+	  starOn   	: '$link.contextPath/STATIC/plugin/raty/img/star-on-big.png'
+	});
+	
+	function confirmWithIndetityCode() {	
+		if($('input[name=indentityCode]').val()==''){
+			$.Zebra_Dialog('请输入验证码才能完成评价，请向您的咨询者索取验证码！');
+			return ;
+		}
+		if($('textarea[name=memo]').val()==''){
+			$.Zebra_Dialog('请对您模拟面试的同学做一个简单的评价和建议！');
+			return ;
+		}		
+		var hideForm = $('#confirmWithIndetityCodeForm');
+		var options = {
+			dataType : "json",
+			beforeSubmit : function() {
+				$('#confirmWithIndetityCodeButton').button('loading');
+			},
+			success : function(result) {
+				$('#confirmWithIndetityCodeButton').button('reset');
+				var data = eval(result);
+				if(data.result.success){
+					$.Zebra_Dialog('操作成功！');
+             		setInterval(function(){
+             			window.location.href='$link.contextPath/counselor/consult/goConsultInterview.htm?consultId=$consultBase.consult.id';
+					},2000);									
+				}else{
+					$.Zebra_Dialog('<strong>请注意</strong>, '+data.result.message, {
+					    'type':     'error',
+					    'title':    '对不起，操作失败'
+					});						
+				}
+			},
+			error : function(result) {
+				$('#confirmWithIndetityCodeButton').button('reset');
+				alert("确认失败");
+			}
+		};
+		hideForm.ajaxSubmit(options);
+		return false;
+	}
+	
+</script>

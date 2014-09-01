@@ -2,27 +2,22 @@ package com.ccconsult.pojo;
 
 import java.util.Date;
 
-import com.ccconsult.base.enums.AppriseRelTypeEnum;
-
 /**
  * Apprise entity. @author MyEclipse Persistence Tools
  */
 
 public class Apprise extends com.ccconsult.base.ToString implements java.io.Serializable {
-    /**  */
-    private static final long serialVersionUID = 1L;
-    private Integer           id;
-    private Integer           apprise;
-    private Integer           creator;
-    private String            memo;
-    private Integer           relType;
-    private Integer           relId;
-    private Date              gmtCreate;
-    private Integer           creatorRole;
 
-    public AppriseRelTypeEnum getRelTypeEnum() {
-        return AppriseRelTypeEnum.getByValue(relType);
-    }
+    // Fields    
+
+    private Integer id;
+    private Integer score;
+    private Integer creator;
+    private String  memo;
+    private Integer relType;
+    private Integer relId;
+    private Date    gmtCreate;
+    private Integer creatorRole;
 
     // Constructors
 
@@ -31,9 +26,9 @@ public class Apprise extends com.ccconsult.base.ToString implements java.io.Seri
     }
 
     /** full constructor */
-    public Apprise(Integer apprise, Integer creator, String memo, Integer relType, Integer relId,
+    public Apprise(Integer score, Integer creator, String memo, Integer relType, Integer relId,
                    Date gmtCreate, Integer creatorRole) {
-        this.apprise = apprise;
+        this.score = score;
         this.creator = creator;
         this.memo = memo;
         this.relType = relType;
@@ -52,12 +47,12 @@ public class Apprise extends com.ccconsult.base.ToString implements java.io.Seri
         this.id = id;
     }
 
-    public Integer getApprise() {
-        return this.apprise;
+    public Integer getScore() {
+        return this.score;
     }
 
-    public void setApprise(Integer apprise) {
-        this.apprise = apprise;
+    public void setScore(Integer score) {
+        this.score = score;
     }
 
     public Integer getCreator() {

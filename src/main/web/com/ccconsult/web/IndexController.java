@@ -18,7 +18,7 @@ import com.ccconsult.base.CcConstrant;
 import com.ccconsult.base.PageList;
 import com.ccconsult.base.enums.ArticleTypeEnum;
 import com.ccconsult.base.enums.ConsultStepEnum;
-import com.ccconsult.core.ConsultComponent;
+import com.ccconsult.core.consult.ConsultQueryComponent;
 import com.ccconsult.dao.ArticleDAO;
 import com.ccconsult.dao.CompanyDAO;
 import com.ccconsult.pojo.Article;
@@ -37,7 +37,7 @@ public class IndexController {
     @Autowired
     private CompanyDAO       companyDAO;
     @Autowired
-    private ConsultComponent consultComponent;
+    private ConsultQueryComponent consultComponent;
 
     @RequestMapping(value = "/index.htm", method = RequestMethod.GET)
     public ModelAndView toIndex(HttpServletRequest request, ModelMap modelMap) {
@@ -65,7 +65,7 @@ public class IndexController {
         Object interviewer = request.getSession()
             .getAttribute(CcConstrant.SESSION_COUNSELOR_OBJECT);
         if (interviewer != null) {
-            return new ModelAndView("redirect:/counselor/counselorSelf.htm");
+            return new ModelAndView("redirect:/counselor/counselorToday.htm");
         }
         ModelAndView view = new ModelAndView("content/login");
         return view;

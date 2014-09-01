@@ -21,7 +21,7 @@
 	                    		</P>
 	                    	</div>
 							<div class="col-lg-12">
-								#set($scheduleType=$enumUtil.getByValue("com.ccconsult.enums.ScheduleTypeEnum",$service.scheduleType))
+								#set($scheduleType=$enumUtil.getByValue("com.ccconsult.base.enums.ScheduleTypeEnum",$service.scheduleType))
 								<strong>预约类型：</strong>$scheduleType.getDescription()<br/>
 								<p>$service.description</p>	
 							  </div>					  

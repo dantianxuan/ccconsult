@@ -1,15 +1,16 @@
 #set($service=$application.getAttribute("serviceMap").get("$consultBase.serviceConfig.serviceId"))	
 <div class="row">
     <div class="col-sm-6">
-        <p class="col-sm-12"><strong class=" text-right col-sm-4">咨询类型:</strong>$!service.name</p>
-        <p class="col-sm-12"><strong class=" text-right col-sm-4">支付状态:</strong>$enumUtil.getEnumClass("com.ccconsult.enums.PayStateEnum").getByValue($consultBase.consult.payTag).getDescription()</p>
-        <p class="col-sm-12"><strong class=" text-right col-sm-4">有效期:</strong>$!date.format("yyyy-MM-dd HH:mm:ss", $consultBase.consult.gmtEffectEnd)</p>
+        <p class="col-sm-12"><strong class=" text-right col-sm-4">咨询类型:</strong><a href="$link.contextPath/serviceInfo.htm?serviceId=$!service.id" >$!service.name</a></p>
+        <p class="col-sm-12"><strong class=" text-right col-sm-4">支付状态:</strong>$enumUtil.getEnumClass("com.ccconsult.base.enums.PayStateEnum").getByValue($consultBase.consult.payTag).getDescription()</p>
+        <p class="col-sm-12"><strong class=" text-right col-sm-4">咨询价格:</strong>${consultBase.consult.price}<small>元</small></p>
     </div>
     <div class="col-sm-6">
-     	<p class="col-sm-12"><strong class=" text-right col-sm-4">当前状态:</strong>$enumUtil.getByValue("com.ccconsult.enums.ConsultStepEnum",$consultBase.consult.step).getDescription()</p>
+     	<p class="col-sm-12"><strong class=" text-right col-sm-4">当前状态:</strong>$enumUtil.getByValue("com.ccconsult.base.enums.ConsultStepEnum",$consultBase.consult.step).getDescription()</p>
+        <p class="col-sm-12"><strong class=" text-right col-sm-4">有效期:</strong>$!date.format("yyyy-MM-dd HH:mm:ss", $consultBase.consult.gmtEffectEnd)</p>
         <p class="col-sm-12"><strong class=" text-right col-sm-4">创建时间:</strong>$date.format("yyyy-MM-dd HH:mm:ss", $consultBase.consult.gmtCreate)</p>
     </div>
 </div>
-#if($consultBase.consult.step==6)
-	<p  class="text-primary" style="border-top:solid 1px #ddd" class="text-primary"><small><span class="glyphicon glyphicon-warning-sign"></span>对不起，咨询师拒绝了您的预约，原因是：$!consultBase.consult.rejectReason</small></p>
+#if($consultBase.consult.step==5)
+	<p  class="text-primary" style="border-top:solid 1px #ddd;" class="text-primary"><span class="glyphicon glyphicon-warning-sign"></span>拒绝原因：$!consultBase.consult.rejectReason</p>
 #end

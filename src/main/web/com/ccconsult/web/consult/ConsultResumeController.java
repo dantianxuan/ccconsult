@@ -31,8 +31,8 @@ import com.ccconsult.base.enums.PayStateEnum;
 import com.ccconsult.base.util.CodeGenUtil;
 import com.ccconsult.base.util.DateUtil;
 import com.ccconsult.base.util.StringUtil;
-import com.ccconsult.core.ConsultComponent;
-import com.ccconsult.core.FileComponent;
+import com.ccconsult.core.consult.ConsultQueryComponent;
+import com.ccconsult.core.file.FileComponent;
 import com.ccconsult.dao.ConsultDAO;
 import com.ccconsult.dao.ConsultResumeDAO;
 import com.ccconsult.dao.CounselorDAO;
@@ -66,7 +66,7 @@ public class ConsultResumeController extends BaseController {
     @Autowired
     private MessageDAO       messageDAO;
     @Autowired
-    private ConsultComponent consultComponent;
+    private ConsultQueryComponent consultComponent;
     @Autowired
     private FileComponent    fileComponent;
     @Autowired
@@ -144,6 +144,7 @@ public class ConsultResumeController extends BaseController {
                 consult.setStep(ConsultStepEnum.CREATE.getValue());
                 Service service = serviceDAO.findById(consult.getServiceId());
                 AssertUtil.notNull(service, "服务不存在，请检查");
+                consult.setGmtEffectBegin(new Date());
                 consult.setGmtEffectEnd(DateUtil.addHours(new Date(), service.getEffectTime()));
                 consult.setIndetityCode(CodeGenUtil.getFixLenthString(6));
                 consultDAO.save(consult);
@@ -159,7 +160,7 @@ public class ConsultResumeController extends BaseController {
         return modelMap;
     }
 
-    @RequestMapping(value = "/consultant/consult/consultResume.htm", method = RequestMethod.GET)
+    @RequestMapping(value = "/consultant/consult/goConsultResume.htm", method = RequestMethod.GET)
     public ModelAndView innerConsult(final HttpServletRequest request, final String consultId,
                                      final ModelMap modelMap) {
         ModelAndView view = new ModelAndView("consultant/consult/consultResume");

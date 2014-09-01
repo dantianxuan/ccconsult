@@ -1,5 +1,6 @@
 package com.ccconsult.dao;
 
+import com.ccconsult.pojo.ConsultInterview;
 import com.ccconsult.pojo.ConsultOnline;
 
 import java.util.List;
@@ -18,33 +19,11 @@ import org.slf4j.LoggerFactory;
   * @author MyEclipse Persistence Tools 
  */
 
-public class ConsultOnlineDAO extends BaseHibernateDAO {
+public class ConsultOnlineDAO extends BaseHibernateDAO<ConsultOnline> {
     private static final Logger log          = LoggerFactory.getLogger(ConsultOnlineDAO.class);
     //property constants
     public static final String  CONSULT_ID   = "consultId";
     public static final String  SCHEDUE_TIME = "schedueTime";
-
-    public void save(ConsultOnline transientInstance) {
-        log.debug("saving ConsultOnline instance");
-        try {
-            getSession().save(transientInstance);
-            log.debug("save successful");
-        } catch (RuntimeException re) {
-            log.error("save failed", re);
-            throw re;
-        }
-    }
-
-    public void delete(ConsultOnline persistentInstance) {
-        log.debug("deleting ConsultOnline instance");
-        try {
-            getSession().delete(persistentInstance);
-            log.debug("delete successful");
-        } catch (RuntimeException re) {
-            log.error("delete failed", re);
-            throw re;
-        }
-    }
 
     public ConsultOnline findById(java.lang.Integer id) {
         log.debug("getting ConsultOnline instance with id: " + id);
@@ -54,19 +33,6 @@ public class ConsultOnlineDAO extends BaseHibernateDAO {
             return instance;
         } catch (RuntimeException re) {
             log.error("get failed", re);
-            throw re;
-        }
-    }
-
-    public List findByExample(ConsultOnline instance) {
-        log.debug("finding ConsultOnline instance by example");
-        try {
-            List results = getSession().createCriteria("com.ccconsult.pojo.ConsultOnline")
-                .add(Example.create(instance)).list();
-            log.debug("find by example successful, result size: " + results.size());
-            return results;
-        } catch (RuntimeException re) {
-            log.error("find by example failed", re);
             throw re;
         }
     }
@@ -85,57 +51,8 @@ public class ConsultOnlineDAO extends BaseHibernateDAO {
         }
     }
 
-    public List findByConsultId(Object consultId) {
-        return findByProperty(CONSULT_ID, consultId);
+    public ConsultOnline findByConsultId(Object consultId) {
+        return getLimit(findByProperty(CONSULT_ID, consultId));
     }
 
-    public List findBySchedueTime(Object schedueTime) {
-        return findByProperty(SCHEDUE_TIME, schedueTime);
-    }
-
-    public List findAll() {
-        log.debug("finding all ConsultOnline instances");
-        try {
-            String queryString = "from ConsultOnline";
-            Query queryObject = getSession().createQuery(queryString);
-            return queryObject.list();
-        } catch (RuntimeException re) {
-            log.error("find all failed", re);
-            throw re;
-        }
-    }
-
-    public ConsultOnline merge(ConsultOnline detachedInstance) {
-        log.debug("merging ConsultOnline instance");
-        try {
-            ConsultOnline result = (ConsultOnline) getSession().merge(detachedInstance);
-            log.debug("merge successful");
-            return result;
-        } catch (RuntimeException re) {
-            log.error("merge failed", re);
-            throw re;
-        }
-    }
-
-    public void attachDirty(ConsultOnline instance) {
-        log.debug("attaching dirty ConsultOnline instance");
-        try {
-            getSession().saveOrUpdate(instance);
-            log.debug("attach successful");
-        } catch (RuntimeException re) {
-            log.error("attach failed", re);
-            throw re;
-        }
-    }
-
-    public void attachClean(ConsultOnline instance) {
-        log.debug("attaching clean ConsultOnline instance");
-        try {
-            getSession().lock(instance, LockMode.NONE);
-            log.debug("attach successful");
-        } catch (RuntimeException re) {
-            log.error("attach failed", re);
-            throw re;
-        }
-    }
 }

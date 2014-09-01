@@ -3,7 +3,7 @@
     <div class="col-sm-12">
         <div class="panel panel-default">
             <div class="panel-body">
-            	#foreach($articleTypeEnum in $enumUtil.getEnumClass("com.ccconsult.enums.ArticleTypeEnum").values())
+            	#foreach($articleTypeEnum in $enumUtil.getEnumClass("com.ccconsult.base.enums.ArticleTypeEnum").values())
 				<button type="button" class="btn btn-info" onclick="$('#articleType').val($articleTypeEnum.getValue());submitForm(0)">$articleTypeEnum.getDescription()</button>
 				#end
 				
@@ -34,7 +34,7 @@
                     	<td><a href="$link.contextPath/article.htm?articleId=$article.id">$article.id</td>
                         <td><a href="$link.contextPath/article.htm?articleId=$article.id">$article.title</td>
                         <td>	
-                        	$enumUtil.getEnumClass("com.ccconsult.enums.ArticleTypeEnum").getByValue($article.type).getDescription()
+                        	$enumUtil.getEnumClass("com.ccconsult.base.enums.ArticleTypeEnum").getByValue($article.type).getDescription()
 						</td>
                         <td>$date.format("yyyy-MM-dd HH:mm:ss", $article.gmtModified)</td>
                         <td>

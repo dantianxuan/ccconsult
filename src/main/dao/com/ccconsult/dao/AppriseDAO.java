@@ -19,7 +19,7 @@ import com.ccconsult.pojo.Apprise;
 public class AppriseDAO extends BaseHibernateDAO<Apprise> {
     private static final Logger log          = LoggerFactory.getLogger(AppriseDAO.class);
     //property constants
-    public static final String  APPRISE      = "apprise";
+    public static final String  SCORE        = "score";
     public static final String  CREATOR      = "creator";
     public static final String  MEMO         = "memo";
     public static final String  REL_TYPE     = "relType";
@@ -48,5 +48,4 @@ public class AppriseDAO extends BaseHibernateDAO<Apprise> {
                      + "order by gmtCreate desc";
         return getLimit(findByQuery(0, Integer.MAX_VALUE, hql, null));
     }
-
 }

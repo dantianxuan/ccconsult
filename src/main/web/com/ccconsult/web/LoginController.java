@@ -59,7 +59,7 @@ public class LoginController extends BaseController {
             request.getSession().removeAttribute("redirectUrl");
             return new ModelAndView("redirect:" + redirectUrl);
         }
-        return new ModelAndView("redirect:/counselor/consult/searchConsult.htm?step=1");
+        return new ModelAndView("redirect:/counselor/counselorToday.htm");
 
     }
 

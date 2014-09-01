@@ -10,8 +10,8 @@
             <column name="id" />
             <generator class="identity" />
         </id>
-        <property name="apprise" type="integer">
-            <column name="apprise" />
+        <property name="score" type="integer">
+            <column name="score" />
         </property>
         <property name="creator" type="integer">
             <column name="creator" />

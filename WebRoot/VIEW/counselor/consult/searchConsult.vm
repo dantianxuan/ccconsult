@@ -9,13 +9,12 @@
     <div class="col-sm-12">
         <div class="panel panel-default">
         	<div class="panel-heading">
-			  	<ul class="nav nav-tabs nav-justified" role="tablist">
-			  		<li #if($step==2) class="active"  #end><a href="javascript:void(0)"  onclick="queryConsults(1,2);">未支付</a></li>
-			  		<li #if($step==3) class="active"  #end><a href="javascript:void(0)"  onclick="queryConsults(1,3);">待处理</a></li>
-			  		<li #if($step==4) class="active"  #end><a href="javascript:void(0)"  onclick="queryConsults(1,4);">处理完成</a></li>
-			  		<li #if($step==6) class="active"  #end><a href="javascript:void(0)"  onclick="queryConsults(1,6);">已拒绝</a></li>
-			  		<li #if($step==5) class="active"  #end><a href="javascript:void(0)"  onclick="queryConsults(1,5);">已过期</a></li>
-				</ul>
+				<ul class="nav nav-tabs nav-justified" role="tablist">
+			  		<li #if($step==2) class="active"  #end><a href="javascript:void(0)"  onclick="queryConsults(1,2);">进行中 	#if($step==2)  <span class="badge">$result.object.data.size()</span>  #end</a></li>
+			  		<li #if($step==3) class="active"  #end><a href="javascript:void(0)"  onclick="queryConsults(1,3);">咨询完成 	#if($step==3)  <span class="badge">$result.object.data.size()</span>  #end</a></li>
+			  		<li #if($step==5) class="active"  #end><a href="javascript:void(0)"  onclick="queryConsults(1,5);">已拒绝 	#if($step==5)  <span class="badge">$result.object.data.size()</span>  #end</a></li>
+			  		<li #if($step==4) class="active"  #end><a href="javascript:void(0)"  onclick="queryConsults(1,4);">已过期 	#if($step==4)  <span class="badge">$result.object.data.size()</span>  #end</a></li>
+				</ul> 
 			</div>
             <div class="panel-body">
 				#if($result && $result.object && $result && $result.object.data.size()<=0)
@@ -27,51 +26,39 @@
         			#set($service=$application.getAttribute("serviceMap").get("$consultBase.serviceConfig.serviceId"))	
 			            <div class="panel panel-default">
 			                <div class="panel-body">
-			                		<div class="col-sm-1" style="font-size:30px;">
+		                		#set($service=$application.getAttribute("serviceMap").get("$consultBase.serviceConfig.serviceId"))	 
+									<div class="col-sm-1" style="font-size:50px;">
 			                			<strong>$foreach.count</strong>
 			                		</div>
 			                		<div class="col-sm-2">
-			                		 		<img src="$link.contextPath/$fileUtil.getPath($!consultant.photo)" class="img-thumbnail" style="width:72px;height:72px;"/>
+			                		 		<img src="$link.contextPath/$fileUtil.getPath($service.photo)" class="img-thumbnail" style="width:72px;height:72px;"/>
 			                		</div>
 			                		<div class="col-sm-9" style="border-left:solid 1px #ddd">
 		                                <div class="col-lg-12">
                             			  <p  style="border-bottom:solid 1px #ddd">
 		                                	<span class="glyphicon glyphicon-tag"></span> 咨询类型：$service.name
-		                                	<a class="btn btn-link btn-xs" style="float:right"  href="$link.contextPath/counselor/consult/${service.code}.htm?consultId=$consultBase.consult.id">详情...</a>
+		                                	<a class="btn btn-link btn-xs" style="float:right"  href="$link.contextPath/counselor/consult/go${service.code}.htm?consultId=$consultBase.consult.id">详情...</a>
 	                                		</P>
 	                                	</div>
 										<div class="col-lg-12">
 											<p>
-											  <a  class="btn   btn-xs btn-success  disabled col-sm-2" style="margin-right:4px;">创建预约<span class="glyphicon glyphicon-arrow-right"></span></a>
-									  			#if($consult.step==1)
-										   			<a  class="btn btn-primary disabled col-sm-2  btn-xs" style="margin-right:4px;">接受咨询 <span class="glyphicon glyphicon-arrow-right"></a>
-										   			<a  class="btn btn-default disabled col-sm-2  btn-xs" style="margin-right:4px;">等待支付 <span class="glyphicon glyphicon-arrow-right"></a>
-										   			<a  class="btn btn-default disabled col-sm-2  btn-xs" style="margin-right:4px;">咨询进行中 <span class="glyphicon glyphicon-arrow-right"></a>
-										   			<a  class="btn btn-default disabled col-sm-2  btn-xs" style="margin-right:4px;"><span class="glyphicon glyphicon-ok"></span>咨询完成 </a>
-										   	  	#end
 									  			#if($consult.step==2)
-									   				<a  class="btn btn-success disabled col-sm-2  btn-xs" style="margin-right:4px;">接受咨询 <span class="glyphicon glyphicon-arrow-right"></a>
-										   			<a  class="btn btn-primary disabled col-sm-2  btn-xs" style="margin-right:4px;">等待支付 <span class="glyphicon glyphicon-arrow-right"></a>
-										   			<a  class="btn btn-default disabled col-sm-2  btn-xs" style="margin-right:4px;">咨询进行中 <span class="glyphicon glyphicon-arrow-right"></a>
+									   				<a  class="btn btn-success disabled col-sm-2  btn-xs" style="margin-right:4px;">创建咨询 <span class="glyphicon glyphicon-arrow-right"></a>									  			
+								   					<a  href="$link.contextPath/counselor/consult/goConsultInner.htm?consultId=$consultBase.consult.id"
+									   				class="btn btn-primary  col-sm-2  btn-xs" style="margin-right:4px;">处理咨询 <span class="glyphicon glyphicon-arrow-right"></a>
 										   			<a  class="btn btn-default disabled col-sm-2  btn-xs" style="margin-right:4px;"><span class="glyphicon glyphicon-ok"></span>咨询完成 </a>
 										   	  	#end										   	  	
 											   	#if($consult.step==3)
-									   				<a  class="btn btn-success disabled col-sm-2  btn-xs" style="margin-right:4px;">接受咨询 <span class="glyphicon glyphicon-arrow-right"></a>
-										   			<a  class="btn btn-success disabled col-sm-2  btn-xs" style="margin-right:4px;">等待支付 <span class="glyphicon glyphicon-arrow-right"></a>
-										   			<a  class="btn btn-primary disabled col-sm-2  btn-xs" style="margin-right:4px;">咨询进行中 <span class="glyphicon glyphicon-arrow-right"></a>
-										   			<a  class="btn btn-default disabled col-sm-2  btn-xs" style="margin-right:4px;"><span class="glyphicon glyphicon-ok"></span>咨询完成 </a>											   		
+									   				<a  class="btn btn-success disabled col-sm-2  btn-xs" style="margin-right:4px;">创建咨询 <span class="glyphicon glyphicon-arrow-right"></a>
+										   			<a  class="btn btn-success disabled col-sm-2  btn-xs" style="margin-right:4px;">处理咨询 <span class="glyphicon glyphicon-arrow-right"></a>
+										   			<a  class="btn btn-success disabled col-sm-2  btn-xs" style="margin-right:4px;"><span class="glyphicon glyphicon-ok"></span>咨询完成 </a>											   		
 											   	#end
 											   	#if($consult.step==4)
-													<a  class="btn btn-success disabled col-sm-2  btn-xs" style="margin-right:4px;">接受咨询 <span class="glyphicon glyphicon-arrow-right"></a>
-										   			<a  class="btn btn-success disabled col-sm-2  btn-xs" style="margin-right:4px;">等待支付 <span class="glyphicon glyphicon-arrow-right"></a>
-										   			<a  class="btn btn-success disabled col-sm-2  btn-xs" style="margin-right:4px;">咨询进行中 <span class="glyphicon glyphicon-arrow-right"></a>
-										   			<a  class="btn btn-success disabled col-sm-2  btn-xs" style="margin-right:4px;"><span class="glyphicon glyphicon-ok"></span>咨询完成 </a>											   													   		
-											   	#end
-											   	#if($consult.step==5)
   													<a  class="btn btn-success disabled col-sm-2  btn-xs" style="margin-right:4px;"><span class="glyphicon glyphicon-stop"></span>已过期 </a>											  
 											    #end
-											   	#if($consult.step==6)
-  													<a  class="btn btn-success disabled col-sm-2  btn-xs" style="margin-right:4px;"><span class="glyphicon glyphicon-stop"></span>已拒绝</a>											  
+											   	#if($consult.step==5)
+											   		<a  class="btn btn-success disabled col-sm-2  btn-xs" style="margin-right:4px;">创建咨询 <span class="glyphicon glyphicon-arrow-right"></a>
+  													<a  class="btn btn-success disabled col-sm-2  btn-xs" style="margin-right:4px;"><span class="glyphicon glyphicon-ban-circle"></span>已拒绝</a>											  
 											    #end											    
 											    </p>
 										  </div>

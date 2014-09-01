@@ -1,0 +1,49 @@
+#set($counselorVO=$session.getAttribute("SESSION_COUNSELOR_OBJECT"))
+#set($service=$application.getAttribute("serviceMap").get("$consultBase.serviceConfig.serviceId"))	
+#set($counselorVO=$consultBase.counselorVO)
+<div class="alert alert-dismissable alert-success">
+	<div class="row" style="padding-bottom:4px;">
+	    <div class="col-sm-12">   
+	    	#if($consultBase.consult.step==2)	
+				<a  class="btn btn-primary" href="$link.contextPath/counselor/consult/consultInterviewComplete.htm?consultId=$consultBase.consult.id" >
+					 我已经完成咨询 </a>				 	
+				<a  class="btn btn-link"  data-toggle="modal" data-target="#rejectConsult" >
+					 拒绝咨询 </a>
+	    	#end
+	    	
+	    	<a  class="btn  btn-link" style="float:right"  href="$link.contextPath/ccconsult/article.htm?articleId=$service.id" target="_blank">
+	    	<span class="glyphicon glyphicon-question-sign"></span>
+					 咨询帮助信息 </a>		
+	    	<a  class="btn  btn-link" style="float:right"  onclick="javascript:history.go(-1);" >
+					 返回上一页 </a>						
+	 	</div>
+	</div>
+	<hr style="margin:0px;">
+	#parse("counselor/consult/common/consultBaseInfoCommon.vm")
+</div>
+#parse("counselor/consult/common/consultConsultantCommon.vm")
+<div class="row">
+	<div class="col-sm-12">
+		<div class="panel panel-default">
+		  <div class="panel-heading"><span class="glyphicon glyphicon-bookmark"></span>咨询问题描述</div>
+		  <div class="panel-body">
+			  <div class="col-lg-12">
+			  <table class="table" style="margin-bottom:0px;">
+				<tr>
+			      <td width="20%"><span class="glyphicon glyphicon-tag"><strong>说明信息：</strong></span></td>
+			      <td width="80%">$consultBase.consult.goal</td>
+			    </tr>			  			    
+			    <tr>
+			      <td width="20%"><span class="glyphicon glyphicon-paperclip"><strong>上传的简历文件:</strong></span></td>
+			      <td width="80%"><span class="glyphicon glyphicon-download-alt"></span><a target="_blank" href="$link.contextPath$fileUtil.getPath($consultBase.consultInterview.resumeFile)" >$fileUtil.getFileName($consultBase.consultInterview.resumeFile)</a>
+			      <small>请点击下载或直接阅览 </small></td>
+			    </tr>
+			  </table>
+			  </div>
+	      </div>   
+  		</div>
+	</div>
+</div>
+#parse("counselor/consult/common/consultMessageCommon.vm")
+#parse("counselor/consult/common/consultAppraiseCommon.vm")
+#parse("counselor/consult/common/consultRejectCommon.vm")

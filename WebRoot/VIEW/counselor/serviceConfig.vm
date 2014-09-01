@@ -30,7 +30,7 @@
 	                                		</P>
 	                                	</div>
 										<div class="col-lg-12">
-											#set($scheduleType=$enumUtil.getByValue("com.ccconsult.enums.ScheduleTypeEnum",$service.scheduleType))
+											#set($scheduleType=$enumUtil.getByValue("com.ccconsult.base.enums.ScheduleTypeEnum",$service.scheduleType))
 											#if($service.scheduleType==1)
 												预约时间：#foreach($time in $scheduleTimeUtil.getSchuleTime($serviceConfig.workOnTime))
 													<span style="margin:3px;border:solid 1px #ddd;border-radius:3px;">$scheduleTimeUtil.getScheduleMap().get($time)</span> 
@@ -82,7 +82,7 @@
 	                                		</p>
 	                                	</div>
 										<div class="col-lg-12">
-											#set($scheduleType=$enumUtil.getByValue("com.ccconsult.enums.ScheduleTypeEnum",$service.scheduleType))
+											#set($scheduleType=$enumUtil.getByValue("com.ccconsult.base.enums.ScheduleTypeEnum",$service.scheduleType))
 												<strong>预约类型：</strong><span style="font-size:18px;color:red">$scheduleType.getDescription()</span>   
 												<strong>薪酬信息：</strong><span style="font-size:18px;color:red">$service.priceRegion</span>元/次（时段）
 										  </div>

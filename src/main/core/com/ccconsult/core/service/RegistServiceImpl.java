@@ -13,9 +13,9 @@ import com.ccconsult.base.CcException;
 import com.ccconsult.base.CcResult;
 import com.ccconsult.base.enums.NotifySenderEnum;
 import com.ccconsult.base.util.ValidateUtil;
+import com.ccconsult.core.notify.NotifySender;
 import com.ccconsult.dao.CounselorDAO;
 import com.ccconsult.dao.RegMailDAO;
-import com.ccconsult.notify.NotifySender;
 import com.ccconsult.pojo.RegMail;
 import com.ccconsult.web.view.CounselorVO;
 

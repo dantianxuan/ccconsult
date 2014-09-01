@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.ccconsult.core.FileComponent;
+import com.ccconsult.core.file.FileComponent;
 import com.ccconsult.dao.CompanyDAO;
 import com.ccconsult.web.BaseController;
 

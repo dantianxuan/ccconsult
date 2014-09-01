@@ -16,7 +16,7 @@
 								  <div class="panel-body">
 								  		<p class="text-primary" style="border-bottom:solid 1px #ddd">
 								  		<span class="label label-info">
-								  		评价：$enumUtil.getEnumClass("com.ccconsult.enums.AppriseEnum").getByValue($apprise.apprise).getDescription()
+								  		评价：$enumUtil.getEnumClass("com.ccconsult.base.enums.AppriseEnum").getByValue($apprise.apprise).getDescription()
 								  		</span>
 								  		<span style="float:right;">
 								  		创建时间 $date.format("yyyy-MM-dd HH:mm:ss", $apprise.gmtCreate)</span></p>
@@ -34,7 +34,7 @@
 								  <div class="panel-body">
 										<p class="text-primary" style="border-bottom:solid 1px #ddd">
 								  		<span class="label label-info">
-								  		评价：$enumUtil.getEnumClass("com.ccconsult.enums.AppriseEnum").getByValue($apprise.apprise).getDescription()
+								  		评价：$enumUtil.getEnumClass("com.ccconsult.base.enums.AppriseEnum").getByValue($apprise.apprise).getDescription()
 								  		</span>
 								  		<span style="float:left;">
 								  		创建时间 $date.format("yyyy-MM-dd HH:mm:ss", $apprise.gmtCreate)</span></p>

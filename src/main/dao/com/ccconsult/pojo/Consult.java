@@ -2,8 +2,6 @@ package com.ccconsult.pojo;
 
 import java.util.Date;
 
-import com.ccconsult.base.enums.ConsultStepEnum;
-
 /**
  * Consult entity. @author MyEclipse Persistence Tools
  */
@@ -12,6 +10,8 @@ public class Consult extends com.ccconsult.base.ToString implements java.io.Seri
 
     // Fields    
 
+    /**  */
+    private static final long serialVersionUID = 1L;
     private Integer id;
     private Integer consultantId;
     private Integer counselorId;
@@ -21,10 +21,12 @@ public class Consult extends com.ccconsult.base.ToString implements java.io.Seri
     private String  goal;
     private Date    gmtModified;
     private Date    gmtCreate;
-    private Date    gmtEffectEnd;
     private String  rejectReason;
     private Integer serviceConfigId;
     private String  indetityCode;
+    private Date    gmtEffectBegin;
+    private Date    gmtEffectEnd;
+    private double  price;
 
     // Constructors
 
@@ -35,8 +37,8 @@ public class Consult extends com.ccconsult.base.ToString implements java.io.Seri
     /** full constructor */
     public Consult(Integer consultantId, Integer counselorId, Integer step, Integer payTag,
                    Integer serviceId, String goal, Date gmtModified, Date gmtCreate,
-                   Date gmtEffectEnd, String rejectReason, Integer serviceConfigId,
-                   String indetityCode) {
+                   String rejectReason, Integer serviceConfigId, String indetityCode,
+                   Date gmtEffectBegin, Date gmtEffectEnd, double price) {
         this.consultantId = consultantId;
         this.counselorId = counselorId;
         this.step = step;
@@ -45,14 +47,12 @@ public class Consult extends com.ccconsult.base.ToString implements java.io.Seri
         this.goal = goal;
         this.gmtModified = gmtModified;
         this.gmtCreate = gmtCreate;
-        this.gmtEffectEnd = gmtEffectEnd;
         this.rejectReason = rejectReason;
         this.serviceConfigId = serviceConfigId;
         this.indetityCode = indetityCode;
-    }
-
-    public ConsultStepEnum getStepEnum() {
-        return ConsultStepEnum.getByValue(step);
+        this.gmtEffectBegin = gmtEffectBegin;
+        this.gmtEffectEnd = gmtEffectEnd;
+        this.price = price;
     }
 
     // Property accessors
@@ -129,14 +129,6 @@ public class Consult extends com.ccconsult.base.ToString implements java.io.Seri
         this.gmtCreate = gmtCreate;
     }
 
-    public Date getGmtEffectEnd() {
-        return this.gmtEffectEnd;
-    }
-
-    public void setGmtEffectEnd(Date gmtEffectEnd) {
-        this.gmtEffectEnd = gmtEffectEnd;
-    }
-
     public String getRejectReason() {
         return this.rejectReason;
     }
@@ -159,6 +151,30 @@ public class Consult extends com.ccconsult.base.ToString implements java.io.Seri
 
     public void setIndetityCode(String indetityCode) {
         this.indetityCode = indetityCode;
+    }
+
+    public Date getGmtEffectBegin() {
+        return this.gmtEffectBegin;
+    }
+
+    public void setGmtEffectBegin(Date gmtEffectBegin) {
+        this.gmtEffectBegin = gmtEffectBegin;
+    }
+
+    public Date getGmtEffectEnd() {
+        return this.gmtEffectEnd;
+    }
+
+    public void setGmtEffectEnd(Date gmtEffectEnd) {
+        this.gmtEffectEnd = gmtEffectEnd;
+    }
+
+    public double getPrice() {
+        return this.price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 
 }

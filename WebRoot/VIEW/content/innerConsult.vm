@@ -85,7 +85,7 @@
 		  <div class="panel-body">
 		  		<div class="col-sm-12">
 				<p class="text-primary" style="border-bottom:solid 1px #ddd">
-							  		评价：$enumUtil.getByValue("com.ccconsult.enums.AppriseEnum",$consultBase.consultantApprise.apprise).getDescription()
+							  		评价：$enumUtil.getByValue("com.ccconsult.base.enums.AppriseEnum",$consultBase.consultantApprise.apprise).getDescription()
 							  		<span style="float:right;">
 							  		创建时间 $date.format("yyyy-MM-dd HH:mm:ss", $consultBase.consultantApprise.gmtCreate)</span></p>
 							  		#if($consultBase.consultantApprise.memo) $consultBase.consultantApprise.memo  #else 他很懒，什么也没有写  #end

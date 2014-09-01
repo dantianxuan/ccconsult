@@ -4,6 +4,7 @@
 package com.ccconsult.web.counselor;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -28,8 +29,8 @@ import com.ccconsult.base.enums.FileTypeEnum;
 import com.ccconsult.base.enums.UserRoleEnum;
 import com.ccconsult.base.util.StringUtil;
 import com.ccconsult.base.util.ValidateUtil;
-import com.ccconsult.core.ConsultComponent;
-import com.ccconsult.core.FileComponent;
+import com.ccconsult.core.consult.ConsultQueryComponent;
+import com.ccconsult.core.file.FileComponent;
 import com.ccconsult.dao.CounselorDAO;
 import com.ccconsult.dao.InnerMailDAO;
 import com.ccconsult.pojo.Consultant;
@@ -47,7 +48,7 @@ public class CounselorController extends BaseController {
     @Autowired
     private CounselorDAO     counselorDAO;
     @Autowired
-    private ConsultComponent consultComponent;
+    private ConsultQueryComponent consultComponent;
     @Autowired
     private InnerMailDAO     innerMailDAO;
     @Autowired
@@ -73,7 +74,6 @@ public class CounselorController extends BaseController {
                     ConsultStepEnum.FIHSHED.getValue(), 0, counselorVO.getCounselor().getId(), 0,
                     query.getPageSize(), query.getPageNo());
                 modelMap.put("counselorVO", counselorVO);
-
                 modelMap.put("consultBases", consultBases);
                 return new CcResult(true);
             }
@@ -90,13 +90,13 @@ public class CounselorController extends BaseController {
         CcResult result = serviceTemplate.execute(CcResult.class, new BlankServiceCallBack() {
             @Override
             public CcResult executeService() {
-                PageList<ConsultBase> consultBases = consultComponent.queryPaged(0,
-                    ConsultStepEnum.CREATE.getValue(), 0, counselorVO.getCounselor().getId(), 0,
-                    query.getPageSize(), query.getPageNo());
+                PageList<ConsultBase> consultBases = consultComponent.queryPaged(2,
+                    ConsultStepEnum.ON_CONSULT.getValue(), 0, counselorVO.getCounselor().getId(),
+                    0, query.getPageSize(), query.getPageNo());
                 return new CcResult(consultBases);
             }
         });
-        modelMap.put("step", 1);
+        modelMap.put("step", 2);
         modelMap.put("result", result);
         return view;
     }
@@ -118,6 +118,15 @@ public class CounselorController extends BaseController {
         modelMap.put("serviceId", serviceId);
         modelMap.put("step", step);
         modelMap.put("result", result);
+        return view;
+    }
+
+    @RequestMapping(value = "counselor/counselorToday.htm", method = RequestMethod.GET)
+    public ModelAndView counselorToday(HttpServletRequest request, ModelMap modelMap) {
+        ModelAndView view = new ModelAndView("counselor/counselorToday");
+        //查询出有效期在今天的所有就行中的咨询
+        List<ConsultBase> consultBases = consultComponent.queryToday();
+        modelMap.put("consultBases", consultBases);
         return view;
     }
 

@@ -27,7 +27,7 @@ import com.ccconsult.base.CcResult;
 import com.ccconsult.base.enums.FileTypeEnum;
 import com.ccconsult.base.util.FileUtil;
 import com.ccconsult.base.util.LogUtil;
-import com.ccconsult.core.FileComponent;
+import com.ccconsult.core.file.FileComponent;
 
 /**
  * 

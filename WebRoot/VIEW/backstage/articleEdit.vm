@@ -22,7 +22,7 @@
                         <div class="form-group">
                             	<div class="col-sm-6">
                     		        <select class="form-control" name="type" >
-                    		        	#foreach($enum in $enumUtil.getEnumClass("com.ccconsult.enums.ArticleTypeEnum").values())
+                    		        	#foreach($enum in $enumUtil.getEnumClass("com.ccconsult.base.enums.ArticleTypeEnum").values())
 							         		 <option value="$enum.getValue()" 
 							         		 #if($enum.getValue()==$article.type) checked  #end>$enum.getDescription()</option>
                     		        	#end
