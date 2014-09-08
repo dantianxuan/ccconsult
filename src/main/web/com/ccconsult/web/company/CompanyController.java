@@ -26,8 +26,10 @@ import com.ccconsult.base.BlankServiceCallBack;
 import com.ccconsult.base.CcConstrant;
 import com.ccconsult.base.CcResult;
 import com.ccconsult.base.PageList;
+import com.ccconsult.base.enums.DataStateEnum;
 import com.ccconsult.base.enums.FileTypeEnum;
 import com.ccconsult.base.util.StringUtil;
+import com.ccconsult.base.util.ValidateUtil;
 import com.ccconsult.core.file.FileComponent;
 import com.ccconsult.dao.CompanyDAO;
 import com.ccconsult.dao.CounselorDAO;
@@ -49,6 +51,12 @@ public class CompanyController extends BaseController {
     @Autowired
     private FileComponent fileComponent;
 
+    @RequestMapping(value = "regist/regCompany.htm", method = RequestMethod.GET)
+    public ModelAndView regCompany(HttpServletRequest request, ModelMap modelMap) {
+        ModelAndView view = new ModelAndView("regist/regCompany");
+        return view;
+    }
+
     @RequestMapping(value = "/company.htm", method = RequestMethod.GET)
     public ModelAndView handleRequest(HttpServletRequest request, ModelMap modelMap) {
         ModelAndView view = new ModelAndView("content/company");
@@ -63,6 +71,7 @@ public class CompanyController extends BaseController {
         return view;
     }
 
+    //~~~~~~~~~~~~backstage~~~~~~~~~~~~~~~~~~~~~
     @RequestMapping(value = "backstage/companyEdit.htm", method = RequestMethod.GET)
     public ModelAndView toPage(HttpServletRequest request, ModelMap modelMap) {
         String companyId = request.getParameter("companyId");
@@ -82,6 +91,33 @@ public class CompanyController extends BaseController {
             name);
         modelMap.put("companys", companys);
         return new ModelAndView("backstage/companyList");
+    }
+
+    @RequestMapping(value = "regist/regCompanyInfo.json", method = RequestMethod.POST)
+    public @ResponseBody
+    ModelMap registCompany(HttpServletRequest request, final Company company, ModelMap modelMap) {
+        modelMap.clear();
+        CcResult result = serviceTemplate.executeWithTx(CcResult.class, new BlankServiceCallBack() {
+            @Override
+            public CcResult executeService() {
+                AssertUtil.state(company != null, "公司信息不存在");
+                AssertUtil.state(company.getName() != null
+                                 && company.getName().length() <= CcConstrant.COMMON_128_LENGTH,
+                    "公司信息不存在");
+                AssertUtil.state(
+                    company.getDescription() != null
+                            && company.getDescription().length() <= CcConstrant.COMMON_256_LENGTH,
+                    "公司描述信息不存在");
+                AssertUtil.state(ValidateUtil.isMailSubfix(company.getMailSuffix()), "请输入正确的邮箱后缀");
+                AssertUtil.state(ValidateUtil.isMobile(company.getRegMobile()),
+                    "请输入正确的手机号码便于我们审核信息");
+                companyDAO.save(company);
+                return new CcResult(company);
+            }
+        });
+        modelMap.put("result", result);
+        return modelMap;
+
     }
 
     @RequestMapping(value = "backstage/companyEdit.htm", params = "action=save", method = RequestMethod.POST)

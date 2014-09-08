@@ -28,11 +28,12 @@ import com.ccconsult.base.enums.DataStateEnum;
 import com.ccconsult.base.enums.FileTypeEnum;
 import com.ccconsult.base.enums.MessageRelTypeEnum;
 import com.ccconsult.base.enums.PayStateEnum;
+import com.ccconsult.base.enums.UserRoleEnum;
 import com.ccconsult.base.util.CodeGenUtil;
 import com.ccconsult.base.util.DateUtil;
-import com.ccconsult.base.util.StringUtil;
 import com.ccconsult.core.consult.ConsultQueryComponent;
 import com.ccconsult.core.file.FileComponent;
+import com.ccconsult.core.order.OrderComponent;
 import com.ccconsult.dao.ConsultDAO;
 import com.ccconsult.dao.ConsultResumeDAO;
 import com.ccconsult.dao.CounselorDAO;
@@ -58,21 +59,21 @@ import com.ccconsult.web.view.ServiceConfigVO;
 public class ConsultResumeController extends BaseController {
 
     @Autowired
-    private ServiceDAO       serviceDAO;
+    private ServiceDAO            serviceDAO;
     @Autowired
-    private CounselorDAO     counselorDAO;
+    private CounselorDAO          counselorDAO;
     @Autowired
-    private ConsultDAO       consultDAO;
+    private ConsultDAO            consultDAO;
     @Autowired
-    private MessageDAO       messageDAO;
+    private MessageDAO            messageDAO;
     @Autowired
     private ConsultQueryComponent consultComponent;
     @Autowired
-    private FileComponent    fileComponent;
+    private FileComponent         fileComponent;
     @Autowired
-    private ConsultResumeDAO consultResumeDAO;
+    private ConsultResumeDAO      consultResumeDAO;
     @Autowired
-    private ServiceConfigDAO serviceConfigDAO;
+    private ServiceConfigDAO      serviceConfigDAO;
 
     @RequestMapping(value = "/consultant/consult/createConsultResumeInit.htm", method = RequestMethod.GET)
     public ModelAndView handleRequest(HttpServletRequest request, final String serviceConfigId,
@@ -254,33 +255,4 @@ public class ConsultResumeController extends BaseController {
         return modelMap;
     }
 
-    //完成预约记录
-    @RequestMapping(value = "counselor/consult/completeConsultResume.json", method = RequestMethod.POST)
-    public @ResponseBody
-    ModelMap completeConsult(final HttpServletRequest request, final Integer consultId,
-                             ModelMap modelMap) {
-        modelMap.clear();
-        CcResult result = serviceTemplate.executeWithTx(CcResult.class, new BlankServiceCallBack() {
-            @Override
-            public CcResult executeService() {
-                AssertUtil.state(consultId != null && consultId > 0, "非法请求，当前记录不存在");
-                CounselorVO counselorVO = getCounselorInSession(request.getSession());
-                AssertUtil.notNull(counselorVO, "当前请求过期，请刷新页面或登录后重试");
-                ConsultBase consultBase = consultComponent.queryById(consultId);
-                AssertUtil.state(
-                    consultBase.getConsult().getCounselorId()
-                        .equals(counselorVO.getCounselor().getId()), "请不要尝试修改不属于您的记录");
-                ConsultResume resumeConsult = ((ConsultResumeVO) consultBase).getConsultResume();
-                AssertUtil.state(StringUtil.isNotBlank(resumeConsult.getReview()),
-                    "您未做任何评价不能完成这次咨询");
-                Consult consult = consultBase.getConsult();
-                consult.setStep(ConsultStepEnum.FIHSHED.getValue());//将状态设定为已经完成
-                consult.setGmtModified(new Date());
-                consultDAO.update(consult);
-                return new CcResult(consult);
-            }
-        });
-        modelMap.put("result", result);
-        return modelMap;
-    }
 }

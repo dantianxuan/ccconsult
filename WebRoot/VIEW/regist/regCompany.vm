@@ -15,7 +15,7 @@
 				  <h4>欢迎您注册一个公司信息</h4>
 				  <p>请仔细填写您要注册的公司信息并留下您的电话号码，我们会及时和您联系并审核您的申请.</p>
 				</div>            
-                <form class="form-horizontal" action="$link.contextPath/regist/regCompanyInfo.htm" method="POST" id="regCompanyForm">
+                <form class="form-horizontal" action="$link.contextPath/regist/regCompanyInfo.json" method="POST" id="regCompanyForm">
                     <fieldset>  
                         <div class="form-group">
                         	<label  class="col-sm-2 control-label">公司名称</label>
@@ -58,66 +58,56 @@
 </div>
 <script>
 	function regCompany() {
-			
 			if($('input[name=name]')==undefined || $('input[name=name]').val()==''){
 				$.Zebra_Dialog('<strong>请注意</strong>, 公司名称必须输入', {
 					    'type':     'error',
 					    'title':    '对不起请检查您的输入'
 				});	
-				return true;		
+				return ;		
 			}
 			if($('input[name=mailSuffix]')==undefined || $('input[name=mailSuffix]').val()==''){
 				$.Zebra_Dialog('<strong>请注意</strong>, 必须输入公司邮箱后缀', {
 					    'type':     'error',
 					    'title':    '对不起请检查您的输入'
 				});	
-				return true;		
+				return ;		
 			}
 			if($('input[name=regMobile]')==undefined || $('input[name=regMobile]').val()==''){
 				$.Zebra_Dialog('<strong>请注意</strong>, 必须输入您的联系方式', {
 					    'type':     'error',
 					    'title':    '对不起请检查您的输入'
 				});	
-				return true;		
+				return ;		
 			}	
 			if($('textarea[name=description]')==undefined || $('textarea[name=description]').val()==''){
 				$.Zebra_Dialog('<strong>请注意</strong>, 必须输入公司的描述信息', {
 					    'type':     'error',
 					    'title':    '对不起请检查您的输入'
 				});	
-				return true;		
+				return ;		
 			}				
-								
-			var options = {
-				dataType : "json",
-				beforeSubmit : function() {
-					$('#submitCompanyButton').button('loading');
-				},
-				success : function(result) {
-					$('#submitCompanyButton').button('reset');
-					var data = eval(result);
-					if(data.result.success){
+			$('#submitCompanyButton').button('loading');		
+			jQuery.ajax({
+	             type: "POST",
+	             url: "$link.contextPath/regist/regCompanyInfo.json",
+	             data: $('#regCompanyForm').serialize(),
+	             dataType: "json",
+	             success: function(data){
+	             	if(data.result.success){
 							$.Zebra_Dialog('<strong>恭喜您</strong>, 请耐心等待我们的工作人员联系您完成注册，感谢您的支持！');
 		             		setTimeout(function(){
 		             			location.href="$link.contextPath/index.htm";
-							},3000);
+							},1000);
 					}else{
 						$.Zebra_Dialog('<strong>请注意</strong>,'+data.result.message, {
 							    'type':     'error',
 							    'title':    '对不起注册失败'
-						});							
+						});		
+						$('#submitCompanyButton').button('reset');
 					}
-				},
-				error : function(result) {
-					$('#submitCompanyButton').button('reset');
-					$.Zebra_Dialog('<strong>请注意</strong>,当前无法注册请稍后再试', {
-						    'type':     'error',
-						    'title':    '对不起注册失败'
-					});						
-				}
-			};
-			$('#regCompanyForm').ajaxSubmit(options); 
-        	return false;
+	              }
+	         });
+	         $('#submitCompanyButton').button('reset');
 		}	
 </script>
 

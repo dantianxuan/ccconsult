@@ -56,7 +56,7 @@ public class TokenController extends BaseController {
                 MobileTokenEnum tokenType = MobileTokenEnum.getByValue(type);
                 AssertUtil.notNull(tokenType, "非法请求");
                 MobileToken localToken = mobileTokenDAO.getByTypeAndMobile(tokenType.getValue(),
-                    mobile);
+                    mobile, -1);
                 if (localToken != null) {
                     AssertUtil.state(
                         DateUtil.getDiffSeconds(new Date(), localToken.getGmtModified()) >= 60,
@@ -92,17 +92,15 @@ public class TokenController extends BaseController {
         CCPRestSDK restAPI = new CCPRestSDK();
         restAPI.init("sandboxapp.cloopen.com", "8883");// 初始化服务器地址和端口，格式如下，服务器地址不需要写https://
         restAPI.setAccount("8a48b5514767145d01477fcf5f2907d4", "72a27e3d8d314aaab7f495ffb5cde4e5");// 初始化主帐号名称和主帐号令牌
-        restAPI.setAppId("8a48b55147d7c67d0147d910cf290285");// 初始化应用ID
-        result = restAPI.sendTemplateSMS(mobile, "1",
-            new String[] { "真咨网注册测试" + CodeGenUtil.getFixLenthString(10) + "，验证码(" + token + ")",
-                    "zhifuba=" });
+        restAPI.setAppId("8a48b55147d7c67d0147d88b473b018e");// 初始化应用ID
+        result = restAPI.sendTemplateSMS(mobile, "3751", new String[] { token });
         if ("000000".equals(result.get("statusCode"))) {
             return;
         } else {
             //异常返回输出错误码和错误信息
             LogUtil.info(CcLogger.smsDigest,
                 "错误码=" + result.get("statusCode") + " 错误信息= " + result.get("statusMsg"));
-            throw new CcException("对不起短信发送失败，请稍后再试！");
+            throw new CcException("对不起短信发送失败，请稍后再试:" + result.get("statusMsg"));
         }
     }
 }

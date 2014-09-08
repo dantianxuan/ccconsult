@@ -13,7 +13,6 @@
 	<bean id="commetDAO" class="com.ccconsult.dao.CommentDAO" />
 	<bean id="articeDAO" class="com.ccconsult.dao.ArticleDAO" />
 	<bean id="accountDAO" class="com.ccconsult.dao.AccountDAO" />
-	<bean id="accountTransDAO" class="com.ccconsult.dao.AccountTransDAO" />
 	<bean id="consultantDAO" class="com.ccconsult.dao.ConsultantDAO" />
 	<bean id="messageDAO" class="com.ccconsult.dao.MessageDAO" />
 	<bean id="innerMailDAO" class="com.ccconsult.dao.InnerMailDAO" />
@@ -27,4 +26,5 @@
 	<bean id="serviceConfigDAO" class="com.ccconsult.dao.ServiceConfigDAO" />
 	<bean id="levelDAO" class="com.ccconsult.dao.LevelDAO" />
 	<bean id="mobileTokenDAO" class="com.ccconsult.dao.MobileTokenDAO" />
+	<bean id="transRecordDAO" class="com.ccconsult.dao.TransRecordDAO" />
 </beans>

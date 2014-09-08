@@ -79,14 +79,14 @@ public class RegistConsultantController extends BaseController {
                     "注册用户名称不能超过128个字符！");
 
                 MobileToken mobileToken = mobileTokenDAO.getByTypeAndMobile(
-                    MobileTokenEnum.REG_CONSULTANT.getValue(), consultant.getMobile());
+                    MobileTokenEnum.REG_CONSULTANT.getValue(), consultant.getMobile(), -1);
                 AssertUtil.state(mobileToken != null && mobileToken.getToken().equals(token),
                     "验证码信息不正确，无法注册");
 
                 AssertUtil.state(ValidateUtil.isMobile(consultant.getMobile()), "请输入合法的手机号码");
                 AssertUtil.state(consultant.getPasswd() != null
-                                 && consultant.getPasswd().length() > 6
-                                 && consultant.getPasswd().length() < 20, "密码长度必须在6到20个字符之间");
+                                 && consultant.getPasswd().length() >= 6
+                                 && consultant.getPasswd().length() <= 20, "密码长度必须在6到20个字符之间");
                 Consultant localJobseeker = consultantDAO.findByEmail(consultant.getEmail());
                 if (localJobseeker != null) {
                     throw new CcException("该用户名称已经被注册！");

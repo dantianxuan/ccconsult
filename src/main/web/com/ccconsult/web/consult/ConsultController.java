@@ -29,6 +29,7 @@ import com.ccconsult.base.enums.PayStateEnum;
 import com.ccconsult.base.enums.UserRoleEnum;
 import com.ccconsult.core.consult.ConsultQueryComponent;
 import com.ccconsult.core.notify.NotifySender;
+import com.ccconsult.core.order.OrderComponent;
 import com.ccconsult.dao.ArticleDAO;
 import com.ccconsult.dao.ConsultDAO;
 import com.ccconsult.dao.MessageDAO;
@@ -49,15 +50,17 @@ import com.ccconsult.web.view.CounselorVO;
 public class ConsultController extends BaseController {
 
     @Autowired
-    private ConsultDAO       consultDAO;
+    private ConsultDAO            consultDAO;
     @Autowired
-    private MessageDAO       messageDAO;
+    private MessageDAO            messageDAO;
     @Autowired
     private ConsultQueryComponent consultComponent;
     @Autowired
-    private ArticleDAO       articleDAO;
+    private ArticleDAO            articleDAO;
     @Autowired
-    private NotifySender     notifySender;
+    private NotifySender          notifySender;
+    @Autowired
+    private OrderComponent        orderComponent;
 
     @RequestMapping(value = "counselor/consult/rejectConsult.json", method = RequestMethod.POST)
     public @ResponseBody
@@ -114,6 +117,30 @@ public class ConsultController extends BaseController {
         return view;
     }
 
+    /**
+     * 公司邮箱链接注册
+     * @return
+     */
+    @RequestMapping(value = "consultant/consult/completeConsult.json", method = RequestMethod.POST)
+    public @ResponseBody
+    ModelMap consultantCompleteConsult(final HttpServletRequest request, final Integer consultId,
+                                       final ModelMap modelMap) {
+        modelMap.clear();
+        CcResult result = serviceTemplate.executeWithTx(CcResult.class, new BlankServiceCallBack() {
+            @Override
+            public CcResult executeService() {
+                Consult consult = consultDAO.findById(consultId);
+                AssertUtil.state(
+                    validInSession(consult.getConsultantId(), UserRoleEnum.CONSULTANT,
+                        request.getSession()), "不合法的请求或者超时，请重新登录");
+                orderComponent.confirmConsunt(consultId);//确认费用
+                return new CcResult(true);
+            }
+        });
+        modelMap.put("result", result);
+        return modelMap;
+    }
+
     @RequestMapping(value = "/consultant/consult/createSuccess.htm")
     public ModelAndView consultSuccess(final HttpServletRequest request, final Integer consultId,
                                        final ModelMap modelMap) {
@@ -162,38 +189,7 @@ public class ConsultController extends BaseController {
                 consult.setPayTag(PayStateEnum.PAY_SUCCESS.getValue());
                 consult.setStep(ConsultStepEnum.ON_CONSULT.getValue());
                 consultDAO.update(consult);
-                notifySender.notify(NotifySenderEnum.CONSULT_WORKON_NOTIFY.getCode(), consult);
                 return new CcResult(true);
-            }
-        });
-        modelMap.put("result", result);
-        return modelMap;
-    }
-
-    //接受预约
-    @RequestMapping(value = "counselor/consult/acceptConsult.json", method = RequestMethod.POST)
-    public @ResponseBody
-    ModelMap acceptConsult(final HttpServletRequest request, final Integer consultId,
-                           ModelMap modelMap) {
-        modelMap.clear();
-        CcResult result = serviceTemplate.executeWithTx(CcResult.class, new BlankServiceCallBack() {
-            @Override
-            public CcResult executeService() {
-                AssertUtil.state(consultId != null && consultId > 0, "非法请求，当前记录不存在");
-                CounselorVO counselorVO = getCounselorInSession(request.getSession());
-                AssertUtil.notNull(counselorVO, "当前请求过期，请刷新页面或登录后重试");
-                Consult consult = consultDAO.findById(consultId);
-                AssertUtil.state(consult.getCounselorId()
-                    .equals(counselorVO.getCounselor().getId()), "请不要尝试修改不属于您的记录");
-                if (consult.getPayTag().equals(PayStateEnum.PAY_SUCCESS.getValue())) {
-                    consult.setStep(ConsultStepEnum.ON_CONSULT.getValue());//检测支付状态
-                } else {
-                    consult.setStep(ConsultStepEnum.ON_CONSULT.getValue());//检测支付状态
-                }
-                consult.setGmtModified(new Date());
-                consultDAO.update(consult);
-                notifySender.notify(NotifySenderEnum.ON_SCHEDULE_NOTIFY.getCode(), consult);//咨询师完成预约
-                return new CcResult(consult);
             }
         });
         modelMap.put("result", result);

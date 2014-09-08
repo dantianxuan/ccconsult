@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.time.DateUtils;
+import org.hibernate.LockMode;
 import org.hibernate.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,6 +47,13 @@ public class ConsultDAO extends BaseHibernateDAO<Consult> {
             log.error("get failed", re);
             throw re;
         }
+    }
+
+    public Consult findByIdForUpdate(java.lang.Integer id) {
+        String hqlStr = "from Consult as consult where consult.id=" + id;
+        Query query = getSession().createQuery(hqlStr);
+        query.setLockMode("consult", LockMode.PESSIMISTIC_WRITE);
+        return getLimit(query.list());
     }
 
     public PageList<Consult> queryInnerConsultByGoal(String keyWord, int pageSize, int pageNo) {

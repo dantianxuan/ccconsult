@@ -3,51 +3,54 @@
 <div class="alert alert-dismissable alert-success">
 	<div class="row" >
 	    <div class="col-sm-12" style="padding-bottom:4px;">   
-	    	#if($consultBase.consult.step==2)	
-				<a  class="btn btn-sm btn-primary" href="javascript:void(0)" >
+	    	#if($consultBase.consult.step==1)	
+				<a  class="btn btn-sm btn-primary" href="$link.contextPath//consultant/consult/createSuccess.htm?consultId=$consultBase.consult.id">
+					 支付咨询费 </a>			    		
+	    	#end	    
+	    	#if($consultBase.consult.step==2 && $consultBase.consultResume.review)	
+				<a  class="btn btn-sm btn-primary" href="javascript:void(0)" onclick="confirmConsultResume()">
 					 确认咨询完成 </a>			    		
 	    	#end
 	    	#if($consultBase.consult.step==3 && $consultBase.consultantApprise)	
 				<a  class="btn btn-sm btn-primary" href="javascript:void(0)" >
 					 评价咨询师 </a>			    		
-	    	#end	    	
-			<a  class="btn btn-link" style="float:right" href="javascript:void(0)" onclick="deleteConsult()">
-			<span class="glyphicon glyphicon-remove"></span> 删除记录</a>	
-	    	<a  class="btn  btn-link" style="float:right"  onclick="javascript:history.go(-1);" ><span class="glyphicon glyphicon-arrow-left"></span>
-					 返回上一页 </a>				
+	    	#end
+		 	#if($consultBase.consult.step==1) 
+				<a  class="btn btn-link" style="float:right" href="javascript:void(0)" onclick="deleteConsult()">
+				<span class="glyphicon glyphicon-remove"></span> 删除记录</a>		 	
+		 	#end	     	
+	    	<a  class="btn  btn-link" style="float:right"  onclick="javascript:history.go(-1);" >
+	    	<span class="glyphicon glyphicon-arrow-left"></span>
+			 返回上一页 </a>	
 	 	</div>
 	</div>
 	<hr style="margin:0px;">
 	#parse("consultant/consult/common/consultBaseInfoCommon.vm")	
 </div>
 <script>
-	function deleteConsult(){
-		jQuery.ajax({
-             type: "POST",
-             url: "$link.contextPath/consultant/deleteConsult.json",
-             data: {"consultId":'$consultBase.consult.id','service':'$service.code'},
-             dataType: "json",
-             success: function(data){
-             	if(data.result.success==true){
-					$.Zebra_Dialog('删除成功！');
-             		setInterval(function(){
-             			window.location.href="$link.contextPath/consultant/consultantSelf.htm"
-					},2000);										
-             	}else{
-					$.Zebra_Dialog('<strong>请注意</strong>, '+data.result.message, {
-					    'type':     'error',
-					    'title':    '对不起，操作失败'
-					});				             	
-             	}
-              }
-         });
-	}
+	function confirmConsultResume(){
+		var configm=$.Zebra_Dialog('<strong>请注意？</strong>,您确认完成了这次咨询，您确认后您的咨询费用会直接支付给咨询师！', {
+		    'type':     'question',
+		    'title':    '咨询完成确认框',
+		    'buttons':  [
+		                    {caption: '确认咨询完成', callback: function() { 
+		                    	 configm.close();
+		                    	 setTimeout(function(){
+		                    	 	confirmConsult($consultBase.consult.id);
+		                    	 }
+		                    	 ,1000);
+		                    	 return false;
+							 }},
+		                    {caption: '取消', callback: function() { configm.close();}},
+		                ]
+		});		
+	}	
 </script>
 #parse("consultant/consult/common/consultCounselorCommon.vm")
 <div class="row">
 	<div class="col-sm-12">
 		<div class="panel panel-default">
-		  <div class="panel-heading"><span class="glyphicon glyphicon-bookmark"></span>咨询要求和描述</div>
+		  <div class="panel-heading"><span class="glyphicon glyphicon-bookmark"></span>咨询目标</div>
 		  <div class="panel-body">
 			  	<div class="col-lg-12">	
 			  		$consultBase.consult.goal
@@ -67,21 +70,17 @@
 <div class="row">
 	<div class="col-sm-12">
 		<div class="panel panel-default">
-		  <div class="panel-heading"><span class="glyphicon glyphicon-bookmark"></span>咨询师区域  
-		  #if($consultBase.resumeConsult.review && $consultBase.consult.step==2)	
-		  <a href="javascript:void(0)" onclick="showReviewArea()" style="float:right"><span class="glyphicon glyphicon-edit"></span>修改review信息</a>
-		  #end
-		  </div>
+		  <div class="panel-heading"><span class="glyphicon glyphicon-bookmark"></span>咨询师区域</div>
 		  <div class="panel-body">
-					#if($consultBase.resumeConsult.review)
+					#if($consultBase.consultResume.review)
 			  		<div class="col-sm-12 showReviewResumeArea">	
-				  		$!consultBase.resumeConsult.review
+				  		$!consultBase.consultResume.review
 			  		</div>
 				  	<div class="col-sm-12 showReviewResumeArea">
 					  <table class="table" style="margin-bottom:0px;">
 					    <tr>
 					      <td width="20%"><span class="glyphicon glyphicon-paperclip"></span>批注的简历文件</td>
-					      <td width="80%"><span class="glyphicon glyphicon-download-alt"></span><a target="_blank" href="$link.contextPath$fileUtil.getPath($consultBase.resumeConsult.reviewFiles)" >$fileUtil.getFileName($consultBase.resumeConsult.reviewFiles)</a>
+					      <td width="80%"><span class="glyphicon glyphicon-download-alt"></span><a target="_blank" href="$link.contextPath$fileUtil.getPath($consultBase.consultResume.reviewFiles)" >$fileUtil.getFileName($consultBase.consultResume.reviewFiles)</a>
 					      <small>请点击下载或直接阅览</small></td>
 					    </tr>
 					  </table>

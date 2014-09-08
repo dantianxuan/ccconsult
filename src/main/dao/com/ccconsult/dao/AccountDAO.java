@@ -1,5 +1,7 @@
 package com.ccconsult.dao;
 
+import org.hibernate.LockMode;
+import org.hibernate.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,10 +37,19 @@ public class AccountDAO extends BaseHibernateDAO<Account> {
         }
     }
 
-    public Account findByRoleIdAndType(int relRoleId, int relRoleType) {
-        String hql = "from Account where relRoleId=" + relRoleId + " and relRoleType="
-                     + relRoleType;
-        return getLimit(this.findByHql(hql));
+    public Account queryByRole(int roleId, int roleType) {
+        String hqlStr = "from Account as account where account.relRoleId=" + roleId
+                        + " and roleType=" + roleType;
+        Query query = getSession().createQuery(hqlStr);
+        return getLimit(query.list());
+    }
+
+    public Account queryByRoleForUpdate(int roleId, int roleType) {
+        String hqlStr = "from Account as account where account.relRoleId=" + roleId
+                        + " and relRoleType=" + roleType;
+        Query query = getSession().createQuery(hqlStr);
+        query.setLockMode("account", LockMode.PESSIMISTIC_WRITE);
+        return getLimit(query.list());
     }
 
 }

@@ -44,7 +44,7 @@
 	                        </div>                                                                                
 	                        <div class="form-group">
 								<div class="col-sm-12" style="text-align:right">
-							    	<a  href="$link.contextPath/counselorInfo.htm?counselorId=$serviceConfig.counselorId"   class="btn btn-link" >  返回咨询师详情</a>
+							    	<a  href="$link.contextPath/counselorInfo.htm?counselorId=$serviceConfigVO.serviceConfig.counselorId"   class="btn btn-link" >  返回咨询师详情</a>
 									<button type="button"  class="btn btn-primary" id="submitConsultButton" onclick="uploadConsult();return false;" />
 									<span class="glyphicon glyphicon-send"></span> 创建咨询请求</button>
 							    </div>   

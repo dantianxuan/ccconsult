@@ -10,7 +10,7 @@
                         </a>
                     </div>
                     <div class="col-sm-5">
-	                    <p class="col-sm-12"><strong class=" text-right col-sm-4">名称:</strong>$!counselorVO.counselor.name</p>
+	                    <p class="col-sm-12"><strong class=" text-right col-sm-4">名称:</strong><a href="$link.contextPath/counselorInfo.htm?counselorId=$!counselorVO.counselor.id">$!counselorVO.counselor.name</a></p>
 	                    <p class="col-sm-12"><strong class=" text-right col-sm-4">邮箱:</strong>#if($consultBase.consult.step==3) $!counselorVO.counselor.email #else ************* #end</p>
 	                    <p class="col-sm-12"><strong class=" text-right col-sm-4">公司:</strong><a href="$link.contextPath/company.htm?companyId=$!counselorVO.company.id">$!counselorVO.company.name</a></p>
                     </div>

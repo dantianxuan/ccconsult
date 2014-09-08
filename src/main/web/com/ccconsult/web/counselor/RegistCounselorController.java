@@ -135,7 +135,7 @@ public class RegistCounselorController extends BaseController {
                     throw new CcException("您已经注册过该用户，请直接登录，如果忘记密码请点击忘记密码找回");
                 }
                 MobileToken mobileToken = mobileTokenDAO.getByTypeAndMobile(
-                    MobileTokenEnum.REG_COUNSELOR.getValue(), counselor.getMobile());
+                    MobileTokenEnum.REG_COUNSELOR.getValue(), counselor.getMobile(), -1);
                 AssertUtil.state(mobileToken != null && mobileToken.getToken().equals(token),
                     "验证码信息不正确，无法注册");
                 AssertUtil.state(StringUtils.equals(counselor.getPasswd(), repasswd), "重复密码输入不一致");
@@ -176,5 +176,4 @@ public class RegistCounselorController extends BaseController {
         modelMap.put("result", result);
         return new ModelAndView("regist/regCounselor");
     }
-
 }

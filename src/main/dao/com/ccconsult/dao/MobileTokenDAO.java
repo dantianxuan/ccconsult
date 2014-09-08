@@ -1,9 +1,12 @@
 package com.ccconsult.dao;
 
+import java.util.Date;
+
 import org.hibernate.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.ccconsult.base.util.DateUtil;
 import com.ccconsult.pojo.MobileToken;
 
 /**
@@ -36,8 +39,15 @@ public class MobileTokenDAO extends BaseHibernateDAO<MobileToken> {
         }
     }
 
-    public MobileToken getByTypeAndMobile(int type, String mobile) {
-        String hql = "from MobileToken where tokenType=? and mobile=? order by gmtModified desc";
+    public MobileToken getByTypeAndMobile(int type, String mobile, int recentHoure) {
+
+        String beginTime = DateUtil.format(DateUtil.addHours(new Date(), recentHoure),
+            DateUtil.newFormat);
+        String currentTime = DateUtil.format(new Date(), DateUtil.newFormat);
+
+        String hql = "from MobileToken where tokenType=? and mobile=? and  gmtCreate<='"
+                     + currentTime + "' and  gmtCreate>='" + beginTime
+                     + "' order by gmtModified desc";
         Query queryObject = getSession().createQuery(hql);
         queryObject.setParameter(0, type);
         queryObject.setParameter(1, mobile);

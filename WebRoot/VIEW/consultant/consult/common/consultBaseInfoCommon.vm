@@ -16,4 +16,54 @@
         <p class="col-sm-12"><strong class=" text-right col-sm-4">创建时间:</strong>$date.format("yyyy-MM-dd HH:mm:ss", $consultBase.consult.gmtCreate)</p>
         <p class="col-sm-12"><strong class=" text-right col-sm-4">有效期:</strong>$!date.format("yyyy-MM-dd HH:mm:ss", $consultBase.consult.gmtEffectEnd)</p>
     </div>
-</div>        
+</div> 
+<script>
+#if($consultBase.consult.step==1) 
+	function deleteConsult(){
+		jQuery.ajax({
+             type: "POST",
+             url: "$link.contextPath/consultant/deleteConsult.json",
+             data: {"consultId":'$consultBase.consult.id','service':'$service.code'},
+             dataType: "json",
+             success: function(data){
+             	if(data.result.success==true){
+					$.Zebra_Dialog('删除成功！');
+             		setInterval(function(){
+             			window.location.href="$link.contextPath/consultant/consultantSelf.htm"
+					},2000);										
+             	}else{
+					$.Zebra_Dialog('<strong>请注意</strong>, '+data.result.message, {
+					    'type':     'error',
+					    'title':    '对不起，操作失败'
+					});				             	
+             	}
+              }
+         });
+	}
+#end	
+	
+#if($consultBase.consult.step==2)
+	function confirmConsult(consultId){
+		jQuery.ajax({
+             type: "POST",
+             async: false,
+             url: "$link.contextPath/consultant/consult/completeConsult.json",
+             data: {"consultId":consultId},
+             dataType: "json",
+             success: function(data){
+             	if(data.result.success==true){
+					$.Zebra_Dialog('操作成功！');
+             		setTimeout(function(){
+             			window.location.href="$link.contextPath/consultant/consultantSelf.htm"
+					},2000);	
+             	}else{
+					var aa=$.Zebra_Dialog('<strong>请注意</strong>, '+data.result.message, {
+					    'type':     'error',
+					    'title':    '对不起，操作失败'
+					});	
+             	}
+              }
+         });
+	}	
+#end	
+</script>

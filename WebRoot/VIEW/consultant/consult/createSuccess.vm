@@ -50,24 +50,36 @@
 <script>
 	//完成请求
 	function payForConsult(consultId){
-		jQuery.ajax({
-             type: "POST",
-             url: "$link.contextPath/consultant/consult/payTempForConsult.json",
-             data: {'consultId':consultId},
-             dataType: "json",
-             success: function(data){
-             	if(data.result.success==true){
-					$.Zebra_Dialog('支付成功！');
-             		setInterval(function(){
-             			window.location.href="$link.contextPath/consultant/consultantSelf.htm"
-					},2000);										
-             	}else{
-					$.Zebra_Dialog('<strong>请注意</strong>, '+data.result.message, {
-					    'type':     'error',
-					    'title':    '对不起，操作失败'
-					});				             	
-             	}
-              }
-         });
+ 	window.open("http://www.alipay.com");	
+	setInterval(function(){
+		$.Zebra_Dialog('<strong>请注意？</strong>,您是否已经完成了支付？', {
+		    'type':     'question',
+		    'title':    '支付完成确认框',
+		    'buttons':  [
+		                    {caption: '完成支付', callback: function() { 
+									jQuery.ajax({
+						             type: "POST",
+						             url: "$link.contextPath/consultant/consult/payTempForConsult.json",
+						             data: {'consultId':consultId},
+						             dataType: "json",
+						             success: function(data){
+						             	if(data.result.success==true){
+											$.Zebra_Dialog('支付成功！');
+						             		setInterval(function(){
+						             			window.location.href="$link.contextPath/consultant/consultantSelf.htm"
+											},2000);										
+						             	}else{
+											$.Zebra_Dialog('<strong>请注意</strong>, '+data.result.message, {
+											    'type':     'error',
+											    'title':    '对不起，操作失败'
+											});				             	
+						             	}
+						              }
+						         });
+							 }},
+		                    {caption: '支付失败', callback: function() { location.reload(); }},
+		                ]
+		});	
+		},4000);
 	}
 </script>

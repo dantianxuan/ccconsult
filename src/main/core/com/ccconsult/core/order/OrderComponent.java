@@ -16,5 +16,5 @@ public interface OrderComponent {
      * 
      * @param consultId
      */
-    public void payConsunt(int consultId);
+    public void confirmConsunt(int consultId);
 }

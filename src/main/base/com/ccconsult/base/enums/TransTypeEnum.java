@@ -18,11 +18,19 @@ public enum TransTypeEnum {
     /** 提出 */
     CHARGE_OUT(2, "CHARGE_OUT", "转出到账户"),
 
-    /** 支付 */
-    TRANS_OUT(3, "TRANS_OUT", "支付"),
+    /** 支付咨询押金 */
+    PAY_CONSULT_DEPOSIT(3, "PAY_CONSULT_DEPOSIT", "支付咨询押金"),
 
-    /** 转入 */
-    TRANS_IN(4, "TRANS_IN", "转入"), ;
+    /** 支付咨询师咨询费用 */
+    PAY_COUNSELOR_CONSULT_MONEY(4, "PAY_COUNSELOR_CONSULT_MONEY", "支付咨询师咨询费用"),
+
+    /** 支付平台服务费用 */
+    PAY_PALTFORM_SERVICE_MONEY(5, "PAY_PALTFORM_SERVICE_MONEY", "支付平台服务费用"),
+
+    /** 退换费用 */
+    DEABCK_MONEY(6, "DEABCK_MONEY", "支付平台服务费用"),
+
+    ;
 
     /** 枚举码 */
     private int    value;

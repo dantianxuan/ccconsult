@@ -16,7 +16,10 @@ public enum UserRoleEnum {
     COUNSELOR(1, "COUNSELOR", "咨询师"),
 
     /** 咨询者 */
-    CONSULTANT(2, "CONSULTANT", "咨询人");
+    CONSULTANT(2, "CONSULTANT", "咨询人"),
+
+    /** 管理者 */
+    ADMINISTRATOR(3, "ADMINISTRATOR", "管理者");
 
     /** 枚举码 */
     private int    value;

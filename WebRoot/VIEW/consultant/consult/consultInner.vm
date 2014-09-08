@@ -1,38 +1,17 @@
 <div class="alert alert-dismissable alert-success">
 	<div class="row" style="padding-bottom:4px;" >
-	    <div class="col-sm-12">   	
-			<a  class="btn btn-link" style="float:right" href="javascript:void(0)" onclick="deleteConsult()">
-			<span class="glyphicon glyphicon-remove"></span> 删除记录</a>
+	    <div class="col-sm-12">  
+		 	#if($consultBase.consult.step==1) 
+				<a  class="btn  btn-link" style="float:right" href="javascript:void(0)" onclick="deleteConsult()">
+				<span class="glyphicon glyphicon-remove"></span> 删除记录</a>		 	
+		 	#end	     	
 	    	<a  class="btn  btn-link" style="float:right"  onclick="javascript:history.go(-1);" ><span class="glyphicon glyphicon-arrow-left"></span>
-					 返回上一页 </a>									
-	 	</div>
+			 返回上一页 </a>
+		</div>	 
 	</div>
 	<hr style="margin:0px;">
 	#parse("consultant/consult/common/consultBaseInfoCommon.vm")  	
 </div>
-<script>
-	function deleteConsult(){
-		jQuery.ajax({
-             type: "POST",
-             url: "$link.contextPath/consultant/deleteConsult.json",
-             data: {"consultId":'$consultBase.consult.id','service':'$service.code'},
-             dataType: "json",
-             success: function(data){
-             	if(data.result.success==true){
-					$.Zebra_Dialog('删除成功！');
-             		setInterval(function(){
-             			window.location.href="$link.contextPath/consultant/consultantSelf.htm"
-					},2000);										
-             	}else{
-					$.Zebra_Dialog('<strong>请注意</strong>, '+data.result.message, {
-					    'type':     'error',
-					    'title':    '对不起，操作失败'
-					});				             	
-             	}
-              }
-         });
-	}
-</script>
 #parse("consultant/consult/common/consultCounselorCommon.vm")
 <div class="row">
 	<div class="col-sm-12">

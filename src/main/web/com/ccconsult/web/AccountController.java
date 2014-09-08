@@ -5,6 +5,7 @@ package com.ccconsult.web;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -15,36 +16,39 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ccconsult.base.PageList;
 import com.ccconsult.base.enums.UserRoleEnum;
 import com.ccconsult.dao.AccountDAO;
-import com.ccconsult.dao.AccountTransDAO;
+import com.ccconsult.dao.TransRecordDAO;
 import com.ccconsult.pojo.Account;
-import com.ccconsult.pojo.AccountTrans;
 import com.ccconsult.pojo.Consultant;
+import com.ccconsult.pojo.TransRecord;
 
 /**
- * @author jingyu.dan
+ * 账户信息
  * 
+ * @author jingyu.dan
  */
 @Controller
 public class AccountController extends BaseController {
 
     @Autowired
-    private AccountDAO      accountDAO;
+    private AccountDAO     accountDAO;
     @Autowired
-    private AccountTransDAO accountTransDAO;
+    private TransRecordDAO transRecordDAO;
 
     @RequestMapping(value = "consultant/personalAccount.htm", method = RequestMethod.GET)
-    public ModelAndView queryAccountInfo(HttpServletRequest request, final Integer consultId,
+    public ModelAndView queryAccountInfo(HttpServletRequest request, final Integer transType,
                                          final Integer pageSize, final Integer pageNo,
-                                         final Integer transType, final ModelMap modelMap) {
+                                         final ModelMap modelMap) {
         ModelAndView view = new ModelAndView("consultant/personalAccount");
         Consultant consultant = getConsultantInSession(request.getSession());
-        Account account = accountDAO.findByRoleIdAndType(consultant.getId(),
+        Account account = accountDAO.queryByRoleForUpdate(consultant.getId(),
             UserRoleEnum.CONSULTANT.getValue());
         modelMap.put("account", account);
-        PageList<AccountTrans> accountTrans = accountTransDAO.queryPaged(consultant.getId(),
-            UserRoleEnum.CONSULTANT.getValue(), transType == null ? 0 : transType, 0,
-            pageSize == null ? 20 : pageSize, pageNo == null ? 1 : pageNo);
-        modelMap.put("accountTrans", accountTrans);
+        int localTransType = transType == null ? 0 : transType;
+        PageList<TransRecord> pageList = transRecordDAO.queryPaged(consultant.getId(),
+            UserRoleEnum.CONSULTANT.getValue(), localTransType, pageSize == null ? 20 : pageSize,
+            pageNo == null ? 1 : pageNo);
+        modelMap.put("pageList", pageList);
+        modelMap.put("transType", localTransType);
         return view;
     }
 }

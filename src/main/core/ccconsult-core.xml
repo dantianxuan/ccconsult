@@ -8,13 +8,16 @@
                        http://www.springframework.org/schema/context/spring-context-2.5.xsd">
 
 
-	<bean id="consultComponent" class="com.ccconsult.core.consult.ConsultComponentImpl" />
 	<bean id="fileComponent" class="com.ccconsult.core.file.FileComponentImpl" />
 	<bean id="consultInnerComponent" class="com.ccconsult.core.consult.ConsultInnerComponentImpl" />
 	<bean id="consultInterviewComponent"
 		class="com.ccconsult.core.consult.ConsultInterviewComponentImpl" />
+	<bean id="orderComponent" class="com.ccconsult.core.order.OrderComponentImpl" />
 
 
+
+
+	<bean id="consultQueryComponent" class="com.ccconsult.core.consult.ConsultQueryComponentImpl" />
 
 	<bean id="serviceTemplate" class="com.ccconsult.base.ServiceTemplateImpl" />
 	<bean id="registService" class="com.ccconsult.core.service.RegistServiceImpl"></bean>

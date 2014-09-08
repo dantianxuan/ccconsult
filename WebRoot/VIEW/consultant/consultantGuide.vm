@@ -8,13 +8,7 @@
             </div>
             <div class="panel-body">
 					<div class="btn-group">
-					  <a class="btn btn-primary" href="$link.contextPath/consultant/consultantSelf.htm""><span class="glyphicon glyphicon-star"></span>  预约记录</a>
-					  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
-					  <ul class="dropdown-menu">
-					  	#foreach($service in $services)
-					  		<li><a href="$link.contextPath/consultant/consult/searchConsult.htm?serviceId=$service.id">我的${service.name}</a></li>
-					  	#end
-					  </ul>
+					  <a class="btn btn-primary" href="$link.contextPath/consultant/consultantSelf.htm""><span class="glyphicon glyphicon-star"></span>  我的记录</a>
 					</div>	
 					<a  class="btn btn-warning" href="$link.contextPath/consultant/personalAccount.htm"><span class="glyphicon glyphicon-copyright-mark"></span>   账户信息</a>					
 					<div class="btn-group">
@@ -30,3 +24,56 @@
     	</div>
     </div>
 </div>
+<script>
+	function deleteConsult(){
+		jQuery.ajax({
+             type: "POST",
+             url: "$link.contextPath/consultant/deleteConsult.json",
+             data: {"consultId":'$consultBase.consult.id','service':'$service.code'},
+             dataType: "json",
+             success: function(data){
+             	if(data.result.success==true){
+					$.Zebra_Dialog('删除成功！');
+             		setInterval(function(){
+             			window.location.href="$link.contextPath/consultant/consultantSelf.htm"
+					},2000);										
+             	}else{
+					$.Zebra_Dialog('<strong>请注意</strong>, '+data.result.message, {
+					    'type':     'error',
+					    'title':    '对不起，操作失败'
+					});				             	
+             	}
+              }
+         });
+	}
+	function confirmConsult(consultId){
+		$.Zebra_Dialog('<strong>请注意？</strong>,您确认完成了这次咨询，您确认后您的咨询费用会直接支付给咨询师！', {
+		    'type':     'question',
+		    'title':    '咨询完成确认框',
+		    'buttons':  [
+		                    {caption: '确认咨询完成', callback: function() { 
+								jQuery.ajax({
+						             type: "POST",
+						             url: "$link.contextPath/consultant/deleteConsult.json",
+						             data: {"consultId":'$consultBase.consult.id','service':'$service.code'},
+						             dataType: "json",
+						             success: function(data){
+						             	if(data.result.success==true){
+											$.Zebra_Dialog('删除成功！');
+						             		setInterval(function(){
+						             			window.location.href="$link.contextPath/consultant/consultantSelf.htm"
+											},2000);										
+						             	}else{
+											$.Zebra_Dialog('<strong>请注意</strong>, '+data.result.message, {
+											    'type':     'error',
+											    'title':    '对不起，操作失败'
+											});				             	
+						             	}
+						              }
+						         });
+							 }},
+		                    {caption: '取消', callback: function() { location.reload(); }},
+		                ]
+		});		
+	}		
+</script>

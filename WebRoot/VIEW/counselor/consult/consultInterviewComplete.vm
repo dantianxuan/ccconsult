@@ -9,7 +9,7 @@
 	    	<a  class="btn  btn-link" style="float:right"  href="$link.contextPath/ccconsult/article.htm?articleId=$service.id" target="_blank">
 	    	<span class="glyphicon glyphicon-question-sign"></span>
 					 咨询帮助信息 </a>		
-	    	<a  class="btn  btn-link" style="float:right"  onclick="javascript:history.go(-1);" >
+	    	<a  class="btn  btn-link" style="float:right"  onclick="javascript:history.go(-1);" ><span class="glyphicon glyphicon-arrow-left"></span>
 					 返回上一页 </a>	 	
 	 	</div>
 	</div>

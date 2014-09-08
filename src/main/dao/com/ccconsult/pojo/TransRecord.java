@@ -3,10 +3,10 @@ package com.ccconsult.pojo;
 import java.util.Date;
 
 /**
- * AccountTrans entity. @author MyEclipse Persistence Tools
+ * TransRecord entity. @author MyEclipse Persistence Tools
  */
 
-public class AccountTrans extends com.ccconsult.base.ToString implements java.io.Serializable {
+public class TransRecord extends com.ccconsult.base.ToString implements java.io.Serializable {
 
     // Fields    
 
@@ -23,12 +23,12 @@ public class AccountTrans extends com.ccconsult.base.ToString implements java.io
     // Constructors
 
     /** default constructor */
-    public AccountTrans() {
+    public TransRecord() {
     }
 
     /** full constructor */
-    public AccountTrans(double money, Integer transType, Integer relRoleId, Integer relRoleType,
-                        String detail, Date gmtCreate, String transToken, Integer consultId) {
+    public TransRecord(double money, Integer transType, Integer relRoleId, Integer relRoleType,
+                       String detail, Date gmtCreate, String transToken, Integer consultId) {
         this.money = money;
         this.transType = transType;
         this.relRoleId = relRoleId;
