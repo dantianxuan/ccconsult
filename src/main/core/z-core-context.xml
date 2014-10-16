@@ -7,21 +7,12 @@
                        http://www.springframework.org/schema/context  
                        http://www.springframework.org/schema/context/spring-context-2.5.xsd">
 
-
 	<bean id="fileComponent" class="com.ccconsult.core.file.FileComponentImpl" />
 	<bean id="consultInnerComponent" class="com.ccconsult.core.consult.ConsultInnerComponentImpl" />
 	<bean id="consultInterviewComponent"
 		class="com.ccconsult.core.consult.ConsultInterviewComponentImpl" />
 	<bean id="orderComponent" class="com.ccconsult.core.order.OrderComponentImpl" />
-
-
-
-
 	<bean id="consultQueryComponent" class="com.ccconsult.core.consult.ConsultQueryComponentImpl" />
-
-	<bean id="serviceTemplate" class="com.ccconsult.base.ServiceTemplateImpl" />
-	<bean id="registService" class="com.ccconsult.core.service.RegistServiceImpl"></bean>
-	<bean id="articleService" class="com.ccconsult.core.service.ArticleServiceImpl"></bean>
 
 	<!-- 注册邮件通知处理器 -->
 	<bean id="regMailNotifySender" class="com.ccconsult.core.notify.RegMailNotifySender"></bean>
@@ -29,18 +20,19 @@
 	<bean id="onScheduleNotifySender" class="com.ccconsult.core.notify.OnScheduleNotifySender"></bean>
 	<!-- 找回密码通知处理器 -->
 	<bean id="findPasswdNotifySender" class="com.ccconsult.core.notify.FindPasswdNotifySender"></bean>
-	<!-- 咨询进入工作状态通知处理器 -->
-	<bean id="consultWorkOnNotify" class="com.ccconsult.core.notify.ConsultWorkOnNotify"></bean>
 	<!-- 咨询被拒绝处理器 -->
 	<bean id="consultRejectNotify" class="com.ccconsult.core.notify.ConsultRejectNotify"></bean>
+	<!-- 注册短信通知器 -->
+	<bean id="registSmsNotify" class="com.ccconsult.core.notify.RegistSmsNotify"></bean>
+
 
 	<bean id="notifySender" class="com.ccconsult.core.notify.NotifySenderProxy">
 		<property name="notifySenders">
 			<map>
 				<entry key="REG_MAIL_NOTIFY" value-ref="regMailNotifySender" />
+				<entry key="REGIST_SMS_NOTIFY" value-ref="registSmsNotify" />
 				<entry key="ON_SCHEDULE_NOTIFY" value-ref="onScheduleNotifySender" />
 				<entry key="FINDPASSWD_NOTIFY" value-ref="findPasswdNotifySender" />
-				<entry key="CONSULT_WORKON_NOTIFY" value-ref="consultWorkOnNotify" />
 				<entry key="CONSULT_REJECT_NOTIFY" value-ref="consultRejectNotify" />
 			</map>
 		</property>

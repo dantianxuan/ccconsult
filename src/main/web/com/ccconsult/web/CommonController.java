@@ -50,7 +50,7 @@ public class CommonController extends BaseController {
                          ModelMap modelMap) {
         modelMap.clear();
         final Map<String, String> filePaths = new HashMap<String, String>();
-        CcResult result = serviceTemplate.execute(CcResult.class, new BlankServiceCallBack() {
+        CcResult result = serviceTemplate.executeWithTx(CcResult.class, new BlankServiceCallBack() {
             @Override
             public CcResult executeService() {
                 try {

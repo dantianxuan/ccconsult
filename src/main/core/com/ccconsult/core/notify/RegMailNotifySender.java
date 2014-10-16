@@ -1,5 +1,6 @@
 /**
- * 
+ * ccinterviewer.com Inc.
+ * Copyright (c) 2014-2014 All Rights Reserved.
  */
 package com.ccconsult.core.notify;
 
@@ -7,12 +8,16 @@ import com.ccconsult.base.util.ResourceUtil;
 import com.ccconsult.pojo.RegMail;
 
 /**
+ * 用户注册信箱发送
+ * 
  * @author jingyu.dan
  * 
  */
 public class RegMailNotifySender extends AbstractNotifySender {
 
     /** 
+     * 咨询师使用邮箱就行注册
+     * 
      * @see com.ccconsult.core.notify.NotifySender#notify(java.lang.Object)
      */
     @Override

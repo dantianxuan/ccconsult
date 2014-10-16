@@ -2,7 +2,7 @@
  * ccinterviewer.com Inc.
  * Copyright (c) 2014-2014 All Rights Reserved.
  */
-package com.ccconsult.core.service;
+package com.ccconsult.service;
 
 import com.ccconsult.base.CcResult;
 import com.ccconsult.pojo.Article;

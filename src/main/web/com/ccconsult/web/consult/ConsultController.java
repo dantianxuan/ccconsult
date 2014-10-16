@@ -83,6 +83,7 @@ public class ConsultController extends BaseController {
                 consult.setGmtModified(new Date());
                 consult.setRejectReason(rejectReason);
                 consultDAO.update(consult);
+                //
                 notifySender.notify(NotifySenderEnum.CONSULT_REJECT_NOTIFY.getCode(), consult);
                 return new CcResult(consult);
             }

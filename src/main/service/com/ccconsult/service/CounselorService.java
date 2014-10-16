@@ -2,12 +2,13 @@
  * ccinterviewer.com Inc.
  * Copyright (c) 2014-2014 All Rights Reserved.
  */
-package com.ccconsult.core.service;
+package com.ccconsult.service;
 
 import com.ccconsult.base.CcResult;
 import com.ccconsult.pojo.Counselor;
 
 /**
+ * 咨询师服务
  * 
  * @author jingyu.dan
  * @version $Id: CounselorService.java, v 0.1 2014-5-28 下午8:36:13 jingyu.dan Exp $
@@ -15,7 +16,14 @@ import com.ccconsult.pojo.Counselor;
 public interface CounselorService {
 
     /**
-     * 修改面试官信息
+     * 注册一个咨询师
+     * 
+     * @return
+     */
+    public CcResult registCounselor(Counselor counselor, int regMailId, String token);
+
+    /**
+     * 修改咨询师信息
      * 
      * @param userInfo
      * @return
@@ -23,7 +31,7 @@ public interface CounselorService {
     public CcResult updateCounselor(Counselor counselor);
 
     /**
-     * 删除面试官信息
+     * 删除咨询师信息
      * 
      * @param id
      * @return

@@ -11,7 +11,8 @@ import com.ccconsult.pojo.Consult;
 import com.ccconsult.pojo.Consultant;
 
 /**
- * 咨询师拒绝
+ * 咨询师拒绝通知
+ * （发送邮件）
  * 
  * @author jingyudan
  * @version $Id: ConsultRejectNotify.java, v 0.1 2014-7-27 上午10:09:16 jingyudan Exp $

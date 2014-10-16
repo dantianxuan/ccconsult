@@ -10,8 +10,6 @@
                        http://www.springframework.org/schema/aop/spring-aop-2.5.xsd  
                        http://www.springframework.org/schema/tx  
                        http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
-
-	<import resource="classpath:*.xml" />
 	<!-- 配置SessionFactory -->
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
@@ -24,5 +22,7 @@
 			<ref bean="sessionFactory" />
 		</property>
 	</bean>
-
+	<import resource="classpath:z-dao-context.xml" />
+	<import resource="classpath:z-core-context.xml" />
+	<import resource="classpath:z-service-context.xml" />
 </beans>

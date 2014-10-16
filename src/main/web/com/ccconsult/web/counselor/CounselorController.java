@@ -46,13 +46,13 @@ import com.ccconsult.web.view.CounselorVO;
 @Controller
 public class CounselorController extends BaseController {
     @Autowired
-    private CounselorDAO     counselorDAO;
+    private CounselorDAO          counselorDAO;
     @Autowired
     private ConsultQueryComponent consultComponent;
     @Autowired
-    private InnerMailDAO     innerMailDAO;
+    private InnerMailDAO          innerMailDAO;
     @Autowired
-    private FileComponent    fileComponent;
+    private FileComponent         fileComponent;
 
     /**
      * 公共个人信息介绍页面

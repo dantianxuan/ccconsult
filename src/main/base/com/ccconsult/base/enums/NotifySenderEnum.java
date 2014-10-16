@@ -28,7 +28,10 @@ public enum NotifySenderEnum {
     FINDPASSWD_NOTIFY(5, "FINDPASSWD_NOTIFY", "找回密码通知"),
 
     /** 一般 */
-    WORK_TASK_NOTIFY(6, "WORK_TASK_NOTIFY", "工作任务通知"), ;
+    WORK_TASK_NOTIFY(6, "WORK_TASK_NOTIFY", "工作任务通知"),
+
+    /**短信注册信息 */
+    REGIST_SMS_NOTIFY(7, "REGIST_SMS_NOTIFY", "短信注册信息"), ;
 
     /** 枚举码 */
     private int    value;

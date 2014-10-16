@@ -21,10 +21,12 @@ import com.ccconsult.base.CcException;
 import com.ccconsult.base.CcLogger;
 import com.ccconsult.base.CcResult;
 import com.ccconsult.base.enums.MobileTokenEnum;
+import com.ccconsult.base.enums.NotifySenderEnum;
 import com.ccconsult.base.util.CodeGenUtil;
 import com.ccconsult.base.util.DateUtil;
 import com.ccconsult.base.util.LogUtil;
 import com.ccconsult.base.util.ValidateUtil;
+import com.ccconsult.core.notify.NotifySender;
 import com.ccconsult.dao.MobileTokenDAO;
 import com.ccconsult.pojo.MobileToken;
 import com.cloopen.rest.sdk.CCPRestSDK;
@@ -37,6 +39,9 @@ import com.cloopen.rest.sdk.CCPRestSDK;
 public class TokenController extends BaseController {
     @Autowired
     private MobileTokenDAO mobileTokenDAO;
+
+    @Autowired
+    private NotifySender   notifySender;
 
     /**
      * 注册面试官init页面
@@ -66,7 +71,7 @@ public class TokenController extends BaseController {
                     localToken.setGmtModified(new Date());
                     localToken.setSendTimes(localToken.getSendTimes() + 1);
                     mobileTokenDAO.update(localToken);
-                    sendSMS(localToken.getMobile(), localToken.getToken());
+                    notifySender.notify(NotifySenderEnum.REGIST_SMS_NOTIFY.getCode(), localToken);
                     return new CcResult(localToken);
                 }
                 MobileToken mobileToken = new MobileToken();
@@ -78,7 +83,7 @@ public class TokenController extends BaseController {
                 mobileToken.setMobile(mobile);
                 mobileToken.setParams(mobile);
                 mobileTokenDAO.save(mobileToken);
-                sendSMS(mobileToken.getMobile(), mobileToken.getToken());
+                notifySender.notify(NotifySenderEnum.REGIST_SMS_NOTIFY.getCode(), mobileToken);
                 return new CcResult(mobileToken);
             }
         });
@@ -86,21 +91,4 @@ public class TokenController extends BaseController {
         return modelMap;
     }
 
-    private void sendSMS(String mobile, String token) {
-
-        HashMap<String, Object> result = null;
-        CCPRestSDK restAPI = new CCPRestSDK();
-        restAPI.init("sandboxapp.cloopen.com", "8883");// 初始化服务器地址和端口，格式如下，服务器地址不需要写https://
-        restAPI.setAccount("8a48b5514767145d01477fcf5f2907d4", "72a27e3d8d314aaab7f495ffb5cde4e5");// 初始化主帐号名称和主帐号令牌
-        restAPI.setAppId("8a48b55147d7c67d0147d88b473b018e");// 初始化应用ID
-        result = restAPI.sendTemplateSMS(mobile, "3751", new String[] { token });
-        if ("000000".equals(result.get("statusCode"))) {
-            return;
-        } else {
-            //异常返回输出错误码和错误信息
-            LogUtil.info(CcLogger.smsDigest,
-                "错误码=" + result.get("statusCode") + " 错误信息= " + result.get("statusMsg"));
-            throw new CcException("对不起短信发送失败，请稍后再试:" + result.get("statusMsg"));
-        }
-    }
 }

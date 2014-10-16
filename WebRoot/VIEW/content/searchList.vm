@@ -12,7 +12,7 @@
  		</div> 	
 </div>
 <br/>
-#parse("content/common/commonSearchResult.vm")
+#parse("content/commonSearchResult.vm")
 </form>
 <script>
 function submitForm(pageNo){

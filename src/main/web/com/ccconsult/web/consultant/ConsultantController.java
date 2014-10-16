@@ -46,15 +46,15 @@ import com.ccconsult.web.view.ConsultBase;
 public class ConsultantController extends BaseController {
 
     /**日志 */
-    private static final Logger logger = Logger.getLogger(ConsultantController.class);
+    private static final Logger   logger = Logger.getLogger(ConsultantController.class);
     @Autowired
-    private ConsultQueryComponent    consultComponent;
+    private ConsultQueryComponent consultComponent;
     @Autowired
-    private ConsultantDAO       consultantDAO;
+    private ConsultantDAO         consultantDAO;
     @Autowired
-    private FileComponent       fileComponent;
+    private FileComponent         fileComponent;
     @Autowired
-    private InnerMailDAO        innerMailDAO;
+    private InnerMailDAO          innerMailDAO;
 
     @RequestMapping(value = "/consultant/consultantSelf.htm", method = RequestMethod.GET)
     public ModelAndView handleRequest(HttpServletRequest request, final PageQuery query,

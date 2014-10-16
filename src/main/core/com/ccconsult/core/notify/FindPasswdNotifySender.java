@@ -8,7 +8,7 @@ import com.ccconsult.web.view.CounselorVO;
 
 /**
  * 寻找密码通知发送器
- * 
+ * （邮件发送）
  * @author jingyu.dan
  * 
  */

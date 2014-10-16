@@ -67,7 +67,7 @@ public class ConsultInterviewController extends BaseController {
     @Autowired
     private MessageDAO                messageDAO;
     @Autowired
-    private ConsultQueryComponent          consultComponent;
+    private ConsultQueryComponent     consultComponent;
     @Autowired
     private ServiceConfigDAO          serviceConfigDAO;
     @Autowired

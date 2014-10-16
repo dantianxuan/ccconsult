@@ -20,6 +20,11 @@
 					<a  class="btn btn-warning" href="$link.contextPath/counselor/personalInfo.htm"><span class="glyphicon glyphicon-user"></span>  个人信息</a>
 					<a  class="btn btn-warning" href="$link.contextPath/counselor/innerMails.htm"> <span class="glyphicon glyphicon-envelope"></span>    站内信箱</a>
        	 	</div>
+       	 	#if(!$counselorVO.counselor.description || !$counselorVO.counselor.department)
+		 	<div class="panel-body">       	 	    
+       	 		<p class="alert alert-danger"><a class="glyphicon glyphicon-exclamation-sign"></a>系统检查到您当前未完善您的<a href="$link.contextPath/counselor/personalInfo.htm">个人信息</a>，请您完善您的个人信息（个人介绍和部门信息等）以便于咨询者了解您的基本信息！</p>
+   	 		</div>
+   	 		#end   	 	
     	</div>
     </div>
-</div>
+</div>    

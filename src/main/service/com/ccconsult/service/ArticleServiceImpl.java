@@ -2,7 +2,7 @@
  * ccinterviewer.com Inc.
  * Copyright (c) 2014-2014 All Rights Reserved.
  */
-package com.ccconsult.core.service;
+package com.ccconsult.service;
 
 import java.util.Date;
 
@@ -26,7 +26,7 @@ public class ArticleServiceImpl extends AbstractService implements ArticleServic
     private ArticleDAO articleDAO;
 
     /** 
-     * @see com.ccconsult.core.service.ArticleService#saveArticle(com.ccconsult.pojo.Article)
+     * @see com.ccconsult.service.ArticleService#saveArticle(com.ccconsult.pojo.Article)
      */
     @Override
     public CcResult saveArticle(final Article article) {
@@ -49,7 +49,7 @@ public class ArticleServiceImpl extends AbstractService implements ArticleServic
     }
 
     /** 
-     * @see com.ccconsult.core.service.ArticleService#updateArticle(com.ccconsult.pojo.Article)
+     * @see com.ccconsult.service.ArticleService#updateArticle(com.ccconsult.pojo.Article)
      */
     @Override
     public CcResult updateArticle(final Article article) {
