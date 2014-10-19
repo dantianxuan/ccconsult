@@ -19,6 +19,7 @@ public class TransRecord extends com.ccconsult.base.ToString implements java.io.
     private Date    gmtCreate;
     private String  transToken;
     private Integer consultId;
+    private Integer chargeType;
 
     // Constructors
 
@@ -28,7 +29,8 @@ public class TransRecord extends com.ccconsult.base.ToString implements java.io.
 
     /** full constructor */
     public TransRecord(double money, Integer transType, Integer relRoleId, Integer relRoleType,
-                       String detail, Date gmtCreate, String transToken, Integer consultId) {
+                       String detail, Date gmtCreate, String transToken, Integer consultId,
+                       Integer chargeType) {
         this.money = money;
         this.transType = transType;
         this.relRoleId = relRoleId;
@@ -37,9 +39,18 @@ public class TransRecord extends com.ccconsult.base.ToString implements java.io.
         this.gmtCreate = gmtCreate;
         this.transToken = transToken;
         this.consultId = consultId;
+        this.chargeType = chargeType;
     }
 
     // Property accessors
+
+    public Integer getChargeType() {
+        return chargeType;
+    }
+
+    public void setChargeType(Integer chargeType) {
+        this.chargeType = chargeType;
+    }
 
     public Integer getId() {
         return this.id;

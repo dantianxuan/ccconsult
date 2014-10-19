@@ -20,6 +20,7 @@ import com.ccconsult.dao.TransRecordDAO;
 import com.ccconsult.pojo.Account;
 import com.ccconsult.pojo.Consultant;
 import com.ccconsult.pojo.TransRecord;
+import com.ccconsult.web.view.CounselorVO;
 
 /**
  * 账户信息
@@ -35,9 +36,9 @@ public class AccountController extends BaseController {
     private TransRecordDAO transRecordDAO;
 
     @RequestMapping(value = "consultant/personalAccount.htm", method = RequestMethod.GET)
-    public ModelAndView queryAccountInfo(HttpServletRequest request, final Integer transType,
-                                         final Integer pageSize, final Integer pageNo,
-                                         final ModelMap modelMap) {
+    public ModelAndView queryConsultantAccountInfo(HttpServletRequest request,
+                                                   final Integer transType, final Integer pageSize,
+                                                   final Integer pageNo, final ModelMap modelMap) {
         ModelAndView view = new ModelAndView("consultant/personalAccount");
         Consultant consultant = getConsultantInSession(request.getSession());
         Account account = accountDAO.queryByRoleForUpdate(consultant.getId(),
@@ -45,10 +46,29 @@ public class AccountController extends BaseController {
         modelMap.put("account", account);
         int localTransType = transType == null ? 0 : transType;
         PageList<TransRecord> pageList = transRecordDAO.queryPaged(consultant.getId(),
-            UserRoleEnum.CONSULTANT.getValue(), localTransType, pageSize == null ? 20 : pageSize,
-            pageNo == null ? 1 : pageNo);
+            UserRoleEnum.CONSULTANT.getValue(), localTransType, 0,
+            pageSize == null ? 20 : pageSize, pageNo == null ? 1 : pageNo);
         modelMap.put("pageList", pageList);
         modelMap.put("transType", localTransType);
         return view;
     }
+
+    @RequestMapping(value = "counselor/personalAccount.htm", method = RequestMethod.GET)
+    public ModelAndView queryCounselorAccountInfo(HttpServletRequest request,
+                                                  final Integer transType, final Integer pageSize,
+                                                  final Integer pageNo, final ModelMap modelMap) {
+        ModelAndView view = new ModelAndView("counselor/personalAccount");
+        CounselorVO counselorVO = getCounselorInSession(request.getSession());
+        Account account = accountDAO.queryByRoleForUpdate(counselorVO.getCounselor().getId(),
+            UserRoleEnum.COUNSELOR.getValue());
+        modelMap.put("account", account);
+        int localTransType = transType == null ? 0 : transType;
+        PageList<TransRecord> pageList = transRecordDAO.queryPaged(counselorVO.getCounselor()
+            .getId(), UserRoleEnum.COUNSELOR.getValue(), localTransType, 0, pageSize == null ? 20
+            : pageSize, pageNo == null ? 1 : pageNo);
+        modelMap.put("pageList", pageList);
+        modelMap.put("transType", localTransType);
+        return view;
+    }
+
 }

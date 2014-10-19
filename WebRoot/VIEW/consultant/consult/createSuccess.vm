@@ -28,14 +28,15 @@
 						  	#if($consultBase.consult.payTag==2)
 						  		您的服务无需预约，请耐心等待您的咨询师回答您的问题
 						  	#else
-						  		请在规定时间内完成支付，如果在设定时间之前10分钟仍旧未能完成支付，您的咨询将被取消
+						  		请在规定时间内完成支付，如果在咨询有效期之前10分钟未进行支付，咨询将被取消
 						  	#end
 				  		  </p> 
 							<p style="text-align:right;border-top:solid 1px #ddd;padding-top:4px;">
+						  	<a class="btn btn-link" href="$link.contextPath/consultant/consultantSelf.htm" >[余额不足，我要充值]</a>
+						  	<a class="btn btn-link" href="$link.contextPath/consultant/consultantSelf.htm" > [转到我的预约]</a>
 						  	#if($consultBase.consult.step==1 && $consultBase.consult.payTag!=2)
 						  		<a class="btn btn-sm btn-primary" href="javascript:void(0)" onclick="payForConsult($consultBase.consult.id)"> <span class="glyphicon glyphicon-copyright-mark"></span> 去支付</a>
-						  	#end
-						  	<a class="btn btn-link" href="$link.contextPath/consultant/consultantSelf.htm" > 转到我的预约</a>
+						  	#end						  	
 						  	</p>
 					 		<small>有效期<span class="glyphicon glyphicon-dashboard"></span>
 					 			$date.format("yyyy-MM-dd HH:mm:ss",$consultBase.consult.gmtCreate)
@@ -50,36 +51,31 @@
 <script>
 	//完成请求
 	function payForConsult(consultId){
- 	window.open("http://www.alipay.com");	
-	setInterval(function(){
-		$.Zebra_Dialog('<strong>请注意？</strong>,您是否已经完成了支付？', {
-		    'type':     'question',
-		    'title':    '支付完成确认框',
+		var confirm=$.Zebra_Dialog('<strong>请注意？</strong>,请确认您将进行支付，您当前的支付在您完成支付确认后才会支付给您的咨询师！', {
+		    'type':     'confirmation',
+		    'title':    '确认支付',
+		    'show_close_button':true,
 		    'buttons':  [
-		                    {caption: '完成支付', callback: function() { 
+		                    {caption: '了解了，我要支付', callback: function() { 
 									jQuery.ajax({
 						             type: "POST",
 						             url: "$link.contextPath/consultant/consult/payTempForConsult.json",
 						             data: {'consultId':consultId},
 						             dataType: "json",
 						             success: function(data){
-						             	if(data.result.success==true){
-											$.Zebra_Dialog('支付成功！');
-						             		setInterval(function(){
-						             			window.location.href="$link.contextPath/consultant/consultantSelf.htm"
-											},2000);										
+						             	confirm.close();
+										if(data.result.success==true){	
+											alert('恭喜你,您当前已经完成了支付，感谢您的使用，请根据平台的流程完成您的咨询服务');
+						             		window.location.href="$link.contextPath/consultant/consultantSelf.htm"
 						             	}else{
-											$.Zebra_Dialog('<strong>请注意</strong>, '+data.result.message, {
-											    'type':     'error',
-											    'title':    '对不起，操作失败'
-											});				             	
+						             		alert('对不起，您的支付失败 '+data.result.message);
+											location.reload();			
 						             	}
 						              }
 						         });
 							 }},
-		                    {caption: '支付失败', callback: function() { location.reload(); }},
+		                    {caption: '放弃支付', callback: function() { location.reload(); }},
 		                ]
 		});	
-		},4000);
 	}
 </script>

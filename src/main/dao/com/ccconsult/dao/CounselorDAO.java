@@ -92,14 +92,14 @@ public class CounselorDAO extends BaseHibernateDAO<Counselor> {
             hql = "from Counselor  order by gmtCreate desc";
         } else {
             map.put(NAME, name);
-            hql = "from Counselor where name like :name order by gmtCreate desc";
+            hql = "from Counselor where description is not null and name like :name order by gmtCreate desc";
         }
         return queryPage(pageNo, pageSize, hql, map);
     }
 
     public int queryCount(int companyId) {
         Query queryObject = getSession().createQuery(
-            "select count(*) from Counselor where companyId=" + companyId);
+            "select count(*) from Counselor where description is not null and companyId=" + companyId);
         return ((Long) queryObject.uniqueResult()).intValue();
     }
 

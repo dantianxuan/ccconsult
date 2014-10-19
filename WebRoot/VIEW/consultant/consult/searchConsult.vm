@@ -2,26 +2,33 @@
 #parse("consultant/consultantGuide.vm")
 <script>
 	function deleteConsult(consultId){
-		if(!confirm("请确认您要删除该记录")){
-			return ;
-		}
-		jQuery.ajax({
-             type: "POST",
-             url: "$link.contextPath/consultant/deleteConsult.json",
-             data: {'consultId':consultId},
-             dataType: "json",
-             success: function(data){
-             	if(data.result.success==true){
-             	 	window.location.reload();
-             	}else{
-					$.Zebra_Dialog('<strong>请注意</strong>,'+data.result.message, {
-					    'type':     'error',
-					    'title':    '对不起，操作失败'
-					});             	
-             	}
-              }
-         });
-	}
+		var configm=$.Zebra_Dialog('<strong>请注意？</strong>,请确认您要删除该记录！', {
+		    'type':     'question',
+		    'title':    '确认框',
+		    'buttons':  [
+		                    {caption: '我要删除', callback: function() { 
+		                    	 configm.close();
+									jQuery.ajax({
+							             type: "POST",
+							             url: "$link.contextPath/consultant/deleteConsult.json",
+							             data: {'consultId':consultId},
+							             dataType: "json",
+							             success: function(data){
+							             	if(data.result.success==true){
+							             	 	window.location.reload();
+							             	}else{
+												$.Zebra_Dialog('<strong>请注意</strong>,'+data.result.message, {
+												    'type':     'error',
+												    'title':    '对不起，操作失败'
+												});             	
+							             	}
+							              }
+							         });		                    	 
+		                    	 }},
+		                    {caption: '取消', callback: function() { configm.close();}},
+		                ]
+		});		
+	}	
 </script>   
 <form id="searchConsultForm" action="$link.contextPath/consultant/consult/searchConsult.htm" method="GET"> 
 <input type="hidden" name="pageSize" value="$!result.object.getPageSize()"/>

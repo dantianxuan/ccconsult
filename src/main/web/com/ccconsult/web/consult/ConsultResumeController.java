@@ -3,7 +3,6 @@
  */
 package com.ccconsult.web.consult;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,27 +22,19 @@ import com.ccconsult.base.AssertUtil;
 import com.ccconsult.base.BlankServiceCallBack;
 import com.ccconsult.base.CcConstrant;
 import com.ccconsult.base.CcResult;
-import com.ccconsult.base.enums.ConsultStepEnum;
 import com.ccconsult.base.enums.DataStateEnum;
 import com.ccconsult.base.enums.FileTypeEnum;
 import com.ccconsult.base.enums.MessageRelTypeEnum;
-import com.ccconsult.base.enums.PayStateEnum;
-import com.ccconsult.base.enums.UserRoleEnum;
-import com.ccconsult.base.util.CodeGenUtil;
-import com.ccconsult.base.util.DateUtil;
 import com.ccconsult.core.consult.ConsultQueryComponent;
 import com.ccconsult.core.file.FileComponent;
-import com.ccconsult.core.order.OrderComponent;
 import com.ccconsult.dao.ConsultDAO;
 import com.ccconsult.dao.ConsultResumeDAO;
-import com.ccconsult.dao.CounselorDAO;
 import com.ccconsult.dao.MessageDAO;
 import com.ccconsult.dao.ServiceConfigDAO;
-import com.ccconsult.dao.ServiceDAO;
 import com.ccconsult.pojo.Consult;
 import com.ccconsult.pojo.ConsultResume;
 import com.ccconsult.pojo.Consultant;
-import com.ccconsult.pojo.Service;
+import com.ccconsult.service.ConsultResumeService;
 import com.ccconsult.web.BaseController;
 import com.ccconsult.web.view.ConsultBase;
 import com.ccconsult.web.view.ConsultResumeVO;
@@ -59,21 +50,19 @@ import com.ccconsult.web.view.ServiceConfigVO;
 public class ConsultResumeController extends BaseController {
 
     @Autowired
-    private ServiceDAO            serviceDAO;
-    @Autowired
-    private CounselorDAO          counselorDAO;
-    @Autowired
     private ConsultDAO            consultDAO;
     @Autowired
     private MessageDAO            messageDAO;
-    @Autowired
-    private ConsultQueryComponent consultComponent;
     @Autowired
     private FileComponent         fileComponent;
     @Autowired
     private ConsultResumeDAO      consultResumeDAO;
     @Autowired
     private ServiceConfigDAO      serviceConfigDAO;
+    @Autowired
+    private ConsultQueryComponent consultComponent;
+    @Autowired
+    private ConsultResumeService  consultResumeService;
 
     @RequestMapping(value = "/consultant/consult/createConsultResumeInit.htm", method = RequestMethod.GET)
     public ModelAndView handleRequest(HttpServletRequest request, final String serviceConfigId,
@@ -101,62 +90,16 @@ public class ConsultResumeController extends BaseController {
      * 公司邮箱链接注册
      * @return
      */
-    @RequestMapping(value = "consultant/consult/createConsultResume.json", method = RequestMethod.POST)
-    public @ResponseBody
-    ModelMap createResume(final HttpServletRequest request, final Consult consult,
-                          @RequestParam final MultipartFile[] localFile, final ModelMap modelMap) {
+    @RequestMapping(value = "/consultant/consult/createConsultResume.json", method = RequestMethod.POST)
+    public @ResponseBody ModelMap createResume(final HttpServletRequest request,
+                                               final Consult consult,
+                                               @RequestParam final MultipartFile[] localFile,
+                                               final ModelMap modelMap) {
         modelMap.clear();
-        CcResult result = serviceTemplate.executeWithTx(CcResult.class, new BlankServiceCallBack() {
-            /** 
-             * @see com.ccconsult.base.ServiceCallBack#check()
-             */
-            @Override
-            public void check() {
-                Consultant consultant = getConsultantInSession(request.getSession());
-                AssertUtil.notNull(consultant, "不合法的用户");
-                consult.getCounselorId();
-                CounselorVO counselorVO = counselorDAO.findById(consult.getCounselorId());
-                AssertUtil.notNull(counselorVO, "咨询对象不存在，请检查");
-                AssertUtil.notBlank(consult.getGoal(), "请填写您的咨询目的，请检查");
-                AssertUtil.state(consult.getGoal().length() <= CcConstrant.COMMON_4096_LENGTH,
-                    "描述问题太长，请简洁描述");
-            }
-
-            @Override
-            public CcResult executeService() {
-                String fileName = "";
-                String contextPath = request.getSession().getServletContext().getRealPath("/");
-                for (MultipartFile myfile : localFile) {
-                    AssertUtil.state(!myfile.isEmpty(), "必须上传您的简历文件！");
-                    fileName = fileComponent.uploadFile(myfile, FileTypeEnum.RESUME, contextPath,
-                        CcConstrant.FILE_2M_SIZE, "doc|pdf|docx");
-                }
-                ServiceConfigVO serviceConfigVO = serviceConfigDAO.findVoById(consult
-                    .getServiceConfigId());
-                AssertUtil.state(
-                    serviceConfigVO != null
-                            && serviceConfigVO.getServiceConfig().getState()
-                                .equals(DataStateEnum.NORMAL.getValue()), "服务配置对象当前过期，请查询发起咨询");
-                modelMap.put("serviceConfigVO", serviceConfigVO);
-                //创建一个咨询记录
-                consult.setGmtCreate(new Date());
-                consult.setGmtModified(new Date());
-                consult.setPayTag(PayStateEnum.WAIT_FOR_PAY.getValue());
-                consult.setStep(ConsultStepEnum.CREATE.getValue());
-                Service service = serviceDAO.findById(consult.getServiceId());
-                AssertUtil.notNull(service, "服务不存在，请检查");
-                consult.setGmtEffectBegin(new Date());
-                consult.setGmtEffectEnd(DateUtil.addHours(new Date(), service.getEffectTime()));
-                consult.setIndetityCode(CodeGenUtil.getFixLenthString(6));
-                consultDAO.save(consult);
-                //创建面试咨询记录
-                ConsultResume resumeConsult = new ConsultResume();
-                resumeConsult.setConsultId(consult.getId());
-                resumeConsult.setResumeFiles(fileName);
-                consultResumeDAO.save(resumeConsult);
-                return new CcResult(consult);
-            }
-        });
+        String contextPath = request.getSession().getServletContext().getRealPath("/");
+        CcResult result = consultResumeService.create(consult, localFile, contextPath);
+        ServiceConfigVO serviceConfigVO = serviceConfigDAO.findVoById(consult.getServiceConfigId());
+        modelMap.put("serviceConfigVO", serviceConfigVO);
         modelMap.put("result", result);
         return modelMap;
     }
@@ -219,10 +162,10 @@ public class ConsultResumeController extends BaseController {
      * @return
      */
     @RequestMapping(value = "counselor/consult/consultResumeReview.htm", method = RequestMethod.POST)
-    public @ResponseBody
-    ModelMap updateResumeReview(final HttpServletRequest request, final Integer consultId,
-                                final String review, @RequestParam final MultipartFile[] localFile,
-                                final ModelMap modelMap) {
+    public @ResponseBody ModelMap updateResumeReview(final HttpServletRequest request,
+                                                     final Integer consultId, final String review,
+                                                     @RequestParam final MultipartFile[] localFile,
+                                                     final ModelMap modelMap) {
         modelMap.clear();
         CcResult result = serviceTemplate.executeWithTx(CcResult.class, new BlankServiceCallBack() {
             @Override

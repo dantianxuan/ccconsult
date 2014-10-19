@@ -95,7 +95,7 @@
 				},
 				error : function(result) {
 					$('#submitConsultButton').button('reset');
-					$.Zebra_Dialog('<strong>请注意</strong>,', {
+					$.Zebra_Dialog('<strong>请创建失败，请稍后重试</strong>,', {
 							    'type':     'warn',
 							    'title':    '对不起，创建失败，请稍后再试'
 					});

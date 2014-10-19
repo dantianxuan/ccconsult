@@ -13,7 +13,7 @@ import com.ccconsult.pojo.MobileToken;
  * @author jingyudan
  * @version $Id: ConsultRejectNotify.java, v 0.1 2014-7-27 上午10:09:16 jingyudan Exp $
  */
-public class RegistSmsNotify extends AbstractNotifySender {
+public class RegistSmsNotifySender extends AbstractNotifySender {
 
     /** 
      * @see com.ccconsult.core.notify.NotifySender#notify(java.lang.String, java.lang.Object)

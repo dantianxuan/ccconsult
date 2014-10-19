@@ -15,11 +15,8 @@ public enum NotifySenderEnum {
     /** 注册面试官通知处理器 */
     REG_MAIL_NOTIFY(1, "REG_MAIL_NOTIFY", "注册面试官消息发送器"),
 
-    /** 咨询师已经完成预约通知 */
-    ON_SCHEDULE_NOTIFY(2, "ON_SCHEDULE_NOTIFY", "咨询师已经完成预约通知"),
-
     /**咨询就行中通知(支付完成) */
-    CONSULT_WORKON_NOTIFY(3, "CONSULT_WORKON_NOTIFY", "咨询就行中通知(支付完成)"),
+    CONSULT_EFFIECT_NOTIFY(2, "CONSULT_EFFIECT_NOTIFY", "咨询就行中通知(支付完成)"),
 
     /**咨询被拒绝通知 */
     CONSULT_REJECT_NOTIFY(4, "CONSULT_REJECT_NOTIFY", "咨询被拒绝通知"),

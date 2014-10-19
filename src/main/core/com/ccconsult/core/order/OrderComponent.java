@@ -4,6 +4,7 @@
  */
 package com.ccconsult.core.order;
 
+
 /**
  * 
  * @author jingyudan
@@ -12,9 +13,24 @@ package com.ccconsult.core.order;
 public interface OrderComponent {
 
     /**
-     * 支付订单
+     * finishOrder
      * 
      * @param consultId
      */
-    public void confirmConsunt(int consultId);
+    public void finishConsultOrder(int consultId);
+
+    /**
+     * 
+     * 
+     * @return
+     */
+    public void payConsultOrder(int consultId);
+
+    /**
+     * 
+     * 
+     * @return
+     */
+    public void rejectConsultOrder(int consultId);
+
 }

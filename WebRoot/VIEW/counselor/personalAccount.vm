@@ -1,6 +1,6 @@
-#set($consultant=$session.getAttribute("SESSION_CONSULTANT_OBJECT"))
-#parse("consultant/consultantGuide.vm")  
-<form id="queryAccountPersonalForm" action="$link.contextPath/consultant/personalAccount.htm" method="GET">
+#set($counselorVO=$session.getAttribute("SESSION_COUNSELOR_OBJECT"))
+#parse("counselor/counselorGuide.vm")
+<form id="queryAccountPersonalForm" action="$link.contextPath/counselor/personalAccount.htm" method="GET">
 <div class="row">
 	<div class="col-sm-12">
 		<div class="panel panel-default">
@@ -21,10 +21,8 @@
         <div class="panel panel-default">
         	<br/>
 			<ul class="nav nav-tabs nav-justified" role="tablist">
-				<li #if($transType==1) class="active"  #end><a href="javascript:void(0)"  onclick="queryRecords(1,1);">支付咨询押金</a></li>
-		  		<li #if($transType==4) class="active"  #end><a href="javascript:void(0)"  onclick="queryRecords(1,4);">退还咨询押金</a></li>
-		  		<li #if($transType==7) class="active"  #end><a href="javascript:void(0)"  onclick="queryRecords(1,7);">充值到账户</a></li>
-		  		<li #if($transType==8) class="active"  #end><a href="javascript:void(0)"  onclick="queryRecords(1,8);">转出账户（提现）</a></li>
+				<li #if($transType==2) class="active"  #end><a href="javascript:void(0)"  onclick="queryRecords(1,2);">咨询收入</a></li>
+		  		<li #if($transType==8) class="active"  #end><a href="javascript:void(0)"  onclick="queryRecords(1,8);">提出记录</a></li>
 			</ul>  
             <div class="panel-body">
             	#if($pageList && $pageList.data)	            	

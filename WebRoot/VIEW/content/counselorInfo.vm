@@ -22,7 +22,7 @@
 						  <p>$application.getAttribute('serviceMap').get("$serviceConfig.serviceId").description</p>
 						  <p class="text-primary">
 						  	<span style="font-size:24px;">
-						  		<span class="glyphicon glyphicon-copyright-mark"></span>0/元次
+						  		<span class="glyphicon glyphicon-copyright-mark">$application.getAttribute('serviceMap').get("$serviceConfig.serviceId").priceRegion</span>/元次
 					  		</span> 
 						    <a class="btn btn-primary" href="$link.contextPath/consultant/consult/create${application.getAttribute('serviceMap').get("$serviceConfig.serviceId").code}Init.htm?serviceConfigId=$serviceConfig.id" style="float:right;"><span class="glyphicon glyphicon-send"></span>  发起咨询</a>		
 				  		  </p>

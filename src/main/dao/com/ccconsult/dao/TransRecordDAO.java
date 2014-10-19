@@ -30,6 +30,7 @@ public class TransRecordDAO extends BaseHibernateDAO<TransRecord> {
     public static final String  DETAIL        = "detail";
     public static final String  TRANS_TOKEN   = "transToken";
     public static final String  CONSULT_ID    = "consultId";
+    public static final String  CHARGE_TYPE   = "chargeType";
 
     public TransRecord findById(java.lang.Integer id) {
         log.debug("getting TransRecord instance with id: " + id);
@@ -51,16 +52,18 @@ public class TransRecordDAO extends BaseHibernateDAO<TransRecord> {
     }
 
     public PageList<TransRecord> queryPaged(int relRoleId, int relRoleType, int transType,
-                                            int pageSize, int pageNo) {
+                                            int chargeType, int pageSize, int pageNo) {
         Map<String, Object> params = new HashMap<String, Object>();
         String hql = "from TransRecord where relRoleId=" + relRoleId + " ";
-        params.put(REL_ROLE_ID, relRoleId);
-        hql += " and relRoleId=:relRoleId ";
         params.put(REL_ROLE_TYPE, relRoleType);
         hql += " and relRoleType=:relRoleType ";
         if (transType > 0) {
             params.put(TRANS_TYPE, transType);
             hql += " and transType=:transType ";
+        }
+        if (chargeType > 0) {
+            params.put(CHARGE_TYPE, chargeType);
+            hql += " and chargeType=:chargeType ";
         }
         hql += " order by gmtCreate DESC ";
         return queryPage(pageNo, pageSize, hql, params);

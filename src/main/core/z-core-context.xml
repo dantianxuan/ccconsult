@@ -17,21 +17,21 @@
 	<!-- 注册邮件通知处理器 -->
 	<bean id="regMailNotifySender" class="com.ccconsult.core.notify.RegMailNotifySender"></bean>
 	<!-- 预约时间到时候提醒 -->
-	<bean id="onScheduleNotifySender" class="com.ccconsult.core.notify.OnScheduleNotifySender"></bean>
+	<bean id="consultEffectNotifySender" class="com.ccconsult.core.notify.ConsultEffectNotifySender"></bean>
 	<!-- 找回密码通知处理器 -->
 	<bean id="findPasswdNotifySender" class="com.ccconsult.core.notify.FindPasswdNotifySender"></bean>
 	<!-- 咨询被拒绝处理器 -->
 	<bean id="consultRejectNotify" class="com.ccconsult.core.notify.ConsultRejectNotify"></bean>
 	<!-- 注册短信通知器 -->
-	<bean id="registSmsNotify" class="com.ccconsult.core.notify.RegistSmsNotify"></bean>
+	<bean id="registSmsNotifySender" class="com.ccconsult.core.notify.RegistSmsNotifySender"></bean>
 
 
 	<bean id="notifySender" class="com.ccconsult.core.notify.NotifySenderProxy">
 		<property name="notifySenders">
 			<map>
 				<entry key="REG_MAIL_NOTIFY" value-ref="regMailNotifySender" />
-				<entry key="REGIST_SMS_NOTIFY" value-ref="registSmsNotify" />
-				<entry key="ON_SCHEDULE_NOTIFY" value-ref="onScheduleNotifySender" />
+				<entry key="REGIST_SMS_NOTIFY" value-ref="registSmsNotifySender" />
+				<entry key="CONSULT_EFFIECT_NOTIFY" value-ref="consultEffectNotifySender" />
 				<entry key="FINDPASSWD_NOTIFY" value-ref="findPasswdNotifySender" />
 				<entry key="CONSULT_REJECT_NOTIFY" value-ref="consultRejectNotify" />
 			</map>

@@ -83,6 +83,7 @@ public class ConsultInterviewComponentImpl implements ConsultInterviewComponent 
                     + ScheduleTimeUtil.getEnd(times), "yyyy-MM-dd HH:mm");
         AssertUtil.state(scheduleBegin.after(new Date()), "对不起，当前预约时间已经过期，请重新选择");
         consult.setGmtEffectBegin(new Date());
+        consult.setPrice(NumberUtils.toDouble(service.getPriceRegion()));
         consult.setGmtEffectEnd(DateUtil.addHours(new Date(), service.getEffectTime()));
         consult.setIndetityCode(CodeGenUtil.getFixLenthString(6));
         consultDAO.save(consult);

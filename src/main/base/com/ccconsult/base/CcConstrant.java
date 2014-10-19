@@ -17,6 +17,9 @@ public class CcConstrant {
     /** counselor对象 */
     public final static String SESSION_COUNSELOR_OBJECT  = "SESSION_COUNSELOR_OBJECT";
 
+    /** 默认管理员对象 */
+    public final static int    ADMINISTOR_ROLE_ID        = 1;
+
     /** CONSULTANT 对象 */
     public final static String SESSION_CONSULTANT_OBJECT = "SESSION_CONSULTANT_OBJECT";
 

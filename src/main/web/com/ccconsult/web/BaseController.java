@@ -7,8 +7,10 @@ package com.ccconsult.web;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.ModelMap;
 
 import com.ccconsult.base.CcConstrant;
+import com.ccconsult.base.CcResult;
 import com.ccconsult.base.ServiceTemplate;
 import com.ccconsult.base.enums.UserRoleEnum;
 import com.ccconsult.core.cache.CachedComponent;
@@ -36,6 +38,13 @@ public class BaseController {
     protected CachedComponent cachedComponent;
     public final static int   COUNSELOR  = 0;
     public final static int   CONSULTANT = 1;
+
+    public ModelMap illegalJsonRequest(ModelMap modelMap) {
+        CcResult result = new CcResult();
+        result.setMessage("非法请求！");
+        modelMap.put("result", result);
+        return modelMap;
+    }
 
     public Consultant getConsultantInSession(HttpSession session) {
         Object consultant = session.getAttribute(CcConstrant.SESSION_CONSULTANT_OBJECT);
@@ -74,7 +83,7 @@ public class BaseController {
         }
         if (role == UserRoleEnum.COUNSELOR) {
             CounselorVO counselorVO = getCounselorInSession(session);
-            if (counselorVO == null || counselorVO.getCounselor().getId().equals(id)) {
+            if (counselorVO == null || !counselorVO.getCounselor().getId().equals(id)) {
                 return false;
             }
             return true;

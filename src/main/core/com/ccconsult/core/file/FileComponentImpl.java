@@ -35,7 +35,7 @@ public class FileComponentImpl implements FileComponent {
                              int maxByteSize, String prefixReg) {
         File file = null;
         String uuid = UUID.randomUUID().toString().replace(CcConstrant.ALT_SEPARATOR, "");
-        AssertUtil.state(myfile.getSize() <= maxByteSize, "文件太大，不能上传");
+        AssertUtil.state(myfile.getSize() <= maxByteSize, "文件太大，请压缩后上传");
         String prefix = myfile.getOriginalFilename().substring(
             myfile.getOriginalFilename().lastIndexOf(".") + 1);
         if (!StringUtil.isBlank(prefixReg)) {
